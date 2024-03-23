@@ -1,0 +1,228 @@
+<template>
+  <div class="app-container">
+    <el-form :model="queryParams" ref="queryForm"  :inline="true">
+      <el-form-item label="名称" prop="fApplyName">
+        <el-input
+          v-model="queryParams.fApplyName"
+          placeholder="请输入计划名称"
+          clearable
+          size="small"
+          style="width: 240px"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+
+      <el-form-item label="状态" prop="status">
+        <el-select
+          v-model="queryParams.fActStatus"
+          placeholder="状态"
+          clearable
+          size="small"
+          style="width: 240px"
+        >
+          <el-option
+            v-for="(item,index) in dict.fundingStatus"
+            :key="item.dictValue"
+            :label="item.dictLabel"
+            :value="item.dictValue"
+          />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+
+    <el-table v-loading="loading" :data="tableData" border>
+      <!--      <el-table-column width="55" align="center"/>-->
+      <el-table-column label="经费申请名称" align="center" prop="fApplyName" width="200" show-overflow-tooltip/>
+      <el-table-column label="用途" align="center" prop="fPurpose" width="300" :show-overflow-tooltip="true"/>
+      <el-table-column label="类别" align="center" prop="fApplyType" width="150">
+        <template slot-scope="{row}">
+          <span v-for="(item,index) in dict.fundType" v-if="row.fApplyType == item.dictValue">
+            {{item.dictLabel}}
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" align="center" prop="fCreateTime"  width="150">
+        <template slot-scope="{row}">
+          <span v-for="(item,index) in dict.fundingStatus" v-if="row.fActStatus == item.dictValue">{{ item.dictLabel }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="申请金额" align="center" prop="fApplyMoney" width="150">
+        <template slot-scope="{ row }">
+          <span>{{row.fApplyMoney}} 元</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="批准金额" align="center" prop="fApprovalMoney"  width="150">
+        <template slot-scope="{ row }">
+          <span>{{row.fApprovalMoney}} 元</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="支出金额" align="center" prop="fExpendMoney" width="150">
+        <template slot-scope="{ row }">
+          <span>{{row.fExpendMoney}} 元</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="结余金额" align="center" prop="fSurplusMoney" width="150">
+        <template slot-scope="{ row }">
+          <span>{{row.fSurplusMoney}} 元</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="支出时间" align="center" prop="fCreateTime" width="180"/>
+      <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
+        <template slot-scope="{ row }">
+          <span v-if="row.fActStatus == '1' || row.fActStatus == null">
+            <el-button size="mini" type="text" @click="open(row)">提交</el-button>
+          </span>
+          <span v-if="row.fActStatus == '2'">
+            <el-button size="mini" type="text" @click="open(row)">审核</el-button>
+          </span>
+          <span v-if="row.fActStatus == '3'">
+            <el-button size="mini" type="text" @click="open(row)">审批</el-button>
+          </span>
+          <span style="margin-left: 5px" v-if="row.fActStatus == '4'">
+            <el-button size="mini" type="text" @click="open(row)">支出详情</el-button>
+          </span>
+        </template>
+      </el-table-column>
+    </el-table>
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
+
+    <el-dialog
+      title="支出详情"
+      :visible.sync="editFormVisible"
+      width="1500px"
+    >
+      <outlay ref="expend" @shut="closeReview" @search="getList"></outlay>
+    </el-dialog>
+
+  </div>
+</template>
+<script>
+import outlay from './outlay.vue';
+import {listExpend} from "@/api/fundManage/expend"
+import {getFileById} from "@/api/file";
+
+import {
+  dataQuery
+} from "@/api/indemnification/training";
+
+export default {
+  components: { outlay },
+  data() {
+    return {
+
+      dict: {
+        fundType: [],
+        fundingStatus: []
+      },
+
+      total: 0,
+
+      tableData: [],
+
+      // 是否显示弹出层
+      editFormVisible: false,
+
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        fApplyName: undefined,
+        fActStatus: undefined
+      },
+    };
+  },
+  props: {},
+
+  created() {
+    this.getList()
+    this.dataQuery()
+  },
+  methods: {
+
+    getList() {
+      this.loading = true;
+      listExpend(this.queryParams).then(
+        response => {
+          this.tableData = response.rows;
+          this.total = response.total;
+          this.loading = false;
+        }
+      );
+    },
+
+    closeReview(data) {
+      this.editFormVisible = data
+    },
+
+    open(row) {
+      this.editFormVisible = true;
+      if (row.fExpendFileId) {
+        row.fApplyType = row.fApplyType.toString();
+        getFileById({id: row.fExpendFileId}).then(result => {
+          if (result) {
+            // 调用子组件的方法
+            this.$nextTick(() => {
+              this.$refs.expend.init(row, result.data)
+            });
+
+          }
+        })
+      }
+      ;
+    },
+
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1;
+      this.getList();
+    },
+
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.dateRange = [];
+      this.resetForm("queryForm");
+      this.handleQuery();
+    },
+
+    dataQuery() {
+      var query = { dictType: 'fundType' }
+      dataQuery(query).then(res => {
+        if (res.code == 200) {
+          this.dict.fundType = res.data
+        }
+      });
+      var status = { dictType: 'fundingStatus' }
+      dataQuery(status).then(res => {
+        if (res.code == 200) {
+          this.dict.fundingStatus = res.data
+        }
+      });
+    }
+
+  },
+};
+</script>
+<style lang="scss" scoped>
+::v-deep .el-transfer__button {
+  border-radius: 50%;
+  padding: 12px;
+  display: block;
+  margin-left: 0px;
+}
+
+::v-deep .el-transfer__button:first-child {
+  margin-bottom: 10px;
+}
+</style>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.workflow.mapper.WorkFlowMapper">
+
+    <update id="updateBusinessActiviti"  parameterType="java.util.Map">
+        update ${tableName}
+        <set>
+            <trim prefixOverrides=",">
+                <if test="actId != null">f_act_id = #{actId},</if>
+                <if test="actPersion != null and actPersion != ''">f_act_persion = #{actPersion}, </if>
+                <if test="status != null">f_status = #{status},</if>
+                <if test="actNode != null">f_act_node = #{actNode},</if>
+            </trim>
+        </set>
+        where f_id = #{businessKey}
+    </update>
+
+    <select id="getRoles" resultType="com.szsk.reservoir.workflow.domain.RoleVO" parameterType="java.lang.Long">
+        SELECT
+            sr.role_id as 'roleId',
+            sr.role_key as 'roleKey',
+            sr.role_name as 'roleName',
+            su.user_id as 'userId',
+            su.user_name as 'userName'
+        FROM
+            sys_role sr,
+            sys_user_role sur,
+            sys_user su
+        WHERE
+            sr.role_id = sur.role_id
+          AND sur.user_id = su.user_id
+          AND su.user_id = #{userId}
+    </select>
+
+</mapper>

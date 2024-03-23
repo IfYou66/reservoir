@@ -1,0 +1,78 @@
+package com.ruoyi.common.core.utils.coordinates;
+
+
+public class CoordinatesUtils {
+	
+	public static double [] xytolatlon(double X, double Y ,double L0) {
+        double lat ,lon;
+        Y-=500000;
+        double []  result  = new double[2];
+        double iPI = 0.0174532925199433;//pi/180
+        double a = 6378137.0; //长半轴 m
+        double b = 6356752.31414; //短半轴 m
+        double f = 1/298.257222101;//扁率 a-b/a
+        double e = 0.0818191910428; //第一偏心率 Math.sqrt(5)
+        double ee = Math.sqrt(a*a-b*b)/b; //第二偏心率
+        double bf = 0; //底点纬度
+        double a0 = 1+(3*e*e/4) + (45*e*e*e*e/64) + (175*e*e*e*e*e*e/256) + (11025*e*e*e*e*e*e*e*e/16384) + (43659*e*e*e*e*e*e*e*e*e*e/65536);
+        double b0 = X/(a*(1-e*e)*a0);
+        double c1 = 3*e*e/8 +3*e*e*e*e/16 + 213*e*e*e*e*e*e/2048 + 255*e*e*e*e*e*e*e*e/4096;
+        double c2 = 21*e*e*e*e/256 + 21*e*e*e*e*e*e/256 + 533*e*e*e*e*e*e*e*e/8192;
+        double c3 = 151*e*e*e*e*e*e*e*e/6144 + 151*e*e*e*e*e*e*e*e/4096;
+        double c4 = 1097*e*e*e*e*e*e*e*e/131072;
+        bf = b0 + c1*Math.sin(2*b0) + c2*Math.sin(4*b0) +c3*Math.sin(6*b0) + c4*Math.sin(8*b0); // bf =b0+c1*sin2b0 + c2*sin4b0 + c3*sin6b0 +c4*sin8b0 +...
+        double tf = Math.tan(bf);
+        double n2 = ee*ee*Math.cos(bf)*Math.cos(bf); //第二偏心率平方成bf余弦平方
+        double c = a*a/b;
+        double v=Math.sqrt(1+ ee*ee*Math.cos(bf)*Math.cos(bf));
+        double mf = c/(v*v*v); //子午圈半径
+        double nf = c/v;//卯酉圈半径
+ 
+        //纬度计算
+        lat=bf-(tf/(2*mf)*Y)*(Y/nf) * (1-1/12*(5+3*tf*tf+n2-9*n2*tf*tf)*(Y*Y/(nf*nf))+1/360*(61+90*tf*tf+45*tf*tf*tf*tf)*(Y*Y*Y*Y/(nf*nf*nf*nf)));
+        //经度偏差
+        lon=1/(nf*Math.cos(bf))*Y -(1/(6*nf*nf*nf*Math.cos(bf)))*(1+2*tf*tf +n2)*Y*Y*Y + (1/(120*nf*nf*nf*nf*nf*Math.cos(bf)))*(5+28*tf*tf+24*tf*tf*tf*tf)*Y*Y*Y*Y*Y;
+        result[0] =retain6(lat/iPI);
+        result[1] =retain6(L0+lon/iPI);
+       // System.out.println(result[1]+","+result[0]);
+        return result;
+	}
+	private static double retain6(double num) {
+        String result = String.format("%.6f", num);
+        return Double.valueOf(result);
+	}
+	/**
+	 * 2000坐标转百度坐标
+	 * @param coordinates
+	 * @return
+	 */
+	public static String getCoordinates(String coordinates) {
+		String [] coordinatesArr = coordinates.split(";");
+		String [] coordinateTemp = null;
+		double [] point84 = null;
+		double [] pointBD = null;
+		StringBuffer baiduCoordinates = new StringBuffer();
+		for(int i =0;i< coordinatesArr.length;i++) {
+			if (coordinatesArr[i].length()<1) {
+				continue;
+			}
+			coordinateTemp = coordinatesArr[i].split(",");
+			point84 = CoordinatesUtils.xytolatlon(Double.valueOf(coordinateTemp[1]),Double.valueOf(coordinateTemp[0]), 117);
+			pointBD = GPSUtil.gps84_To_bd09(point84[0],point84[1]);
+			baiduCoordinates.append(Double.toString(pointBD[1])).append(",").append(Double.toString(pointBD[0])).append(";");
+		}
+		return baiduCoordinates.substring(0, baiduCoordinates.length()-1).toString();
+	}
+	
+	public static void main(String [] args) {
+		
+		String coordinates = "479432.86,3986671.23;478504.94,3986781.42;478317.08,3989058.27;479057.98,3989021.57;"
+				+ "478447.97,3987704.09;479399.25,3986624.46;479222.95,3986628.14;478592.36,3986448.07;"
+				+ "477808.14,3988448.57;479252.04,3987859.87";
+		
+		System.out.println(CoordinatesUtils.getCoordinates(coordinates));
+		
+		
+		
+	}
+}

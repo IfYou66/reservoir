@@ -1,0 +1,464 @@
+<template>
+  <div class="app-container">
+    <dv-border-box8 style="height: 100px; padding: 30px">
+      <el-row>
+        <el-col :span="12" :offset="0">
+          <span class="demonstration">选择日期：</span>
+          <el-button type="primary" icon="el-icon-caret-left" style="width: 20px" @click="getPre"></el-button>
+          <el-date-picker
+            v-model="dateRange"
+            type="daterange"
+            align="right"
+            unlink-panels
+            range-separator="至"
+            start-placeholder="开始日期"
+            end-placeholder="结束日期"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            :picker-options="pickerOptions">
+          </el-date-picker>
+          <el-button type="primary" icon="el-icon-caret-right" style="width: 20px" @click="getNext"></el-button>
+        </el-col>
+        <el-col :span="6">
+          <label class="layui-form-label">断面选择:</label>
+          <el-select v-model="section" placeholder="请选择" @change="selectSection(section)">
+            <el-option
+              v-for="(item,i) in sections"
+              :key="item"
+              :label="item"
+              :value="i">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="6">
+          <el-button type="warning" round @click="queryData">数据查询</el-button>
+          <el-button type="primary" round @click="exportData">数据导出</el-button>
+        </el-col>
+      </el-row>
+    </dv-border-box8>
+    <dv-border-box8 style="height: 420px; padding: 20px">
+      <el-row>
+        <div class="layui-card-body" style="width:100%;height: 380px;">
+          <div id="div-line" style="width:95%;height: 100%;"></div>
+        </div>
+      </el-row>
+    </dv-border-box8>
+    <dv-border-box8 style="height: 320px; padding: 30px">
+      <el-row>
+        <el-col :span="24">
+          <!--<el-table
+            :header-cell-style="{background:'#a7d0f6',color:'#606266'}"
+            :data="data"
+            style="width: 100%"
+            :row-class-name="tableRowClassName">
+            <el-table-column v-for="item in ['date','水位'].concat(Object.keys(data.length?data[0]:'').
+                              sort().filter((a)=>a[0]==='T' || a[0] === 'J'))" v-bind:key="item"
+                             :prop="item" :label="item==='date'?'日期':item">
+            </el-table-column>
+          </el-table>
+          <el-pagination class="fy"
+                         layout="prev, pager, next"
+                         @current-change="change"
+                         :total="total"
+                         style="text-align: center"
+                         background
+          >
+          </el-pagination>-->
+          <el-col :span="24">
+            <dv-scroll-board :config="config" style="width:85%;height:260px; margin: 0 auto"/>
+          </el-col>
+        </el-col>
+      </el-row>
+    </dv-border-box8>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "realtime",
+    data() {
+      let sections = this.operator.getAttrArray(this.common.getData('damSeepage'), 'section').filter(function (item) {
+        return item.indexOf('TBD') < 0;
+      });
+
+      return {
+        sections: sections,
+        section: 0,
+        seepage: this.reservoir.getDam().getSeepageSafe(),
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        dateRange: [new Date(new Date().setTime(new Date().getTime() - 5 * 3600000 * 24)).format("yyyy-MM-dd"), new Date().format("yyyy-MM-dd")],
+        loading: '',
+        data: [],
+        pageSize: 10,
+        currentPage: 1,
+        total: 10,
+        sendCount: 0,
+        titles: [],
+        config: null,
+        lineChart: null,
+        lineOption: null,
+      }
+    },
+    methods: {
+      selectSection(section) {
+        this.section = section;
+        this.refreshData();
+      },
+      exportData() {
+        let titleExcel = ['日期'].concat(this.titles);
+        excel.convert(this.data, this.sections[this.section] + " " + this.currentTime, titleExcel);
+      },
+      queryData() {
+        this.refreshData();
+      },
+      tableRowClassName({row, rowIndex}) {
+        if (rowIndex % 2 === 1) {
+          return 'warning-row';
+        } else {
+          return 'success-row';
+        }
+      },
+      getPre() {
+        let start = new Date(this.dateRange[0]);
+        let end = new Date(this.dateRange[1]);
+        let span = end.getTime() - start.getTime() + 24 * 3600 * 1000;
+        start.setTime(start.getTime() - span);
+        end.setTime(end.getTime() - span);
+        this.dateRange[0] = start.format('yyyy-MM-dd');
+        this.dateRange[1] = end.format('yyyy-MM-dd');
+        this.$set(this, "dateRange", [start.format('yyyy-MM-dd'), end.format('yyyy-MM-dd')]);
+        this.refreshData();
+      },
+      getNext() {
+        let start = new Date(this.dateRange[0]);
+        let end = new Date(this.dateRange[1]);
+        let span = end.getTime() - start.getTime() + 24 * 3600 * 1000;
+        start.setTime(start.getTime() + span);
+        end.setTime(end.getTime() + span);
+        this.dateRange[0] = start.format('yyyy-MM-dd');
+        this.dateRange[1] = end.format('yyyy-MM-dd');
+        this.$set(this, "dateRange", [start.format('yyyy-MM-dd'), end.format('yyyy-MM-dd')]);
+        this.refreshData();
+      },
+      getSens() {
+        return this.operator.getSensors(this.operator.getSensors(this.common.loadSensors(),
+          'section', this.sections[this.section]), 'part', 'damSeepage');
+      },
+      getTitles() {
+        let sens = this.getSens();
+        let sensors = [];
+        let width = (100 / (2 + sens.length)) + '%';
+        sensors.push({field: 'date', title: '日期', width: width});
+        sensors.push({field: '水位', title: '水位(m)', width: width});
+        for (let i = 0; i < sens.length; i++) {
+          sensors.push({field: sens[i].name, title: sens[i].name + '(m)', width: width});
+        }
+        this.titles = sensors;
+        return sensors;
+      },
+      change: function (currentPage) {
+        this.currentPage = currentPage;
+      },
+      refreshData() {
+        this.initChart();
+        this.loading = this.openLoading();
+        let that = this;
+        setTimeout(function () {
+          that.sendRequest();
+        }, 100);
+      },
+      sendRequest() {
+        let sens = this.getSens();
+        this.data = [];
+        this.titles = [];
+        let waterLevelSen = this.operator.findArrayItemByAttrValue(this.common.loadSensors(), 'tag', 'water-level');
+        let that = this;
+        setTimeout(function () {
+          that.request.sendRecordRequest(waterLevelSen.url, that.common.SENSOR_RECORD_COMMOND, waterLevelSen.id, that.dateRange[0], that.dateRange[1], that.handle);
+          that.titles.push(waterLevelSen.name);
+        }, 1000);
+
+        for (let i = 0; i < sens.length; i++) {
+          setTimeout(function () {
+            that.request.sendRecordRequest(sens[i].url, that.common.SENSOR_RECORD_COMMOND, sens[i].id, that.dateRange[0], that.dateRange[1], that.handle);
+            that.titles.push(sens[i].name);
+          }, 1000);
+        }
+      },
+      handle(result) {
+        if (!result || result.length === 0) {
+          this.loading.close();
+          return;
+        }
+        let sensor = this.operator.findArrayItemByAttrValue(this.common.loadSensors(), 'id', result[0].SensorID);
+        if (!sensor) return;
+        this.sendCount++;
+        let obj = {};
+        if (result && result.length !== 0) {
+          for (let i = 0; i < result.length; i++) {
+            let value = this.common.correct(parseFloat(result[i].DataValue), sensor.bias);
+            if (value > sensor.low && value < sensor.high) {
+              let key = this.datetime.formatToDate(new Date(result[i].RevTime));
+              if (!obj[key]) {
+                obj[key] = {'value': 0, 'time': 0}
+              }
+              obj[key]['value'] += value;
+              obj[key]['time'] += 1;
+            }
+          }
+        }
+
+        for (let key in obj) {
+          let item = this.findItem(key, this.data);
+          let is_new = false;
+          if (!item) {
+            item = {date: key};
+            is_new = true;
+          }
+          if (!sensor.invalid || (sensor.invalid && sensor.value > sensor.min)) {
+            item[sensor.name] = (obj[key]['value'] / obj[key]['time']).toFixed(sensor.precision);
+          } else {
+            item[sensor.name] = '--';
+          }
+          if (is_new) this.data.push(item);
+        }
+
+        if (this.titles.length === this.sendCount) {
+          let arr = [];
+          this.data = this.data.sort(function (a, b) {
+            return new Date(a.date).getTime() - new Date(b.date).getTime();
+          });
+          for (let i = 0; i < this.data.length; i++) {
+            let item = [this.data[i]['date'], this.data[i]['水位']];
+            for (let j = 1; j < this.titles.length; j++) {
+              item.push(this.data[i][this.titles[j]]);
+            }
+            arr.push(item);
+          }
+          this.config = {
+            header: ['日期'].concat(this.titles),
+            data: arr,
+            columnWidth: [40,],
+            align: ['center'],
+            rowNum: 3,
+            index: true,
+            headerBGC: '#1981f6',
+            carousel: 'single',
+            headerHeight: 35,
+            oddRowBGC: 'rgba(0, 44, 81, 0.8)',
+            evenRowBGC: 'rgba(10, 29, 50, 0.8)'
+          };
+          for (let i = 0; i < this.titles.length; i++) {
+            let col = [];
+            for (let j = 0; j < this.data.length; j++) {
+              col.push([this.data[j]['date'], this.data[j][this.titles[i]]])
+            }
+            let sensor = this.operator.findArrayItemByAttrValue(this.common.loadSensors(), 'name', this.titles[i]);
+            if (sensor) {
+              this.addSeries(sensor, col, this.titles);
+            }
+          }
+          this.sendCount = 0;
+          this.loading.close();
+        }
+      },
+      addSeries(sensor, sensorsData, sensorsTitle) {
+        let series = {
+          name: sensor.name,
+          type: 'line',
+          symbol: "none",
+          itemStyle: {
+            normal: {
+              label: {
+                show: false,//显示圆点顶部的数字
+                position: 'top',
+                formatter: function (params) {
+                  return params.value;
+                },
+                rich: {
+                  color1: {
+                    color: '#f7ba0e'
+                  },
+                  color2: {
+                    color: '#42a1fe'
+                  }
+                },
+                textStyle: {
+                  color: '#333'
+                }
+              }
+            },
+          },
+          data: sensorsData
+        };
+
+
+        this.lineOption.xAxis.min = new Date((this.dateRange[0] + " 00:00:00").replace(/-/g, '/')).getTime() - 1000 * 60;
+        this.lineOption.xAxis.max = new Date((this.dateRange[1] + " 23:59:59").replace(/-/g, '/')).getTime() + 1000 * 60;
+        this.lineOption.yAxis.min = sensor.low - 10;
+        this.lineOption.series.push(series);
+        this.lineOption.legend.data = sensorsTitle;
+        this.lineChart.setOption(this.lineOption,true);
+      },
+      findItem(date, data) {
+        for (let item of data) {
+          if (item.date === date) {
+            return item;
+          }
+        }
+      },
+      initChart(lineName) {
+        this.lineChart = this.$echarts.init(document.getElementById('div-line'));
+        this.lineOption = {
+          color: ['rgba(99,140,153,0.88)', 'rgba(227,125,46,0.88)', 'rgba(15,224,16,0.88)', 'rgba(147,78,222,0.88)',
+            'rgba(71,208,233,0.88)', 'rgba(252,82,0,0.88)', 'rgba(114,193,187,0.88)', 'rgba(96,84,217,0.88)'],
+          legend: {
+            data: [],
+            right: '10%',
+            top: '0%',
+            itemWidth: 10,//图例的宽度
+            itemHeight: 10,//图例的高度
+            textStyle: {//图例文字的样式
+              color: '#8d44cc',
+              fontSize: 16
+            }
+          },
+
+          title: {
+            text: lineName,
+            textStyle: {//图例文字的样式
+              color: '#fff0cd',
+              fontSize: 16
+            }
+          },
+
+          dataZoom: [{
+            show: true,
+            realtime: true,
+            start: 0.01,
+            end: 100
+          }],
+
+          grid: {
+            left: '5%',
+            right: '4%',
+            bottom: '13%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'time',
+            axisLine: {
+              show: false,
+              onZero: false,
+              textStyle: {//图例文字的样式
+                color: '#fff0cd',
+                fontSize: 16
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              textStyle: {//图例文字的样式
+                color: '#fff0cd',
+                fontSize: 16
+              }
+            },
+            z: 10
+          },
+          yAxis: {
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              textStyle: {
+                color: '#e1e1e1'
+              }
+            }
+          },
+
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          series: []
+        };
+        this.lineChart.setOption(this.lineOption, true);
+      },
+    },
+    mounted() {
+      this.titles = this.getTitles();
+      this.initChart('');
+      this.refreshData();
+    }
+  }
+</script>
+
+<style scoped>
+  .app-container {
+    margin: 0;
+    padding: 30px;
+    background: url("../../../../assets/images/bg.png") repeat-y;
+    color: #dfe6ec;
+    height: 120vh;
+  }
+
+  ::v-deep table {
+    width: 100% !important;
+  }
+
+  ::v-deep.el-table .warning-row {
+    background: oldlace;
+  }
+
+  ::v-deep.el-table .success-row {
+    background: #f0f9eb;
+  }
+
+
+  ::v-deep .el-table__empty-block {
+    width: 100% !important;
+  }
+
+  ::v-deep td {
+    text-align: center !important;
+  }
+
+  ::v-deep .el-table th {
+    text-align: center !important;
+  }
+</style>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.RDispatchRulesMapper">
+    
+    <resultMap type="com.szsk.reservoir.run.domain.RDispatchRules" id="RDispatchRulesResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fRulesName"    column="f_rules_name"    />
+        <result property="fRulesOutline"    column="f_rules_outline"    />
+        <result property="fRulesTime"    column="f_rules_time"    />
+        <result property="fRulesFileId"    column="f_rules_file_id"    />
+        <result property="fCreatePeople"    column="f_create_people"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectRDispatchRulesVo">
+        select f_id, f_reservoir_info_id,f_rules_name, f_rules_outline, f_rules_time, f_rules_file_id, f_create_people, f_create_time from r_dispatch_rules
+    </sql>
+
+    <select id="selectRDispatchRulesList" parameterType="com.szsk.reservoir.run.domain.RDispatchRules" resultMap="RDispatchRulesResult">
+        <include refid="selectRDispatchRulesVo"/>
+        <where>  
+            <if test="fReservoirInfoId != null  "> and f_reservoir_info_id =  #{fReservoirInfoId}</if>
+            <if test="fRulesName != null  and fRulesName != ''"> and f_rules_name like concat('%', #{fRulesName}, '%')</if>
+            <if test="fRulesTime != null "> and f_rules_time = #{fRulesTime}</if>
+            <if test="fCreatePeople != null  and fCreatePeople != ''"> and f_create_people = #{fCreatePeople}</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and f_rules_time &gt;= #{params.beginTime}
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and f_rules_time &lt;= #{params.endTime}
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectRDispatchRulesById" parameterType="Long" resultMap="RDispatchRulesResult">
+        <include refid="selectRDispatchRulesVo"/>
+        where f_id = #{fId}
+    </select>
+        
+    <insert id="insertRDispatchRules" parameterType="com.szsk.reservoir.run.domain.RDispatchRules" useGeneratedKeys="true" keyProperty="fId">
+        insert into r_dispatch_rules
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fRulesName != null">f_rules_name,</if>
+            <if test="fRulesOutline != null">f_rules_outline,</if>
+            <if test="fRulesTime != null">f_rules_time,</if>
+            <if test="fRulesFileId != null">f_rules_file_id,</if>
+            <if test="fCreatePeople != null">f_create_people,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fRulesName != null">#{fRulesName},</if>
+            <if test="fRulesOutline != null">#{fRulesOutline},</if>
+            <if test="fRulesTime != null">#{fRulesTime},</if>
+            <if test="fRulesFileId != null">#{fRulesFileId},</if>
+            <if test="fCreatePeople != null">#{fCreatePeople},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRDispatchRules" parameterType="com.szsk.reservoir.run.domain.RDispatchRules">
+        update r_dispatch_rules
+        <trim prefix="SET" suffixOverrides=","> 
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fRulesName != null">f_rules_name = #{fRulesName},</if>
+            <if test="fRulesOutline != null">f_rules_outline = #{fRulesOutline},</if>
+            <if test="fRulesTime != null">f_rules_time = #{fRulesTime},</if>
+            <if test="fRulesFileId != null">f_rules_file_id = #{fRulesFileId},</if>
+            <if test="fCreatePeople != null">f_create_people = #{fCreatePeople},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteRDispatchRulesById" parameterType="Long">
+        delete from r_dispatch_rules where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteRDispatchRulesByIds" parameterType="String">
+        delete from r_dispatch_rules where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

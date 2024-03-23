@@ -1,0 +1,398 @@
+20:52:59.556 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068779418, Client-RequestToken=8a5a00b7ba16eb6ad86b12c06285868b, Timestamp=1630068779420, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:52:59.658 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068779418, Client-RequestToken=8a5a00b7ba16eb6ad86b12c06285868b, Timestamp=1630068779420, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:52:59.758 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068779418, Client-RequestToken=8a5a00b7ba16eb6ad86b12c06285868b, Timestamp=1630068779420, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:52:59.865 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068779764, Client-RequestToken=d9fad159f9afa5f6c8a8ee16e7d96a67, Timestamp=1630068779764, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:52:59.966 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068779764, Client-RequestToken=d9fad159f9afa5f6c8a8ee16e7d96a67, Timestamp=1630068779764, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:00.066 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068779764, Client-RequestToken=d9fad159f9afa5f6c8a8ee16e7d96a67, Timestamp=1630068779764, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:00.168 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068780066, Client-RequestToken=879f0edc3bdb50cc5e99dfe41ba42735, Timestamp=1630068780066, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:00.269 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068780066, Client-RequestToken=879f0edc3bdb50cc5e99dfe41ba42735, Timestamp=1630068780066, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:00.370 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068780066, Client-RequestToken=879f0edc3bdb50cc5e99dfe41ba42735, Timestamp=1630068780066, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:00.471 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068780370, Client-RequestToken=6342a9b690e7a91454358ea35abc68ca, Timestamp=1630068780370, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:00.572 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068780370, Client-RequestToken=6342a9b690e7a91454358ea35abc68ca, Timestamp=1630068780370, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:00.672 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068780370, Client-RequestToken=6342a9b690e7a91454358ea35abc68ca, Timestamp=1630068780370, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:11.364 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068791263, Client-RequestToken=2c4c793cdb59273095dde7b8ce72e8ff, Timestamp=1630068791263, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:11.366 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068791263, charset=UTF-8, Client-RequestToken=2c4c793cdb59273095dde7b8ce72e8ff, exConfigInfo=true, Timestamp=1630068791263}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:11.465 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068791263, Client-RequestToken=2c4c793cdb59273095dde7b8ce72e8ff, Timestamp=1630068791263, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:11.467 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068791263, charset=UTF-8, Client-RequestToken=2c4c793cdb59273095dde7b8ce72e8ff, exConfigInfo=true, Timestamp=1630068791263}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:11.566 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1630068791263, Client-RequestToken=2c4c793cdb59273095dde7b8ce72e8ff, Timestamp=1630068791263, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:11.697 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068791263, charset=UTF-8, Client-RequestToken=2c4c793cdb59273095dde7b8ce72e8ff, exConfigInfo=true, Timestamp=1630068791263}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:11.788 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.c.i.ClientWorker - [executeConfigListen,797] - Async listen config change error 
+com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:976)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:951)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.executeConfigListen(ClientWorker.java:757)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$3.run(ClientWorker.java:677)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+20:53:11.948 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=SubscribeServiceRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:12.048 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=SubscribeServiceRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:12.148 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=SubscribeServiceRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:12.148 [main] ERROR c.a.c.n.d.NacosWatch - [start,127] - namingService subscribe failed, properties:NacosDiscoveryProperties{serverAddr='127.0.0.1:8848', endpoint='', namespace='', watchDelay=30000, logName='', service='ruoyi-gateway', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='192.168.0.126', networkInterface='', port=-1, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null}
+com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.subscribe(NamingGrpcClientProxy.java:172)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.subscribe(NamingClientProxyDelegate.java:146)
+	at com.alibaba.nacos.client.naming.NacosNamingService.subscribe(NacosNamingService.java:387)
+	at com.alibaba.cloud.nacos.discovery.NacosWatch.start(NacosWatch.java:123)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:64)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:438)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1336)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1325)
+	at com.ruoyi.gateway.CFGatewatApplication.main(CFGatewatApplication.java:17)
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 19 common frames omitted
+20:53:12.410 [boundedElastic-1] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceListRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:12.415 [boundedElastic-2] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceListRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:12.511 [boundedElastic-1] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceListRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:12.516 [boundedElastic-2] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceListRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:12.612 [boundedElastic-1] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceListRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:12.612 [boundedElastic-1] ERROR c.a.c.n.d.r.NacosReactiveDiscoveryClient - [lambda$getServices$1,78] - get services from nacos server fail,
+com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.getServiceList(NamingGrpcClientProxy.java:161)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.getServiceList(NamingClientProxyDelegate.java:137)
+	at com.alibaba.nacos.client.naming.NacosNamingService.getServicesOfServer(NacosNamingService.java:434)
+	at com.alibaba.nacos.client.naming.NacosNamingService.getServicesOfServer(NacosNamingService.java:422)
+	at com.alibaba.cloud.nacos.discovery.NacosServiceDiscovery.getServices(NacosServiceDiscovery.java:69)
+	at com.alibaba.cloud.nacos.discovery.reactive.NacosReactiveDiscoveryClient.lambda$getServices$1(NacosReactiveDiscoveryClient.java:75)
+	at reactor.core.publisher.FluxDefer.subscribe(FluxDefer.java:46)
+	at reactor.core.publisher.FluxSubscribeOn$SubscribeOnSubscriber.run(FluxSubscribeOn.java:193)
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:84)
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 16 common frames omitted
+20:53:12.617 [boundedElastic-2] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceListRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:12.617 [boundedElastic-2] ERROR c.a.c.n.d.r.NacosReactiveDiscoveryClient - [lambda$getServices$1,78] - get services from nacos server fail,
+com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.getServiceList(NamingGrpcClientProxy.java:161)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.getServiceList(NamingClientProxyDelegate.java:137)
+	at com.alibaba.nacos.client.naming.NacosNamingService.getServicesOfServer(NacosNamingService.java:434)
+	at com.alibaba.nacos.client.naming.NacosNamingService.getServicesOfServer(NacosNamingService.java:422)
+	at com.alibaba.cloud.nacos.discovery.NacosServiceDiscovery.getServices(NacosServiceDiscovery.java:69)
+	at com.alibaba.cloud.nacos.discovery.reactive.NacosReactiveDiscoveryClient.lambda$getServices$1(NacosReactiveDiscoveryClient.java:75)
+	at reactor.core.publisher.FluxDefer.subscribe(FluxDefer.java:46)
+	at reactor.core.publisher.FluxSubscribeOn$SubscribeOnSubscriber.run(FluxSubscribeOn.java:193)
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:84)
+	at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 16 common frames omitted
+20:53:13.153 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:13.254 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:13.354 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:13.354 [main] ERROR c.a.c.n.r.NacosServiceRegistry - [register,79] - nacos registry, ruoyi-gateway register failed...NacosRegistration{nacosDiscoveryProperties=NacosDiscoveryProperties{serverAddr='127.0.0.1:8848', endpoint='', namespace='', watchDelay=30000, logName='', service='ruoyi-gateway', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='192.168.0.126', networkInterface='', port=8080, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null}},
+com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.registerService(NamingGrpcClientProxy.java:101)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.registerService(NamingClientProxyDelegate.java:95)
+	at com.alibaba.nacos.client.naming.NacosNamingService.registerInstance(NacosNamingService.java:139)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:74)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.register(AbstractAutoServiceRegistration.java:232)
+	at com.alibaba.cloud.nacos.registry.NacosAutoServiceRegistration.register(NacosAutoServiceRegistration.java:78)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.start(AbstractAutoServiceRegistration.java:133)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.bind(AbstractAutoServiceRegistration.java:98)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:86)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:47)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:421)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:378)
+	at org.springframework.boot.web.reactive.context.WebServerManager.start(WebServerManager.java:57)
+	at org.springframework.boot.web.reactive.context.WebServerStartStopLifecycle.start(WebServerStartStopLifecycle.java:40)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:64)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:438)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1336)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1325)
+	at com.ruoyi.gateway.CFGatewatApplication.main(CFGatewatApplication.java:17)
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 32 common frames omitted
+20:53:13.915 [grpc-nio-worker-ELG-1-13] ERROR c.a.n.s.i.g.i.ManagedChannelImpl - [uncaughtException,153] - [Channel<109>: (127.0.0.1:9848)] Uncaught exception in the SynchronizationContext. Panic!
+java.util.concurrent.RejectedExecutionException: Task com.alibaba.nacos.shaded.io.grpc.internal.DelayedClientTransport$5@468bb9fe rejected from java.util.concurrent.ThreadPoolExecutor@44ada4da[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 14]
+	at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2063)
+	at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:830)
+	at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1379)
+	at com.alibaba.nacos.shaded.io.grpc.internal.DelayedClientTransport.reprocess(DelayedClientTransport.java:297)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ManagedChannelImpl.updateSubchannelPicker(ManagedChannelImpl.java:802)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ManagedChannelImpl.access$4300(ManagedChannelImpl.java:106)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ManagedChannelImpl$LbHelperImpl$1UpdateBalancingState.run(ManagedChannelImpl.java:1115)
+	at com.alibaba.nacos.shaded.io.grpc.SynchronizationContext.drain(SynchronizationContext.java:95)
+	at com.alibaba.nacos.shaded.io.grpc.SynchronizationContext.execute(SynchronizationContext.java:127)
+	at com.alibaba.nacos.shaded.io.grpc.internal.InternalSubchannel$TransportListener.transportShutdown(InternalSubchannel.java:535)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.grpc.netty.ClientTransportLifecycleManager.notifyShutdown(ClientTransportLifecycleManager.java:53)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.grpc.netty.ClientTransportLifecycleManager.notifyTerminated(ClientTransportLifecycleManager.java:69)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.grpc.netty.NettyClientTransport$5.operationComplete(NettyClientTransport.java:287)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.grpc.netty.NettyClientTransport$5.operationComplete(NettyClientTransport.java:281)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:500)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:474)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:413)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:538)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:531)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.setFailure(DefaultPromise.java:103)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.DefaultChannelPromise.setFailure(DefaultChannelPromise.java:89)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.grpc.netty.WriteBufferingAndExceptionHandler.failWrites(WriteBufferingAndExceptionHandler.java:236)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.grpc.netty.WriteBufferingAndExceptionHandler.access$100(WriteBufferingAndExceptionHandler.java:43)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.grpc.netty.WriteBufferingAndExceptionHandler$1ConnectListener.operationComplete(WriteBufferingAndExceptionHandler.java:145)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.grpc.netty.WriteBufferingAndExceptionHandler$1ConnectListener.operationComplete(WriteBufferingAndExceptionHandler.java:141)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:500)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.notifyListeners0(DefaultPromise.java:493)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:472)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:413)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:538)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.setFailure0(DefaultPromise.java:531)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.DefaultPromise.tryFailure(DefaultPromise.java:111)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.fulfillConnectPromise(AbstractNioChannel.java:323)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:339)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:685)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:632)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:549)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:511)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:918)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.lang.Thread.run(Thread.java:748)
+20:53:15.729 [main] ERROR o.s.b.SpringApplication - [reportFailure,847] - Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is java.lang.reflect.UndeclaredThrowableException
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:64)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:438)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1336)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1325)
+	at com.ruoyi.gateway.CFGatewatApplication.main(CFGatewatApplication.java:17)
+Caused by: java.lang.reflect.UndeclaredThrowableException: null
+	at org.springframework.util.ReflectionUtils.rethrowRuntimeException(ReflectionUtils.java:147)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:83)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.register(AbstractAutoServiceRegistration.java:232)
+	at com.alibaba.cloud.nacos.registry.NacosAutoServiceRegistration.register(NacosAutoServiceRegistration.java:78)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.start(AbstractAutoServiceRegistration.java:133)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.bind(AbstractAutoServiceRegistration.java:98)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:86)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:47)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:421)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:378)
+	at org.springframework.boot.web.reactive.context.WebServerManager.start(WebServerManager.java:57)
+	at org.springframework.boot.web.reactive.context.WebServerStartStopLifecycle.start(WebServerStartStopLifecycle.java:40)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	... 14 common frames omitted
+Caused by: com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.registerService(NamingGrpcClientProxy.java:101)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.registerService(NamingClientProxyDelegate.java:95)
+	at com.alibaba.nacos.client.naming.NacosNamingService.registerInstance(NacosNamingService.java:139)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:74)
+	... 28 common frames omitted
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 32 common frames omitted
+20:53:15.913 [com.alibaba.nacos.client.remote.worker] ERROR c.a.n.c.r.client - [connectToServer,292] - [4b5a56b8-3935-4320-9c80-663897f04ce3]Fail to connect to server!,error={}
+java.util.concurrent.RejectedExecutionException: Task com.alibaba.nacos.shaded.io.grpc.internal.SerializingExecutor@660a8693 rejected from java.util.concurrent.ThreadPoolExecutor@44ada4da[Terminated, pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 14]
+	at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2063)
+	at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:830)
+	at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1379)
+	at com.alibaba.nacos.shaded.io.grpc.internal.SerializingExecutor.schedule(SerializingExecutor.java:93)
+	at com.alibaba.nacos.shaded.io.grpc.internal.SerializingExecutor.execute(SerializingExecutor.java:86)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl.closedInternal(ClientCallImpl.java:696)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl.closed(ClientCallImpl.java:646)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl.closed(ClientCallImpl.java:639)
+	at com.alibaba.nacos.shaded.io.grpc.internal.DelayedStream.cancel(DelayedStream.java:302)
+	at com.alibaba.nacos.shaded.io.grpc.internal.DelayedClientTransport$PendingStream.cancel(DelayedClientTransport.java:363)
+	at com.alibaba.nacos.shaded.io.grpc.internal.DelayedClientTransport.shutdownNow(DelayedClientTransport.java:241)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ManagedChannelImpl$UncommittedRetriableStreamsRegistry.onShutdownNow(ManagedChannelImpl.java:1021)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ManagedChannelImpl.shutdownNow(ManagedChannelImpl.java:752)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ManagedChannelImpl.shutdownNow(ManagedChannelImpl.java:105)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ForwardingManagedChannel.shutdownNow(ForwardingManagedChannel.java:52)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ManagedChannelOrphanWrapper.shutdownNow(ManagedChannelOrphanWrapper.java:66)
+	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.shuntDownChannel(GrpcClient.java:123)
+	at com.alibaba.nacos.common.remote.client.grpc.GrpcClient.connectToServer(GrpcClient.java:263)
+	at com.alibaba.nacos.common.remote.client.RpcClient.reconnect(RpcClient.java:501)
+	at com.alibaba.nacos.common.remote.client.RpcClient$3.run(RpcClient.java:337)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+20:53:16.940 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068796839, charset=UTF-8, Client-RequestToken=b115ee5e065cf2f5a040b25006d0fb27, exConfigInfo=true, Timestamp=1630068796839}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:17.040 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068796839, charset=UTF-8, Client-RequestToken=b115ee5e065cf2f5a040b25006d0fb27, exConfigInfo=true, Timestamp=1630068796839}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:17.140 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068796839, charset=UTF-8, Client-RequestToken=b115ee5e065cf2f5a040b25006d0fb27, exConfigInfo=true, Timestamp=1630068796839}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:17.140 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.c.i.ClientWorker - [executeConfigListen,797] - Async listen config change error 
+com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:976)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:951)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.executeConfigListen(ClientWorker.java:757)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$3.run(ClientWorker.java:677)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+20:53:22.292 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068802192, charset=UTF-8, Client-RequestToken=5f9b8352e31e171be73b6e44bb267037, exConfigInfo=true, Timestamp=1630068802192}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:22.393 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068802192, charset=UTF-8, Client-RequestToken=5f9b8352e31e171be73b6e44bb267037, exConfigInfo=true, Timestamp=1630068802192}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:22.494 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068802192, charset=UTF-8, Client-RequestToken=5f9b8352e31e171be73b6e44bb267037, exConfigInfo=true, Timestamp=1630068802192}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:22.494 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.c.i.ClientWorker - [executeConfigListen,797] - Async listen config change error 
+com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:976)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:951)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.executeConfigListen(ClientWorker.java:757)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$3.run(ClientWorker.java:677)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+20:53:27.646 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068807546, charset=UTF-8, Client-RequestToken=6f61d4c1228e8e34124f5466225f58bb, exConfigInfo=true, Timestamp=1630068807546}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:27.747 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068807546, charset=UTF-8, Client-RequestToken=6f61d4c1228e8e34124f5466225f58bb, exConfigInfo=true, Timestamp=1630068807546}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:27.848 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068807546, charset=UTF-8, Client-RequestToken=6f61d4c1228e8e34124f5466225f58bb, exConfigInfo=true, Timestamp=1630068807546}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:27.848 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.c.i.ClientWorker - [executeConfigListen,797] - Async listen config change error 
+com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:976)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:951)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.executeConfigListen(ClientWorker.java:757)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$3.run(ClientWorker.java:677)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+20:53:33.002 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068812900, charset=UTF-8, Client-RequestToken=496d0f8cc8ca0a3a6e715e8b1e985de3, exConfigInfo=true, Timestamp=1630068812900}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:33.103 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068812900, charset=UTF-8, Client-RequestToken=496d0f8cc8ca0a3a6e715e8b1e985de3, exConfigInfo=true, Timestamp=1630068812900}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:33.204 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068812900, charset=UTF-8, Client-RequestToken=496d0f8cc8ca0a3a6e715e8b1e985de3, exConfigInfo=true, Timestamp=1630068812900}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:33.204 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.c.i.ClientWorker - [executeConfigListen,797] - Async listen config change error 
+com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:976)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:951)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.executeConfigListen(ClientWorker.java:757)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$3.run(ClientWorker.java:677)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+20:53:38.356 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068818255, charset=UTF-8, Client-RequestToken=b7b63a71aa22164972942a7a5e3af484, exConfigInfo=true, Timestamp=1630068818255}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:38.457 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068818255, charset=UTF-8, Client-RequestToken=b7b63a71aa22164972942a7a5e3af484, exConfigInfo=true, Timestamp=1630068818255}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:38.557 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068818255, charset=UTF-8, Client-RequestToken=b7b63a71aa22164972942a7a5e3af484, exConfigInfo=true, Timestamp=1630068818255}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:38.557 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.c.i.ClientWorker - [executeConfigListen,797] - Async listen config change error 
+com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:976)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:951)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.executeConfigListen(ClientWorker.java:757)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$3.run(ClientWorker.java:677)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+20:53:43.710 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068823609, charset=UTF-8, Client-RequestToken=72e668b38ca9bc874b6b27a9edf655ab, exConfigInfo=true, Timestamp=1630068823609}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:43.810 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068823609, charset=UTF-8, Client-RequestToken=72e668b38ca9bc874b6b27a9edf655ab, exConfigInfo=true, Timestamp=1630068823609}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:43.911 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068823609, charset=UTF-8, Client-RequestToken=72e668b38ca9bc874b6b27a9edf655ab, exConfigInfo=true, Timestamp=1630068823609}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:43.911 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.c.i.ClientWorker - [executeConfigListen,797] - Async listen config change error 
+com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:976)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:951)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.executeConfigListen(ClientWorker.java:757)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$3.run(ClientWorker.java:677)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+20:53:49.064 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068828962, charset=UTF-8, Client-RequestToken=0ab9df7af75af7eef2dcb7a0b415be11, exConfigInfo=true, Timestamp=1630068828962}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+20:53:49.165 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068828962, charset=UTF-8, Client-RequestToken=0ab9df7af75af7eef2dcb7a0b415be11, exConfigInfo=true, Timestamp=1630068828962}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+20:53:49.266 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigBatchListenRequest{headers={Client-AppName=unknown, Client-RequestTS=1630068828962, charset=UTF-8, Client-RequestToken=0ab9df7af75af7eef2dcb7a0b415be11, exConfigInfo=true, Timestamp=1630068828962}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+20:53:49.266 [com.alibaba.nacos.client.Worker] ERROR c.a.n.c.c.i.ClientWorker - [executeConfigListen,797] - Async listen config change error 
+com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:976)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.requestProxy(ClientWorker.java:951)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient.executeConfigListen(ClientWorker.java:757)
+	at com.alibaba.nacos.client.config.impl.ClientWorker$ConfigRpcTransportClient$3.run(ClientWorker.java:677)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)

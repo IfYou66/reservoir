@@ -1,0 +1,794 @@
+/**
+ * 此文件用于创建各种数据对象，主要供数据文件调用
+ */
+const calculator = require('@/api/collection/calculator');
+const common = require('@/api/collection/common');
+const operator = require('@/api/collection/operator');
+const request = require('@/api/collection/request');
+const datetime = require('@/api/collection/datetime');
+const reservoir = require('@/api/collection/' + common.CURRENT_RESERVOIR + '/reservoir');
+const base = require('@/api/collection/' + common.CURRENT_RESERVOIR + '/base');
+/**
+ * 获取水库中的单元数据
+ */
+let units = reservoir.getUnits();
+
+/**
+ * 更新实时水位
+ */
+function setWaterLevel(id, waterLevel) {
+  for (let i = 0; i < units.length; i++) {
+    let sensor = units[i].waterLevelSensor;
+    if (sensor.id === id) {
+      sensor.value = waterLevel;
+    }
+  }
+}
+
+/**
+ * 发送各个单元实时水位请求
+ */
+function sendInfo(request) {
+  for (let i = 0; i < units.length; i++) {
+    let sensor = units[i].waterLevelSensor;
+    request.sendRequest(request.createUrl(sensor.command, sensor));
+  }
+}
+
+/**
+ * 使用模拟值更新每日降雨量数组
+ * @returns {[]}
+ */
+export function updateRandomDailyRains() {
+  // for (let i in data.getUnits()) {
+  //     let unit = data.getUnits()[i];
+  //     let dailyRains = [];
+  //     for (let j = data.getBaseInfo().daysBefore; j >= -data.getBaseInfo().daysAfter; j--) {
+  //         dailyRains.push(operator.createDailyRain(j, Math.random() * 48));
+  //     }
+  //     data.getUnits()[i].dailyRains = dailyRains;
+  // }
+  for (let i in units) {
+    let dailyRains = [];
+    dailyRains.push(operator.createDailyRain(15, 0.2));
+    dailyRains.push(operator.createDailyRain(14, 0));
+    dailyRains.push(operator.createDailyRain(13, 0));
+    dailyRains.push(operator.createDailyRain(12, 4.4));
+    dailyRains.push(operator.createDailyRain(11, 0));
+    dailyRains.push(operator.createDailyRain(10, 0));
+    dailyRains.push(operator.createDailyRain(9, 0));
+    dailyRains.push(operator.createDailyRain(8, 0));
+    dailyRains.push(operator.createDailyRain(7, 1.6));
+    dailyRains.push(operator.createDailyRain(6, 45.8));
+    dailyRains.push(operator.createDailyRain(5, 13.4));
+    dailyRains.push(operator.createDailyRain(4, 0));
+    dailyRains.push(operator.createDailyRain(3, 1.2));
+    dailyRains.push(operator.createDailyRain(2, 0.6));
+    dailyRains.push(operator.createDailyRain(1, 21.8));
+    dailyRains.push(operator.createDailyRain(0, 185.2));
+    dailyRains.push(operator.createDailyRain(-1, 85.2));
+    dailyRains.push(operator.createDailyRain(-2, 0));
+    dailyRains.push(operator.createDailyRain(-3, 0));
+    units[i].dailyRains = dailyRains;
+  }
+}
+
+
+/**
+ * 使用模拟值更新每日降雨量数组
+ * @returns {[]}
+ */
+export function updateRandomHourlyRains() {
+  // for (let i in data.getUnits()) {
+  //     let unit = data.getUnits()[i];
+  //     let hourlyRains = []
+  //     for (let j = 0; j < unit.hourlyRains.length; j++) {
+  //         hourlyRains.push(operator.createHourlyRain(j, Math.random() * 2));
+  //     }
+  //     unit.hourlyRains = hourlyRains;
+  // }
+  for (let i in units) {
+    let unit = units[i];
+    let hourlyRains = [];
+    hourlyRains.push(operator.createHourlyRain(0, 1.5));
+    hourlyRains.push(operator.createHourlyRain(1, 2.7));
+    hourlyRains.push(operator.createHourlyRain(2, 1.1));
+    hourlyRains.push(operator.createHourlyRain(3, 1.2));
+    hourlyRains.push(operator.createHourlyRain(4, 0.6));
+    hourlyRains.push(operator.createHourlyRain(5, 0.3));
+    hourlyRains.push(operator.createHourlyRain(6, 0.4));
+    hourlyRains.push(operator.createHourlyRain(7, 1.7));
+    hourlyRains.push(operator.createHourlyRain(8, 2.2));
+    hourlyRains.push(operator.createHourlyRain(9, 15.2));
+    hourlyRains.push(operator.createHourlyRain(10, 9.2));
+    hourlyRains.push(operator.createHourlyRain(11, 6.8));
+    hourlyRains.push(operator.createHourlyRain(12, 8.0));
+    hourlyRains.push(operator.createHourlyRain(13, 7.3));
+    hourlyRains.push(operator.createHourlyRain(14, 4.5));
+    hourlyRains.push(operator.createHourlyRain(15, 5.5));
+    hourlyRains.push(operator.createHourlyRain(16, 12.6));
+    hourlyRains.push(operator.createHourlyRain(17, 29.8));
+    hourlyRains.push(operator.createHourlyRain(18, 32.3));
+    hourlyRains.push(operator.createHourlyRain(19, 19.7));
+    hourlyRains.push(operator.createHourlyRain(20, 19.4));
+    hourlyRains.push(operator.createHourlyRain(21, 2.5));
+    hourlyRains.push(operator.createHourlyRain(22, 0.6));
+    hourlyRains.push(operator.createHourlyRain(23, 0));
+    for (let j = 24; j < 48; j++) {
+      hourlyRains.push(operator.createHourlyRain(j, j / 10));
+    }
+    for (let j = 48; j < 96; j++) {
+      hourlyRains.push(operator.createHourlyRain(j, 0));
+    }
+
+    unit.hourlyRains = hourlyRains;
+  }
+}
+
+/**
+ * 更新每日降雨量数组
+ * @returns {[]}
+ */
+export async function updateDailyRains() {
+  for (let i in units) {
+    let unit = units[i];
+    for (let j = 0; j < unit.dailyRains.length; j++) {
+      unit.dailyRains[j].rainFall = 0;
+    }
+    for (let j = base.getBaseInfo().daysBefore; j > 0; j--) {
+      let res = await request.requestHistoryRain(j, operator.findArrayItemByAttrValue(common.loadSensors(), 'name', '雨量'));
+      let rainArray = request.handleResult(res);
+      console.log(unit.name + j);
+      let rainFall = 0;
+      for (let k = 0; k < rainArray.length - 1; k++) {
+        let diff = rainArray[k + 1].DataValue - rainArray[k].DataValue;
+        if (diff > 0) {
+          rainFall += diff;
+        }
+      }
+      unit.dailyRains[base.getBaseInfo().daysBefore - j].rainFall = rainFall;
+    }
+  }
+}
+
+/**
+ * 更新逐小时降雨量数组
+ * @returns {[]}
+ */
+export async function updateHourlyRains() {
+  for (let i in units) {
+    let unit = units[i];
+    for (let j = 0; j < unit.hourlyRains.length; j++) {
+      unit.hourlyRains[j].rainFall = 0;
+    }
+
+    let data = await request.requestHistoryRain(common.DAY.TODAY, operator.findArrayItemByAttrValue(common.loadSensors(), 'name', '雨量'));
+    let rainArray = request.handleResult(data);
+    let allSum = 0;
+    let sum = 0;
+    for (let j = 0; j < rainArray.length - 1; j++) {
+      let time = rainArray[j].RevTime;
+      if (datetime.sameHour(rainArray[j].RevTime, rainArray[j + 1].RevTime)) {
+        let diff = rainArray[j + 1].DataValue - rainArray[j].DataValue;
+        if (diff > 0) {
+          sum += diff;
+        }
+      } else {
+        unit.hourlyRains[datetime.getHour(rainArray[j].RevTime)].rainFall = sum;
+        allSum += sum;
+        sum = 0;
+      }
+    }
+    unit.dailyRains[base.getBaseInfo().daysBefore].rainFall = allSum;
+
+
+    data = await request.requestForecastRain(unit.longitude, unit.latitude);
+    rainArray = data.hourly;
+    for (let j = 0; j < rainArray.length; j++) {
+      let index = datetime.transDateToIndex(rainArray[j].fxTime);
+      if (index < (24 * base.getBaseInfo().daysAfter + 1)) {
+        unit.hourlyRains[index].rainFall = parseFloat(rainArray[j].precip);
+        unit.dailyRains[base.getBaseInfo().daysBefore + parseInt(index / 24)].rainFall += parseFloat(rainArray[j].precip);
+      }
+    }
+  }
+}
+
+/**
+ * 计算前期影响雨量
+ */
+function computePas() {
+  for (let i in units) {
+    for (let j = 0; j <= base.getBaseInfo().daysAfter; j++) {
+      let dailyRains = units[i].dailyRains;
+      dailyRains[base.getBaseInfo().daysBefore + j].rfpDays = calculator.calculatePa(dailyRains,
+        j, base.getBaseInfo().maxHt);
+    }
+  }
+}
+
+/**
+ * 计算净雨
+ */
+function computePureRains() {
+  for (let i in units) {
+    for (let j = 0; j <= base.getBaseInfo().daysAfter; j++) {
+      let dailyRains = units[i].dailyRains;
+      dailyRains[base.getBaseInfo().daysBefore + j].rfpDay = reservoir.getRelations().getLineValue(
+        dailyRains[base.getBaseInfo().daysBefore + j].rfpDays +
+        dailyRains[base.getBaseInfo().daysBefore + j].rainFall, base.getBaseInfo().line);
+    }
+  }
+}
+
+/**
+ * 计算净雨分配
+ */
+function assignPureRains() {
+  for (let i in units) {
+    for (let j = 0; j <= base.getBaseInfo().daysAfter; j++) {
+      let dailyRains = units[i].dailyRains;
+
+      for (let k = j * 24; k < j * 24 + 24; k++) {
+        let rain = units[i].hourlyRains[k];
+        if (dailyRains[base.getBaseInfo().daysBefore + j].rainFall === 0) {
+          rain.rainPure = 0;
+        } else {
+          rain.rainPure = rain.rainFall / dailyRains[base.getBaseInfo().daysBefore + j].rainFall *
+            dailyRains[base.getBaseInfo().daysBefore + j].rfpDay;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * 计算降雨历时
+ */
+function computePureHours() {
+  for (let i in units) {
+    for (let j = 0; j <= base.getBaseInfo().daysAfter; j++) {
+      let dailyRains = units[i].dailyRains;
+      let pureHour = 0;
+      for (let k = j * 24; k < j * 24 + 24; k++) {
+        let rain = units[i].hourlyRains[k];
+        if (rain.rainFall > 0.08) {
+          pureHour++;
+        }
+      }
+      dailyRains[base.getBaseInfo().daysBefore + j].rfHours = pureHour;
+    }
+  }
+}
+
+/**
+ * 计算M1
+ */
+function computeM1s() {
+  for (let i in units) {
+    for (let j = 0; j <= base.getBaseInfo().daysAfter; j++) {
+      let dailyRain = units[i].dailyRains[base.getBaseInfo().daysBefore + j];
+      dailyRain.m1 = calculator.computeM1(base.getBaseInfo().k, units[i].area,
+        units[i].slope, dailyRain.rfpDay, dailyRain.rfHours);
+    }
+  }
+}
+
+/**
+ * 计算单位线
+ */
+function computeUnitLines() {
+  for (let i in units) {
+    for (let j = 0; j <= base.getBaseInfo().daysAfter; j++) {
+      let dailyRain = units[i].dailyRains[base.getBaseInfo().daysBefore + j];
+      let m1 = dailyRain.m1;
+      dailyRain.m2 = calculator.computeM2(m1);
+      for (let t = 0; t < 24; t++) {
+        let line = {};
+        let st = calculator.outputGamma(t / (m1 * dailyRain.m2), 1 / dailyRain.m2, 1);
+        let st1 = 0;
+        if (t > 0) {
+          st1 = calculator.outputGamma((t - 1) / (m1 * dailyRain.m2), 1 / dailyRain.m2, 1);
+        }
+        units[i].hourlyRains[j * 24 + t].unitLineValue = (st - st1) * 100 / 0.36 * units[i].area / 100 / 10;
+      }
+    }
+  }
+}
+
+function sumOneDay(i, start) {
+  for (let j = start; j < start + 24; j++) {
+    let sum = 0;
+    units[i].hourlyRains[j].floodValue = 0;
+    for (let k = start; k < start + 24; k++) {
+      if (j >= k) {
+        sum += units[i].hourlyRains[j - k].unitLineValue *
+          units[i].hourlyRains[k].rainPure;
+      }
+    }
+    units[i].hourlyRains[j].floodValue = sum;
+  }
+}
+
+/**
+ * 计算洪水线
+ */
+function computeFloodLines() {
+  for (let i in units) {
+    for (let j = 0; j < base.getBaseInfo().daysAfter + 1; j++) {
+      sumOneDay(i, 24 * j);
+    }
+  }
+  // data.getUnits()[0].hourlyRains[new Date().getHours()].floodValue = 0.3;
+  // data.getUnits()[0].hourlyRains[new Date().getHours()].waterLevel = 365;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 1].floodValue = 42;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 2].floodValue =72.6;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 3].floodValue = 78.4;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 4].floodValue = 79.2;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 5].floodValue = 89.7;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 6].floodValue = 72.5;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 7].floodValue = 55.8;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 8].floodValue = 33;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 9].floodValue = 15.6;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 10].floodValue = 10.9;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 11].floodValue = 18.1;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 12].floodValue = 28.9;
+  // data.getUnits()[0].hourlyRains[new Date().getHours() + 13].floodValue = 44.3;
+
+}
+
+/**
+ * 计算洪水线
+ */
+function computeDischargeLines() {
+  for (let i in units) {
+    computeFloodControl(units[i].name);
+  }
+}
+
+/**
+ * 汇总洪水线
+ */
+function sumFloodLines() {
+  for (let j = 0; j < 96; j++) {
+    let sum = 0;
+    units[0].hourlyRains[j].floodValue;
+
+  }
+}
+
+/**
+ * 调洪演算
+ * @param unitName 单元名称
+ * @returns {{}}
+ */
+function computeFloodControl(unitName) {
+  let unit = getUnit(unitName);
+  let waterLevel = unit.waterLevelSensor.value;
+  if (unitName) {
+    let unit = getUnit(unitName);
+    let date = new Date();
+    let hourlyRain = unit.hourlyRains[date.getHours()];
+    hourlyRain.waterLevel = waterLevel;
+    hourlyRain.capacity = computeCapacityByLevel(unitName, hourlyRain.waterLevel);
+    hourlyRain.discharge = 0;
+    for (let i = date.getHours() + 1; i < unit.hourlyRains.length; i++) {
+      computeDischarge(unitName, unit.hourlyRains[i - 1], unit.hourlyRains[i]);
+    }
+  }
+}
+
+/**
+ * 一次计算所有,得到洪水线
+ */
+export function computeFloodLinesForAll() {
+  computePas();  //计算当天Pa
+  computePureRains();  //计算当天净雨
+  assignPureRains();  //净雨分配
+  computePureHours(); //计算净雨历时数
+  computeM1s(); //计算M1
+  computeUnitLines(); //计算单位线
+  computeFloodLines(); //计算洪水过程线
+  computeDischargeLines(); //计算泄洪线
+  //sumFloodLines(); //汇总计算，将跃进和百丈崖叠加，落后区间一个小时，全部叠加
+}
+
+/**
+ * 一次计算所有，得到单位线，优化了前面的计算
+ */
+export function computeUnitLineForAll() {
+  for (let i in units) {
+    for (let j = 0; j <= base.getBaseInfo().daysAfter; j++) {
+      //计算当天Pa
+      let dailyRains = units[i].dailyRains;
+      let dailyRain = dailyRains[base.getBaseInfo().daysBefore + j];
+      dailyRain.rfpDays = calculator.calculatePa(dailyRains,
+        j, base.getBaseInfo().maxHt);
+
+      //计算净雨
+      dailyRain.rfpDay = reservoir.getRelations().getLineValue(
+        dailyRain.rfpDays +
+        dailyRain.rainFall, base.getBaseInfo().line);
+
+      //计算净雨分配
+      let pureHour = 0;
+      for (let k = j * 24; k < j * 24 + 24; k++) {
+        let rain = units[i].hourlyRains[k];
+        rain.rainPure = rain.rainFall / dailyRain.rainFall *
+          dailyRain.rfpDay;
+        if (rain.rainFall > 0.08) {
+          pureHour++;
+        }
+      }
+      dailyRains[base.getBaseInfo().daysBefore + j].rfHours = pureHour;
+
+      //计算m1和m2
+      dailyRain.m1 = calculator.computeM1(base.getBaseInfo().k, units[i].area,
+        units[i].slope, dailyRain.rfpDay, dailyRain.rfHours);
+      dailyRain.m2 = calculator.computeM2(dailyRain.m1);
+
+      //计算单位线
+      for (let t = 0; t < 24; t++) {
+        let line = {};
+        let st = calculator.outputGamma(t / (dailyRain.m1 * dailyRain.m2), 1 / dailyRain.m2, 1);
+        let st1 = 0;
+        if (t > 0) {
+          st1 = calculator.outputGamma((t - 1) / (dailyRain.m1 * dailyRain.m2), 1 / dailyRain.m2, 1);
+        }
+        units[i].hourlyRains[j * 24 + t].unitLineValue = (st - st1) * 100 / 0.36 * units[i].area / 100;
+      }
+    }
+
+    //开始计算洪水线
+    for (let j = 0; j < units[i].hourlyRains.length; j++) {
+      let sum = 0;
+      for (let k = 0; k < units[i].hourlyRains.length; k++) {
+        if (j >= k) {
+          sum += units[i].hourlyRains[j - k].unitLineValue *
+            units[i].hourlyRains[k].rainPure;
+        }
+      }
+      units[i].hourlyRains[j].floodValue = sum;
+    }
+
+    //开始计算调洪线
+    computeFloodControl(units[i]);
+  }
+}
+
+/**
+ * 获取一个流域单元信息
+ * @param unitName 单元名称
+ * @returns {*}
+ */
+export function getUnit(unitName) {
+  for (let i in units) {
+    if (units[i].name === unitName) {
+      return units[i];
+    }
+  }
+}
+
+/**
+ * 获取流域单元的近15天的日降雨
+ * @param unitName 单元名称
+ * @returns {{}}
+ */
+export function getDaysRainFall(unitName) {
+  let unit = getUnit(unitName);
+  let result = {};
+  for (let i = 0; i < unit.dailyRains.length; i++) {
+    result[datetime.getDateWithFormat(unit.dailyRains[i].dayDiff, 'MM-dd')] = unit.dailyRains[i].rainFall;
+  }
+  return result;
+}
+
+/**
+ * 获取流域单元的今天和后三天的小时降雨情况
+ * @param unitName 单元名称
+ * @param day 天
+ * @returns {{}}
+ */
+export function getHoursRainFall(unitName, day) {
+  let unit = getUnit(unitName);
+  day = day < 0 ? -day : day;   //明天是-1，这里要改为1
+  let result = {};
+  for (let i = day * 24; i < 24 + day * 24; i++) {
+    result[unit.hourlyRains[i].hour % 24 + ":00"] = unit.hourlyRains[i].rainFall;
+  }
+  return result;
+}
+
+/**
+ * 获取流域单元的洪水数据
+ * @param unitName 单元名称
+ * @returns {{}}
+ */
+export function getFloodLine(unitName) {
+  let result = {};
+  if (unitName) {
+    let unit = getUnit(unitName);
+    for (let i = 0; i < unit.hourlyRains.length; i++) {
+      let day = new Date();
+      day.setDate(day.getDate() + parseInt(i / 24 + ''));
+      day = day.format('MM-dd');
+      let hour = i % 24;
+      let item = {};
+      result[day + ' ' + hour + ":00"] = unit.hourlyRains[i].floodValue;
+    }
+    unit.flood = result;
+  } else {
+    let unitBaizhangya = getUnit('baizhangya');
+    let unitYuejin = getUnit('yuejin');
+    let unitQujian = getUnit('qujian');
+
+    for (let i = 0; i < unitBaizhangya.hourlyRains.length - 1; i++) {
+      let value = unitQujian.hourlyRains[i].floodValue + unitYuejin.hourlyRains[i + 1].floodValue
+        + unitBaizhangya.hourlyRains[i + 1].floodValue;
+      let day = new Date();
+      day.setDate(day.getDate() + parseInt(i / 24 + ''));
+      day = day.format('MM-dd');
+      let hour = i % 24;
+      result[day + ' ' + hour + ":00"] = value;
+    }
+    let day = new Date();
+    day.setDate(day.getDate() + parseInt((unitBaizhangya.hourlyRains.length - 1) / 24 + ''));
+    day = day.format('MM-dd');
+    result[day + ' ' + "23:00"] = unitQujian.hourlyRains[unitBaizhangya.hourlyRains.length - 1].floodValue;
+    reservoir.flood = result;
+  }
+
+  return result;
+}
+
+/**
+ * 根据选择获取流域单元的泄洪要素数据
+ * @param unitName 单元名称
+ * @param factor 显示内容
+ * @returns {{}}
+ */
+export function getDischargeLine(unitName, factor) {
+  let result = [];
+  if (unitName) {
+    let unit = getUnit(unitName);
+    let day = new Date();
+    for (let i = day.getHours(); i < unit.hourlyRains.length; i++) {
+      day.setDate(new Date().getDate() + parseInt(i / 24 + ''));
+      let date = day.format('yyyy-MM-dd');
+      let hour = i % 24;
+      if (factor === '库容线') {
+        result.push([new Date(date + ' ' + hour + ":00:00"), unit.hourlyRains[i].capacity]);
+      } else if (factor === '水位线') {
+        result.push([new Date(date + ' ' + hour + ":00:00"), unit.hourlyRains[i].waterLevel]);
+      } else if (factor === '泄量线') {
+        result.push([new Date(date + ' ' + hour + ":00:00"), unit.hourlyRains[i].discharge]);
+      }
+    }
+    return result;
+  }
+}
+
+/**
+ * 获取当前时间点
+ * @returns {{}}
+ */
+export function getCurrentPoint() {
+  let day = new Date();
+  return day.getHours();
+}
+
+/**
+ * 计算洪水总量（从今晚24：00开始）
+ * @returns 洪水总量
+ */
+export function computeFloodVolume() {
+  let sum = 0;
+  let valueArr = Object.values(reservoir.flood);
+  for (let i = 24; i < valueArr.length; i++) {
+    sum += valueArr[i];
+  }
+  return sum * base.getBaseInfo().forecast;
+}
+
+/**
+ * 计算泄洪总量（从今晚24：00开始）
+ * @returns number
+ *
+ */
+export function computeDischargeVolume(floodVolume, waterLevel, unitName) {
+  let sum = 0;
+  //开始查表（插值法）
+  let dischargeVolume = floodVolume - (base.getBaseInfo().storageCapacity - computeCapacityByLevel(unitName, waterLevel));
+  return dischargeVolume < 0 ? 0 : dischargeVolume;
+}
+
+/**
+ * 根据水位获取库容(插值法)
+ * @returns {*}
+ */
+export function computeCapacityByLevel(unitName, waterLevel) {
+  //找最近小于它的一个值
+  let unit = getUnit(unitName);
+  let arr = unit.dischargeRelations;
+  let i = 0;
+
+  //查找位置，假定值是按从小到大顺序排列的
+  for (; i < arr.length; i++) {
+    if (arr[i].level > waterLevel) {
+      break;
+    }
+  }
+
+  if (i === 0) { //低于最低值按最低值计
+    return arr[0].capacity;
+  } else if (i === arr.length) {   //超过最高值按最高值计算
+    return arr[i - 1].capacity;
+  } else {   //正常情况
+    return (waterLevel - arr[i - 1].level) / (arr[i].level - arr[i - 1].level) *
+      (arr[i].capacity - arr[i - 1].capacity) + arr[i - 1].capacity;
+  }
+}
+
+/**
+ * 根据泄量获取库容(插值法)
+ * @returns {*}
+ */
+export function computeCapacityByDischarge(unitName, discharge, waterLevel) {
+  if (discharge <= 0 && waterLevel) {
+    return computeCapacityByLevel(unitName, waterLevel);
+  }
+  //找最近小于它的一个值
+  let unit = getUnit(unitName);
+  let arr = unit.dischargeRelations;
+  let i = 0;
+  for (; i < arr.length; i++) {
+    if (arr[i].discharge > discharge) {
+      break;
+    }
+  }
+  if (i === 0) { //低于最低值最低值计
+    return arr[0].capacity;
+  } else if (i === arr.length) {   //超过最高值按最高值计算
+    return arr[i - 1].capacity;
+  } else {   //正常情况
+    return (discharge - arr[i - 1].discharge) / (arr[i].discharge - arr[i - 1].discharge) *
+      (arr[i].capacity - arr[i - 1].capacity) + arr[i - 1].capacity;
+  }
+}
+
+/**
+ * 根据库容获取水位(插值法)
+ * @returns {*}
+ */
+export function computeWaterLevel(unitName, capacity) {
+  //找最近小于它的一个值
+  let unit = getUnit(unitName);
+  let arr = unit.dischargeRelations;
+  let i = 0;
+  for (; i < arr.length; i++) {
+    if (arr[i].capacity > capacity) {
+      break;
+    }
+  }
+  if (i === 0) { //低于最低值最低值计
+    return arr[0].level;
+  } else if (i === arr.length) {   //超过最高值按最高值计算
+    return arr[i - 1].level;
+  } else {   //正常情况
+    return (capacity - arr[i - 1].capacity) / (arr[i].level - arr[i - 1].capacity) *
+      (arr[i].level - arr[i - 1].level) + arr[i - 1].level;
+  }
+}
+
+/**
+ * 获取泄洪库容
+ * @returns {*}
+ */
+export function getMaxCapacity(unitName) {
+  let unit = getUnit(unitName);
+  let arr = unit.dischargeRelations;
+  let i = 0;
+  for (; i < arr.length; i++) {
+    if (arr[i].discharge === 0 && arr[i + 1].discharge > 0) {
+      return arr[i].capacity;
+    }
+  }
+}
+
+/**
+ * 计算泄洪数据
+ * @param unitName 单元名称
+ * @param preHourlyRain 前一时段降雨
+ * @param hourlyRain 当前时段降雨
+ */
+export function computeDischarge(unitName, preHourlyRain, hourlyRain) {
+  hourlyRain.capacity = preHourlyRain.capacity +
+    (preHourlyRain.floodValue + hourlyRain.floodValue) / 2 * 0.36;
+  hourlyRain.waterLevel = computeWaterLevel(unitName, hourlyRain.capacity);
+  hourlyRain.discharge = 0;
+  if (hourlyRain.capacity > getMaxCapacity(unitName)) {
+    //需要泄洪
+    let c = preHourlyRain.capacity / 0.36 + (hourlyRain.floodValue + preHourlyRain.floodValue) / 2
+      - preHourlyRain.discharge / 2;
+    let x = preHourlyRain.capacity / 0.36 + preHourlyRain.discharge / 2;
+    let l = Math.abs(c - x);
+    hourlyRain.discharge = preHourlyRain.discharge;
+    while (Math.abs(c - x) > 0.001) {
+      if (c - x > 0) {
+        hourlyRain.discharge = hourlyRain.discharge + l;
+      } else {
+        hourlyRain.discharge = hourlyRain.discharge - l;
+      }
+      hourlyRain.capacity = computeCapacityByDischarge(unitName, hourlyRain.discharge, hourlyRain.waterLevel);
+      x = hourlyRain.capacity / 0.36 + hourlyRain.discharge / 2;
+      l = Math.abs(c - x) / 3;
+    }
+    hourlyRain.waterLevel = computeWaterLevel(unitName, hourlyRain.capacity);
+  }
+}
+
+/**
+ * 洪峰发生时间
+ * @returns {*}
+ */
+export function computePeakTime() {
+  let valueArr = Object.values(reservoir.flood);
+  let max = valueArr[24];
+  let index = 24;
+  for (let i = 24; i < valueArr.length; i++) {
+    if (valueArr[i] > max) {
+      max = valueArr[i];
+      index = i;
+    }
+  }
+  return Object.keys(reservoir.flood)[index];
+}
+
+/**
+ * 将多个数据根据时间合并，并输出
+ * @param unitName 单元名称
+ * @param lines 曲线数组
+ */
+export function combineLinesData(unitName, lines) {
+  let unit = getUnit(unitName);
+  let result = [];
+  let day = new Date();
+  let hour = day.getHours();
+  for (let i = hour; i < unit.hourlyRains.length; i++) {
+    let item = [datetime.convertHourToTime(unit.hourlyRains[i].hour).format('yyyy-MM-dd hh时')];
+    if (lines.includes('水位线')) item.push(unit.hourlyRains[i].waterLevel.toFixed(2));
+    if (lines.includes('泄量线')) item.push(unit.hourlyRains[i].discharge.toFixed(2));
+    if (lines.includes('库容线')) item.push(unit.hourlyRains[i].capacity.toFixed(2));
+    result.push(item);
+  }
+  return result;
+}
+
+/**
+ * 获取最大泄量对应的项
+ * @param unitName 单元名称
+ */
+export function getMaxItem(unitName) {
+  let unit = getUnit(unitName);
+  let hour = new Date().getHours();
+  for (let i = hour; i < unit.hourlyRains.length - 1; i++) {
+    if (unit.hourlyRains[i].floodValue > unit.hourlyRains[i].discharge &&
+      unit.hourlyRains[i + 1].floodValue < unit.hourlyRains[i + 1].discharge) {
+      if (unit.hourlyRains[i].discharge >= unit.hourlyRains[i + 1].discharge) {
+        return unit.hourlyRains[i];
+      } else {
+        return unit.hourlyRains[i + 1];
+      }
+    }
+  }
+}
+
+/**
+ * 是否超过下游河道标准
+ * @returns {*}
+ */
+export function passStandard(dischargeVolume) {
+  return base.getBaseInfo().downstreamStandard < dischargeVolume;
+}
+
+

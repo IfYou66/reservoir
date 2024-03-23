@@ -1,0 +1,195 @@
+<template>
+  <div class="el-fluid">
+    <div class="el-card">
+      <div class="el-card__body">
+        <div class="el-row" style="background-color:#80c8f7;">
+          <div class="el-col-md-12">
+            <div class="el-card__body time-info">
+              最新监测数据时间：<span id="newest-time">--</span>
+            </div>
+          </div>
+          <div class="el-col-md-12 el-col-lg-offset1">
+            <div class="el-card__body voltage-info">
+              <img class="el-icon-circle-plus" src="../../../../assets/images/common/voltage.jpg" alt=""/>
+              <span id="voltage">电压: 12.2v</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="el-card">
+      <div class="el-card__body section" v-for="item in items">
+        <div class="el-collapse">
+          <div class="el-collapse-item">
+            <h2 class="el-collapse-item__header">{{item.section}}</h2>
+            <div class="el-collapse-item__content" :id="item.section">
+              <div class="row" :gutter="20" style="background-color: #f2f2f2;" v-for="(sen,i) in item.sensors"
+                   v-if="i%2===0">
+                <el-row :gutter="20">
+                  <div class="title" :id="sen.text" style="background-color: #F2F2F2;" v-if='operator.exists(sen,item.sensors,`text`,sen.text)'>
+                                {{sen.text}}</div>
+                  <el-col :span="12" class="cell">
+                    <div class="el-card">
+                      <div class="el-card__body">
+                        <img :src="require(`../../../assets/images/common/${sen.image}.gif`)" alt="">
+                        <span class="info"
+                              :id="sen.tag">{{sen.name + ':' + operator.generateValueStr(sen) + sen.unit}}</span>
+                      </div>
+                    </div>
+                  </el-col>
+                  <el-col :span="12" class="cell" v-if='item.sensors[i+1]'>
+                    <div class="el-card">
+                      <div class="el-card__body">
+                        <img :src="require(`../../../assets/images/common/${item.sensors[i+1].image}.gif`)" alt="">
+                        <span class="info" :id="item.sensors[i+1].tag">{{item.sensors[i+1].name + ':' + operator.generateValueStr(item.sensors[i+1]) + item.sensors[i+1].unit}}</span>
+                      </div>
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  const operator = require('../../../../api/data/operator');
+  const common = require('../../../../api/data/common');
+  const reservoir = require('../../../../api/data/heihushan/reservoir');
+
+  export default {
+    name: "realtime",
+    data() {
+      let sensors = common.getData('data');
+      let sensorSections = [];
+      for (let i = 0; i < sensors.length; i++) {
+        if (!sensors[i].section) continue;
+        let arr = sensors[i].section.split('-');
+        let section = sensors[i].section;
+        if (arr.length === 2) {
+          section = arr[1];
+        }
+        if (!this.findSection(section, sensorSections)) {
+          let obj = {};
+          let sectionSensors = [];
+          for (let i = 0; i < sensors.length; i++) {
+            if (sensors[i].section.includes(section)) {
+              sectionSensors.push(sensors[i]);
+            }
+          }
+          obj.section = section;
+          obj.sensors = sectionSensors;
+          sensorSections.push(obj);
+        }
+      }
+
+      return {
+        items: sensorSections,
+        operator: operator,
+        common: common
+      };
+    },
+
+    methods: {
+      findSection(section, sensorSections) {
+        for (let item of sensorSections) {
+          if (item.section === section) {
+            return true;
+          }
+        }
+        return false;
+      }
+    },
+    created() {
+
+    },
+    updated() {
+
+    },
+    beforeMount() {
+    },
+
+    mounted() {
+
+    }
+  }
+</script>
+
+<style scoped>
+  img {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+  }
+
+  /*.el-collapse   .el-card__body {*/
+  /*   background-color: #b3d9d9;*/
+  /* }*/
+
+  /*::v-deep .el-collapse > div:nth-child(even) > div > div:nth-child(even) .el-card__body{*/
+  /*  background-color: #b2d9bc;*/
+  /*}*/
+
+  /*::v-deep .el-collapse-item__content > div:nth-child(odd) > div > div {*/
+  /*  background-color: #b2d9bc;*/
+  /*}*/
+
+  ::v-deep .el-collapse-item__content > div:nth-child(even) > div > div > div {
+    background-color: #c0d9d4;
+  }
+
+  ::v-deep .el-collapse-item__content > div:nth-child(odd) > div > div > div {
+    background-color: #b2d9bc;
+  }
+
+
+  .info {
+    font-family: 黑体, serif;
+    font-size: 18pt;
+    color: #000000;
+    vertical-align: top;
+    height: 24px;
+  }
+
+  .el-elem-field legend {
+    font-size: 18pt;
+  }
+
+  .time-info {
+    font-size: 1.4rem;
+    padding-top: 10px;
+  }
+
+  .voltage-info {
+    font-size: 1.4rem;
+    padding-top: 10px;
+    right: 20px;
+  }
+
+  .el-collapse {
+    background-color: #b3c2db;
+    margin-top: 10px;
+  }
+
+  .el-collapse-item__header {
+    background-color: #7ba9db;
+    font-size: 22pt;
+  }
+
+  .txt-small {
+    display: block;
+    text-align: left;
+    padding-left: 5%;
+    font-size: 12pt;
+  }
+
+  .title {
+    font-family: "Microsoft YaHei", 楷体, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu, serif;
+    font-size: 17px;
+    color: #0c64eb;
+  }
+</style>

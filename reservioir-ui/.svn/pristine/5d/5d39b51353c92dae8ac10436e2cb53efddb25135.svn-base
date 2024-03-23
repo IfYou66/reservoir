@@ -1,0 +1,358 @@
+<template>
+  <div class="app-container">
+    <el-form :model="queryParams" ref="queryForm" v-show="showSearch" :inline="true">
+      <el-form-item label="档案编号" prop="archivesNumber">
+        <el-input
+          v-model="queryParams.archivesNumber"
+          placeholder="请输入档案编号"
+          clearable
+          size="small"
+          style="width: 240px"
+        />
+      </el-form-item>
+
+      <el-form-item label="档案名称" prop="fArchivesName">
+        <el-input
+          v-model="queryParams.fArchivesName"
+          placeholder="请输入档案名称"
+          clearable
+          size="small"
+          style="width: 240px"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+
+      <el-form-item label="审核状态">
+        <el-select
+          v-model="queryParams.fState"
+          placeholder="状态"
+          clearable
+          size="small"
+          style="width: 240px"
+        >
+          <el-option v-for="(item,index) in approvalStatus" :key="index" :label="item.label" :value="item.value"></el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <!-- <el-button type="primary" icon="el-icon-s-check" size="mini" @click="reviewDetails">审核</el-button> -->
+      </el-form-item>
+    </el-form>
+
+
+    <template>
+      <el-row :gutter="20">
+        <el-col :span="24" :xs="24">
+          <el-table
+        border
+        ref="multipleTable"
+        :data="tableData"
+        tooltip-effect="dark"
+        style="width: 100%"
+        @selection-change="handleSelectionChange">
+        <el-table-column prop="archivesNum" align="center" label="档案编号" width="150"/>
+
+        <el-table-column prop="fArchivesName" align="center" label="档案名称" width="150"/>
+        <el-table-column prop="fStoreroomName" align="center" label="库房" width="150"/>
+        <!-- <el-table-column prop="shelfNumber" align="center" label="书架号" width="100"/> -->
+        <el-table-column prop="fBorrower" align="center" label="借阅人" width="100"/>
+        <el-table-column prop="fBorrowerTime" align="center" label="申请借阅时间" width="200"/>
+        <el-table-column prop="fReturnTime" align="center" label="归还时间" width="200"/>
+        <el-table-column prop="fState" align="center" label="状态" width="120">
+          <template slot-scope="scope">
+            <span v-if="scope.row.fState == 0">待审核</span>
+            <span v-if="scope.row.fState == 1">借阅中</span>
+            <span v-if="scope.row.fState == 2">已归还</span>
+            <span v-if="scope.row.fState == 3">已拒绝</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="fAuditOpinion" align="center" label="审核意见" width="200"/>
+        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+          <template slot-scope="scope">
+
+            <el-button size="mini" type="text" @click="seeDetails">详情</el-button>
+
+            <!-- 当状态为<待审核>时 显示此按钮 -->
+            <el-button size="mini" type="text" @click="audit(scope.row)" v-if="scope.row.fState == '0'">审核</el-button>
+
+            <!-- 当状态为<借阅中>时 显示此按钮 -->
+            <el-button size="mini" type="text" @click="borrowFile(scope.row.fBorrowId)" v-if="scope.row.fState == '1'">归还</el-button>
+            <span v-if="scope.row.status=='已归还'" style="margin-left: 15px">
+              <el-button size="mini" type="text" @click="handleUpdate">归还</el-button>
+            </span>
+
+          </template>
+        </el-table-column>
+
+          </el-table>
+        </el-col>
+        <el-col :span="24" :xs="24">
+          <pagination
+            v-show="total>0"
+            :total="total"
+            :page.sync="queryParams.pageNum"
+            :limit.sync="queryParams.pageSize"
+            @pagination="getList"
+          />
+        </el-col>
+      </el-row>
+    </template>
+
+
+
+    <el-dialog
+      title="借阅审核"
+      :visible.sync="check"
+      width="40%">
+      <el-form ref="form" :model="formAudit" label-width="120px" :inline="true" class="demo-form-inline">
+        <el-form-item label="档案名称">
+          <el-input v-model="formAudit.fArchivesName" style="width: 220px"></el-input>
+        </el-form-item>
+        <el-form-item label="借阅人">
+          <el-input v-model="formAudit.fBorrower" style="width: 220px"></el-input>
+        </el-form-item>
+        <el-form-item label="借阅时间">
+          <el-input v-model="formAudit.fBorrowerTime" style="width: 220px"></el-input>
+        </el-form-item>
+        <el-form-item label="审核状态">
+          <el-select v-model="formAudit.fAuditStatus" placeholder="审核" clearable  style="width: 220px">
+
+             <el-option v-for="(item,index) in auditStatus" :key="index" :label="item.label" :value="item.value"></el-option>
+
+           </el-select>
+        </el-form-item>
+
+        <el-form-item label="审核意见">
+          <el-input type="textarea"  maxlength="500" show-word-limit :rows="5" v-model="formAudit.fAuditOpinion" style="width: 550px"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="check = false">取 消</el-button>
+    <el-button type="primary" @click="auditSubmit">确 定</el-button>
+      </span>
+    </el-dialog>
+
+
+    <el-dialog
+      title="详情"
+      :visible.sync="dialogBox"
+      width="55%"
+      :before-close="handleClose">
+      <img src="../../assets/u10346.png">
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogBox = false">取 消</el-button>
+    <el-button type="primary" @click="dialogBox = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <el-dialog
+      title="归还"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <el-form ref="form" :model="form" label-width="120px">
+
+        <el-form-item label="库房">
+          <el-select v-model="form.region" placeholder="请选择">
+            <el-option label="库房一" value="1"></el-option>
+            <el-option label="库房二" value="2"></el-option>
+            <el-option label="库房三" value="2"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="书架号">
+          <el-input v-model="form.name" style="width: 95%"></el-input>
+        </el-form-item>
+      </el-form>
+
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
+  </div>
+</template>
+
+<script>
+import {queryBorrow, updateBorrow} from "@/api/classifyManage/borrow"
+export default {
+  components: {},
+  data() {
+    return {
+
+      form: {},
+
+      check: false,
+
+      dialogVisible: false,
+
+      dialogBox: false,
+
+      // 遮罩层
+      loading: false,
+      // 显示搜索条件
+      showSearch: true,
+      // 总条数
+      total: 0,
+
+      tableData: [],
+      multipleSelection: [],
+
+
+      //审核弹窗 正在被审核的数据
+      formAudit:'',
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        archivesNumber:'',
+        fArchivesName: '',
+        fState: ''
+      },
+      //状态数组
+      approvalStatus: [
+        {label:'待审核',value:0},
+        {label:'借阅中',value:1},
+        {label:'已归还',value:2},
+        {label:'已拒绝',value:3},
+      ],
+      //审核数组
+      auditStatus: [
+        {label:'不同意', value:0,},
+        {label:'同意',   value:1,},
+      ]
+    };
+  },
+  created() {
+    this.getList()
+  },
+  methods: {
+
+    //查询列表数据
+    getList() {
+      this.loading = true
+      queryBorrow(this.queryParams).then(res => {
+        this.tableData = res.rows
+        this.total = res.total
+        console.log("列表数据",res)
+        this.loading = false
+      })
+    },
+    //归还按钮
+    borrowFile(val) {
+	    var now = new Date();
+	    var year = now.getFullYear(); //得到年份
+	    var month = now.getMonth(); //得到月份
+	    var date = now.getDate(); //得到日期
+      var hour= now.getHours();
+      var minute=now.getMinutes();
+      var second=now.getSeconds();
+      var time = year + '-' + month + '-' + date + " " + hour + ":" + minute + ":" + second
+      updateBorrow({
+        fBorrowId:val,
+        fState:2,
+        fReturnTime:time
+      }).then(res => {
+        //重新查询 表格列表数据
+        this.getList()
+        console.log("--  档案归还了  --")
+      })
+    },
+    //审核按钮
+    audit(val) {
+      //存放审核数据
+      this.formAudit = val
+      //打开审核弹窗
+      this.check = true
+    },
+    //审核弹窗 确定按钮
+    auditSubmit() {
+      if(this.formAudit.fAuditStatus == 1) {
+        updateBorrow({
+          fBorrowId:this.formAudit.fBorrowId,
+          fState:1,
+          fAuditStatus:1,
+          fAuditOpinion:this.formAudit.fAuditOpinion
+        }).then(res => {
+          //置空表单
+          this.formAudit = ''
+          //重新查询 表格列表数据
+          this.getList()
+          console.log("--  审核通过了  --",res)
+          //提交成功 弹窗关闭
+          this.check = false
+        })
+
+      }
+      if(this.formAudit.fAuditStatus == 0) {
+        updateBorrow({
+          fBorrowId:this.formAudit.fBorrowId,
+          fState:3,
+          fAuditStatus:0,
+          fAuditOpinion:this.formAudit.fAuditOpinion
+        }).then(res => {
+          //置空表单
+          this.formAudit = ''
+          //重新查询 表格列表数据
+          this.getList()
+          console.log("--  审核没通过  --")
+          //提交成功 弹窗关闭
+          this.check = false
+        })
+      }
+    },
+
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+    },
+
+    seeDetails() {
+      this.dialogBox = true
+    },
+
+    handleUpdate() {
+      this.dialogVisible = true
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {
+        });
+    },
+
+    /** 搜索按钮操作 */
+    handleQuery() {
+      console.log('查询条件   ===',this.queryParams)
+      this.queryParams.pageNum = 1;
+      this.getList();
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.dateRange = [];
+      this.resetForm("queryForm");
+      this.handleQuery();
+    }
+
+  }
+};
+</script>
+<style lang="scss">
+.color409 {
+  color: #409eff;
+  cursor: pointer;
+}
+</style>

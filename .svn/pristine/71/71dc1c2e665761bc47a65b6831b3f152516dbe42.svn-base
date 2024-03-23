@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.REventRecordMapper">
+    
+    <resultMap type="com.szsk.reservoir.run.domain.REventRecord" id="REventRecordResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fSecuimpId"    column="f_secuimp_id"    />
+        <result property="fEventName"    column="f_event_name"    />
+        <result property="fEventLevel"    column="f_event_level"    />
+        <result property="fEventContent"    column="f_event_content"    />
+        <result property="fEventTime"    column="f_event_time"    />
+        <result property="fEditPersion"    column="f_edit_persion"    />
+        <result property="fPhoto"    column="f_photo"    />
+        <result property="fHandleContent"    column="f_handle_content"    />
+        <result property="fHandleTime"    column="f_handle_time"    />
+        <result property="fHandlePersion"    column="f_handle_persion"    />
+        <result property="fStatus"    column="f_status"    />
+    </resultMap>
+
+    <sql id="selectREventRecordVo">
+        select f_id, f_secuimp_id, f_event_name, f_event_level, f_event_content, f_event_time, f_edit_persion, f_photo, f_handle_content, f_handle_time, f_handle_persion, f_status from r_event_record
+    </sql>
+
+    <select id="selectREventRecordList" parameterType="com.szsk.reservoir.run.domain.REventRecord" resultMap="REventRecordResult">
+        <include refid="selectREventRecordVo"/>
+        <where>  
+            <if test="fSecuimpId != null  and fSecuimpId != ''"> and f_secuimp_id = #{fSecuimpId}</if>
+            <if test="fEventName != null  and fEventName != ''"> and f_event_name like concat('%', #{fEventName}, '%')</if>
+            <if test="fEventLevel != null "> and f_event_level = #{fEventLevel}</if>
+            <if test="fEventContent != null  and fEventContent != ''"> and f_event_content = #{fEventContent}</if>
+            <if test="fEventTime != null "> and f_event_time = #{fEventTime}</if>
+            <if test="fEditPersion != null  and fEditPersion != ''"> and f_edit_persion = #{fEditPersion}</if>
+            <if test="fPhoto != null "> and f_photo = #{fPhoto}</if>
+            <if test="fHandleContent != null  and fHandleContent != ''"> and f_handle_content = #{fHandleContent}</if>
+            <if test="fHandleTime != null "> and f_handle_time = #{fHandleTime}</if>
+            <if test="fHandlePersion != null  and fHandlePersion != ''"> and f_handle_persion = #{fHandlePersion}</if>
+            <if test="fStatus != null "> and f_status = #{fStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectREventRecordById" parameterType="Long" resultMap="REventRecordResult">
+        <include refid="selectREventRecordVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <sql id="selectREventRecordVos">
+        select r.f_id, r.f_secuimp_id, r.f_event_name, r.f_event_level, r.f_event_content, r.f_event_time, r.f_edit_persion, r.f_photo, r.f_handle_content, r.f_handle_time, r.f_handle_persion, r.f_status, s.f_file_path as imageUrl1 from r_event_record r
+    </sql>
+    <select id="getListBySecuimpId" resultType="com.szsk.reservoir.run.domain.REventRecord" resultMap="REventRecordResult">
+        <include refid="selectREventRecordVos"/>
+        left outer join sys_file s on r.f_photo = s.f_id
+        where f_secuimp_id = #{fSecuimpId}
+    </select>
+
+    <insert id="insertREventRecord" parameterType="com.szsk.reservoir.run.domain.REventRecord" useGeneratedKeys="true" keyProperty="fId">
+        insert into r_event_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fSecuimpId != null">f_secuimp_id,</if>
+            <if test="fEventName != null">f_event_name,</if>
+            <if test="fEventLevel != null">f_event_level,</if>
+            <if test="fEventContent != null">f_event_content,</if>
+            <if test="fEventTime != null">f_event_time,</if>
+            <if test="fEditPersion != null">f_edit_persion,</if>
+            <if test="fPhoto != null">f_photo,</if>
+            <if test="fHandleContent != null">f_handle_content,</if>
+            <if test="fHandleTime != null">f_handle_time,</if>
+            <if test="fHandlePersion != null">f_handle_persion,</if>
+            <if test="fStatus != null">f_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fSecuimpId != null">#{fSecuimpId},</if>
+            <if test="fEventName != null">#{fEventName},</if>
+            <if test="fEventLevel != null">#{fEventLevel},</if>
+            <if test="fEventContent != null">#{fEventContent},</if>
+            <if test="fEventTime != null">#{fEventTime},</if>
+            <if test="fEditPersion != null">#{fEditPersion},</if>
+            <if test="fPhoto != null">#{fPhoto},</if>
+            <if test="fHandleContent != null">#{fHandleContent},</if>
+            <if test="fHandleTime != null">#{fHandleTime},</if>
+            <if test="fHandlePersion != null">#{fHandlePersion},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateREventRecord" parameterType="com.szsk.reservoir.run.domain.REventRecord">
+        update r_event_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fSecuimpId != null">f_secuimp_id = #{fSecuimpId},</if>
+            <if test="fEventName != null">f_event_name = #{fEventName},</if>
+            <if test="fEventLevel != null">f_event_level = #{fEventLevel},</if>
+            <if test="fEventContent != null">f_event_content = #{fEventContent},</if>
+            <if test="fEventTime != null">f_event_time = #{fEventTime},</if>
+            <if test="fEditPersion != null">f_edit_persion = #{fEditPersion},</if>
+            <if test="fPhoto != null">f_photo = #{fPhoto},</if>
+            <if test="fHandleContent != null">f_handle_content = #{fHandleContent},</if>
+            <if test="fHandleTime != null">f_handle_time = #{fHandleTime},</if>
+            <if test="fHandlePersion != null">f_handle_persion = #{fHandlePersion},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteREventRecordById" parameterType="Long">
+        delete from r_event_record where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteREventRecordByIds" parameterType="String">
+        delete from r_event_record where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

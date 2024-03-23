@@ -1,0 +1,32 @@
+<template>
+  <div class="app-container">
+    <dv-border-box12 style="padding:20px; height: 630px;">
+      <img style="width: 100%; height: 100%;" src="../../../assets/images/data/agriculture.png" alt="">
+    </dv-border-box12>
+  </div>
+</template>
+
+<script>
+  import error from '@/views/error/403'
+
+  export default {
+    components: {error},
+    name: "realtime",
+    data() {
+      return {}
+    },
+    mounted() {
+    }
+  }
+
+
+</script>
+
+<style scoped>
+  .app-container {
+    margin: 0;
+    background: url("../../../assets/images/bg.png") repeat-y;
+    color: #dfe6ec;
+    height: 100vh;
+  }
+</style>

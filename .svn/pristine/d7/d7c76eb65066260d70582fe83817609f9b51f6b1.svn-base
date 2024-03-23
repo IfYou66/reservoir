@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.RProReportMapper">
+
+    <resultMap type="com.szsk.reservoir.run.domain.RProReport" id="RProReportResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fPerName"    column="f_per_name"    />
+        <result property="fBudget"    column="f_budget"    />
+        <result property="fProContent"    column="f_pro_content"    />
+        <result property="fProId"    column="f_pro_id"    />
+        <result property="fPreparedBy"    column="f_prepared_by"    />
+        <result property="fPreparationTime"    column="f_preparation_time"    />
+        <result property="fAuditComments"    column="f_audit_comments"    />
+        <result property="fAuditResult"    column="f_audit_result"    />
+        <result property="fAuditPeople"    column="f_audit_people"    />
+        <result property="fAuditDate"    column="f_audit_date"    />
+        <result property="fDesignContent"    column="f_design_content"    />
+        <result property="fDesignId"    column="f_design_id"    />
+        <result property="fDesignUnit"    column="f_design_unit"    />
+        <result property="fDesignTime"    column="f_design_time"    />
+        <result property="fTenderContent"    column="f_tender_content"    />
+        <result property="fTenderId"    column="f_tender_id"    />
+        <result property="fTenderPersion"    column="f_tender_persion"    />
+        <result property="fTenderTime"    column="f_tender_time"    />
+        <result property="fProimplContent"    column="f_proimpl_content"    />
+        <result property="fProimplId"    column="f_proimpl_id"    />
+        <result property="fProimplPersion"    column="f_proimpl_persion"    />
+        <result property="fProimplTime"    column="f_proimpl_time"    />
+        <result property="fAcceptanceContent"    column="f_acceptance_content"    />
+        <result property="fAcceptanceList"    column="f_acceptance_list"    />
+        <result property="fAcceptanceId"    column="f_acceptance_id"    />
+        <result property="fAcceptancePersion"    column="f_acceptance_persion"    />
+        <result property="fAcceptanceTime"    column="f_acceptance_time"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fCreatePeople"    column="f_create_people"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fActId"    column="f_act_id"    />
+        <result property="fActPersion"    column="f_act_persion"    />
+        <result property="fActStatus"    column="f_act_status"    />
+        <result property="fActNode"    column="f_act_node"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectRProReportVo">
+        select f_id,f_reservoir_info_id, f_per_name, f_budget, f_pro_content, f_pro_id, f_prepared_by, f_preparation_time, f_audit_comments, f_audit_result, f_audit_people, f_audit_date, f_design_content, f_design_id, f_design_unit, f_design_time, f_tender_content, f_tender_id, f_tender_persion, f_tender_time, f_proimpl_content, f_proimpl_id, f_proimpl_persion, f_proimpl_time, f_acceptance_content, f_acceptance_list, f_acceptance_id, f_acceptance_persion, f_acceptance_time, f_status, f_create_people, f_create_time, f_act_id, f_act_persion, f_act_status, f_act_node from r_pro_report
+    </sql>
+
+    <select id="selectRProReportList" parameterType="com.szsk.reservoir.run.domain.RProReport" resultMap="RProReportResult">
+        <include refid="selectRProReportVo"/>
+        <where>
+            <if test="fPerName != null  and fPerName != ''"> and f_per_name like concat('%', #{fPerName}, '%')</if>
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fBudget != null "> and f_budget = #{fBudget}</if>
+            <if test="fProContent != null  and fProContent != ''"> and f_pro_content = #{fProContent}</if>
+            <if test="fProId != null "> and f_pro_id = #{fProId}</if>
+            <if test="fPreparedBy != null  and fPreparedBy != ''"> and f_prepared_by = #{fPreparedBy}</if>
+            <if test="fPreparationTime != null  and fPreparationTime != ''"> and f_preparation_time = #{fPreparationTime}</if>
+            <if test="fAuditComments != null  and fAuditComments != ''"> and f_audit_comments = #{fAuditComments}</if>
+            <if test="fAuditResult != null "> and f_audit_result = #{fAuditResult}</if>
+            <if test="fAuditPeople != null  and fAuditPeople != ''"> and f_audit_people = #{fAuditPeople}</if>
+            <if test="fAuditDate != null "> and f_audit_date = #{fAuditDate}</if>
+            <if test="fDesignContent != null  and fDesignContent != ''"> and f_design_content = #{fDesignContent}</if>
+            <if test="fDesignId != null "> and f_design_id = #{fDesignId}</if>
+            <if test="fDesignUnit != null  and fDesignUnit != ''"> and f_design_unit = #{fDesignUnit}</if>
+            <if test="fDesignTime != null "> and f_design_time = #{fDesignTime}</if>
+            <if test="fTenderContent != null  and fTenderContent != ''"> and f_tender_content = #{fTenderContent}</if>
+            <if test="fTenderId != null "> and f_tender_id = #{fTenderId}</if>
+            <if test="fTenderPersion != null  and fTenderPersion != ''"> and f_tender_persion = #{fTenderPersion}</if>
+            <if test="fTenderTime != null "> and f_tender_time = #{fTenderTime}</if>
+            <if test="fProimplContent != null  and fProimplContent != ''"> and f_proimpl_content = #{fProimplContent}</if>
+            <if test="fProimplId != null "> and f_proimpl_id = #{fProimplId}</if>
+            <if test="fProimplPersion != null  and fProimplPersion != ''"> and f_proimpl_persion = #{fProimplPersion}</if>
+            <if test="fProimplTime != null "> and f_proimpl_time = #{fProimplTime}</if>
+            <if test="fAcceptanceContent != null  and fAcceptanceContent != ''"> and f_acceptance_content = #{fAcceptanceContent}</if>
+            <if test="fAcceptanceList != null  and fAcceptanceList != ''"> and f_acceptance_list = #{fAcceptanceList}</if>
+            <if test="fAcceptanceId != null "> and f_acceptance_id = #{fAcceptanceId}</if>
+            <if test="fAcceptancePersion != null  and fAcceptancePersion != ''"> and f_acceptance_persion = #{fAcceptancePersion}</if>
+            <if test="fAcceptanceTime != null "> and f_acceptance_time = #{fAcceptanceTime}</if>
+            <if test="fStatus != null "> and f_status = #{fStatus}</if>
+            <if test="fCreatePeople != null  and fCreatePeople != ''"> and f_create_people = #{fCreatePeople}</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+            <if test="fActId != null "> and f_act_id = #{fActId}</if>
+            <if test="fActPersion != null "> and f_act_persion = #{fActPersion}</if>
+            <if test="fActStatus != null "> and f_act_status = #{fActStatus}</if>
+            <if test="fActNode != null  and fActNode != ''"> and f_act_node = #{fActNode}</if>
+        </where>
+        order by f_id desc
+    </select>
+
+    <select id="selectRProReportById" parameterType="Long" resultMap="RProReportResult">
+        <include refid="selectRProReportVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <insert id="insertRProReport" parameterType="com.szsk.reservoir.run.domain.RProReport" useGeneratedKeys="true" keyProperty="fId">
+        insert into r_pro_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fPerName != null">f_per_name,</if>
+            <if test="fBudget != null">f_budget,</if>
+            <if test="fProContent != null">f_pro_content,</if>
+            <if test="fProId != null">f_pro_id,</if>
+            <if test="fPreparedBy != null">f_prepared_by,</if>
+            <if test="fPreparationTime != null">f_preparation_time,</if>
+            <if test="fAuditComments != null">f_audit_comments,</if>
+            <if test="fAuditResult != null">f_audit_result,</if>
+            <if test="fAuditPeople != null">f_audit_people,</if>
+            <if test="fAuditDate != null">f_audit_date,</if>
+            <if test="fDesignContent != null">f_design_content,</if>
+            <if test="fDesignId != null">f_design_id,</if>
+            <if test="fDesignUnit != null">f_design_unit,</if>
+            <if test="fDesignTime != null">f_design_time,</if>
+            <if test="fTenderContent != null">f_tender_content,</if>
+            <if test="fTenderId != null">f_tender_id,</if>
+            <if test="fTenderPersion != null">f_tender_persion,</if>
+            <if test="fTenderTime != null">f_tender_time,</if>
+            <if test="fProimplContent != null">f_proimpl_content,</if>
+            <if test="fProimplId != null">f_proimpl_id,</if>
+            <if test="fProimplPersion != null">f_proimpl_persion,</if>
+            <if test="fProimplTime != null">f_proimpl_time,</if>
+            <if test="fAcceptanceContent != null">f_acceptance_content,</if>
+            <if test="fAcceptanceList != null">f_acceptance_list,</if>
+            <if test="fAcceptanceId != null">f_acceptance_id,</if>
+            <if test="fAcceptancePersion != null">f_acceptance_persion,</if>
+            <if test="fAcceptanceTime != null">f_acceptance_time,</if>
+            <if test="fStatus != null">f_status,</if>
+            <if test="fCreatePeople != null">f_create_people,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+            <if test="fActId != null">f_act_id,</if>
+            <if test="fActPersion != null">f_act_persion,</if>
+            <if test="fActStatus != null">f_act_status,</if>
+            <if test="fActNode != null">f_act_node,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fPerName != null">#{fPerName},</if>
+            <if test="fBudget != null">#{fBudget},</if>
+            <if test="fProContent != null">#{fProContent},</if>
+            <if test="fProId != null">#{fProId},</if>
+            <if test="fPreparedBy != null">#{fPreparedBy},</if>
+            <if test="fPreparationTime != null">#{fPreparationTime},</if>
+            <if test="fAuditComments != null">#{fAuditComments},</if>
+            <if test="fAuditResult != null">#{fAuditResult},</if>
+            <if test="fAuditPeople != null">#{fAuditPeople},</if>
+            <if test="fAuditDate != null">#{fAuditDate},</if>
+            <if test="fDesignContent != null">#{fDesignContent},</if>
+            <if test="fDesignId != null">#{fDesignId},</if>
+            <if test="fDesignUnit != null">#{fDesignUnit},</if>
+            <if test="fDesignTime != null">#{fDesignTime},</if>
+            <if test="fTenderContent != null">#{fTenderContent},</if>
+            <if test="fTenderId != null">#{fTenderId},</if>
+            <if test="fTenderPersion != null">#{fTenderPersion},</if>
+            <if test="fTenderTime != null">#{fTenderTime},</if>
+            <if test="fProimplContent != null">#{fProimplContent},</if>
+            <if test="fProimplId != null">#{fProimplId},</if>
+            <if test="fProimplPersion != null">#{fProimplPersion},</if>
+            <if test="fProimplTime != null">#{fProimplTime},</if>
+            <if test="fAcceptanceContent != null">#{fAcceptanceContent},</if>
+            <if test="fAcceptanceList != null">#{fAcceptanceList},</if>
+            <if test="fAcceptanceId != null">#{fAcceptanceId},</if>
+            <if test="fAcceptancePersion != null">#{fAcceptancePersion},</if>
+            <if test="fAcceptanceTime != null">#{fAcceptanceTime},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+            <if test="fCreatePeople != null">#{fCreatePeople},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+            <if test="fActId != null">#{fActId},</if>
+            <if test="fActPersion != null">#{fActPersion},</if>
+            <if test="fActStatus != null">#{fActStatus},</if>
+            <if test="fActNode != null">#{fActNode},</if>
+        </trim>
+    </insert>
+
+    <update id="updateRProReport" parameterType="com.szsk.reservoir.run.domain.RProReport">
+        update r_pro_report
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fPerName != null">f_per_name = #{fPerName},</if>
+            <if test="fBudget != null">f_budget = #{fBudget},</if>
+            <if test="fProContent != null">f_pro_content = #{fProContent},</if>
+            <if test="fProId != null">f_pro_id = #{fProId},</if>
+            <if test="fPreparedBy != null">f_prepared_by = #{fPreparedBy},</if>
+            <if test="fPreparationTime != null">f_preparation_time = #{fPreparationTime},</if>
+            <if test="fAuditComments != null">f_audit_comments = #{fAuditComments},</if>
+            <if test="fAuditResult != null">f_audit_result = #{fAuditResult},</if>
+            <if test="fAuditPeople != null">f_audit_people = #{fAuditPeople},</if>
+            <if test="fAuditDate != null">f_audit_date = #{fAuditDate},</if>
+            <if test="fDesignContent != null">f_design_content = #{fDesignContent},</if>
+            <if test="fDesignId != null">f_design_id = #{fDesignId},</if>
+            <if test="fDesignUnit != null">f_design_unit = #{fDesignUnit},</if>
+            <if test="fDesignTime != null">f_design_time = #{fDesignTime},</if>
+            <if test="fTenderContent != null">f_tender_content = #{fTenderContent},</if>
+            <if test="fTenderId != null">f_tender_id = #{fTenderId},</if>
+            <if test="fTenderPersion != null">f_tender_persion = #{fTenderPersion},</if>
+            <if test="fTenderTime != null">f_tender_time = #{fTenderTime},</if>
+            <if test="fProimplContent != null">f_proimpl_content = #{fProimplContent},</if>
+            <if test="fProimplId != null">f_proimpl_id = #{fProimplId},</if>
+            <if test="fProimplPersion != null">f_proimpl_persion = #{fProimplPersion},</if>
+            <if test="fProimplTime != null">f_proimpl_time = #{fProimplTime},</if>
+            <if test="fAcceptanceContent != null">f_acceptance_content = #{fAcceptanceContent},</if>
+            <if test="fAcceptanceList != null">f_acceptance_list = #{fAcceptanceList},</if>
+            <if test="fAcceptanceId != null">f_acceptance_id = #{fAcceptanceId},</if>
+            <if test="fAcceptancePersion != null">f_acceptance_persion = #{fAcceptancePersion},</if>
+            <if test="fAcceptanceTime != null">f_acceptance_time = #{fAcceptanceTime},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+            <if test="fCreatePeople != null">f_create_people = #{fCreatePeople},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+            <if test="fActId != null">f_act_id = #{fActId},</if>
+            <if test="fActPersion != null">f_act_persion = #{fActPersion},</if>
+            <if test="fActStatus != null">f_act_status = #{fActStatus},</if>
+            <if test="fActNode != null">f_act_node = #{fActNode},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteRProReportById" parameterType="Long">
+        delete from r_pro_report where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteRProReportByIds" parameterType="String">
+        delete from r_pro_report where f_id in
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+
+</mapper>

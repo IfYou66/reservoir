@@ -1,0 +1,14 @@
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\domain\GenTable.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\util\VelocityInitializer.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\service\IGenTableService.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\util\GenUtils.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\CFGenApplication.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\controller\GenController.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\mapper\GenTableColumnMapper.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\service\GenTableColumnServiceImpl.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\service\GenTableServiceImpl.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\service\IGenTableColumnService.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\mapper\GenTableMapper.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\domain\GenTableColumn.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\config\GenConfig.java
+D:\cangfeng-server\cf-modules\cf-gen\src\main\java\com\ruoyi\gen\util\VelocityUtils.java

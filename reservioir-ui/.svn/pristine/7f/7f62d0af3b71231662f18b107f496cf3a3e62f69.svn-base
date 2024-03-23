@@ -1,0 +1,769 @@
+<template>
+  <div class="app-container">
+
+    <!-- 子组件 -->
+
+
+    <!-- 子组件 -->
+    <div class="from-div">
+
+      <!-- 头部 按钮 -->
+      <el-row>
+        <el-col :span="24" class="from-div-title" style="background-color: rgba(215, 215, 215, 1); text-align: right;">
+          <div style="margin-right: 15px">
+            <!-- 第一次创建 提交按钮 -->
+            <el-button type="primary" size="small" @click="temporaryStorage" v-if="status = 0">暂 存</el-button>
+            <!-- 第一次创建 提交按钮 -->
+            <el-button type="primary" size="small" @click="submitemergency" v-if="status = 0">提 交</el-button>
+
+
+          </div>
+        </el-col>
+      </el-row>
+
+      <!-- 表 标题 -->
+      <el-row>
+        <el-col :span="24" class="from-div-title">
+          水库预案编制审批表
+        </el-col>
+      </el-row>
+
+      <!-- 提交填写  -->
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col-left"> 预案名称 </el-col>
+        <el-col :span="4" class="from-border-right">
+          <el-input v-model="emergencyPass.fPlanName" placeholder="请输入内容"
+                    :disabled="emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 5 ? false : true"></el-input>
+        </el-col>
+
+        <el-col :span="2" class="from-col-left"> 预案编号 </el-col>
+        <el-col :span="2" class="from-border-right">
+          <el-input v-model="emergencyPass.fPlanNumber" placeholder="请输入内容"
+                    :disabled="emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 5 ? false : true"></el-input>
+        </el-col>
+
+        <el-col :span="2" class="from-col-left" > 预案分类 </el-col>
+        <el-col :span="2" class="from-border-right" >
+          <div>
+            <el-select v-model="emergencyPass.fPlanType" placeholder="请选择" :disabled="emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 7 ? false : true">
+              <el-option v-for="item in approvalPlanType" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+          </div>
+        </el-col>
+
+        <el-col :span="3" class="from-col-left"> 发布时间 </el-col>
+        <el-col :span="6" style="text-align: center ;line-height: 40px;">
+          <el-date-picker v-model="emergencyPass.fPublishStartDate" type="date" value-format="yyyy-MM-dd"
+                          style="width: 44%;" placeholder="开始时间"
+                          :disabled="emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 5 ? false : true"> </el-date-picker>
+          ~
+          <el-date-picker v-model="emergencyPass.fPublishEndDate" type="date" value-format="yyyy-MM-dd"
+                          style="width: 44%;" placeholder="结束时间"
+                          :disabled="emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 5 ? false : true"> </el-date-picker>
+        </el-col>
+      </el-row>
+
+      <!-- 提交填写  -->
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-borderibht"> 预案概述 </el-col>
+        <el-col :span="21" style="height: 400px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;"> 预案概述： </div>
+          <el-input maxlength="500" show-word-limit  type="textarea" :rows="8" placeholder="请输入内容" v-model="emergencyPass.fPlanSummary"
+                    :disabled="emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 5 ? false : true">
+          </el-input>
+
+          <div style="display:flex;justify-content:space-between;margin-top: 100px;">
+            <div style="width: 200px;margin-left: 20px;">
+              <el-upload style="margin-left: 15px;margin-top: 0px" class="upload-demo" :headers="GLOBAL.headers()"
+               :before-upload = "beforeAvatarUpload"
+                         :action="GLOBAL.httpUrl" :on-preview="handlePreview"
+                         multiple :on-success="uploadedSuccess" :show-file-list="true" :auto-upload="true" :limit="1"
+                         :on-exceed="handleExceed" :file-list="fileList">
+                <el-button size="small" type="primary"
+                           v-if=" emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 5 ">文件上传</el-button>
+                <div v-if=" emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 5 " slot="tip" class="el-upload__tip" style="margin-top: 15px">上传文件不得超过100M</div>
+              </el-upload>
+            </div>
+
+            <div style="font-size: 20px;margin-right: 10px;width:300px;margin-top: -5px;">
+              <div style="text-align: left">
+                <div style="display:inline;">编制人：<el-input disabled v-model="emergencyPass.fPreparedBy" placeholder="请输入内容"
+                                                           style="width:220px;border: 1px solid #DCDFE6;"></el-input>
+                </div>
+                <div class="block" style="transform:translateY(10%)">
+                  <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                  <el-date-picker type="date" style="border: 1px solid #DCDFE6;"
+                                  v-model="emergencyPass.fPreparationTime" placeholder="选择日期" format="yyyy 年 MM 月 dd 日"
+                                  value-format="yyyy-MM-dd HH:mm:ss" disabled>
+                  </el-date-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <!-- 审核填写 -->
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col" style="line-height:188px;"> 审核信息 </el-col>
+        <el-col :span="21" style="height: 70px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;"> 审核意见： </div>
+          <el-input maxlength="500" show-word-limit  type="textarea" :rows="3" placeholder="请输入内容" v-model="emergencyPass.fReviewComments"
+                    :disabled="emergencyPass.fActStatus == 1 ? false : true"> </el-input>
+          <div class="from-select">
+            <div style="margin-top: 20px;margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;"> 审核结果： </div>
+              <el-select v-model="emergencyPass.fReviewResult" placeholder="请选择"
+                         :disabled="emergencyPass.fActStatus == 1 ? false : true">
+                <el-option v-for="item in fReviewResultList" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+            <div style="margin-top:20px;">
+              <span>审核人：<el-input v-model="emergencyPass.fReviewPeople" placeholder="请输入内容" style="width:180px;"
+                                  :disabled="emergencyPass.fActStatus == 1 ? false : true"></el-input></span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                <el-date-picker type="date" v-model="emergencyPass.fReviewDate" placeholder="选择日期"
+                                format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"
+                                :disabled="emergencyPass.fActStatus == 1 ? false : true">
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <!-- 批准填写 -->
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col" style="line-height:268px;"> 批准信息 </el-col>
+        <el-col :span="21" style="height: 70px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;"> 审批意见：</div>
+          <el-input maxlength="500" show-word-limit  type="textarea" :rows="3" placeholder="请输入内容" v-model="emergencyPass.fAuditComments"
+                    :disabled="emergencyPass.fActStatus == 2 ? false : true"> </el-input>
+          <div style="width: 200px;margin-left: 20px;">
+            <el-upload style="margin-left: 15px;margin-top: 0px" class="upload-demo" :headers="GLOBAL.headers()"
+             :before-upload = "beforeAvatarUpload"
+                       :action="GLOBAL.httpUrl" :on-preview="handlePreview2"
+                       multiple :on-success="uploadedSuccess" :show-file-list="true" :auto-upload="true" :limit="1"
+                       :on-exceed="handleExceed" :file-list="fileList2">
+              <el-button size="small" type="primary"
+                         v-if=" emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 5 ">文件上传</el-button>
+            </el-upload>
+          </div>
+          <div class="from-select">
+            <div style="margin-top: 20px;margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;"> 审批结果： </div>
+              <el-select v-model="emergencyPass.fAuditResult" placeholder="请选择"
+                         :disabled="emergencyPass.fActStatus == 2 ? false : true">
+                <el-option v-for="item in fReviewResultList" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+            <div style="margin-top:20px;">
+              <span>审批人：<el-input v-model="emergencyPass.fAuditPeople" placeholder="请输入内容" style="width:180px;"
+                                  :disabled="emergencyPass.fActStatus == 2 ? false : true"></el-input></span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                <el-date-picker type="date" v-model="emergencyPass.fAuditDate" placeholder="选择日期"
+                                format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"
+                                :disabled="emergencyPass.fActStatus == 2 ? false : true">
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <!-- 发布填写 -->
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col" style="line-height:188px;"> 预案发布 </el-col>
+        <el-col :span="21" style="height: 70px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;"> 预案发布：</div>
+          <el-input maxlength="500" show-word-limit  type="textarea" :rows="3" placeholder="请输入内容" v-model="emergencyPass.fPublishContent"
+                    :disabled="emergencyPass.fActStatus == 3 ? false : true"> </el-input>
+          <div style="margin-top:20px;text-align:right;">
+            <span>发布人：<el-input v-model="emergencyPass.fPublishPeople" placeholder="请输入内容"
+                                style="width:180px;border: 1px solid #DCDFE6;" :disabled="emergencyPass.fActStatus == 3 ? false : true">
+              </el-input></span>
+            <div class="block" style="display:inline;margin-left:14px;">
+              <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+              <el-date-picker type="date" style="width:220px;margin-right:10px;border: 1px solid #DCDFE6;"
+                              v-model="emergencyPass.fPublishConfirmDate" placeholder="选择日期" format="yyyy 年 MM 月 dd 日"
+                              value-format="yyyy-MM-dd HH:mm:ss" :disabled="emergencyPass.fActStatus == 3 ? false : true">
+              </el-date-picker>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <!-- 预案演练  -->
+      <el-row  class="from-border-bottom">
+        <el-col :span="3" class="from-borderibht" > 预案演练 </el-col>
+        <el-col :span="21" style="height: 400px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;"> 演练概述： </div>
+          <el-input type="textarea" :rows="8"   placeholder="请输入内容" v-model="emergencyPass.fDrillOutline" :disabled="emergencyPass.fActStatus == 4 ? false : true">
+          </el-input>
+
+          <div style="display:flex;justify-content:space-between;margin-top: 60px;">
+            <div  style="width: 200px;margin-left: 20px;">
+              <el-upload style="margin-left: 15px;"
+                         class="upload-demo"
+                          :before-upload = "beforeAvatarUpload"
+                         :headers="GLOBAL.headers()"
+                         :action="GLOBAL.httpUrl"
+                         :on-preview="handlePreview3"
+                         multiple
+                         :show-file-list="true"
+                         :auto-upload="true"
+                         :limit="1"
+                         :on-exceed="handleExceed"
+                         :file-list="fileList3">
+                <el-button size="small" type="primary" v-if=" emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 5 ">文件上传</el-button>
+              </el-upload>
+            </div>
+
+            <div style="font-size: 20px;margin-right: 10px;width:300px;margin-top: -5px;">
+              <div style="text-align: left">
+                <div style="display:inline;">演练记录人：<el-input v-model="emergencyPass.fDrillPeople"  placeholder="请输入内容" style="width:220px;border: 1px solid #DCDFE6;" :disabled="emergencyPass.fActStatus == 4 ? false : true"></el-input></div>
+                <div class="block" style="transform:translateY(10%)">
+                  <span class="demonstration" v-html="'时&ensp;&ensp;间：'"/>
+                  <el-date-picker
+                    type="date" style="border: 1px solid #DCDFE6;"
+                    v-model="emergencyPass.fDrillDate"
+                    placeholder="选择日期"
+                    format="yyyy 年 MM 月 dd 日"
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    :disabled="emergencyPass.fActStatus == 4 ? false : true">
+                  </el-date-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <!-- 预案执行 -->
+      <el-row  class="from-border-bottom">
+        <el-col :span="3" class="from-col" style="line-height:500px;"> 预案执行 </el-col>
+        <el-col :span="21" style="height: 70px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;"> 启动记录：</div>
+          <el-input type="textarea" :rows="3" placeholder="请输入内容" v-model="emergencyPass.fExecutiveStartRecord" :disabled="emergencyPass.fActStatus == 5 ? false : true"> </el-input>
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;"> 执行过程：</div>
+          <el-input type="textarea" :rows="3" placeholder="请输入内容" v-model="emergencyPass.fExecutiveProcessRecord" :disabled="emergencyPass.fActStatus == 5 ? false : true"> </el-input>
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;"> 终止记录：</div>
+          <el-input type="textarea" :rows="3" placeholder="请输入内容" v-model="emergencyPass.fExecutiveEndRecord" :disabled="emergencyPass.fActStatus == 5 ? false : true"> </el-input>
+          <div  style="width: 200px;margin-left: 20px;">
+            <el-upload style="margin-left: 15px;"
+                       class="upload-demo"
+                        :before-upload = "beforeAvatarUpload"
+                       :headers="GLOBAL.headers()"
+                       :action="GLOBAL.httpUrl"
+                       :on-preview="handlePreview4"
+
+                       multiple
+                       :show-file-list="true"
+                       :auto-upload="true"
+                       :limit="1"
+                       :on-exceed="handleExceed"
+                       :file-list="fileList4">
+              <el-button size="small" type="primary" v-if=" emergencyPass.fActStatus == 0 || emergencyPass.fActStatus == 5 ">文件上传</el-button>
+            </el-upload>
+          </div>
+          <div  style="margin-top:20px;text-align:right;">
+            <span >执行记录人：<el-input v-model="emergencyPass.fExecutivePeople"  placeholder="请输入内容" style="width:180px;border: 1px solid #DCDFE6;" :disabled="emergencyPass.fActStatus == 5 ? false : true"></el-input></span>
+            <div class="block"  style="display:inline;margin-left:14px;">
+              <span class="demonstration" v-html="'时&ensp;&ensp;间：'"/>
+              <el-date-picker
+                type="date"
+                style="width:220px;margin-right:10px;border: 1px solid #DCDFE6;"
+                v-model="emergencyPass.fExecutiveDate"
+                placeholder="选择日期"
+                format="yyyy 年 MM 月 dd 日"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                :disabled="emergencyPass.fActStatus == 5 ? false : true">
+              </el-date-picker>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+    </div>
+
+
+
+
+
+    <!-- 下一流程 处理人 弹窗 -->
+    <el-dialog title="选择处理人" :visible.sync="nextVisible" width="30%" >
+      <el-radio v-model="radio" :label="item.userId" v-for="(item,index) in list" :key="index">{{item.nickName}}
+      </el-radio>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addSubmits">确 定</el-button>
+      </span>
+    </el-dialog>
+
+  </div>
+</template>
+
+<script>
+import {
+  listPlanning,
+  getPlanning,
+  delPlanning,
+  addPlanning,
+  updatePlanning
+} from "@/api/emergency/emergency"
+import {
+  getUserList
+} from "@/api/security/planning"
+//文件上传
+import {
+  getFileById
+} from "@/api/file"
+import {
+  getToken
+} from "@/utils/auth"
+export default {
+
+  props: ['emergencyPass', 'status', 'fileList', 'fileList2', 'fileList3', 'fileList4'],
+  data() {
+    return {
+      list:null,
+
+      approvalPlanType:[
+        {
+          value:0,
+          label:'水库大坝管理运行预案'
+        },
+        {
+          value:1,
+          label:'水库防汛抢险应急预案'
+        },
+        {
+          value:2,
+          label:'水库防御洪水预案'
+        },
+        {
+          value:3,
+          label:'其他预案'
+        },
+      ],
+      //审核结果 列表
+      fReviewResultList: [{
+        value: 1,
+        label: '通过'
+      },
+        {
+          value: 2,
+          label: '不通过'
+        },
+        {
+          value: 3,
+          label: '驳回'
+        },
+      ],
+      //下一处理人
+      radio: '',
+      info: {
+        stockDate: this.getNowTime(), //日期
+      },
+
+      dialogVisible: false,
+
+      textarea: '',
+      value1: '',
+      value2: '',
+      value3: '',
+      value4: '',
+      value: '',
+
+
+      data: [{
+        id: '1',
+        planName: '李所长',
+        planningTime: '2021-07-05 16:00:00',
+        progressStatus: '查看',
+      },
+        {
+          id: '2',
+          planName: '张所长',
+          planningTime: '2021-07-05 16:00:00',
+          progressStatus: '批准',
+          status: '待审批'
+        },
+        {
+          id: '3',
+          planName: '马所长',
+          planningTime: '2021-07-05 16:00:00',
+          progressStatus: '实施',
+          status: '实施'
+        }
+      ],
+      //预案编制对象
+      emergency: {
+        //预案编制ID
+        fId: '',
+        //预案名称
+        fPlanName: '',
+        //预案编号
+        fPlanNumber: '',
+        //发布开始时间
+        fPublishStartDate: '',
+        //发布结束时间
+        fPublishEndDate: '',
+        //预案概述
+        fPlanSummary: '',
+        //编制时间
+        fPreparationTime: '',
+        //编制人
+        fPreparedBy: '',
+
+        //预案文件ID
+        fPlanFileId: '',
+
+        //审核意见
+        fReviewComments: '',
+        //审核结果
+        fReviewResult: '',
+        //审核人
+        fReviewPeople: '',
+        //审核时间
+        fReviewDate: '',
+
+        //审批意见
+        fAuditComments: '',
+        //审批结果
+        fAuditResult: '',
+        //审批人
+        fAuditPeople: '',
+        //审批时间
+        fAuditDate: '',
+
+        //发布内容
+        fPublishContent: '',
+        //发布人
+        fPublishPeople: '',
+        //发布确认时间
+        fPublishConfirmDate: '',
+
+        //流程实例ID
+        fActId: '',
+        //下一节点审核人
+        fActPersion: '',
+        //流程状态 1已提交启动 2：批准中 3：发布 4：发布完成 5：驳回 6：不同意删除
+        fActStatus: '',
+        //流程节点
+        fActNode: '',
+
+        //创建人
+        fCreateBy: '',
+        //创建时间
+        fCreateTime: '',
+
+      },
+      //预案编制对象
+      emergencyInit: {
+        //预案编制ID
+        fId: '',
+        //预案名称
+        fPlanName: '',
+        //预案编号
+        fPlanNumber: '',
+        //发布开始时间
+        fPublishStartDate: '',
+        //发布结束时间
+        fPublishEndDate: '',
+        //预案概述
+        fPlanSummary: '',
+        //编制时间
+        fPreparationTime: '',
+        //编制人
+        fPreparedBy: '',
+
+        //预案文件ID
+        fPlanFileId: '',
+
+        //审核意见
+        fReviewComments: '',
+        //审核结果
+        fReviewResult: '',
+        //审核人
+        fReviewPeople: '',
+        //审核时间
+        fReviewDate: '',
+
+        //审批意见
+        fAuditComments: '',
+        //审批结果
+        fAuditResult: '',
+        //审批人
+        fAuditPeople: '',
+        //审批时间
+        fAuditDate: '',
+
+        //发布内容
+        fPublishContent: '',
+        //发布人
+        fPublishPeople: '',
+        //发布确认时间
+        fPublishConfirmDate: '',
+
+        //流程实例ID
+        fActId: '',
+        //下一节点审核人
+        fActPersion: '',
+        //流程状态 1已提交启动 2：批准中 3：发布 4：发布完成 5：驳回 6：不同意删除
+        fActStatus: '',
+        //流程节点
+        fActNode: '',
+
+        //创建人
+        fCreateBy: '',
+        //创建时间
+        fCreateTime: '',
+
+      },
+      //作为子组件时 状态
+      status: 0,
+      nextVisible: false,
+    };
+  },
+  created() {
+    this.personnel()
+  },
+  methods: {
+    beforeAvatarUpload(file){
+          const isLt100M = file.size / 1024 / 1024 < 100;
+             if (!isLt100M) {
+                    this.$message.error('上传文件大小不能超过 100MB!');
+                    return false
+                }
+          },
+    //获取处理人集合
+    personnel() {
+      console.log('获取处理人集合')
+      getUserList().then(response => {
+        console.log('获取处理人集合执行成功', response)
+        this.list = response.data
+      })
+    },
+    init() {
+      console.log('初始化')
+      if (this.status == 1) {
+        console.log('初始化', this.emergencyPass)
+
+        //查询是否 为暂存
+        if (this.emergencyPass.fActStatus == 0) {
+          this.active = 1
+          console.log("为暂存")
+        }
+        //查询是否  为待审核
+        else if (this.emergencyPass.fActStatus == 1) {
+          this.active = 2
+          console.log("为待审核")
+        }
+        //查询是否  为待批准
+        else if (this.emergencyPass.fActStatus == 2) {
+          this.active = 3
+          console.log("为待审核批准")
+        }
+        //查询是否  为待发布
+        else if (this.emergencyPass.fActStatus == 3) {
+          this.active = 4
+          console.log("为待发布")
+        }
+        //查询是否  已发布
+        else if (this.emergencyPass.fActStatus == 4) {
+          this.active = 5
+          console.log("已发布")
+        }
+        //查询是否  为驳回
+        else if (this.emergencyPass.fActStatus == 5) {
+          this.active = 0
+          console.log("为驳回")
+        }
+        //查询是否  不同意删除
+        else if (this.emergencyPass.fActStatus == 6) {
+          this.active = 5
+          console.log("不同意删除")
+        }
+      }
+
+    },
+    //提交 表单 （第一次创建 提交）
+    submitEmergency() {
+      //是否填写 预案名称
+      if (this.emergency.fPlanName == null || this.emergency.fPlanName == '') {
+        this.$message({
+          showClose: true,
+          message: '请填写预案名称',
+          type: 'error'
+        });
+        return false
+      }
+      //是否填写 预案编号
+      if (this.emergency.fPlanNumber == null || this.emergency.fPlanNumber == '') {
+        this.$message({
+          showClose: true,
+          message: '请填写预案编号',
+          type: 'error'
+        });
+        return false
+      }
+      //是否填写 发布开始时间
+      if (this.emergency.fPublishStartDate == null || this.emergency.fPublishStartDate == '') {
+        this.$message({
+          showClose: true,
+          message: '请选择发布开始时间',
+          type: 'error'
+        });
+        return false
+      }
+      //是否填写 发布结束时间
+      if (this.emergency.fPublishEndDate == null || this.emergency.fPublishEndDate == '') {
+        this.$message({
+          showClose: true,
+          message: '请选择发布结束时间',
+          type: 'error'
+        });
+        return false
+      }
+      //是否填写 预案概述
+      if (this.emergency.fPlanSummary == null || this.emergency.fPlanSummary == '') {
+        this.$message({
+          showClose: true,
+          message: '请填写预案概述',
+          type: 'error'
+        });
+        return false
+      }
+      //是否填写 编制时间
+      if (this.emergency.fPreparationTime == null || this.emergency.fPreparationTime == '') {
+        this.$message({
+          showClose: true,
+          message: '请选择编制时间',
+          type: 'error'
+        });
+        return false
+      }
+      //是否填写 编制人
+      if (this.emergency.fPreparedBy == null || this.emergency.fPreparedBy == '') {
+        this.$message({
+          showClose: true,
+          message: '请填写编制人',
+          type: 'error'
+        });
+        return false
+      }
+      //将状态 设为 审核中
+      this.emergency.fActStatus = 1
+      this.nextVisible = true
+
+    },
+    //选择处理人 弹窗 确定按钮
+    addSubmits() {
+      //判断是否 选择了下一处理人
+      if (this.radio == '') {
+        this.$message({
+          showClose: true,
+          message: '请选择审批人',
+          type: 'error'
+        });
+        return false
+      }
+      this.emergency.fActPersion = this.radio
+      //判断完  提交表单
+      addPlanning(this.emergency).then(res => {
+        if (res.code == 200) {
+          this.msgSuccess("预案编制提交成功");
+          this.init()
+          this.emergency = this.emergencyInit
+          this.nextVisible = false
+        }
+      })
+    },
+    //暂存 表单
+    temporaryStorage() {
+      //将状态 设为 暂存
+      this.emergency.fActStatus = 0
+      // 提交表单  暂存
+      addPlanning(this.emergency).then(res => {
+        if (res.code == 200) {
+          this.msgSuccess("预案编制暂存成功");
+          this.emergency = this.emergencyInit
+        }
+      })
+    },
+    dialog() {
+      this.dialogVisible = true
+    },
+    handlePreview(file) {
+	  window.open(this.fileList[0].url);
+    },
+    handlePreview2(file) {
+      // window.location.href = this.fileList2[0].url;
+      window.open(this.fileList2[0].url);
+    },
+    handlePreview3(file) {
+      // window.location.href = this.fileList3[0].url;
+      window.open(this.fileList3[0].url);
+    },
+    handlePreview4(file) {
+      // window.location.href = this.fileList4[0].url;
+      window.open(this.fileList4[0].url);
+    },
+    handleRemove(file, fileList) {
+      this.GLOBAL.commonFun(this.emergencyPass.fPlanFileId);
+      console.log(file, fileList);
+    },
+    //删除文件的
+    beforeRemove(file, fileList) {
+      if (this.emergencyPass.fActStatus != 0 &&
+        this.emergencyPass.fActStatus != 5) {
+        this.$message.warning(`当前状态无法删除文件`)
+        return false
+      }
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+
+    //上传数量 限制
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    //上传成功
+    uploadedSuccess(response, file, fileList) {
+      this.emergencyPass.fPlanFileId = response.data.fId
+    },
+    //获得当前时间
+    getNowTime() {
+      var now = new Date();
+      var year = now.getFullYear(); //得到年份
+      var month = now.getMonth(); //得到月份
+      var date = now.getDate(); //得到日期
+      var hour = " 00:00:00"; //默认时分秒 如果传给后台的格式为年月日时分秒，就需要加这个，如若不需要，此行可忽略
+      month = month + 1;
+      month = month.toString().padStart(2, "0");
+      date = date.toString().padStart(2, "0");
+      var defaultDate = `${year}-${month}-${date}${hour}`;
+      console.log(defaultDate)
+      return defaultDate;
+      this.$set(this.info, "stockDate", defaultDate);
+    },
+
+
+  }
+};
+</script>
+<style lang="scss">
+.color409 {
+  color: #409eff;
+  cursor: pointer;
+}
+  .el-upload-list__item .el-icon-close-tip {
+      top: 100000px;
+      z-index: -98;
+  }
+</style>

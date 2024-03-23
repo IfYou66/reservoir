@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.cf</groupId>
+        <artifactId>cf</artifactId>
+        <version>2.5.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>cf-system</module>
+        <module>cf-gen</module>
+        <module>cf-job</module>
+        <module>cf-file</module>
+        <module>cf-archives</module>
+        <module>cf-indemnification</module>
+        <module>cf-reservoir</module>
+    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.cf</groupId>
+            <artifactId>cf-common-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.cf</groupId>
+            <artifactId>cf-common-swagger</artifactId>
+        </dependency>
+    </dependencies>
+
+    <artifactId>cf-modules</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+        cf-modules业务模块
+    </description>
+
+</project>

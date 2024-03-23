@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.RFloodRegulationEvaluationMapper">
+    
+    <resultMap type="com.szsk.reservoir.run.domain.RFloodRegulationEvaluation" id="RFloodRegulationEvaluationResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fEvaluationName"    column="f_evaluation_name"    />
+        <result property="fEvaluationOnline"    column="f_evaluation_online"    />
+        <result property="fEvaluationTime"    column="f_evaluation_time"    />
+        <result property="fEvaluationFileId"    column="f_evaluation_file_id"    />
+        <result property="fCreatePeople"    column="f_create_people"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectRFloodRegulationEvaluationVo">
+        select f_id, f_reservoir_info_id,f_evaluation_name, f_evaluation_online, f_evaluation_time, f_evaluation_file_id, f_create_people, f_create_time from r_flood_regulation_evaluation
+    </sql>
+
+    <select id="selectRFloodRegulationEvaluationList" parameterType="com.szsk.reservoir.run.domain.RFloodRegulationEvaluation" resultMap="RFloodRegulationEvaluationResult">
+        <include refid="selectRFloodRegulationEvaluationVo"/>
+        <where>  
+            <if test="fEvaluationName != null  and fEvaluationName != ''"> and f_evaluation_name like concat('%', #{fEvaluationName}, '%')</if>
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fEvaluationTime != null "> and f_evaluation_time = #{fEvaluationTime}</if>
+            <if test="fCreatePeople != null  and fCreatePeople != ''"> and f_create_people = #{fCreatePeople}</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and f_evaluation_time &gt;= #{params.beginTime}
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and f_evaluation_time &lt;= #{params.endTime}
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectRFloodRegulationEvaluationById" parameterType="Long" resultMap="RFloodRegulationEvaluationResult">
+        <include refid="selectRFloodRegulationEvaluationVo"/>
+        where f_id = #{fId}
+    </select>
+        
+    <insert id="insertRFloodRegulationEvaluation" parameterType="com.szsk.reservoir.run.domain.RFloodRegulationEvaluation" useGeneratedKeys="true" keyProperty="fId">
+        insert into r_flood_regulation_evaluation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fEvaluationName != null">f_evaluation_name,</if>
+            <if test="fEvaluationOnline != null">f_evaluation_online,</if>
+            <if test="fEvaluationTime != null">f_evaluation_time,</if>
+            <if test="fEvaluationFileId != null">f_evaluation_file_id,</if>
+            <if test="fCreatePeople != null">f_create_people,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fEvaluationName != null">#{fEvaluationName},</if>
+            <if test="fEvaluationOnline != null">#{fEvaluationOnline},</if>
+            <if test="fEvaluationTime != null">#{fEvaluationTime},</if>
+            <if test="fEvaluationFileId != null">#{fEvaluationFileId},</if>
+            <if test="fCreatePeople != null">#{fCreatePeople},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRFloodRegulationEvaluation" parameterType="com.szsk.reservoir.run.domain.RFloodRegulationEvaluation">
+        update r_flood_regulation_evaluation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fEvaluationName != null">f_evaluation_name = #{fEvaluationName},</if>
+            <if test="fEvaluationOnline != null">f_evaluation_online = #{fEvaluationOnline},</if>
+            <if test="fEvaluationTime != null">f_evaluation_time = #{fEvaluationTime},</if>
+            <if test="fEvaluationFileId != null">f_evaluation_file_id = #{fEvaluationFileId},</if>
+            <if test="fCreatePeople != null">f_create_people = #{fCreatePeople},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteRFloodRegulationEvaluationById" parameterType="Long">
+        delete from r_flood_regulation_evaluation where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteRFloodRegulationEvaluationByIds" parameterType="String">
+        delete from r_flood_regulation_evaluation where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

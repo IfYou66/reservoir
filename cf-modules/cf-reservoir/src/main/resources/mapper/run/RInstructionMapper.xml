@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.RInstructionMapper">
+    
+    <resultMap type="com.szsk.reservoir.run.domain.RInstruction" id="RInstructionResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fInstructionName"    column="f_instruction_name"    />
+        <result property="fInstructionTime"    column="f_instruction_time"    />
+        <result property="fInstructionContent"    column="f_instruction_content"    />
+        <result property="fSchedulingId"    column="f_scheduling_id"    />
+        <result property="fOperateId"    column="f_operate_id"    />
+        <result property="fPreparedBy"    column="f_prepared_by"    />
+        <result property="fPreparationTime"    column="f_preparation_time"    />
+        <result property="fRunResult"    column="f_run_result"    />
+        <result property="fResultUrl"    column="f_result_url"    />
+        <result property="fReportPersion"    column="f_report_persion"    />
+        <result property="fReportTime"    column="f_report_time"    />
+        <result property="fInstructionStatus"    column="f_instruction_status"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fCreatePeople"    column="f_create_people"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fActId"    column="f_act_id"    />
+        <result property="fActPersion"    column="f_act_persion"    />
+        <result property="fActStatus"    column="f_act_status"    />
+        <result property="fActNode"    column="f_act_node"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <select id="search" parameterType="com.szsk.reservoir.run.domain.RInstruction" resultMap="RInstructionResult">
+        <include refid="selectRInstructionVo"/>
+        <where>
+            <if test="fInstructionName != null and fInstructionName != ''">
+                AND f_instruction_name like concat('%',#{fInstructionName},'%')
+            </if>
+            <if test="fReservoirInfoId != null and fReservoirInfoId != ''">
+                AND f_reservoir_info_id = #{fReservoirInfoId}
+            </if>
+            <if test="fActStatus != null and fActStatus != ''">
+                AND f_act_status = #{fActStatus}
+            </if>
+            <if test="fActPersion == 'com' and fCreatePeople != null">
+                AND f_create_people = #{fCreatePeople}
+            </if>
+            AND f_status = 1
+            <if test="fActPersion == 'audit' and fCreatePeople != null">
+                AND (f_create_people = #{fCreatePeople} OR f_act_persion = #{fActPersion})
+            </if>
+        </where>
+        order by f_id desc
+    </select>
+
+    <sql id="selectRInstructionVo">
+        select f_id,f_reservoir_info_id, f_instruction_name, f_instruction_time, f_instruction_content, f_scheduling_id, f_operate_id, f_prepared_by, f_preparation_time, f_run_result, f_result_url, f_report_persion, f_report_time, f_instruction_status, f_status, f_create_people, f_create_time, f_act_id, f_act_persion, f_act_status, f_act_node from r_instruction
+    </sql>
+
+    <select id="selectRInstructionList" parameterType="com.szsk.reservoir.run.domain.RInstruction" resultMap="RInstructionResult">
+        <include refid="selectRInstructionVo"/>
+        <where>
+            <if test="fInstructionName != null  and fInstructionName != ''"> and f_instruction_name like concat('%', #{fInstructionName}, '%')</if>
+            <if test="fInstructionTime != null "> and f_instruction_time = #{fInstructionTime}</if>
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fInstructionContent != null  and fInstructionContent != ''"> and f_instruction_content = #{fInstructionContent}</if>
+            <if test="fSchedulingId != null  and fSchedulingId != ''"> and f_scheduling_id = #{fSchedulingId}</if>
+            <if test="fOperateId != null  and fOperateId != ''"> and f_operate_id = #{fOperateId}</if>
+            <if test="fPreparedBy != null  and fPreparedBy != ''"> and f_prepared_by = #{fPreparedBy}</if>
+            <if test="fPreparationTime != null "> and f_preparation_time = #{fPreparationTime}</if>
+            <if test="fRunResult != null  and fRunResult != ''"> and f_run_result = #{fRunResult}</if>
+            <if test="fResultUrl != null  and fResultUrl != ''"> and f_result_url = #{fResultUrl}</if>
+            <if test="fReportPersion != null  and fReportPersion != ''"> and f_report_persion = #{fReportPersion}</if>
+            <if test="fReportTime != null "> and f_report_time = #{fReportTime}</if>
+            <if test="fInstructionStatus != null "> and f_instruction_status = #{fInstructionStatus}</if>
+            <if test="fStatus != null "> and f_status = #{fStatus}</if>
+            <if test="fCreatePeople != null  and fCreatePeople != ''"> and f_create_people = #{fCreatePeople}</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+            <if test="fActId != null "> and f_act_id = #{fActId}</if>
+            <if test="fActPersion != null "> and f_act_persion = #{fActPersion}</if>
+            <if test="fActStatus != null "> and f_act_status = #{fActStatus}</if>
+            <if test="fActNode != null  and fActNode != ''"> and f_act_node = #{fActNode}</if>
+        </where>
+    </select>
+
+    <select id="selectRInstructionById" parameterType="Integer" resultMap="RInstructionResult">
+        <include refid="selectRInstructionVo"/>
+        where f_id = #{fId}
+    </select>
+        
+    <insert id="insertRInstruction" parameterType="com.szsk.reservoir.run.domain.RInstruction" useGeneratedKeys="true" keyProperty="fId">
+        insert into r_instruction
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fInstructionName != null">f_instruction_name,</if>
+            <if test="fInstructionTime != null">f_instruction_time,</if>
+            <if test="fInstructionContent != null">f_instruction_content,</if>
+            <if test="fSchedulingId != null">f_scheduling_id,</if>
+            <if test="fOperateId != null">f_operate_id,</if>
+            <if test="fPreparedBy != null">f_prepared_by,</if>
+            <if test="fPreparationTime != null">f_preparation_time,</if>
+            <if test="fRunResult != null">f_run_result,</if>
+            <if test="fResultUrl != null">f_result_url,</if>
+            <if test="fReportPersion != null">f_report_persion,</if>
+            <if test="fReportTime != null">f_report_time,</if>
+            <if test="fInstructionStatus != null">f_instruction_status,</if>
+            <if test="fStatus != null">f_status,</if>
+            <if test="fCreatePeople != null">f_create_people,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+            <if test="fActId != null">f_act_id,</if>
+            <if test="fActPersion != null">f_act_persion,</if>
+            <if test="fActStatus != null">f_act_status,</if>
+            <if test="fActNode != null">f_act_node,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fInstructionName != null">#{fInstructionName},</if>
+            <if test="fInstructionTime != null">#{fInstructionTime},</if>
+            <if test="fInstructionContent != null">#{fInstructionContent},</if>
+            <if test="fSchedulingId != null">#{fSchedulingId},</if>
+            <if test="fOperateId != null">#{fOperateId},</if>
+            <if test="fPreparedBy != null">#{fPreparedBy},</if>
+            <if test="fPreparationTime != null">#{fPreparationTime},</if>
+            <if test="fRunResult != null">#{fRunResult},</if>
+            <if test="fResultUrl != null">#{fResultUrl},</if>
+            <if test="fReportPersion != null">#{fReportPersion},</if>
+            <if test="fReportTime != null">#{fReportTime},</if>
+            <if test="fInstructionStatus != null">#{fInstructionStatus},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+            <if test="fCreatePeople != null">#{fCreatePeople},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+            <if test="fActId != null">#{fActId},</if>
+            <if test="fActPersion != null">#{fActPersion},</if>
+            <if test="fActStatus != null">#{fActStatus},</if>
+            <if test="fActNode != null">#{fActNode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRInstruction" parameterType="com.szsk.reservoir.run.domain.RInstruction">
+        update r_instruction
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fInstructionName != null">f_instruction_name = #{fInstructionName},</if>
+            <if test="fInstructionTime != null">f_instruction_time = #{fInstructionTime},</if>
+            <if test="fInstructionContent != null">f_instruction_content = #{fInstructionContent},</if>
+            <if test="fSchedulingId != null">f_scheduling_id = #{fSchedulingId},</if>
+            <if test="fOperateId != null">f_operate_id = #{fOperateId},</if>
+            <if test="fPreparedBy != null">f_prepared_by = #{fPreparedBy},</if>
+            <if test="fPreparationTime != null">f_preparation_time = #{fPreparationTime},</if>
+            <if test="fRunResult != null">f_run_result = #{fRunResult},</if>
+            <if test="fResultUrl != null">f_result_url = #{fResultUrl},</if>
+            <if test="fReportPersion != null">f_report_persion = #{fReportPersion},</if>
+            <if test="fReportTime != null">f_report_time = #{fReportTime},</if>
+            <if test="fInstructionStatus != null">f_instruction_status = #{fInstructionStatus},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+            <if test="fCreatePeople != null">f_create_people = #{fCreatePeople},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+            <if test="fActId != null">f_act_id = #{fActId},</if>
+            f_act_persion = #{fActPersion},
+            <if test="fActStatus != null">f_act_status = #{fActStatus},</if>
+            <if test="fActNode != null">f_act_node = #{fActNode},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteRInstructionById" parameterType="Integer">
+        delete from r_instruction where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteRInstructionByIds" parameterType="String">
+        delete from r_instruction where f_id in
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,335 @@
+<template>
+  <div class="app-container">
+    <dv-border-box7 style="height: 60px; padding: 5px; width: 99.8%">
+      <div class="el-row">
+        <div class="el-col-md-12">
+          <div class="el-card__body time-info">
+            最新监测数据时间：<span id="newest-time">{{newestTime}}</span>
+          </div>
+        </div>
+        <div class="el-col-md-8">
+          <div class="el-card__body voltage-info">
+            <img class="el-icon-circle-plus" src="../../../assets/images/common/voltage.jpg" alt=""/>
+            <span id="voltage">电压: 12.2v</span>
+          </div>
+        </div>
+        <div class="el-col-md-4">
+          <dv-decoration1 style="width: 120px; height: 40px"></dv-decoration1>
+        </div>
+      </div>
+    </dv-border-box7>
+    <record :sensor="sensor" :dialogVisible="dialogVisible" @changeShow="show"></record>
+
+    <dv-border-box2 style="padding: 10px 30px; width: 99.8%">
+      <div class="section" v-for="item in items">
+        <div class="el-collapse">
+          <div class="el-collapse-item">
+            <h2 class="el-collapse-item__header">{{item.section}}</h2>
+            <div class="el-collapse-item__content" :id="item.section">
+              <div class="row" :gutter="20" v-for="(sen,i) in item.sensors"
+                   v-if="i%2===0">
+                <el-row :gutter="20">
+                  <div class="title" :id="sen.text"
+                       v-if='operator.exists(sen,item.sensors,`text`,sen.text)'>
+                    {{sen.text}}
+                  </div>&emsp;
+                  <el-col :span="12" class="cell">
+                    <div class="el-card">
+                      <div class="el-card__body">
+                        <img :src="require(`../../../assets/images/common/${sen.image}.gif`)" alt="">
+                        <span class="info"
+                              :id="sen.tag">{{sen.name + ':' + operator.generateValueStr(sen) + sen.unit}}</span>
+                        <button class="history" @click="showHistory(sen)">
+                          <img src="../../../assets/images/common/history.png" alt="">
+                        </button>
+                      </div>
+                    </div>
+                    <div v-if="sen.name==='水位'" style="color:#ade4ff;padding-left: 40px;font-size: 16px">
+                      {{base.getBaseInfo().benefitWaterLevel ? '兴利水位:' + base.getBaseInfo().benefitWaterLevel +
+                      'm' : '设计水位:' + base.getBaseInfo().designWaterLevel + 'm'}}
+                    </div>
+                  </el-col>
+
+                  <el-col :span="12" class="cell">
+                    <div class="el-card">
+                      <div class="el-card__body">
+                        <img :src="require(`../../../assets/images/common/${item.sensors[i+1].image}.gif`)" alt="">
+                        <span class="info" :id="item.sensors[i+1].tag">{{item.sensors[i+1].name + ':' + operator.generateValueStr(item.sensors[i+1]) + item.sensors[i+1].unit}}</span>
+                        <span style="margin-left: 10px" v-if="item.sensors[i+1].name==='风速'" class="info"
+                              :id="operator.findArrayItemByAttrValue(common.loadSensors(), 'name', '风向').tag">
+                          {{operator.findArrayItemByAttrValue(common.loadSensors(), 'name', '风向').name + ':' +
+                          operator.generateValueStr(operator.findArrayItemByAttrValue(common.loadSensors(), 'name', '风向'))
+                          + operator.findArrayItemByAttrValue(common.loadSensors(), 'name', '风向').unit}}
+                        </span>
+                        <button class="history" @click="showHistory(item.sensors[i+1])">
+                          <img src="../../../assets/images/common/history.png" alt="">
+                        </button>
+                      </div>
+                    </div>
+                    <div v-if="item.sensors[i+1].name==='库容'" style="color:#ade4ff; padding-left: 40px;font-size: 16px">
+                      {{base.getBaseInfo().benefitCapacity ? '兴利水位库容:' + base.getBaseInfo().benefitCapacity +
+                      '万m³' : '设计库容:' + base.getBaseInfo().designCapacity + '万m³'}}
+                    </div>
+                  </el-col>
+                </el-row>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </dv-border-box2>
+  </div>
+</template>
+
+<script>
+  import record from '@/views/collection/common/record'
+
+  export default {
+    name: "realtime",
+    data() {
+      let sensors = this.common.getData('data');
+      let sensorSections = [];
+      for (let i = 0; i < sensors.length; i++) {
+        if (!sensors[i].section) continue;
+        let arr = sensors[i].section.split('-');
+        let section = sensors[i].section;
+        if (arr.length === 2) {
+          section = arr[1];
+        }
+        if (!this.findSection(section, sensorSections)) {
+          let obj = {};
+          let sectionSensors = [];
+          for (let i = 0; i < sensors.length; i++) {
+            if (sensors[i].section.includes(section)) {
+              sectionSensors.push(sensors[i]);
+            }
+          }
+          obj.section = section;
+          obj.sensors = sectionSensors;
+          sensorSections.push(obj);
+        }
+      }
+
+      return {
+        items: sensorSections,
+        sensors: sensors,
+        newestTime: '--',
+        sensor: undefined,
+        dialogVisible: false
+      };
+    },
+    components: {record},
+    methods: {
+      showHistory(sen) {
+        this.sensor = sen;
+        if (sen.name === '库容' || sen.name === '水面面积' || sen.name === '可用水量' || sen.name === '上游水位') {
+          this.sensor.id = this.operator.findArrayItemByAttrValue(this.common.loadSensors(), 'name', '水位').id;
+        }
+        this.dialogVisible = true;
+      },
+      // 监听 子组件弹窗关闭后触发，有子组件调用
+      show(data) {
+        this.dialogVisible = data !== 'false';
+      },
+      findSection(section, sensorSections) {
+        for (let item of sensorSections) {
+          if (item.section === section) {
+            return true;
+          }
+        }
+        return false;
+      },
+
+
+      /**
+       * 更新所有有效point的数值
+       */
+      updateSensors() {
+        let sensors = this.common.getData('data');
+
+        this.computeMax('pipe-vibration-severity', 'pipe', '方向');
+        this.computeMax('well-vibration-severity', 'well', '方向');
+        this.computeMax('gate-vibration-severity', 'gateDisplacement', '方向');
+
+        let waterLevelSensor = this.operator.findArrayItemByAttrValue(sensors, 'tag', 'water-level');
+        if (!waterLevelSensor) return;
+        let capacity = this.reservoir.getRelations().getCapacityRelationShip('capacity', waterLevelSensor.value);
+        if (capacity) {
+          this.updateSensorValue('storage-capacity', capacity);
+          this.updateSensorValue('water-area', this.reservoir.getRelations().getArea('area', waterLevelSensor.value));
+          this.updateSensorValue('water-volume', capacity - this.base.getBaseInfo().deadCapacity);
+          this.updateSensorValue('downstream-level', this.operator.findArrayItemByAttrValue(sensors, 'tag', 'water-level').value);
+        }
+        this.common.refreshSensors(sensors);
+        sensors = this.common.loadSensors();
+        this.sensors = sensors;
+        let newestTime = sensors[0].time;
+        for (let i in sensors) {
+          if (sensors[i].time > newestTime) {
+            newestTime = sensors[i].time;
+          }
+          if (sensors[i].name === '竖井振动烈度') {
+            newestTime = sensors[0].time;
+          }
+          let tag = document.querySelector("#" + sensors[i].tag);
+          if (tag && sensors[i].value && Math.abs(parseFloat(sensors[i].value)) !== this.common.BOUNDARY) {
+            //tag.innerHTML = sensors[i].name + ":" + parseFloat(eval(sensors[i].value)).toFixed(sensors[i].precision) + sensors[i].unit;
+            this.operator.blinkTag(tag);
+            console.log(sensors[i].name)
+          }
+        }
+        this.newestTime = new Date(newestTime).format("yyyy-MM-dd hh:mm:ss");
+      },
+
+
+      /**
+       * 计算最大值
+       * @param tagName 标签名称
+       * @param part 页面名
+       * @param name 数据名称
+       * */
+      computeMax(tagName, part, name) {
+        let sensor = this.operator.findArrayItemByAttrValue(this.sensors, 'tag', tagName);
+        if (!sensor) return;
+        let maxSensors = this.operator.getSensors(this.operator.getSensors(this.common.loadSensors(), 'part', part), 'name', name);
+        if (!maxSensors.length) return;
+        let maxValue = -this.common.BOUNDARY;
+        for (let i = 0; i < maxSensors.length; i++) {
+          if (maxValue < Math.abs(maxSensors[i].value) && Math.abs(maxSensors[i].value) < 10) {
+            maxValue = Math.abs(maxSensors[i].value)
+          }
+        }
+        sensor.value = maxValue;
+      },
+
+      updateSensorValue(tagName, value) {
+        let sensor = this.operator.findArrayItemByAttrValue(this.sensors, 'tag', tagName);
+        if (sensor) {
+          sensor.value = value;
+        }
+      },
+    },
+    created() {
+
+    },
+    updated() {
+
+    },
+    beforeMount() {
+    },
+
+    mounted() {
+      /******************************************************************
+       * 开始数据处理部分
+       * *****************************************************************/
+      let that = this;
+
+      that.updateSensors(that);
+      setInterval(function () {
+        that.updateSensors(that);
+      }, this.common.TIME_SPAN);
+    }
+  }
+</script>
+
+<style scoped>
+  img {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    margin-top: 6px;
+  }
+
+  .app-container {
+    margin: 0;
+    background: url("../../../assets/images/bg.png") repeat-y;
+    color: #dfe6ec;
+  }
+
+  .el-collapse {
+    border-top: 1px solid #060f21;
+    border-bottom: 1px solid #0f1727;
+  }
+
+  .el-collapse-item__content {
+    background-color: #00000000;
+    padding-bottom: 0;
+  }
+
+  .el-card__body {
+    padding: 5px 15px 5px 15px;
+    background-color: #00000000;
+  }
+
+  .title {
+    background-color: #00000000;
+  }
+
+  .el-card {
+    background-color: #00000000;
+    border: 1px solid #1f2d3d;
+  }
+
+  .voltage-info img {
+    vertical-align: bottom;
+    width: 30px;
+    height: 30px;
+  }
+
+  .info {
+    font-family: 黑体, serif;
+    font-size: 16pt;
+    color: #bae9e9;
+    vertical-align: top;
+    height: 24px;
+  }
+
+  .el-elem-field legend {
+    font-size: 18pt;
+  }
+
+  .time-info {
+    font-size: 1.4rem;
+    padding-top: 10px;
+  }
+
+  .history {
+    margin-right: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ccdeda00;
+    width: 80px;
+    height: 40px;
+    float: right;
+    cursor: pointer;
+    z-index: 99;
+
+  }
+
+  .history > img {
+    border-radius: 10%;
+    width: 40px;
+    height: 20px;
+  }
+
+  .voltage-info {
+    font-size: 1.4rem;
+    padding-top: 10px;
+    right: 20px;
+  }
+
+  .el-collapse-item__header {
+    font-size: 16pt;
+    color: #20a7f6;
+    background-color: #00000000;
+    margin: 0 0;
+    border-bottom: 1px solid #1f2d3d;
+  }
+
+  .title {
+    font-family: "Microsoft YaHei", 楷体, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu, serif;
+    font-size: 17px;
+    color: #baddeb;
+  }
+</style>

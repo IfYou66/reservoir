@@ -1,0 +1,340 @@
+<template>
+  <div class="app-container">
+        <el-form  ref="queryForm"  :inline="true">
+      <el-form-item label="名称" prop="roleName">
+        <el-input
+          v-model="fPlanName"
+          placeholder="请输入计划名称"
+          clearable
+          size="small"
+          style="width: 240px"
+        />
+      </el-form-item>
+
+      <el-form-item label="状态" prop="status">
+        <el-select
+          v-model="fActStatus"
+          placeholder="状态"
+          clearable
+          size="small"
+          style="width: 240px"
+        >
+          <el-option
+            v-for="(item,index) in approvalStatus"
+            :key="index + 1"
+            :label="item"
+            :value="index + 1"
+          />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+
+    <el-table v-loading="loading" :data="data" border>
+
+      <el-table-column label="序号" align="center"  type="index" width="120"/>
+      <el-table-column label="计划名称" align="center" prop="fPlanName"  show-overflow-tooltip/>
+
+      <el-table-column label="计划内容" align="center" prop="fPlanContent" :show-overflow-tooltip="true"/>
+
+      <el-table-column label="计划类型" align="center" prop="fPlanType" >
+        <template slot-scope="{row}">
+          <span v-for="(item,index) in dict.plantTypeList" v-if="row.fPlanType == item.dictValue">{{item.dictLabel}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="编制时间" align="center" prop="fEditTime" />
+      <el-table-column label="状态" align="center" prop="fActStatus" >
+        <template slot-scope="{row}">
+          <span v-if="row.fActStatus == 1">待提交</span>
+          <span v-if="row.fActStatus == 2">待审核</span>
+          <span v-if="row.fActStatus == 3">待批准</span>
+          <span v-if="row.fActStatus == 4">编制完成</span>
+          <span v-if="row.fActStatus == 5">待实施</span>
+          <span v-if="row.fActStatus == 6">待上报</span>
+          <span v-if="row.fActStatus == 7">待处置</span>
+          <span v-if="row.fActStatus == 8">实施待审核</span>
+          <span v-if="row.fActStatus == 9">实施完成</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width" >
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.fActStatus == 1"
+            size="mini"
+            type="text"
+            @click="open1(scope.row)"
+          >待提交
+          </el-button>
+          <el-button
+            v-if="scope.row.fActStatus == 2 && scope.row.landingPersonId == 'audit'"
+            size="mini"
+            type="text"
+            @click="open1(scope.row)"
+          >待审核
+          </el-button>
+          <el-button
+            v-if="scope.row.fActStatus == 3 && scope.row.landingPersonId == 'audit'"
+            size="mini"
+            type="text"
+            @click="open1(scope.row)"
+          >待审批
+          </el-button>
+          <el-button
+            v-if="scope.row.fActStatus >= 4 || scope.row.landingPersonId != 'audit'"
+            size="mini"
+            type="text"
+            @click="open1(scope.row)"
+          >计划详情
+          </el-button>
+          <el-button
+            v-if="scope.row.fActStatus >= 4 || scope.row.landingPersonId != 'audit'"
+            size="mini"
+            type="text"
+            @click="detailExport(scope.row,'plan')"
+          >计划导出
+          </el-button>
+          <el-button
+            v-if="scope.row.fActStatus == 5 && scope.row.landingPersonId == 'audit'"
+            size="mini"
+            type="text"
+            @click="open(scope.row)"
+          >待实施
+          </el-button>
+          <el-button
+            v-if="scope.row.fActStatus == 6 && scope.row.landingPersonId == 'audit'"
+            size="mini"
+            type="text"
+            @click="open(scope.row)"
+          >待上报
+          </el-button>
+          <el-button
+            v-if="scope.row.fActStatus == 7 && scope.row.landingPersonId == 'audit'"
+            size="mini"
+            type="text"
+            @click="open(scope.row)"
+          >待处置
+          </el-button>
+          <el-button
+            v-if="scope.row.fActStatus == 8 && scope.row.landingPersonId == 'audit'"
+            size="mini"
+            type="text"
+            @click="open(scope.row)"
+          >实施待审核
+          </el-button>
+          <el-button
+            v-if="scope.row.fActStatus == 9"
+            size="mini"
+            type="text"
+            @click="open(scope.row)"
+          >实施详情
+          </el-button>
+           <!--<el-button
+            v-if="scope.row.fActStatus == 9"
+            size="mini"
+            type="text"
+            @click="detailExport(scope.row,'implementation')"
+          >实施导出
+          </el-button>-->
+        </template>
+      </el-table-column>
+    </el-table>
+      <el-pagination
+         style="text-align: right;"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :page-size="pageSize"
+          layout="total, prev, pager, next"
+          :total="total">
+        </el-pagination>
+
+    <el-dialog
+      title="安全检查-计划详情"
+      :visible.sync="editFormVisible1"
+      width="1500px"
+      >
+      <planning :fActId="fActId" :fId="fId" :time="time" @shut="close" @search="infor"></planning>
+    </el-dialog>
+
+    <el-dialog
+      title="安全检查-实施详情"
+      :visible.sync="editFormVisible"
+      width="1500px"
+      >
+        <Implement ref="impl" @shut="closeReview" @search="infor"></Implement>
+
+    </el-dialog>
+
+
+
+  </div>
+</template>
+<script>
+import { getEntity } from "@/api/security/impl";
+import Implement from './Implement.vue';
+import planning from './planning.vue';
+import {
+      getPlanList
+  } from "@/api/security/planning";
+export default {
+  components: {Implement,planning},
+  name: "RightToolbar",
+  data() {
+    return {
+      loading:false,
+      fPlanName:'',
+      fActStatus:'',
+      pageNum:1,
+      pageSize:10,
+      total:0,
+      fActId:'',
+      time:'',
+      fId:'',
+		  dict: {
+        plantTypeList:[] 
+      },
+      options: [{
+        value: '0',
+        label: '汛前检查'
+      }, {
+        value: '1',
+        label: '年度检查'
+      }, {
+        value: '2',
+        label: '特别检查'
+      }],
+
+      // 显隐数据
+      // 弹出层标题
+      title: "显示/隐藏",
+      // 是否显示弹出层
+      editFormVisible: false,
+      editFormVisible1: false,
+      data: [],
+
+         // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        planName: undefined,
+        status: undefined
+      },
+      approvalStatus: ['待提交', '待审核', '待批准', '编制完成','待实施','待上报','待处置','实施待审核','实施完成']
+    };
+  },
+  props: {},
+  created() {
+    this.infor();
+     //计划类型
+ 		this.getDicts("plan_type").then(response => {
+      this.dict.plantTypeList = response.data;
+    });
+  },
+  methods: {
+          handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
+          },
+          handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
+            this.pageNum = val
+            this.infor()
+          },
+      infor(){
+          var params = {
+              fPlanName:this.fPlanName,
+              fActStatus:this.fActStatus,
+              pageNum:this.pageNum,
+              pageSize:this.pageSize,
+
+          }
+          getPlanList(params).then(response => {
+            console.log(22222,response.rows)
+            if(response.code==200){
+              this.total = response.total
+              this.data = response.rows
+            }
+          })
+      },
+    open(row){
+      var query = {fPlaneditId: parseInt(row.fId)}
+      getEntity(query).then(res => {
+        if (res.code == 200) {
+          this.editFormVisible = true;
+          // 调用子组件的方法
+          this.$nextTick(() => {
+            this.$refs.impl.init(row,res.data,0);
+          });
+        } else if (res.code == 500) {
+          this.msgError("该计划未被实施");
+        }
+      });
+
+    },
+
+    closeReview(data) {
+      this.editFormVisible = data
+    },
+
+    close(data) {
+       this.editFormVisible1 = false
+    },
+
+    open1(val){
+      this.time = Date.parse(new Date())
+      this.fActId = val.fActId
+      this.fId = val.fId
+      this.editFormVisible1 = true;
+    },
+    
+    //word文档导出
+    detailExport(row,mark){
+    	
+    	var queryParams = {fId: parseInt(row.fId)}
+    	
+    	if(mark == 'plan'){
+    		this.download('/reservoir/planEdit/detailExport', {
+	        ...queryParams
+	      }, `安检计划.xls`)
+    		
+    	}else{//实施
+    		this.download('/reservoir/SecuImpl/detailExport', {
+	        ...queryParams
+	      }, `安检实施.xls`)
+    	}
+    },
+    
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.infor()
+
+    },
+
+    /** 重置按钮操作 */
+    resetQuery() {
+      // this.dateRange = [];
+      // this.resetForm("queryForm");
+      this.fPlanName = null
+      this.fActStatus = null
+      this.handleQuery();
+    }
+  },
+};
+</script>
+<style lang="scss" scoped>
+::v-deep .el-transfer__button {
+  border-radius: 50%;
+  padding: 12px;
+  display: block;
+  margin-left: 0px;
+}
+::v-deep .el-transfer__button:first-child {
+  margin-bottom: 10px;
+}
+  .el-image-viewer__wrapper {
+    z-index: 99999999 !important;
+  }
+</style>

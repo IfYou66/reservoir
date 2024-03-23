@@ -1,0 +1,67 @@
+package com.szsk.reservoir.security.mapper;
+
+import java.util.List;
+import com.szsk.reservoir.security.domain.MSafetyAppraisal;
+
+/**
+ * 水库大坝安全鉴定一览 Mapper接口
+ * 
+ * @author cangfeng
+ * @date 2021-08-17
+ */
+public interface MSafetyAppraisalMapper 
+{
+    /**
+     * 查询水库大坝安全鉴定一览 
+     * 
+     * @param fId 水库大坝安全鉴定一览 ID
+     * @return 水库大坝安全鉴定一览 
+     */
+    public MSafetyAppraisal selectMSafetyAppraisalById(Long fId);
+
+    /**
+     * 查询水库大坝安全鉴定一览 列表
+     * 
+     * @param mSafetyAppraisal 水库大坝安全鉴定一览 
+     * @return 水库大坝安全鉴定一览 集合
+     */
+    public List<MSafetyAppraisal> selectMSafetyAppraisalList(MSafetyAppraisal mSafetyAppraisal);
+
+    /**
+     * 新增水库大坝安全鉴定一览 
+     * 
+     * @param mSafetyAppraisal 水库大坝安全鉴定一览 
+     * @return 结果
+     */
+    public int insertMSafetyAppraisal(MSafetyAppraisal mSafetyAppraisal);
+
+    /**
+     * 修改水库大坝安全鉴定一览 
+     * 
+     * @param mSafetyAppraisal 水库大坝安全鉴定一览 
+     * @return 结果
+     */
+    public int updateMSafetyAppraisal(MSafetyAppraisal mSafetyAppraisal);
+
+    /**
+     * 删除水库大坝安全鉴定一览 
+     * 
+     * @param fId 水库大坝安全鉴定一览 ID
+     * @return 结果
+     */
+    public int deleteMSafetyAppraisalById(Long fId);
+
+    /**
+     * 批量删除水库大坝安全鉴定一览 
+     * 
+     * @param fIds 需要删除的数据ID
+     * @return 结果
+     */
+    public int deleteMSafetyAppraisalByIds(Long[] fIds);
+
+    /**
+     * 获取最近
+     * @return 结果
+     */
+    public MSafetyAppraisal latelySafetyAppraisal(MSafetyAppraisal mSafetyAppraisal);
+}

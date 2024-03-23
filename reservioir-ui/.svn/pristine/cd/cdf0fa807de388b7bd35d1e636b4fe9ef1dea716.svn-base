@@ -1,0 +1,289 @@
+<template>
+  <div class='app-container'>
+    <el-row class="top-div">
+      <img src="../assets/images/title.jpg" alt="">
+      <div id="menu">
+        <div style="margin-top:20px; margin-right: 40px;">
+          <img src="../assets/images/data/head.png" style="width:40px;height:40px;" alt="">
+          <div style="margin-left:-10px; color:#385292">退出登陆</div>
+        </div>
+      </div>
+
+    </el-row>
+    <el-col :span="3" id="left">
+      <el-row>
+        <el-col id="imgDiv" :span="24">
+
+        </el-col>
+      </el-row>
+      <el-row>
+
+      </el-row>
+      <el-row>
+        <el-tree :data="reservoirs" @node-click="handleNodeClick" node-key="id" default-expand-all >
+            <span class="custom-tree-node" slot-scope="{ node, data }">
+                <span>
+                    <i class="el-icon-s-flag"></i>{{ node.label }}
+                </span>
+            </span>
+        </el-tree>
+      </el-row>
+    </el-col>
+    <el-col :span="21">
+      <div id="mapDiv" class="divTdtMap"></div>
+    </el-col>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "reservoir",
+    data() {
+      return {
+        tdtMapDivID: "tdtMapDivID_" + this._uid,
+        tdtMap: {},
+        activeIndex: '1',
+        markers: [],
+        reservoirs: [
+          {
+            label: '马河水库',
+            lan: 117.214965,
+            sat: 35.221793,
+            icon: 'el-icon-info',
+            description: "马河水库地处滕州市城区东北15千米处，龙山和谷山之间，位于东郭镇马河村西北400米，龙阳镇何岭村东北500米处。水库是一座以防洪、灌溉为主，结合发电、工业供水、养殖等综合利用的大型水库。",
+            url: '/'
+          },
+          {
+            label: '户主水库',
+            lan: 117.27445,
+            sat: 35.230406,
+            icon:'el-icon-success',
+            description: "户主水库，滕州市户主水库位于滕州市城区东北17公里，东郭镇境内，属淮河流域，南四湖水系，城河支流乡河上游。流域面积44平方公里，干流平均坡降0.00576米/米，坝址以上干流长9公里，流域呈扇形，平均宽4.63公里。2005年6月，被国家防总确定为全国防洪重点中型水库。",
+            url: '/#'
+          },
+          {
+            label: '户主东水库',
+            lan: 117.29441,
+            sat: 35.227917,
+            description: "户主东水库，滕州市户主水库位于滕州市城区东北17公里，东郭镇境内，属淮河流域，南四湖水系，城河支流乡河上游。流域面积44平方公里，干流平均坡降0.00576米/米，坝址以上干流长9公里，流域呈扇形，平均宽4.63公里。2005年6月，被国家防总确定为全国防洪重点中型水库。",
+            url: '/#'
+          },
+          {
+            label: '虎山水库',
+            lan: 117.293163,
+            sat: 35.039168,
+            description: "虎山水库地处滕州市城区东北15千米处，龙山和谷山之间，位于东郭镇马河村西北400米，龙阳镇何岭村东北500米处。水库是一座以防洪、灌溉为主，结合发电、工业供水、养殖等综合利用的大型水库。",
+            url: '/#'
+          },
+        ],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        },
+        map: undefined,
+      }
+    },
+    created() {
+    },
+    mounted() {
+      // 初始化天地图
+      this.initTdtMap();
+      window.enterRes = this.enterRes;
+    },
+    watch: {},
+    methods: {
+      // 初始化天地图
+      initTdtMap() {
+        let imageURL = "http://t0.tianditu.gov.cn/img_w/wmts?" +
+          "SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles" +
+          "&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=dd2abf5a55ddf44b3c81d9101e2d419b";
+        //创建自定义图层对象
+        let lay = new T.TileLayer(imageURL, {minZoom: 1, maxZoom: 18});
+        let config = {
+          layers: [lay],
+        };
+        //初始化地图对象
+        this.map = new T.Map("mapDiv", config);
+
+        //允许鼠标滚轮缩放地图
+        this.map.enableScrollWheelZoom();
+
+        this.createMarkers();
+        //设置显示地图的中心点和级别
+        if (this.markers.length > 0){
+          this.locateMarker(this.markers[0].or.lng, this.markers[0].or.lat);
+        }
+
+      },
+
+      createMarkers() {
+        for (let i = 0; i < this.reservoirs.length; i++) {
+          let point = new T.LngLat(this.reservoirs[i].lan, this.reservoirs[i].sat);
+          let marker = new T.Marker(point);// 创建标注
+
+          this.map.addOverLay(marker);
+          let infoWindow = new T.InfoWindow();
+          let sContent =
+            "<div style='margin:5px;'>" +
+            "<div style='margin: 30px 10px 0 10px; padding-bottom: 20px'>" +
+            "<h2 style='text-align: center'>" + this.reservoirs[i].label + "</h2>" +
+            "<div id='imgRes' style='float:left;margin:0px 10px' width='40' height='40' title='马河水库'></div>" +
+            "<div style='margin:10px 0px 10px 120px;font-size: larger'>" + this.reservoirs[i].description +
+            "</div>" +
+            "<input style='margin: 0 auto;  width: 180px;height: 30px; text-align: center; background: #5596de;color: #FFF;border: none;display: block;cursor: pointer;' type='button' value='进入系统'  onclick='enterRes()'>" +
+            "</div>" +
+            "</div>";
+          infoWindow.setContent(sContent);
+          marker.addEventListener("click", function () {
+            marker.openInfoWindow(infoWindow);
+          });
+          marker.win = infoWindow;
+          this.markers.push(marker);
+        }
+        this.markers[0].openInfoWindow(this.markers[0].win.ET);
+
+      },
+
+      findMarker(lan, sat){
+        for (let marker of this.markers){
+          if (Math.abs(marker.or.lng - lan) < 0.001
+              && Math.abs(marker.or.lat - sat) < 0.001){
+            return marker;
+          }
+        }
+      },
+
+      handleNodeClick(data) {
+        if (!this.isReservoir(data)) return;
+        this.locateMarker(data.lan, data.sat);
+      },
+
+      locateMarker(lan, sat){
+        let center = new T.LngLat(lan, sat + 0.005);
+        this.map.centerAndZoom(center, 15);
+        let marker = this.findMarker(lan, sat);
+        marker.openInfoWindow(marker.win.ET);
+      },
+
+      /***
+       * 进入水库
+       */
+      enterRes() {
+        this.$router.push({path: this.redirect || "/"})
+      },
+
+      /***
+       * 判断是否为正常水库数据项
+       */
+      isReservoir(item) {
+        return item.label.indexOf('水库') !== -1;
+      },
+
+      /***
+       * 查找水库点
+       * @returns {{children: [{sat: number, lan: number, label: string, url: string}], label: string}|{children: [{sat: number, lan: number, label: string, url: string}], label: string}|{label: string}|{label: string}|{label: string}|{label: string}}
+       * @param item 水库项
+       */
+      findItem(item) {
+        if (!this.isReservoir(item)) return;
+        for (let i = 0; i < this.reservoirs.length; i++) {
+          let children = this.reservoirs[i].children;
+          for (let j = 0; j < children.length; j++) {
+            let child = children[j].children;
+            if (child) {
+              for (let k = 0; k < child.length; k++) {
+                let chi = child[k];
+                if (chi.label === item.label) {
+                  return chi;
+                }
+              }
+            } else {
+              if (children[j].label === item.label) {
+                return children[j];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="less">
+  .app-container {
+    margin: 0;
+    padding: 0 !important;
+  }
+
+  .top-div {
+    background: #003d4d; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #00c996, #003d4d); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #003d4d, #2a330f00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100px;
+  }
+
+  .el-tree-node__label{
+    font-family: KaiTi, serif;
+  }
+
+  .top-div > img {
+    margin-left: 40px;
+    height: 100%;
+    width: 790px;
+  }
+
+  .el-tree-node.is-current > .el-tree-node__content {
+    background-color: #acbbc5 !important;
+  }
+
+  .el-tree-node{
+    height:40px;
+
+  }
+
+  #mapDiv {
+    height: calc(100vh - 110px);
+    width: calc(100vw - 210px);;
+    margin: 2px;
+  }
+
+  #menu {
+    float: right;
+  }
+
+  #imgDiv {
+    color: #dfe6ec;
+    height: 0px;
+    /*background-image: url("../assets/images/title.png");*/
+    background-size: 1400px 140px;
+  }
+
+  #imgRes {
+    color: #dfe6ec;
+    height: 100px;
+    width: 100px;
+    background-image: url("../assets/images/common/water-level.gif");
+    background-size: 100px 100px;
+  }
+
+  .tdt-infowindow-content {
+    margin: 0;
+    background-color: #425431;
+  }
+
+  .tdt-infowindow-content-wrapper {
+    background-color: #5784ab;
+    color: #d1f6ff;
+    font-family: 楷体, serif;
+  }
+
+  .el-tree {
+    margin-top: 3px;
+    height: calc(100vh - 110px);
+    color: #44476e;
+    background-color: #a1d2cbc4;
+    border-style: inset;
+  }
+
+
+</style>

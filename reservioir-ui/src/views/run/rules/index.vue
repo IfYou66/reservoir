@@ -1,0 +1,353 @@
+<template>
+  <div class="app-container">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="规程名称" prop="fRulesName" label-width="120px !important">
+        <el-input
+          v-model="queryParams.fRulesName"
+          placeholder="请输入规程名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+<!--      <el-form-item label="规程时间" prop="fRulesTime">
+        <el-date-picker clearable size="small"
+          v-model="queryParams.fRulesTime"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="选择规程时间">
+        </el-date-picker>
+      </el-form-item>-->
+      <el-form-item label="规程时间">
+        <el-date-picker v-model="dateRange" size="small" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
+                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          v-hasPermi="['run:rules:add']"
+        >新增</el-button>
+      </el-col>
+      <!--<el-col :span="1.5">
+        <el-button
+          type="danger"
+          plain
+          icon="el-icon-delete"
+          size="mini"
+          :disabled="multiple"
+          @click="handleDelete"
+          v-hasPermi="['run:rules:remove']"
+        >删除</el-button>-->
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
+
+    <el-table v-loading="loading" :data="rulesList" @selection-change="handleSelectionChange">
+     <!-- <el-table-column type="selection" width="55" align="center" />-->
+      <el-table-column label="规程名称" align="center" prop="fRulesName" />
+      <el-table-column label="规程时间" align="center" prop="fRulesTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.fRulesTime, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
+       <el-table-column label="规程概要" align="center" prop="fRulesOutline" />
+      <el-table-column label="录入时间" align="center" prop="fCreateTime"  width="200"/>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-query"
+              @click="handleGetInfo(scope.row)"
+              v-hasPermi="['run:rules:query']"
+            >查看</el-button>
+          <!--<el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['run:rules:edit']"
+          >修改</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['run:rules:remove']"
+          >删除</el-button>-->
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
+
+    <!-- 添加或修改水库调度规程 对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="150px !important">
+        <el-form-item label="规程名称"  prop="fRulesName" label-width="150px !important">
+          <el-input v-model="form.fRulesName" :disabled="read" placeholder="请输入规程名称" />
+        </el-form-item>
+       <el-form-item label="规程时间" :prop="fRulesTime">
+         <el-date-picker clearable size="small"
+            v-model="form.fRulesTime"
+            type="date"
+            :disabled="read"
+            value-format="yyyy-MM-dd"
+            placeholder="选择规程时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="规程概要"  prop="fRulesOutline" label-width="150px !important">
+          <el-input v-model="form.fRulesOutline" :disabled="read" type="textarea" maxlength="500" show-word-limit  placeholder="请输入内容" rows="12"/>
+        </el-form-item>
+       <el-form-item label="规程文件" prop="fRulesFileId">
+	        <el-upload class="upload-demo" style="font-size:100" :action="GLOBAL.httpUrl" multiple
+	                   :on-success="successResave" ref="upload" :headers="GLOBAL.headers()" :limit="1" :on-preview="handlePreview"
+	                   :show-file-list="true" :auto-upload="true" :disabled="active != 1" :on-remove="remove"
+	                   :file-list="fileList" :before-upload = "beforeAvatarUpload"
+                        >
+	          <el-button :disabled="active != 1" type="primary">上传规程批文</el-button>
+	        </el-upload>
+         </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import { listRules, getRules, delRules, addRules, updateRules } from "@/api/run/rules";
+
+import {getFileById} from "@/api/file";
+export default {
+  name: "Rules",
+  data() {
+    return {
+      // 日期范围
+      dateRange: [],
+      // 遮罩层
+      loading: true,
+      // 选中数组
+      ids: [],
+      // 非单个禁用
+      single: true,
+      // 非多个禁用
+      multiple: true,
+      // 显示搜索条件
+      showSearch: true,
+      // 总条数
+      total: 0,
+      // 水库调度规程 表格数据
+      rulesList: [],
+      // 弹出层标题
+      title: "",
+      // 是否显示弹出层
+      open: false,
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        fRulesName: null,
+        fRulesTime: null,
+        fCreatePeople: null,
+        fCreateTime: null
+      },
+      fileList: [],
+      active: 1,
+      // 表单参数
+      form: {},
+      // 表单校验
+      rules: {
+      },
+      read: false
+    };
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    beforeAvatarUpload(file){
+    const isLt100M = file.size / 1024 / 1024 < 100;
+       if (!isLt100M) {
+              this.$message.error('上传文件大小不能超过 100MB!');
+              return false
+          }
+    },
+    /** 查询水库调度规程 列表 */
+    getList() {
+      this.loading = true;
+      listRules(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        this.rulesList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+      });
+    },
+    // 上传成功事件
+    successResave(response, file, fileList) {
+      this.form.fRulesFileId = response.data.fId
+    },
+    remove(file, fileList) {
+      this.GLOBAL.commonFun(this.form.fRulesFileId)
+    },
+    handlePreview(file) {
+	  // window.location.href = this.fileList[0].url;、
+	  window.open(this.fileList[0].url);
+	},
+    // 取消按钮
+    cancel() {
+      this.open = false;
+      this.reset();
+    },
+    // 表单重置
+    reset() {
+      this.active = 1
+      this.read = false
+      this.fileList = []
+      this.form = {
+        fId: null,
+        fRulesName: null,
+        fRulesOutline: null,
+        fRulesTime: null,
+        fRulesFileId: null,
+        fCreatePeople: null,
+        fCreateTime: null
+      };
+      this.resetForm("form");
+    },
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1;
+      this.getList();
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.resetForm("queryForm");
+      this.handleQuery();
+    },
+    // 多选框选中数据
+    handleSelectionChange(selection) {
+      this.ids = selection.map(item => item.fId)
+      this.single = selection.length!==1
+      this.multiple = !selection.length
+    },
+    /** 新增按钮操作 */
+    handleAdd() {
+      this.reset();
+      this.open = true;
+      this.title = "添加水库调度规程 ";
+    },
+    /** 查看按钮操作 */
+    handleGetInfo(row) {
+      this.reset();
+      this.read = true
+      this.active = 2
+      const fId = row.fId || this.ids
+      getRules(fId).then(response => {
+//        this.fileList = [{
+//          name: '暂无文件',
+//          url: null
+//        }]
+        if(response.data.fRulesFileId){
+         let params = {
+               id:response.data.fRulesFileId
+           }
+         getFileById(params).then(res => {
+         	window.open(res.data.fFilePath);
+//         this.fileList[0].name = res.data.fOldFileName
+//         this.fileList[0].url = res.data.fFilePath
+         })
+        }else{
+          	 this.msgError("没有上传附件！");
+        }
+//      this.form = response.data;
+//      this.open = true;
+//      this.title = "水库调度规程 ";
+      });
+    },
+    /** 修改按钮操作 */
+    handleUpdate(row) {
+      this.reset();
+      const fId = row.fId || this.ids
+      getRules(fId).then(response => {
+        this.fileList = [{
+          name: '暂无文件',
+          url: null
+        }]
+        console.log('11111',response.data)
+        if(response.data.fRulesFileId){
+         let params = {
+               id:response.data.fRulesFileId
+           }
+         getFileById(params).then(res => {
+           this.fileList[0].name = res.data.fOldFileName
+           this.fileList[0].url = res.data.fFilePath
+         })
+        }
+
+        this.form = response.data;
+        this.open = true;
+        this.title = "修改水库调度规程 ";
+      });
+    },
+    /** 提交按钮 */
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.form.fId != null) {
+            updateRules(this.form).then(response => {
+              this.msgSuccess("修改成功");
+              this.open = false;
+              this.getList();
+            });
+          } else {
+            addRules(this.form).then(response => {
+              this.msgSuccess("新增成功");
+              this.open = false;
+              this.getList();
+            });
+          }
+        }
+      });
+    },
+    /** 删除按钮操作 */
+    handleDelete(row) {
+      const fIds = row.fId || this.ids;
+      this.$confirm('是否确认删除水库调度规程 编号为"' + fIds + '"的数据项?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function() {
+          return delRules(fIds);
+        }).then(() => {
+          this.getList();
+          this.msgSuccess("删除成功");
+        }).catch(() => {});
+    },
+    /** 导出按钮操作 */
+    handleExport() {
+      this.download('run/rules/export', {
+        ...this.queryParams
+      }, `run_rules.xlsx`)
+    }
+  }
+};
+</script>

@@ -1,0 +1,345 @@
+package com.szsk.reservoir.run.domain;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.core.annotation.Excel;
+import com.ruoyi.common.core.web.domain.BaseEntity;
+import com.ruoyi.system.api.domain.SysFile;
+import java.math.BigDecimal;
+import java.util.Date;
+
+/**
+ * 安全检查计划编制 对象 s_plan_edit
+ * 
+ * @author cangfeng
+ * @date 2021-08-10
+ */
+public class RSecurity extends BaseEntity
+{
+    private static final long serialVersionUID = 1L;
+
+    /** id */
+    private Long fId;
+
+    /** 计划名称 */
+    @Excel(name = "计划名称")
+    private String fPlanName;
+
+    /** 计划类型 */
+    @Excel(name = "计划类型")
+    private Integer fPlanType;
+
+    /** 预算 */
+    @Excel(name = "预算")
+    private BigDecimal fBudget;
+
+    /** 计划概述 */
+    @Excel(name = "计划概述")
+    private String fPlanContent;
+
+    /** 计划附件 */
+    @Excel(name = "计划附件")
+    private String fPlanId;
+
+    /** 编制人 */
+    @Excel(name = "编制人")
+    private String fEditPersion;
+
+    /** 编制时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "编制时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fEditTime;
+
+    /** 审核意见 */
+    @Excel(name = "审核意见")
+    private String fAuditContent;
+
+    /** 审核结果 0:不同意1：同意 */
+    @Excel(name = "审核结果 0:不同意1：同意")
+    private Integer fAuditResult;
+
+    /** 审核人 */
+    @Excel(name = "审核人")
+    private String fAuditPersion;
+
+    /** 审核时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "审核时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fAuditTime;
+
+    /** 审批意见 */
+    @Excel(name = "审批意见")
+    private String fApproveContent;
+
+    /** 审批结果 */
+    @Excel(name = "审批结果")
+    private Integer fApproveResult;
+
+    /** 审批人 */
+    @Excel(name = "审批人")
+    private String fApprovePersion;
+
+    /** 审批时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "审批时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fApproveTime;
+
+    /** 状态 0:失效1：有效 */
+    @Excel(name = "状态 0:失效1：有效")
+    private Integer fStatus;
+
+    /** 流程实例id */
+    @Excel(name = "流程实例id")
+    private String fActId;
+
+    /** 流程下一节点审核人 */
+    @Excel(name = "流程下一节点审核人")
+    private String fActPersion;
+
+    /** 流程状态 1:待审核 2：待审批 3：审批完成 4：驳回 */
+    @Excel(name = "流程状态 1:待审核 2：待审批 3：审批完成 4：驳回")
+    private Integer fActStatus;
+
+    private SysFile sysFile;
+
+    // 1：同意 2：不同意 3：驳回
+    private String auditStatus;
+    // 流程节点
+    private String fActNode;
+    // 流程发起人
+    private String fStartPersion;
+
+    /**
+     * 暂存或提交 1提交 0暂存
+     */
+    private int holdOrSubmit;
+
+    /**
+     * 当前登陆人角色
+     */
+    private String landingPersonId;
+
+    public int getHoldOrSubmit() {
+        return holdOrSubmit;
+    }
+
+    public void setHoldOrSubmit(int holdOrSubmit) {
+        this.holdOrSubmit = holdOrSubmit;
+    }
+
+    public String getLandingPersonId() {
+        return landingPersonId;
+    }
+
+    public void setLandingPersonId(String landingPersonId) {
+        this.landingPersonId = landingPersonId;
+    }
+
+    public String getfPlanContent() {
+        return fPlanContent;
+    }
+
+    public SysFile getSysFile() {
+        return sysFile;
+    }
+
+    public void setSysFile(SysFile sysFile) {
+        this.sysFile = sysFile;
+    }
+
+    public void setfEditPersion(String fEditPersion) {
+        this.fEditPersion = fEditPersion;
+    }
+
+    public void setfPlanName(String fPlanName) {
+        this.fPlanName = fPlanName;
+    }
+
+    public String getfActNode() {
+        return fActNode;
+    }
+
+    public void setfActNode(String fActNode) {
+        this.fActNode = fActNode;
+    }
+
+    public String getfStartPersion() {
+        return fStartPersion;
+    }
+
+    public void setfStartPersion(String fStartPersion) {
+        this.fStartPersion = fStartPersion;
+    }
+
+    public String getAuditStatus() {
+        return auditStatus;
+    }
+
+    public String getfActId() {
+        return fActId;
+    }
+
+    public void setfActId(String fActId) {
+        this.fActId = fActId;
+    }
+
+    public void setAuditStatus(String auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
+    public Long getfId() {
+        return fId;
+    }
+
+    public void setfId(Long fId) {
+        this.fId = fId;
+    }
+
+    public String getfPlanName()
+    {
+        return fPlanName;
+    }
+    public void setfPlanType(Integer fPlanType) 
+    {
+        this.fPlanType = fPlanType;
+    }
+
+    public Integer getfPlanType() 
+    {
+        return fPlanType;
+    }
+    public void setfBudget(BigDecimal fBudget) 
+    {
+        this.fBudget = fBudget;
+    }
+
+    public BigDecimal getfBudget() 
+    {
+        return fBudget;
+    }
+    public void setfPlanContent(String fPlanContent) 
+    {
+        this.fPlanContent = fPlanContent;
+    }
+
+    public String getfPlanId() {
+        return fPlanId;
+    }
+
+    public void setfPlanId(String fPlanId) {
+        this.fPlanId = fPlanId;
+    }
+
+    public String getfEditPersion()
+    {
+        return fEditPersion;
+    }
+    public void setfEditTime(Date fEditTime) 
+    {
+        this.fEditTime = fEditTime;
+    }
+
+    public Date getfEditTime() 
+    {
+        return fEditTime;
+    }
+    public void setfAuditContent(String fAuditContent) 
+    {
+        this.fAuditContent = fAuditContent;
+    }
+
+    public String getfAuditContent() 
+    {
+        return fAuditContent;
+    }
+    public void setfAuditResult(Integer fAuditResult) 
+    {
+        this.fAuditResult = fAuditResult;
+    }
+
+    public Integer getfAuditResult() 
+    {
+        return fAuditResult;
+    }
+    public void setfAuditPersion(String fAuditPersion) 
+    {
+        this.fAuditPersion = fAuditPersion;
+    }
+
+    public String getfAuditPersion() 
+    {
+        return fAuditPersion;
+    }
+    public void setfAuditTime(Date fAuditTime) 
+    {
+        this.fAuditTime = fAuditTime;
+    }
+
+    public Date getfAuditTime() 
+    {
+        return fAuditTime;
+    }
+    public void setfApproveContent(String fApproveContent) 
+    {
+        this.fApproveContent = fApproveContent;
+    }
+
+    public String getfApproveContent() 
+    {
+        return fApproveContent;
+    }
+    public void setfApproveResult(Integer fApproveResult) 
+    {
+        this.fApproveResult = fApproveResult;
+    }
+
+    public Integer getfApproveResult() 
+    {
+        return fApproveResult;
+    }
+    public void setfApprovePersion(String fApprovePersion) 
+    {
+        this.fApprovePersion = fApprovePersion;
+    }
+
+    public String getfApprovePersion() 
+    {
+        return fApprovePersion;
+    }
+    public void setfApproveTime(Date fApproveTime) 
+    {
+        this.fApproveTime = fApproveTime;
+    }
+
+    public Date getfApproveTime() 
+    {
+        return fApproveTime;
+    }
+    public void setfStatus(Integer fStatus) 
+    {
+        this.fStatus = fStatus;
+    }
+
+    public Integer getfStatus() 
+    {
+        return fStatus;
+    }
+
+    public void setfActPersion(String fActPersion) 
+    {
+        this.fActPersion = fActPersion;
+    }
+
+    public String getfActPersion() 
+    {
+        return fActPersion;
+    }
+    public void setfActStatus(Integer fActStatus) 
+    {
+        this.fActStatus = fActStatus;
+    }
+
+    public Integer getfActStatus() 
+    {
+        return fActStatus;
+    }
+}

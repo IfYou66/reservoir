@@ -1,0 +1,105 @@
+package com.szsk.reservoir.manageSystem.controller;
+
+import java.util.List;
+import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.ruoyi.common.log.annotation.Log;
+import com.ruoyi.common.log.enums.BusinessType;
+import com.ruoyi.common.security.annotation.PreAuthorize;
+import com.szsk.reservoir.manageSystem.domain.SysJoinTraining;
+import com.szsk.reservoir.manageSystem.service.ISysJoinTrainingService;
+import com.ruoyi.common.core.web.controller.BaseController;
+import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.utils.poi.ExcelUtil;
+import com.ruoyi.common.core.web.page.TableDataInfo;
+
+/**
+ * 参加培训人员Controller
+ * 
+ * @author cangfeng
+ * @date 2021-08-13
+ */
+@RestController
+@RequestMapping("/joinTraining")
+public class SysJoinTrainingController extends BaseController
+{
+    @Autowired
+    private ISysJoinTrainingService sysJoinTrainingService;
+
+    /**
+     * 查询参加培训人员列表
+     */
+    @PreAuthorize(hasPermi = "manageSystem:joinTraining:list")
+    @GetMapping("/list")
+    public TableDataInfo list(SysJoinTraining sysJoinTraining)
+    {
+        startPage();
+        List<SysJoinTraining> list = sysJoinTrainingService.selectSysJoinTrainingList(sysJoinTraining);
+        return getDataTable(list);
+    }
+
+    /**
+     * 导出参加培训人员列表
+     */
+    @PreAuthorize(hasPermi = "manageSystem:joinTraining:export")
+    @Log(title = "参加培训人员", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    public void export(HttpServletResponse response, SysJoinTraining sysJoinTraining) throws IOException
+    {
+        List<SysJoinTraining> list = sysJoinTrainingService.selectSysJoinTrainingList(sysJoinTraining);
+        ExcelUtil<SysJoinTraining> util = new ExcelUtil<SysJoinTraining>(SysJoinTraining.class);
+        util.exportExcel(response, list, "参加培训人员数据");
+    }
+
+    /**
+     * 获取参加培训人员详细信息
+     */
+    @PreAuthorize(hasPermi = "manageSystem:joinTraining:query")
+    @GetMapping(value = "/{fId}")
+    public AjaxResult getInfo(@PathVariable("fId") Long fId)
+    {
+        return AjaxResult.success(sysJoinTrainingService.selectSysJoinTrainingById(fId));
+    }
+
+    /**
+     * 新增参加培训人员
+     */
+    @PreAuthorize(hasPermi = "manageSystem:joinTraining:add")
+    @Log(title = "参加培训人员", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@RequestBody SysJoinTraining sysJoinTraining)
+    {
+        return toAjax(sysJoinTrainingService.insertSysJoinTraining(sysJoinTraining));
+    }
+
+    /**
+     * 修改参加培训人员
+     */
+    @PreAuthorize(hasPermi = "manageSystem:joinTraining:edit")
+    @Log(title = "参加培训人员", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@RequestBody SysJoinTraining sysJoinTraining)
+    {
+        return toAjax(sysJoinTrainingService.updateSysJoinTraining(sysJoinTraining));
+    }
+
+    /**
+     * 删除参加培训人员
+     */
+    @PreAuthorize(hasPermi = "manageSystem:joinTraining:remove")
+    @Log(title = "参加培训人员", businessType = BusinessType.DELETE)
+	@DeleteMapping("/{fIds}")
+    public AjaxResult remove(@PathVariable Long[] fIds)
+    {
+        return toAjax(sysJoinTrainingService.deleteSysJoinTrainingByIds(fIds));
+    }
+}

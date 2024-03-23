@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/testm1629097091307" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1629097091307" name="" targetNamespace="http://www.activiti.org/testm1629097091307" typeLanguage="http://www.w3.org/2001/XMLSchema">
+  <process id="training" isClosed="false" isExecutable="true" name="培训管理" processType="None">
+    <startEvent id="start" name="StartEvent"/>
+    <userTask activiti:assignee="${assignee}" activiti:exclusive="true" id="audit" name="培训审核"/>
+    <userTask activiti:assignee="${assignee}" activiti:exclusive="true" id="approve" name="培训批准"/>
+    <userTask activiti:assignee="${assignee}" activiti:exclusive="true" id="impl" name="培训实施"/>
+      <userTask activiti:assignee="${assignee}" activiti:exclusive="true" id="score" name="评分"/>
+    <endEvent id="end" name="EndEvent"/>
+    <sequenceFlow id="_11" sourceRef="audit" targetRef="approve"/>
+    <sequenceFlow id="_12" sourceRef="approve" targetRef="impl"/>
+    <sequenceFlow id="_13" sourceRef="impl" targetRef="score"/>
+    <sequenceFlow id="_14" sourceRef="score" targetRef="end"/>
+    <sequenceFlow id="_3" sourceRef="start" targetRef="audit"/>
+  </process>
+  <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+    <bpmndi:BPMNPlane bpmnElement="training">
+      <bpmndi:BPMNShape bpmnElement="start" id="Shape-start">
+        <dc:Bounds height="32.0" width="32.0" x="170.0" y="95.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="audit" id="Shape-audit">
+        <dc:Bounds height="55.0" width="85.0" x="290.0" y="90.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="approve" id="Shape-approve">
+        <dc:Bounds height="55.0" width="85.0" x="430.0" y="90.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="impl" id="Shape-impl">
+        <dc:Bounds height="55.0" width="85.0" x="565.0" y="90.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="Shape-end">
+        <dc:Bounds height="32.0" width="32.0" x="855.0" y="100.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="score" id="Shape-score">
+        <dc:Bounds height="55.0" width="85.0" x="695.0" y="90.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_13" id="BPMNEdge__13" sourceElement="impl" targetElement="score">
+        <di:waypoint x="650.0" y="117.5"/>
+        <di:waypoint x="695.0" y="117.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_12" id="BPMNEdge__12" sourceElement="approve" targetElement="impl">
+        <di:waypoint x="515.0" y="117.5"/>
+        <di:waypoint x="565.0" y="117.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_14" id="BPMNEdge__14" sourceElement="score" targetElement="end">
+        <di:waypoint x="780.0" y="117.5"/>
+        <di:waypoint x="855.0" y="116.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_3" id="BPMNEdge__3" sourceElement="start" targetElement="audit">
+        <di:waypoint x="202.0" y="111.0"/>
+        <di:waypoint x="290.0" y="117.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_11" id="BPMNEdge__11" sourceElement="audit" targetElement="approve">
+        <di:waypoint x="375.0" y="117.5"/>
+        <di:waypoint x="430.0" y="117.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

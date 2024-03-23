@@ -1,0 +1,268 @@
+<template>
+  <div class="app-container">
+    <div class="from-div" style="width: 100%;">
+      <el-row>
+        <el-col :span="24" class="from-div-title" style="background-color: rgba(215, 215, 215, 1); text-align: right;">
+          <div style="margin-right: 10px">
+            <el-button type="primary" size="small" @click="handleAdd">取消</el-button>
+            <el-button type="primary" size="small" @click="submitForm">提交</el-button>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24" class="from-div-title">
+          控制运行计划编制表
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col-left">
+          计划名称
+        </el-col>
+        <el-col :span="8" class="from-border-right">
+          <el-input v-bind:disabled="rControl.fActStatus == 1 ? false : true" v-model="rControl.fPlanName"
+            placeholder="请输入内容"></el-input>
+        </el-col>
+        <el-col :span="3" class="from-col-left">
+          计划类型
+        </el-col>
+        <el-col :span="3" style="line-height: 40px;border-right: #a4d5ff 1px solid;">
+          <div>
+            <el-select v-bind:disabled="rControl.fActStatus == 1 ? false : true" v-model="rControl.fPlanType"
+              placeholder="请选择">
+              <el-option v-for="item in audit.planType" :key="item.dictValue" :label="item.dictLabel"
+                :value="item.dictValue">
+              </el-option>
+            </el-select>
+          </div>
+        </el-col>
+
+        <el-col :span="3" class="from-col-left">
+          预算（元）
+        </el-col>
+        <el-col :span="4" class="from-border-right">
+          <el-input v-bind:disabled="rControl.fActStatus == 1 ? false : true" v-model="rControl.fBudget"
+            placeholder="预算（元）"></el-input>
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-borderibht">
+          计划内容
+        </el-col>
+        <el-col :span="21" style="height: 400px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            计划概述：
+          </div>
+          <el-input v-bind:disabled="rControl.fActStatus == 1 ? false : true" type="textarea" :rows="8"  maxlength="500" show-word-limit
+            placeholder="请输入内容" v-model="rControl.fPlanContent">
+          </el-input>
+          <div style="display:flex;justify-content:space-between;margin-top: 100px;">
+            <div style="width: 200px;margin-top: -60px;margin-left: 20px;">
+              <el-upload  style="margin-left: 15px;margin-top: 15px" class="upload-demo"
+               :before-upload = "beforeAvatarUpload"
+                :headers="GLOBAL.headers()" :action="GLOBAL.httpUrl" :on-preview="handlePreview" :on-remove="handleRemove"
+                 multiple :on-success="uploadedSuccess" :show-file-list="true"
+                :auto-upload="true" :limit="1" :on-exceed="handleExceed" :file-list="fileList">
+                <el-button size="small" type="primary">上传附件</el-button>
+                <div slot="tip" class="el-upload__tip" style="margin-top: 15px">上传文件不得超过100M</div>
+              </el-upload>
+            </div>
+            <div style="font-size: 20px;margin-right: 10px;margin-top: -5px;">
+              <div style="text-align: left">
+                <div style="display:inline;">编制人：<el-input v-bind:disabled="rControl.fActStatus == 1 ? false : true"
+                    v-model="rControl.fPreparedBy" placeholder="请输入内容" style="width:220px;border: 1px solid #DCDFE6;">
+                  </el-input>
+                </div>
+                <div class="block" style="transform:translateY(10%)">
+                  <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                  <el-date-picker v-bind:disabled="rControl.fActStatus == 1 ? false : true" type="date"
+                    style="border: 1px solid #DCDFE6;" v-model="rControl.fPreparationTime" placeholder="选择日期"
+                    format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss">
+                  </el-date-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col">
+          计划审核
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            审核意见：
+          </div>
+          <el-input v-bind:disabled="rControl.fActStatus == 2 ? false : true" type="textarea" :rows="3"  maxlength="500" show-word-limit
+            v-model="rControl.fReviewComments" placeholder="请输入内容">
+          </el-input>
+          <div class="from-select">
+            <div style="margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;">
+                审核结果：
+              </div>
+              <el-select v-bind:disabled="rControl.fActStatus == 2 ? false : true" v-model="rControl.fReviewResult"
+                clearable placeholder="请选择">
+                <el-option v-for="item in audit.sysResult" :key="item.dictValue" :label="item.dictLabel"
+                  :value="item.dictValue">
+                </el-option>
+              </el-select>
+            </div>
+            <div>
+              <span>审核人：<el-input v-bind:disabled="rControl.fActStatus == 2 ? false : true"
+                  v-model="rControl.fReviewPeople" placeholder="请输入内容" style="width:180px;"></el-input>
+              </span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                <el-date-picker :disabled="rControl.fActStatus == 2 ? false : true" type="date"
+                  v-model="rControl.fReviewDate" placeholder="选择日期" format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd HH:mm:ss">
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col">
+          计划批准
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            审批意见：
+          </div>
+          <el-input :disabled="rControl.fActStatus == 3 ? false : true" type="textarea" :rows="3"  maxlength="500" show-word-limit
+            v-model="rControl.fAuditComments" placeholder="请输入内容">
+          </el-input>
+          <div class="from-select">
+            <div style="margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;">
+                审批结果：
+              </div>
+              <el-select :disabled="rControl.fActStatus == 3 ? false : true" v-model="rControl.fAuditResult" clearable
+                placeholder="请选择">
+                <el-option v-for="item in audit.sysResult" :key="item.dictValue" :label="item.dictLabel"
+                  :value="item.dictValue">
+                </el-option>
+              </el-select>
+            </div>
+            <div>
+              <span>审批人：<el-input :disabled="rControl.fActStatus == 3 ? false : true" v-model="rControl.fAuditPeople"
+                  placeholder="请输入内容" style="width:180px;"></el-input>
+              </span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                <el-date-picker :disabled="rControl.fActStatus == 3 ? false : true" type="date"
+                  v-model="rControl.fAuditDate" placeholder="选择日期" format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd HH:mm:ss">
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+  </div>
+</template>
+<script>
+  import {
+    listControl,
+    getControl,
+    delControl,
+    addControl,
+    updateControl,
+    startWorkFlow,
+    taskReview,
+    latelyControl,
+    getDictByType
+  } from "@/api/reservoir/control";
+  import {
+    getUserList,
+  } from "@/api/security/planning";
+  import {
+    getFileById
+  } from "@/api/file";
+  export default {
+
+    props: ['rControl', 'audit'],
+
+    data() {
+      return {
+        fileList: [],
+        data: [],
+      };
+    },
+    created() {
+      this.getFile();
+    },
+    watch: {
+      // 监听的变量
+      rControl: function() {
+        this.getFile();
+      }
+    },
+    methods: {
+      beforeAvatarUpload(file){
+      const isLt100M = file.size / 1024 / 1024 < 100;
+         if (!isLt100M) {
+                this.$message.error('上传文件大小不能超过 100MB!');
+                return false
+            }
+      },
+      handleAdd(){
+        this.$emit("submitFormfalse")
+      },
+      submitForm(){
+        this.$emit("submitForm")
+      },
+
+      getFile() {
+        console.log('fileList = []');
+        this.fileList = [];
+        if (this.rControl.fPlanId) {
+          getFileById({
+            id: this.rControl.fPlanId
+          }).then(result => {
+            if (result) {
+              this.fileList = [{
+                name: result.data.fOldFileName,
+                url: result.data.fFilePath
+              }];
+              console.log("fileList.url:", this.fileList[0].url);
+            }
+          })
+        }
+      },
+      uploadedSuccess(response, file, fileList) {
+        this.rControl.fPlanId = response.data.fId;
+        this.getFile();
+      },
+      handleRemove(file, fileList) {
+        this.GLOBAL.commonFun(this.rControl.fPlanId);
+        this.rControl.fPlanId = '';
+        this.getFile();
+      },
+      handlePreview(file) {
+		  // window.location.href = this.fileList[0].url;
+		  window.open(this.fileList[0].url);
+		  // window.location.href = file.url;
+	  },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${file.name}？`);
+      },
+
+
+    }
+  };
+</script>
+<style lang="scss">
+  .color409 {
+    color: #409eff;
+    cursor: pointer;
+  }
+</style>

@@ -1,0 +1,150 @@
+<template>
+  <div id="container">
+    <input type="text" v-model="text" @change="dataChange">
+    <child :msg="text"></child>
+    <div>{{value2}}</div>
+    <div class="block">
+      <span class="demonstration">带快捷选项</span>
+      <el-date-picker
+        v-model="value2"
+        type="daterange"
+        align="right"
+        format="yyyy-MM-dd"
+        value-format="yyyy-MM-dd"
+        unlink-panels
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期"
+        :picker-options="pickerOptions">
+      </el-date-picker>
+    </div>
+
+    <div>
+      <el-input v-model="url"></el-input>
+      <el-button @click="send">
+        连接
+      </el-button>
+    </div>
+  </div>
+</template>
+<script>
+  import child from "./child.vue";
+  import req from '@/utils/request'
+  import {getBaseUrl} from "@/api/collection/request";
+
+  export default {
+    data() {
+      return {
+        url: '/collection/data/history/DHSK000100010001000FE3/2020-12-12 12:00:00/2021-08-08 12:23:23',
+        text: "父组件的值",
+        pickerOptions: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        },
+        value1: '',
+        value2: ''
+      };
+    },
+    methods: {
+      dataChange(data) {
+        this.msg = data;
+      },
+      doubleAfter2seconds(url) {
+        let that = this;
+        let baseURL = getBaseUrl(url);
+        url = url.replace(baseURL, '');
+        return req({
+          url: url,
+          method: 'get',
+          baseURL: baseURL,
+        });
+      },
+      async testResult(url) {
+        console.log(1)
+        let first = await this.doubleAfter2seconds(url);
+        let second = await this.doubleAfter2seconds(url);
+        let third = await this.doubleAfter2seconds(url);
+        console.log(first + second + third);
+        return first + second + third
+      },
+      async sendAsyncRequest(url) {
+        let that = this;
+        let baseURL = getBaseUrl(url);
+        url = url.replace(baseURL, '');
+        var info = await req({
+          url: url,
+          method: 'get',
+          baseURL: baseURL,
+        });
+        return info;
+      },
+      sendRequest(url) {
+        let that = this;
+        let baseURL = getBaseUrl(url);
+        url = url.replace(baseURL, '');
+        return req({
+          url: url,
+          method: 'get',
+          baseURL: baseURL,
+        })/*.then(res => {
+          console.log(res)
+        }).catch(error => {
+          console.log(error)
+        });*/
+      },
+      send() {
+        req({
+          //url: '/archives/archives/list',
+          url: this.url,
+          //url: '/system/user/list',
+          method: 'get',
+        }).then(res => {
+          console.log(res)
+        }).catch(error => {
+          console.log(error)
+        });
+      }
+    },
+    components: {
+      child
+    },
+    mounted() {
+      let url = "/first-api/getSensor/serverSensor.ashx?name=getSensorRecord&value=MSSK000100040000010F00&start=2021-08-13 00:00:00&end=2021-08-13 23:59:59";
+      console.log("1")
+      console.log(this.testResult(url));
+      let result = this.sendAsyncRequest(url);
+      result.then(res => {
+        console.log(2)
+      });
+      this.sendRequest(url)
+        .then(res => console.log(3));
+      console.log("4")
+
+    }
+  };
+</script>
+<style scoped>
+</style>

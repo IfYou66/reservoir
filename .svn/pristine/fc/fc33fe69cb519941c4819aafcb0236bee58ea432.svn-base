@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.RSecurityMapper">
+
+    <resultMap type="com.szsk.reservoir.run.domain.RSecurity" id="RSecurityResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fPlanName"    column="f_plan_name"    />
+        <result property="fPlanType"    column="f_plan_type"    />
+        <result property="fBudget"    column="f_budget"    />
+        <result property="fPlanContent"    column="f_plan_content"    />
+        <result property="fPlanId"    column="f_plan_id"    />
+        <result property="fEditPersion"    column="f_edit_persion"    />
+        <result property="fEditTime"    column="f_edit_time"    />
+        <result property="fAuditContent"    column="f_audit_content"    />
+        <result property="fAuditResult"    column="f_audit_result"    />
+        <result property="fAuditPersion"    column="f_audit_persion"    />
+        <result property="fAuditTime"    column="f_audit_time"    />
+        <result property="fApproveContent"    column="f_approve_content"    />
+        <result property="fApproveResult"    column="f_approve_result"    />
+        <result property="fApprovePersion"    column="f_approve_persion"    />
+        <result property="fApproveTime"    column="f_approve_time"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fActId"    column="f_act_id"    />
+        <result property="fActPersion"    column="f_act_persion"    />
+        <result property="fStartPersion"    column="f_start_persion"    />
+        <result property="fActNode"    column="f_act_node"    />
+        <result property="fActStatus"    column="f_act_status"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+        
+    </resultMap>
+
+    <select id="queryPlanList" resultMap="RSecurityResult" parameterType="com.szsk.reservoir.run.domain.RSecurity">
+        select * from r_security
+        <where>
+            f_status = 1
+            <if test="fActStatus != null and fActStatus != ''">
+                AND f_act_status = #{fActStatus}
+            </if>
+            <if test="fReservoirInfoId != null and fReservoirInfoId != ''">
+                AND f_reservoir_info_id = #{fReservoirInfoId}
+            </if>
+            <if test="fPlanName != null and fPlanName != ''">
+                AND f_plan_name like concat('%',#{fPlanName},'%')
+            </if>
+        </where>
+    </select>
+
+    <update id="updatePlanEdit" parameterType="com.szsk.reservoir.run.domain.RSecurity">
+        update r_security
+        <set>
+            <if test="fPlanName != null">f_plan_name = #{fPlanName},</if>
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if> 
+            <if test="fPlanType != null">f_plan_type = #{fPlanType},</if>
+            <if test="fBudget != null">f_budget = #{fBudget},</if>
+            <if test="fPlanContent != null">f_plan_content = #{fPlanContent},</if>
+            <if test="fPlanId != null">f_plan_id = #{fPlanId},</if>
+            <if test="fEditPersion != null">f_edit_persion = #{fEditPersion},</if>
+            <if test="fEditTime != null">f_edit_time = #{fEditTime},</if>
+            <if test="fAuditContent != null">f_audit_content = #{fAuditContent},</if>
+            <if test="fAuditResult != null">f_audit_result = #{fAuditResult},</if>
+            <if test="fAuditPersion != null">f_audit_persion = #{fAuditPersion},</if>
+            <if test="fAuditTime != null">f_audit_time = #{fAuditTime},</if>
+            <if test="fApproveContent != null">f_approve_content = #{fApproveContent},</if>
+            <if test="fApproveResult != null">f_approve_result = #{fApproveResult},</if>
+            <if test="fApprovePersion != null">f_approve_persion = #{fApprovePersion},</if>
+            <if test="fApproveTime != null">f_approve_time = #{fApproveTime},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+            <if test="fActStatus != null">f_act_status = #{fActStatus},</if>
+            f_act_persion = #{fActPersion},
+        </set>
+        WHERE f_id = #{fId}
+    </update>
+
+    <!--修改计划编制表下一环节审核人-->
+    <update id="updateFActPersion" parameterType="com.szsk.reservoir.run.domain.RSecuImpl">
+        update r_security
+        SET f_act_persion = #{fActPersion},
+            f_act_status = #{fActStatus}
+        WHERE f_id = #{fPlaneditId}
+    </update>
+
+    <insert id="insertRSecurity" parameterType="com.szsk.reservoir.run.domain.RSecurity" useGeneratedKeys="true" keyProperty="fId">
+        insert into r_security
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fPlanName != null">f_plan_name,</if>
+            <if test="fPlanType != null">f_plan_type,</if>
+            <if test="fBudget != null">f_budget,</if>
+            <if test="fPlanContent != null">f_plan_content,</if>
+            <if test="fPlanId != null">f_plan_id,</if>
+            <if test="fEditPersion != null">f_edit_persion,</if>
+            <if test="fEditTime != null">f_edit_time,</if>
+            <if test="fAuditContent != null">f_audit_content,</if>
+            <if test="fAuditResult != null">f_audit_result,</if>
+            <if test="fAuditPersion != null">f_audit_persion,</if>
+            <if test="fAuditTime != null">f_audit_time,</if>
+            <if test="fApproveContent != null">f_approve_content,</if>
+            <if test="fApproveResult != null">f_approve_result,</if>
+            <if test="fApprovePersion != null">f_approve_persion,</if>
+            <if test="fApproveTime != null">f_approve_time,</if>
+            <if test="fStatus != null">f_status,</if>
+            <if test="fActId != null">f_act_id,</if>
+            <if test="fActPersion != null">f_act_persion,</if>
+            <if test="fActStatus != null">f_act_status,</if>
+            <if test="fActNode != null">f_act_node,</if>
+            <if test="fStartPersion != null">f_start_persion,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fPlanName != null">#{fPlanName},</if>
+            <if test="fPlanType != null">#{fPlanType},</if>
+            <if test="fBudget != null">#{fBudget},</if>
+            <if test="fPlanContent != null">#{fPlanContent},</if>
+            <if test="fPlanId != null">#{fPlanId},</if>
+            <if test="fEditPersion != null">#{fEditPersion},</if>
+            <if test="fEditTime != null">#{fEditTime},</if>
+            <if test="fAuditContent != null">#{fAuditContent},</if>
+            <if test="fAuditResult != null">#{fAuditResult},</if>
+            <if test="fAuditPersion != null">#{fAuditPersion},</if>
+            <if test="fAuditTime != null">#{fAuditTime},</if>
+            <if test="fApproveContent != null">#{fApproveContent},</if>
+            <if test="fApproveResult != null">#{fApproveResult},</if>
+            <if test="fApprovePersion != null">#{fApprovePersion},</if>
+            <if test="fApproveTime != null">#{fApproveTime},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+            <if test="fActId != null">#{fActId},</if>
+            <if test="fActPersion != null">#{fActPersion},</if>
+            <if test="fActStatus != null">#{fActStatus},</if>
+            <if test="fActNode != null">#{fActNode},</if>
+            <if test="fStartPersion != null">#{fStartPersion},</if>
+         </trim>
+    </insert>
+
+    <select id="queryPlanEdit" resultMap="RSecurityResult" parameterType="java.lang.Long">
+        select * from r_security where f_id = #{fId}
+    </select>
+
+    <select id="queryUserList" resultType="com.ruoyi.system.api.domain.SysUser" parameterType="java.lang.String">
+        select su.user_id as 'userId',su.user_name as 'userName',sr.role_name as 'roleName',sr.role_key as 'roleKey',su.nick_name as 'nickName' from sys_user su,sys_user_role sur,sys_role sr where su.user_id = sur.user_id and sur.role_id=sr.role_id and su.user_id != #{userId} and role_key in ('audit','admin')
+    </select>
+
+    <select id="ifAdmin" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select COUNT(1) from sys_user su,sys_user_role sur,sys_role sr where su.user_id = sur.user_id and sur.role_id=sr.role_id and su.user_id = #{userId} and role_key='admin'
+    </select>
+
+    <select id="getFileInfo" resultType="com.ruoyi.system.api.domain.SysFile" parameterType="java.lang.Long">
+        select
+            f_id as 'fId',
+            f_file_path as 'fFilePath',
+            f_old_file_name as 'fOldFileName',
+            f_new_file_name as 'fNewFileName'
+        from sys_file where f_id=#{id}
+    </select>
+
+    <select id="processComplete" resultMap="RSecurityResult">
+        select * from r_security where f_status = 1 AND f_act_status = 4
+    </select>
+
+</mapper>

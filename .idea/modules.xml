@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/cf-api/cf-api-system/cf-api-system.iml" filepath="$PROJECT_DIR$/cf-api/cf-api-system/cf-api-system.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-auth/cf-auth.iml" filepath="$PROJECT_DIR$/cf-auth/cf-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-common/cf-common-core/cf-common-core.iml" filepath="$PROJECT_DIR$/cf-common/cf-common-core/cf-common-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-common/cf-common-datascope/cf-common-datascope.iml" filepath="$PROJECT_DIR$/cf-common/cf-common-datascope/cf-common-datascope.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-common/cf-common-datasource/cf-common-datasource.iml" filepath="$PROJECT_DIR$/cf-common/cf-common-datasource/cf-common-datasource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-common/cf-common-log/cf-common-log.iml" filepath="$PROJECT_DIR$/cf-common/cf-common-log/cf-common-log.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-common/cf-common-redis/cf-common-redis.iml" filepath="$PROJECT_DIR$/cf-common/cf-common-redis/cf-common-redis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-common/cf-common-security/cf-common-security.iml" filepath="$PROJECT_DIR$/cf-common/cf-common-security/cf-common-security.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-common/cf-common-swagger/cf-common-swagger.iml" filepath="$PROJECT_DIR$/cf-common/cf-common-swagger/cf-common-swagger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-gateway/cf-gateway.iml" filepath="$PROJECT_DIR$/cf-gateway/cf-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-modules/cf-archives/cf-modules-archives.iml" filepath="$PROJECT_DIR$/cf-modules/cf-archives/cf-modules-archives.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-modules/cf-file/cf-modules-file.iml" filepath="$PROJECT_DIR$/cf-modules/cf-file/cf-modules-file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-modules/cf-gen/cf-modules-gen.iml" filepath="$PROJECT_DIR$/cf-modules/cf-gen/cf-modules-gen.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-modules/cf-job/cf-modules-job.iml" filepath="$PROJECT_DIR$/cf-modules/cf-job/cf-modules-job.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-modules/cf-reservoir/cf-modules-reservoir.iml" filepath="$PROJECT_DIR$/cf-modules/cf-reservoir/cf-modules-reservoir.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-modules/cf-system/cf-modules-system.iml" filepath="$PROJECT_DIR$/cf-modules/cf-system/cf-modules-system.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cf-visual/cf-monitor/cf-visual-monitor.iml" filepath="$PROJECT_DIR$/cf-visual/cf-monitor/cf-visual-monitor.iml" />
+    </modules>
+  </component>
+</project>

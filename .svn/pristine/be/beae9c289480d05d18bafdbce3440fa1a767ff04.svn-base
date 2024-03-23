@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.REventProcessMapper">
+    
+    <resultMap type="com.szsk.reservoir.run.domain.REventProcess" id="REventProcessResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fEventId"    column="f_event_id"    />
+        <result property="fImplId"    column="f_impl_id"    />
+        <result property="fProcessContent"    column="f_process_content"    />
+        <result property="fProcessPeople"    column="f_process_people"    />
+        <result property="fProcessTime"    column="f_process_time"    />
+        <result property="fProcessPhoto"    column="f_process_photo"    />
+    </resultMap>
+
+    <sql id="selectREventProcessVo">
+        select f_id, f_event_id, f_impl_id, f_process_content, f_process_people, f_process_time, f_process_photo from r_event_process
+    </sql>
+
+    <select id="selectREventProcessList" parameterType="com.szsk.reservoir.run.domain.REventProcess" resultMap="REventProcessResult">
+        <include refid="selectREventProcessVo"/>
+        <where>  
+            <if test="fEventId != null "> and f_event_id = #{fEventId}</if>
+            <if test="fImplId != null "> and f_impl_id = #{fImplId}</if>
+            <if test="fProcessContent != null  and fProcessContent != ''"> and f_process_content = #{fProcessContent}</if>
+            <if test="fProcessPeople != null "> and f_process_people = #{fProcessPeople}</if>
+            <if test="fProcessTime != null "> and f_process_time = #{fProcessTime}</if>
+            <if test="fProcessPhoto != null "> and f_process_photo = #{fProcessPhoto}</if>
+        </where>
+    </select>
+    
+    <select id="selectREventProcessById" parameterType="Long" resultMap="REventProcessResult">
+        <include refid="selectREventProcessVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <select id="getListByImplId" resultType="com.szsk.reservoir.run.domain.REventProcess" resultMap="REventProcessResult">
+        <include refid="selectREventProcessVo"/>
+        where f_impl_id = #{fImplId}
+    </select>
+
+    <insert id="insertREventProcess" parameterType="com.szsk.reservoir.run.domain.REventProcess" useGeneratedKeys="true" keyProperty="fId">
+        insert into r_event_process
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fEventId != null">f_event_id,</if>
+            <if test="fImplId != null">f_impl_id,</if>
+            <if test="fProcessContent != null">f_process_content,</if>
+            <if test="fProcessPeople != null">f_process_people,</if>
+            <if test="fProcessTime != null">f_process_time,</if>
+            <if test="fProcessPhoto != null">f_process_photo,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fEventId != null">#{fEventId},</if>
+            <if test="fImplId != null">#{fImplId},</if>
+            <if test="fProcessContent != null">#{fProcessContent},</if>
+            <if test="fProcessPeople != null">#{fProcessPeople},</if>
+            <if test="fProcessTime != null">#{fProcessTime},</if>
+            <if test="fProcessPhoto != null">#{fProcessPhoto},</if>
+         </trim>
+    </insert>
+
+    <update id="updateREventProcess" parameterType="com.szsk.reservoir.run.domain.REventProcess">
+        update r_event_process
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fEventId != null">f_event_id = #{fEventId},</if>
+            <if test="fImplId != null">f_impl_id = #{fImplId},</if>
+            <if test="fProcessContent != null">f_process_content = #{fProcessContent},</if>
+            <if test="fProcessPeople != null">f_process_people = #{fProcessPeople},</if>
+            <if test="fProcessTime != null">f_process_time = #{fProcessTime},</if>
+            <if test="fProcessPhoto != null">f_process_photo = #{fProcessPhoto},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteREventProcessById" parameterType="Long">
+        delete from r_event_process where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteREventProcessByIds" parameterType="String">
+        delete from r_event_process where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

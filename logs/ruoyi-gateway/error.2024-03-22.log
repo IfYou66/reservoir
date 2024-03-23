@@ -1,0 +1,6 @@
+20:42:36.848 [reactor-http-nio-4] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/code,异常信息:Unable to connect to Redis; nested exception is io.lettuce.core.RedisConnectionException: Unable to connect to localhost:6379
+20:42:41.460 [reactor-http-nio-5] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/code,异常信息:Unable to connect to Redis; nested exception is io.lettuce.core.RedisConnectionException: Unable to connect to localhost:6379
+20:44:24.462 [reactor-http-nio-9] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/file/getFileById,异常信息:java.lang.OutOfMemoryError
+21:28:36.416 [boundedElastic-8] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/system/user/getInfo,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for ruoyi-system"
+21:29:27.089 [boundedElastic-9] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/file/getFileById,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for ruoyi-file"
+23:07:29.283 [boundedElastic-3] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/file/getFileById,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for ruoyi-file"

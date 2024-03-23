@@ -1,0 +1,1833 @@
+const sensor = require('../sensor');
+const datetime = require('../datetime');
+const common = require('../common');
+const base = require('./base');
+const reservoir = require('./reservoir');
+
+export function createSensors() {
+  return [
+    sensor.createSensor({
+      section: '水库安全实时状态-水库关键参数监测',   //有连接符表示既可以用于实时状态，也用于实时数据
+      part: 'realtime-data-gateSeepage',       //这里注意顺序，realtime和data必须在前两个位置，后面随意
+      category: '关键参数',
+      id: 'MHSK000100050000010200',
+      bias: '-0.18',
+      name: '水位',
+      unit: 'm',
+      limit: datetime.isFloodDate() ? '蓄水位' : '设计水位',
+      max: datetime.isFloodDate() ? base.getBaseInfo().headWaterLevel : base.getBaseInfo().designWaterLevel,
+      tag: 'water-level',
+      index: 0,
+      high: 190,
+      low: 100,
+      image: 'water-level'
+    }),
+    sensor.createSensor({
+      section: '坝体安全实时状态', part: 'realtime', name: '累计沉降量', unit: 'mm',
+      limit: '安全累计沉降量', max: 3,
+      tag: 'dam-accumulate-down', image: 'flood-discharge'
+    }),
+    sensor.createSensor({
+      section: '坝体安全实时状态', part: 'realtime', name: '沉降速率', unit: 'mm/h',
+      limit: '安全沉降速率', max: 3, value: -common.BOUNDARY,
+      tag: 'dam-accumulate-down-speed', image: 'flood-discharge'
+    }),
+    sensor.createSensor({
+      section: '坝体安全实时状态', part: 'realtime', name: '坝坡稳定系数K',
+      limit: '允许稳定系数K', max: common.BOUNDARY, value: common.BOUNDARY, min: 1.3,
+      tag: 'stability-argument', image: 'flood-discharge'
+    }),
+    sensor.createSensor({
+      section: '坝体安全实时状态', part: 'realtime', name: '渗透坡降J',
+      limit: '允许渗透坡降J', max: 3, value: common.BOUNDARY,
+      tag: 'seepage-slope', image: 'flood-discharge'
+    }),
+    sensor.createSensor({
+      section: '溢洪闸安全实时状态', category: '1#闸门', part: 'realtime', name: '累计沉降量',
+      limit: '安全累计沉降量', max: 3,  unit: 'mm',
+      tag: 'gate-accumulate-down', image: 'discharge-water'
+    }),
+    sensor.createSensor({
+      section: '溢洪闸安全实时状态', category: '1#闸门', part: 'realtime', name: '沉降速率',
+      limit: '安全沉降速率', max: 3, unit: 'mm/h', value: -common.BOUNDARY,
+      tag: 'gate-accumulate-down-speed', image: 'discharge-water'
+    }),
+    sensor.createSensor({
+      section: '溢洪闸安全实时状态', category: '1#闸门', part: 'realtime', name: '闸墩倾斜',
+      limit: '允许闸墩倾斜', max: 0.6,  unit: '°', id: 'MSSK000100070001',
+      tag: 'pier-inclination', image: 'discharge-water'
+    }),
+
+    sensor.createSensor({
+      section: '溢洪闸安全实时状态', category: '1#闸门', part: 'realtime', name: '抗滑稳定系数K',
+      limit: '允许稳定系数K', value: common.BOUNDARY, min: 1.08,
+      tag: 'stability-coefficient', image: 'discharge-water'
+    }),
+    sensor.createSensor({
+      section: '溢洪闸安全实时状态', category: '1#闸门', part: 'realtime', name: '溢洪闸振动烈度',
+      limit: '允许溢洪闸振动烈度', value: common.BOUNDARY, max: 3.00, unit: 'g',
+      tag: 'gate-vibration-severity', image: 'discharge-water'
+    }),
+    sensor.createSensor({
+      section: '放水洞安全实时状态', part: 'realtime', name: '竖井稳定系数K',
+      limit: '允许稳定系数K', value: common.BOUNDARY, min: 1.08,
+      tag: 'shaft-factor', image: 'discharge-water'
+    }),
+
+    sensor.createSensor({
+      part: 'data', name: '电压', section: '', value: common.BOUNDARY,
+      unit: 'v', tag: 'voltage', image: 'storage-capacity', category: ''
+    }),
+    sensor.createSensor({
+      part: 'data', section: '', name: '风向', value: common.BOUNDARY, id: 'LYXS00010024001',
+      unit: '°', high: 360, low: 0, tag: 'wind-direction', image: 'storage-capacity', category: '气象参数',
+      url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      part: 'data', section: '水库关键参数监测', id: '',
+      name: '库容', unit: '万m³', tag: 'storage-capacity', image: 'storage-capacity', category: '关键参数'
+    }),
+    sensor.createSensor({
+      part: 'data', section: '水库关键参数监测', name: '水面面积',
+      unit: 'km²', tag: 'water-area', image: 'storage-capacity'
+    }),
+    sensor.createSensor({
+      part: 'data', section: '水库关键参数监测', name: '可用水量',
+      unit: '万m³', tag: 'water-volume', image: 'storage-capacity'
+    }),
+
+    sensor.createSensor({
+      part: 'data', section: '溢洪闸关键参数监测', name: '溢洪道流量',
+      unit: 'm³/s', tag: 'flood-flow', image: 'flood-discharge', category: '关键参数'
+    }),
+    sensor.createSensor({
+      part: 'data', section: '溢洪闸关键参数监测', name: '闸门开度',
+      unit: 'm', tag: 'gate-opening', image: 'flood-discharge', category: '关键参数'
+    }),
+    sensor.createSensor({
+      part: 'data', section: '溢洪闸关键参数监测', name: '溢洪道累积流量',
+      unit: 'm³', tag: 'accumulate-flow', image: 'flood-discharge', category: '关键参数'
+    }),
+    sensor.createSensor({
+      part: 'data', section: '溢洪闸关键参数监测', name: '上游水位',
+      unit: 'm', tag: 'downstream-level', image: 'flood-discharge', category: '关键参数'
+    }),
+
+    sensor.createSensor({
+      part: 'data', section: '放水洞关键参数监测', name: '放水洞瞬时流量',
+      unit: 'm³/s', tag: 'tunnel-flow', image: 'discharge-water', category: '关键参数'
+    }),
+    sensor.createSensor({
+      part: 'data', section: '放水洞关键参数监测', name: '放水洞累积水量',
+      unit: 'm³', tag: 'accumulate-volume', image: 'discharge-water', category: '关键参数'
+    }),
+    sensor.createSensor({
+      part: 'realtime-data', section: '放水洞安全实时状态-放水洞关键参数监测', name: '放水管振动烈度',
+      limit: '允许放水管振动烈度', max: 3,
+      unit: 'g', tag: 'pipe-vibration-severity', image: 'discharge-water', category: '关键参数'
+    }),
+
+    sensor.createSensor({
+      part: 'data-tunnelSeepage',
+      section: '放水洞关键参数监测',
+      name: '放水洞渗流量',
+      id: 'MSSK000100060001000B00',
+      unit: 'm³/h',
+      tag: 'tunnel-seepage',
+      image: 'discharge-water',
+      category: '关键参数',
+      type: 0,
+      pos: [930, 300],
+      high: 40,
+      low: 2,
+      title: '渗流量',
+      text: ''
+    }),
+    sensor.createSensor({
+      part: 'data-tunnelSeepage',
+      section: '放水洞关键参数监测',
+      name: '放水洞渗流总量',
+      id: 'MSSK000100060001000C00',
+      unit: 'm³',
+      tag: 'tunnel-total-seepage',
+      image: 'discharge-water',
+      category: '关键参数',
+      type: 1,
+      pos: [930, 250],
+      high: 40000,
+      low: 0,
+      title: '渗流总量',
+      text: ''
+    }),
+    sensor.createSensor({
+      part: 'realtime-data', section: '放水洞安全实时状态-放水洞关键参数监测', name: '竖井振动烈度',
+      limit: '允许竖井振动烈度', max: 3,
+      unit: 'g', tag: 'well-vibration-severity', image: 'discharge-water', category: '关键参数'
+    }),
+
+    //气象传感器开始
+    sensor.createSensor({
+      part: 'data',
+      section: '水文气象监测',
+      name: '雨强',
+      id: 'LYXS000100240010',
+      unit: 'mm',
+      tag: 'rain-intensity',
+      image: 'rain-intensity',
+      category: '气象参数',
+      url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      part: 'data',
+      section: '水文气象监测',
+      name: '雨量',
+      id: 'LYXS000100240015',
+      unit: 'mm',
+      tag: 'rain',
+      image: 'evaporation',
+      category: '气象参数',
+      url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      part: 'data',
+      section: '水文气象监测',
+      name: '太阳辐射',
+      unit: 'W/㎡',
+      tag: 'solar-radiation',
+      image: 'solar-radiation',
+      category: '气象参数',
+      url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      part: 'data',
+      section: '水文气象监测',
+      name: '风速',
+      id: 'LYXS00010024009',
+      unit: 'm/s',
+      tag: 'wind-speed',
+      image: 'wind-speed',
+      category: '气象参数',
+      url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      part: 'data',
+      section: '水文气象监测',
+      name: '气温',
+      id: 'LYXS000100240016',
+      unit: '℃',
+      tag: 'temperature',
+      image: 'temperature',
+      category: '气象参数',
+      url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      part: 'data',
+      section: '水文气象监测',
+      name: '湿度',
+      id: 'LYXS000100240017',
+      unit: '%',
+      tag: 'humidity',
+      image: 'humidity',
+      category: '气象参数',
+      url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      part: 'data',
+      section: '水文气象监测',
+      name: '土壤含水',
+      id: 'LYXS000100240022',
+      unit: '%',
+      tag: 'soil-water',
+      image: 'soil-water',
+      category: '气象参数',
+      url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      part: 'data',
+      section: '水文气象监测',
+      name: '大气压',
+      id: 'LYXS000100240018',
+      unit: 'hPa',
+      high: 1100,
+      low: 800,
+      tag: 'atmospheric-pressure',
+      image: 'atmospheric-pressure',
+      category: '气象参数',
+      url: common.SENSOR_URL
+    }),
+
+
+    //水质安全传感器
+    sensor.createSensor({
+      section: '水质安全实时状态-水质参数监测', part: 'realtime-data', name: 'PH值',
+      limit: '允许PH范围', max: 9, min: 6, id: 'MHSK000100030015', category: '水质参数',
+      tag: 'ph-value', image: 'ph', url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      section: '水质安全实时状态-水质参数监测', part: 'realtime-data', name: '溶解氧', unit: 'mg/L',
+      limit: '允许溶解氧范围', min: 5, /*id: 'MHSK000100030018'*/id: 'DZSK000100010216', category: '水质参数',
+      tag: 'dissolved-oxygen', image: 'dissolved-oxygen', url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      section: '水质安全实时状态-水质参数监测', part: 'realtime-data', name: '电导率', unit: 'μS/cm',
+      limit: '允许电导率范围', min: 5, bias: '+320', high: 320, low: 100, id: 'MHSK000100030017', category: '水质参数',
+      tag: 'conductivity', image: 'conductivity', url: common.SENSOR_URL,
+    }),
+    sensor.createSensor({
+      section: '水质安全实时状态-水质参数监测', part: 'realtime-data', name: '浊度', unit: 'NTU',
+      limit: '允许浊度范围', max: 5, high: 5, low: -500, id:'DZSK000100010215'/*id: 'MHSK000100030019'*/, category: '水质参数',
+      tag: 'turbidity', image: 'turbidity', url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      section: '水质安全实时状态-水质参数监测', part: 'realtime-data', name: '水温', unit: '℃',
+      limit: '允许水温范围', category: '水质参数', id: 'DZSK000100010220',
+      tag: 'water-temperature', image: 'water-temperature', url: common.SENSOR_URL
+    }),
+    sensor.createSensor({
+      section: '水质安全实时状态-水质参数监测', part: 'realtime-data', name: 'ORP', unit: 'mv',
+      limit: '允许ORP范围', id: 'MHSK000100030016', category: '水质参数',
+      tag: 'orp', high: 300, low: 0, image: 'orp', url: common.SENSOR_URL
+    }),
+
+
+    //流域上游水库
+    sensor.createSensor({
+      part: 'data',
+      section: '控制流域内上游水库参数监测',
+      name: '--',
+      // unit: 'm',
+      tag: 'yty-level',
+      image: 'discharge-water',
+      category: '流域水库'
+    }),
+    sensor.createSensor({
+      part: 'data',
+      section: '控制流域内上游水库参数监测',
+      name: '--',
+      // unit: 'm³',
+      tag: 'yty-capacity',
+      image: 'discharge-water',
+      category: '流域水库'
+    }),
+    // sensor.createSensor({
+    //     part: 'data',
+    //     section: '控制流域内上游水库参数监测',
+    //     name: '樱桃园水库降雨量',
+    //     tag: 'yty-rain',
+    //     unit: 'm',
+    //     image: 'discharge-water',
+    //     category: '流域水库'
+    // }),
+    // sensor.createSensor({
+    //     part: 'data',
+    //     section: '控制流域内上游水库参数监测',
+    //     name: '樱桃园水库泄洪流量',
+    //     unit: 'm³',
+    //     tag: 'yty-flow',
+    //     image: 'discharge-water',
+    //     category: '流域水库'
+    // }),
+    // sensor.createSensor({
+    //     part: 'data',
+    //     section: '控制流域内上游水库参数监测',
+    //     name: '石腊河支流洪水流量',
+    //     tag: 'slh-flow',
+    //     unit: 'm³',
+    //     image: 'discharge-water',
+    //     category: '流域水库'
+    // }),
+    // sensor.createSensor({
+    //     part: 'data',
+    //     section: '控制流域内上游水库参数监测',
+    //     name: '重河连拱坝洪水流量',
+    //     tag: 'zh-flow',
+    //     unit: 'm³',
+    //     image: 'discharge-water',
+    //     category: '流域水库'
+    // }),
+
+    //大坝变形传感器开始
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '基准点',
+      name: '沉降',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      category: '沉降',
+      high: 5,
+      low: -5,
+      type: 0,
+      pos: [350, 475],
+      size: 15,
+      dimension: 15,
+      title: '基准点[0]',
+      image: 'base.png',
+      text: '高程:' + base.getBaseInfo().damHeight + 'm'
+    }),
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '基准点',
+      name: '水平',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      url: common.SENSOR_URL,
+      id: '',
+      category: '水平距离',
+      high: 120,
+      low: 0,
+      type: 0,
+      pos: [350, 475],
+      size: 15,
+      dimension: 15,
+      title: '基准点[0]',
+      image: 'base.png',
+      text: '高程:' + base.getBaseInfo().damHeight + 'm'
+    }),
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '1#测点',
+      name: '沉降',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      id: 'MHSK0001000100010013F2',
+      bias: '*0.1',
+      // id: 'HHSK000200030001001F00',
+      category: '沉降',
+      high: 5,
+      low: -5,
+      type: 1,
+      pos: [450, 425],
+      size: 12,
+      dimension: 15,
+      title: '1#测点',
+      image: 'horizontal.png',
+      text: '沉降:0.0mm'
+    }),
+
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '1#测点',
+      name: '水平',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      url: common.SENSOR_URL,
+      id: 'MHSKWYJCD01',
+      high: 120,
+      low: 0,
+      category: '水平距离',
+      type: 1,
+      pos: [450, 425],
+      size: 12,
+      bias: '*1',
+      dimension: 15,
+      title: '1#测点',
+      image: 'horizontal.png',
+      text: '水平:0.0mm'
+    }),
+
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '2#测点',
+      name: '沉降',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      id: 'MHSK0001000100010011F2',
+      bias: '*0.1',
+      // id: 'HHSK000200030001002500',
+      high: 5,
+      low: -5,
+      type: 2,
+      category: '沉降',
+      pos: [550, 375],
+      size: 12,
+      dimension: 15,
+      title: '2#测点',
+      image: 'horizontal.png',
+      text: '沉降:0.0mm'
+    }),
+
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '2#测点',
+      name: '水平',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      url: common.SENSOR_URL,
+      id: 'MHSKWYJCD02',
+      high: 120,
+      low: 0,
+      category: '水平距离',
+      type: 2,
+      pos: [550, 375],
+      size: 12,
+      bias: '*1',
+      dimension: 15,
+      title: '2#测点',
+      image: 'horizontal.png',
+      text: '水平:0.0mm'
+    }),
+
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '3#测点',
+      name: '沉降',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      //id: 'MHSK0001000100010011F2',
+      id: 'MHSK0001000100010015F2',
+      bias: '*0.1',
+      high: 5,
+      low: -5,
+      type: 3,
+      category: '沉降',
+      pos: [650, 325],
+      size: 12,
+      dimension: 15,
+      title: '3#测点',
+      image: 'horizontal.png',
+      text: '沉降:0.0mm'
+    }),
+
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '3#测点',
+      name: '水平',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      url: common.SENSOR_URL,
+      id: 'MHSKWYJCD03',
+      high: 120,
+      low: 0,
+      category: '水平距离',
+      type: 3,
+      bias: '*1',
+      pos: [650, 325],
+      size: 12,
+      dimension: 15,
+      title: '3#测点',
+      image: 'horizontal.png',
+      text: '水平:0.0mm'
+    }),
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '4#测点',
+      name: '沉降',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      value: -0.4,
+      //id: 'MHSK0001000100010011F2',
+      id: 'MHSK0001000100010017F2',
+      bias: '*0.1',
+      high: 5,
+      low: -5,
+      type: 4,
+      category: '沉降',
+      pos: [750, 275],
+      size: 12,
+      dimension: 15,
+      title: '4#测点',
+      image: 'horizontal.png',
+      text: '沉降:0.0mm'
+    }),
+
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '4#测点',
+      name: '水平',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      url: common.SENSOR_URL,
+      id: 'MHSKWYJCD04',
+      high: 120,
+      low: 0,
+      category: '水平距离',
+      type: 4,
+      pos: [750, 275],
+      size: 12,
+      bias: '*1',
+      dimension: 15,
+      title: '4#测点',
+      image: 'horizontal.png',
+      text: '水平:0.0mm'
+    }),
+
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '5#测点',
+      name: '沉降',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      //id: 'MHSK0001000100010011F2',
+      id: 'MHSK0001000100010019F2',
+      bias: '*0.1',
+      high: 5,
+      low: -5,
+      type: 5,
+      category: '沉降',
+      pos: [850, 225],
+      size: 12,
+      dimension: 15,
+      title: '5#测点',
+      image: 'horizontal.png',
+      text: '沉降:0.0mm'
+    }),
+
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '5#测点',
+      name: '水平',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      url: common.SENSOR_URL,
+      id: 'MHSKWYJCD05',
+      high: 120,
+      low: 0,
+      category: '水平距离',
+      type: 5,
+      pos: [850, 225],
+      size: 12,
+      bias: '*1',
+      dimension: 15,
+      title: '5#测点',
+      image: 'horizontal.png',
+      text: '水平:0.0mm'
+    }),
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '6#测点',
+      name: '沉降',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      //id: 'MHSK0001000100010011F2',
+      id: 'MHSK000100010001001BF2',
+      bias: '*0.1',
+      high: 5,
+      low: -5,
+      type: 6,
+      category: '沉降',
+      pos: [950, 175],
+      size: 12,
+      dimension: 15,
+      title: '6#测点',
+      image: 'horizontal.png',
+      text: '沉降:0.0mm'
+    }),
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '6#测点',
+      name: '水平',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      url: common.SENSOR_URL,
+      id: 'MHSKWYJCD06',
+      high: 120,
+      low: 0,
+      category: '水平距离',
+      type: 6,
+      invalid: true,
+      pos: [950, 175],
+      size: 12,
+      bias: '*1',
+      dimension: 15,
+      title: '6#测点',
+      image: 'horizontal.png',
+      text: '水平:0.0mm'
+    }),
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '7#测点',
+      name: '沉降',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      //id: 'HHSK000200030001001F00',
+      id: 'MSSK0001000200010013F2',
+      high: 5,
+      low: -5,
+      type: 7,
+      category: '沉降',
+      pos: [1020, 125],
+      size: 12,
+      dimension: 15,
+      title: '7#测点',
+      image: 'horizontal.png',
+      text: '沉降:0.0mm'
+    }),
+    sensor.createSensor({
+      part: 'damTransform',
+      section: '7#测点',
+      name: '水平',
+      max: 20,
+      min: -20,
+      unit: 'mm',
+      url: common.SENSOR_URL,
+      id: 'MHSKWYJCD07',
+      high: 120,
+      low: 0,
+      category: '水平距离',
+      type: 7,
+      pos: [1020, 125],
+      size: 12,
+      invalid: true,
+      bias: '*1',
+      dimension: 15,
+      title: '7#测点',
+      image: 'horizontal.png',
+      text: '水平:0.0mm'
+    }),
+
+
+    //大坝渗流开始
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+100断面',
+      id: 'MHSKSYPJ11001',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 104.15;
+      },
+      url: common.SENSOR_URL,
+      name: 'J1',
+      high: 117,
+      low: 104.15,
+      unit: 'm',
+      pos: 87,
+      height: 115.95,
+      category: 'base',
+      index: 1
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+100断面',
+      id: 'MHSKSYPJ11002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 104.49;
+      },
+      url: common.SENSOR_URL,
+      name: 'J2',
+      high: 117,
+      low: 104.49,
+      unit: 'm',
+      pos: 118,
+      height: 116.39,
+      category: 'base',
+      index: 2
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+100断面',
+      id: 'MHSKSYPJ11003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 104.68;
+      },
+      url: common.SENSOR_URL,
+      name: 'J3',
+      high: 115,
+      low: 104.68,
+      unit: 'm',
+      pos: 145,
+      height: 113.48,
+      category: 'base',
+      index: 3
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+100断面',
+      id: 'MHSKSYPJ11004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 104.09;
+      },
+      url: common.SENSOR_URL,
+      name: 'J4',
+      high: 112,
+      low: 104.09,
+      unit: 'm',
+      pos: 178,
+      height: 111.09,
+      category: 'base',
+      index: 4
+    }),
+
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+210断面',
+      id: 'MHSKSYP12101',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 98.94;
+      },
+      url: common.SENSOR_URL,
+      name: 'T1',
+      high: 117,
+      low: 98.94,
+      unit: 'm',
+      pos: 83,
+      height: 116.036,
+      category: 'body',
+      index: 5
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+210断面',
+      id: 'MHSKSYP21002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 98.60;
+      },
+      url: common.SENSOR_URL,
+      name: 'T2',
+      high: 117,
+      low: 98.60,
+      unit: 'm',
+      pos: 106,
+      height: 116.392,
+      category: 'body',
+      index: 6
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+210断面',
+      id: 'MHSKSYP21003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 96.9;
+      },
+      url: common.SENSOR_URL,
+      name: 'T3',
+      high: 107,
+      low: 96.9,
+      unit: 'm',
+      pos: 141,
+      height: 111.5,
+      category: 'body',
+      index: 7
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+210断面',
+      id: 'MHSKSYP21004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 98.02;
+      },
+      url: common.SENSOR_URL,
+      name: 'T4',
+      high: 99,
+      low: 98.02,
+      unit: 'm',
+      pos: 174,
+      height: 106.02,
+      category: 'body',
+      index: 8
+    }),
+
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+400断面',
+      id: 'MHSKSYP14001',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 95.53;
+      },
+      url: common.SENSOR_URL,
+      name: 'T1',
+      high: 117,
+      low: 95.53,
+      unit: 'm',
+      pos: 83,
+      height: 116.03,
+      category: 'body',
+      index: 9
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+400断面',
+      id: 'MHSKSYP14002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 95.91;
+      },
+      url: common.SENSOR_URL,
+      name: 'T2',
+      high: 117,
+      low: 95.91,
+      unit: 'm',
+      pos: 106,
+      height: 116.03,
+      category: 'body',
+      index: 10
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+400断面',
+      id: 'MHSKSYP14003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 95.6;
+      },
+      url: common.SENSOR_URL,
+      name: 'T3',
+      high: 107,
+      low: 95.6,
+      unit: 'm',
+      pos: 141,
+      height: 106.1,
+      category: 'body',
+      index: 11
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+400断面',
+      id: 'MHSKSYP14004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 95.82;
+      },
+      url: common.SENSOR_URL,
+      name: 'T4',
+      high: 100,
+      low: 95.82,
+      unit: 'm',
+      pos: 174,
+      height: 99.22,
+      category: 'body',
+      index: 12
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+400断面',
+      id: 'MHSKSYPJ14001',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 85.93;
+      },
+      url: common.SENSOR_URL,
+      name: 'J1',
+      high: 117,
+      low: 85.93,
+      unit: 'm',
+      pos: 87,
+      height: 116.03,
+      category: 'base',
+      index: 13
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+400断面',
+      id: 'MHSKSYPJ14002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 86.3;
+      },
+      url: common.SENSOR_URL,
+      name: 'J2',
+      high: 116,
+      low: 86.3,
+      unit: 'm',
+      pos: 110,
+      height: 116.00,
+      category: 'base',
+      index: 14
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+400断面',
+      id: 'MHSKSYPJ14003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 86.6;
+      },
+      url: common.SENSOR_URL,
+      name: 'J3',
+      high: 107,
+      low: 86.6,
+      unit: 'm',
+      pos: 145,
+      height: 106.10,
+      category: 'base',
+      index: 15
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+400断面',
+      id: 'MHSKSYPJ14004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 91.03;
+      },
+      url: common.SENSOR_URL,
+      name: 'J4',
+      high: 100,
+      low: 91.03,
+      unit: 'm',
+      pos: 178,
+      height: 99.23,
+      category: 'base',
+      index: 16
+    }),
+
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+600断面',
+      id: 'MHSKSYP16001',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 89.25;
+      },
+      url: common.SENSOR_URL,
+      name: 'T1',
+      high: 117,
+      low: 89.25,
+      unit: 'm',
+      pos: 83,
+      height: 116.05,
+      category: 'body',
+      index: 17
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+600断面',
+      id: 'MHSKSYP16002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 92.51;
+      },
+      url: common.SENSOR_URL,
+      name: 'T2',
+      high: 117,
+      low: 92.51,
+      unit: 'm',
+      pos: 106,
+      height: 116.01,
+      category: 'body',
+      index: 18
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+600断面',
+      id: 'MHSKSYP16003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 92.43;
+      },
+      url: common.SENSOR_URL,
+      name: 'T3',
+      high: 107,
+      low: 92.43,
+      unit: 'm',
+      pos: 139,
+      height: 106.13,
+      category: 'body',
+      index: 19
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+600断面',
+      id: 'MHSKSYP16004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 91.91;
+      },
+      url: common.SENSOR_URL,
+      name: 'T4',
+      high: 100,
+      low: 91.91,
+      unit: 'm',
+      pos: 171,
+      height: 99.71,
+      category: 'body',
+      index: 20
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+600断面',
+      id: 'MHSKSYPJ16001',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 84.03;
+      },
+      url: common.SENSOR_URL,
+      name: 'J1',
+      high: 117,
+      low: 84.03,
+      unit: 'm',
+      pos: 87,
+      height: 116.03,
+      category: 'base',
+      index: 21
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+600断面',
+      id: 'MHSKSYPJ16002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 84.52;
+      },
+      url: common.SENSOR_URL,
+      name: 'J2',
+      high: 117,
+      low: 84.52,
+      unit: 'm',
+      pos: 110,
+      height: 116.02,
+      category: 'base',
+      index: 22
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+600断面',
+      id: 'MHSKSYPJ16003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 87.22;
+      },
+      url: common.SENSOR_URL,
+      name: 'J3',
+      high: 107,
+      low: 87.22,
+      unit: 'm',
+      pos: 143,
+      height: 106.12,
+      category: 'base',
+      index: 23
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+600断面',
+      id: 'MHSKSYPJ16004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 85.34;
+      },
+      url: common.SENSOR_URL,
+      name: 'J4',
+      high: 100,
+      low: 85.34,
+      unit: 'm',
+      pos: 175,
+      height: 99.74,
+      category: 'base',
+      index: 24
+    }),
+
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+700断面',
+      id: 'MHSKSYP17001',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 90.48;
+      },
+      url: common.SENSOR_URL,
+      name: 'T1',
+      high: 117,
+      low: 90.48,
+      unit: 'm',
+      pos: 83,
+      category: 'body',
+      height: 116.04,
+      index: 25
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+700断面',
+      id: 'MHSKSYP17002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 91.33;
+      },
+      url: common.SENSOR_URL,
+      name: 'T2',
+      high: 117,
+      low: 91.33,
+      unit: 'm',
+      pos: 106,
+      height: 116.03,
+      category: 'body',
+      index: 26
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+700断面',
+      id: 'MHSKSYPJ17003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 91.28;
+      },
+      url: common.SENSOR_URL,
+      name: 'T3',
+      high: 107,
+      low: 91.28,
+      unit: 'm',
+      pos: 139,
+      height: 106.18,
+      category: 'body',
+      index: 27
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+700断面',
+      id: 'MHSKSYP17004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 90.93;
+      },
+      url: common.SENSOR_URL,
+      name: 'T4',
+      high: 100,
+      low: 90.93,
+      unit: 'm',
+      pos: 171,
+      height: 99.73,
+      category: 'body',
+      index: 28
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+700断面',
+      id: 'MHSKSYPJ17001',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 83.25;
+      },
+      url: common.SENSOR_URL,
+      name: 'J1',
+      high: 117,
+      low: 83.25,
+      unit: 'm',
+      pos: 87,
+      height: 116.05,
+      category: 'base',
+      index: 29
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+700断面',
+      id: 'MHSKSYPJ17002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 84.03;
+      },
+      url: common.SENSOR_URL,
+      name: 'J2',
+      high: 117,
+      low: 84.03,
+      unit: 'm',
+      pos: 110,
+      height: 116.03,
+      category: 'base',
+      index: 30
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+700断面',
+      id: 'MHSKSYP17003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 84.16;
+      },
+      url: common.SENSOR_URL,
+      name: 'J3',
+      high: 107,
+      low: 84.16,
+      unit: 'm',
+      pos: 143,
+      height: 106.16,
+      category: 'base',
+      index: 31
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+700断面',
+      id: 'MHSKSYP17004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 83.74;
+      },
+      url: common.SENSOR_URL,
+      name: 'J4',
+      high: 100,
+      low: 83.74,
+      unit: 'm',
+      pos: 175,
+      height: 99.74,
+      category: 'base',
+      index: 32
+    }),
+
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+800断面',
+      id: 'MHSKSYP18001',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 93.57;
+      },
+      url: common.SENSOR_URL,
+      name: 'T1',
+      high: 117,
+      low: 93.57,
+      unit: 'm',
+      pos: 83,
+      height: 116.07,
+      category: 'body',
+      index: 33
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+800断面',
+      id: 'MHSKSYP18002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 93.92;
+      },
+      url: common.SENSOR_URL,
+      name: 'T2',
+      high: 117,
+      low: 93.92,
+      unit: 'm',
+      pos: 106,
+      height: 116.02,
+      category: 'body',
+      index: 34
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+800断面',
+      id: 'MHSKSYP18003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 95.36;
+      },
+      url: common.SENSOR_URL,
+      name: 'T3',
+      high: 107,
+      low: 95.36,
+      unit: 'm',
+      pos: 139,
+      height: 106.16,
+      category: 'body',
+      index: 35
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+800断面',
+      id: 'MHSKSYP18004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 95.31;
+      },
+      url: common.SENSOR_URL,
+      name: 'T4',
+      high: 107,
+      low: 95.31,
+      unit: 'm',
+      pos: 171,
+      height: 99.71,
+      category: 'body',
+      index: 36
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+800断面',
+      id: 'MHSKSYPJ18001',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 88.97;
+      },
+      url: common.SENSOR_URL,
+      name: 'J1',
+      high: 117,
+      low: 88.97,
+      unit: 'm',
+      pos: 87,
+      height: 116.07,
+      category: 'base',
+      index: 37
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+800断面',
+      id: 'MHSKSYPJ18002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 88.53;
+      },
+      url: common.SENSOR_URL,
+      name: 'J2',
+      high: 117,
+      low: 88.53,
+      unit: 'm',
+      pos: 110,
+      height: 116.03,
+      category: 'base',
+      index: 38
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+800断面',
+      id: 'MHSKSYPJ18003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 90.13;
+      },
+      url: common.SENSOR_URL,
+      name: 'J3',
+      high: 107,
+      low: 90.13,
+      unit: 'm',
+      pos: 143,
+      height: 106.13,
+      category: 'base',
+      index: 39
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '1+800断面',
+      id: 'MHSKSYPJ18004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 90.84;
+      },
+      url: common.SENSOR_URL,
+      name: 'J4',
+      high: 100,
+      low: 90.84,
+      unit: 'm',
+      pos: 175,
+      height: 99.74,
+      category: 'base',
+      index: 40
+    }),
+
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '2+100断面',
+      id: 'MHSKSYPJ21001',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 103.34;
+      },
+      url: common.SENSOR_URL,
+      name: 'J1',
+      high: 117,
+      low: 103.34,
+      unit: 'm',
+      pos: 87,
+      height: 116.06,
+      category: 'base',
+      index: 41
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '2+100断面',
+      id: 'MHSKSYPJ21002',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 103.23;
+      },
+      url: common.SENSOR_URL,
+      name: 'J2',
+      high: 118,
+      low: 103.23,
+      unit: 'm',
+      pos: 118,
+      height: 116.33,
+      category: 'base',
+      index: 42
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '2+100断面',
+      id: 'MHSKSYPJ21003',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 103.23;
+      },
+      url: common.SENSOR_URL,
+      name: 'J3',
+      high: 115,
+      low: 103.23,
+      unit: 'm',
+      pos: 145,
+      height: 113.43,
+      category: 'base',
+      index: 43
+    }),
+    sensor.createSensor({
+      part: 'damSeepage',
+      section: '2+100断面',
+      id: 'MHSKSYPJ21004',
+      bias:function(value){
+          if (value >= BOUNDARY / 10000) return value;
+          if (value === -100) value = 0;
+          return value + 103.16;
+      },
+      url: common.SENSOR_URL,
+      name: 'J4',
+      high: 112,
+      low: 103.16,
+      unit: 'm',
+      pos: 178,
+      height: 111.06,
+      category: 'base',
+      index: 44
+    }),
+
+    //闸门位移传感器
+    sensor.createSensor({
+      part: 'gateDisplacement',
+      section: '基准点',
+      name: '沉降',
+      high: 2,
+      low: -2,
+      unit: 'mm',
+      type: 0,
+      category: '沉降位移',
+      pos: [130, 280],
+      size: 15,
+      dimension: 15,
+      title: '基准点',
+      image: 'base.png',
+      text: '高程' + base.getBaseInfo().damHeight + 'm'
+    }),
+    // sensor.createSensor({
+    //     part: 'gateDisplacement',
+    //     section: '基准点',
+    //     name: '液面',
+    //     high: 100,
+    //     low: 0,
+    //     unit: 'mm',
+    //     id: 'MHSK000100020001000FE3',
+    //     type: 0,
+    //     category: '液面距离',
+    //     pos: [150, 360],
+    //     size: 15,
+    //     dimension: 15,
+    //     title: '基准点',
+    //     image: 'base.png',
+    //     text: '沉降:0.0mm'
+    // }),
+    sensor.createSensor({
+      part: 'gateDisplacement',
+      section: '1#测点',
+      name: '沉降',
+      high: 2,
+      low: -2,
+      unit: 'mm',
+      id: 'MHSK0001000200010013F2',
+      //id: 'HHSK000200040001002900',
+      bias: function(value){
+        return Math.abs(value) > 2 ? 0.83:value;
+      },
+      type: 1,
+      category: '沉降位移',
+      pos: [300, 300],
+      size: 12,
+      dimension: 15,
+      title: '1#测点',
+      image: 'horizontal.png',
+      text: '沉降:0.0mm'
+    }),
+    // sensor.createSensor({
+    //     part: 'gateDisplacement',
+    //     section: '1#测点',
+    //     name: '液面',
+    //     high: 100,
+    //     low: 0,
+    //     unit: 'mm',
+    //     id: 'MHSK0001000200010012F1',
+    //     type: 1,
+    //     category: '液面距离',
+    //     pos: [300, 360],
+    //     size: 12,
+    //     dimension: 15,
+    //     title: '1#测点',
+    //     image: 'horizontal.png',
+    //     text: '距离:0.0mm'
+    // }),
+    sensor.createSensor({
+      part: 'gateDisplacement',
+      section: '2#测点',
+      name: '沉降',
+      high: 2,
+      low: -2,
+      unit: 'mm',
+      id: 'MHSK0001000200010011F2',
+      bias: function(value){
+        return Math.abs(value) > 2 ? 0.12:value;
+      },
+      //id: 'HHSK000200040001002A00',
+      type: 2,
+      category: '沉降位移',
+      pos: [455, 300],
+      size: 12,
+      dimension: 15,
+      title: '2#测点',
+      image: 'horizontal.png',
+      text: '沉降:0.0mm'
+    }),
+    // sensor.createSensor({
+    //     part: 'gateDisplacement',
+    //     section: '2#测点',
+    //     name: '液面',
+    //     high: 100,
+    //     low: 0,
+    //     unit: 'mm',
+    //     id: 'MHSK0001000200010010F1',
+    //     type: 2,
+    //     category: '液面距离',
+    //     pos: [455, 360],
+    //     size: 12,
+    //     dimension: 15,
+    //     title: '2#测点',
+    //     image: 'horizontal.png',
+    //     text: '距离:0.0mm'
+    // }),
+
+    //闸墩倾斜传感器开始
+    sensor.createSensor({
+      section: '1#', part: 'gateDeclination', name: 'x倾斜', pos: [270, 340], type: 0,
+      high: 2, low: -2, unit: '°', id: 'MSSK000100070001001F00', bias: '',
+      size: 12, dimension: 15, title: '1#', image: 'horizontal.png', text: '0.00°'
+    }),
+    sensor.createSensor({
+      section: '1#', part: 'gateDeclination', name: 'y倾斜', pos: [270, 340], type: 0,
+      high: 2, low: -2, unit: '°', id: 'MSSK000100070001002000', bias: '',
+      size: 12, dimension: 15, title: '1#', image: 'horizontal.png', text: '0.00°'
+    }),
+    sensor.createSensor({
+      section: '2#', part: 'gateDeclination', name: 'x倾斜', pos: [360, 355], type: 1,
+      high: 2, low: -2, unit: '°', id: 'MSSK000100070001002400', bias: '',
+      size: 12, dimension: 15, title: '2#', image: 'horizontal.png', text: '0.00°'
+    }),
+    sensor.createSensor({
+      section: '2#', part: 'gateDeclination', name: 'y倾斜', pos: [360, 355], type: 1,
+      high: 2, low: -2, unit: '°', id: 'MSSK000100070001002500', bias: '',
+      size: 12, dimension: 15, title: '2#', image: 'horizontal.png', text: '0.00°'
+    }),
+    sensor.createSensor({
+      section: '3#', part: 'gateDeclination', name: 'x倾斜', pos: [450, 370], type: 2,
+      high: 2, low: -2, unit: '°', id: 'MSSK000100070001002900', bias: '',
+      size: 12, dimension: 15, title: '3#', image: 'horizontal.png', text: '0.00°'
+    }),
+    sensor.createSensor({
+      section: '3#', part: 'gateDeclination', name: 'y倾斜', pos: [450, 370], type: 2,
+      high: 2, low: -2, unit: '°', id: 'MSSK000100070001002A00', bias: '',
+      size: 12, dimension: 15, title: '3#', image: 'horizontal.png', text: '0.00°'
+    }),
+    sensor.createSensor({
+      section: '4#', part: 'gateDeclination', name: 'x倾斜', pos: [540, 385], type: 3,
+      high: 2, low: -2, unit: '°', id: 'MSSK000100070001002E00', bias: '',
+      size: 12, dimension: 15, title: '4#', image: 'horizontal.png', text: '0.00°'
+    }),
+    sensor.createSensor({
+      section: '4#', part: 'gateDeclination', name: 'y倾斜', pos: [540, 385], type: 3,
+      high: 2, low: -2, unit: '°', id: 'MSSK000100070001002F00', bias: '',
+      size: 12, dimension: 15, title: '4#', image: 'horizontal.png', text: '0.00°'
+    }),
+    sensor.createSensor({
+      section: '5#', part: 'gateDeclination', name: 'x倾斜', pos: [630, 400], type: 4,
+      high: 2, low: -2, unit: '°', id: 'MSSK000100070001003300', bias: '',
+      size: 12, dimension: 15, title: '5#', image: 'horizontal.png', text: '0.00°'
+    }),
+    sensor.createSensor({
+      section: '5#', part: 'gateDeclination', name: 'y倾斜', pos: [630, 400], type: 4,
+      high: 2, low: -2, unit: '°', id: 'MSSK000100070001003400', bias: '',
+      size: 12, dimension: 15, title: '5#', image: 'horizontal.png', text: '0.00°'
+    }),
+
+    //扬压力渗流传感器开始
+    sensor.createSensor({
+      section: '1#断面', part: 'gateSeepage', name: '井1水', pos: 0,
+      high: 90, low: 75, unit: 'm', id: 'MSSK000100030000010300', type: '1', index: 9
+    }),
+    sensor.createSensor({
+      section: '1#断面', part: 'gateSeepage', name: '井2水', pos: 105,
+      high: 90, low: 75, unit: 'm', id: 'MSSK000100030000010200', type: '1', index: 10
+    }),
+    sensor.createSensor({
+      section: '1#断面', part: 'gateSeepage', name: '井3水', pos: 200,
+      high: 90, low: 75, unit: 'm', id: 'MSSK000100030000010100', type: '1', index: 11
+    }),
+    sensor.createSensor({
+      section: '2#断面', part: 'gateSeepage', name: '井1水', pos: 0,
+      high: 90, low: 75, unit: 'm', id: 'MSSK000100040000010300', type: '2', index: 9
+    }),
+    sensor.createSensor({
+      section: '2#断面', part: 'gateSeepage', name: '井2水', pos: 105,
+      high: 90, low: 75, unit: 'm', id: 'MSSK000100040000010200', type: '2', index: 10
+    }),
+    sensor.createSensor({
+      section: '2#断面', part: 'gateSeepage', name: '井3水', pos: 200,
+      high: 90, low: 75, unit: 'm', id: 'MSSK000100040000010100', type: '2', index: 11
+    }),
+    sensor.createSensor({
+      section: '3#断面', part: 'gateSeepage', name: '井1水', pos: 0,
+      high: 90, low: 75, unit: 'm', id: 'MSSK000100050000010300', type: '3', index: 9
+    }),
+    sensor.createSensor({
+      section: '3#断面', part: 'gateSeepage', name: '井2水', pos: 105,
+      high: 90, low: 75, unit: 'm', id: 'MSSK000100050000010300', type: '3', index: 10
+    }),
+    sensor.createSensor({
+      section: '3#断面', part: 'gateSeepage', name: '井3水', pos: 200,
+      high: 90, low: 75, unit: 'm', id: 'MSSK000100050000010300', type: '3', index: 11
+    }),
+
+    //放水洞传感器开始
+    sensor.createSensor({
+      section: '1#测点', part: 'well', name: 'x方向', type: 0,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100090001002100',
+      pos: [65, 250], title: '1#测点'
+    }),
+    sensor.createSensor({
+      section: '1#测点', part: 'well', name: 'y方向', type: 0,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100090001002200',
+      pos: [65, 250], title: '1#测点'
+    }),
+    sensor.createSensor({
+      section: '1#测点', part: 'well', name: 'z方向', type: 0,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100090001002300',
+      pos: [65, 250], title: '1#测点'
+    }),
+    sensor.createSensor({
+      section: '2#测点', part: 'well', name: 'x方向', type: 1,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100090001002600',
+      pos: [65, 300], title: '2#测点'
+    }),
+    sensor.createSensor({
+      section: '2#测点', part: 'well', name: 'y方向', type: 1,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100090001002700',
+      pos: [65, 300], title: '2#测点'
+    }),
+    sensor.createSensor({
+      section: '2#测点', part: 'well', name: 'z方向', type: 1,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100090001002800',
+      pos: [65, 300], title: '2#测点'
+    }),
+    sensor.createSensor({
+      section: '3#测点', part: 'well', name: 'x方向', type: 2,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100090001002B00',
+      pos: [65, 350], title: '3#测点'
+    }),
+    sensor.createSensor({
+      section: '3#测点', part: 'well', name: 'y方向', type: 2,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100090001002C00',
+      pos: [65, 350], title: '3#测点'
+    }),
+    sensor.createSensor({
+      section: '3#测点', part: 'well', name: 'z方向', type: 2,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100090001002D00',
+      pos: [65, 350], title: '3#测点'
+    }),
+
+    //竖井传感器开始
+    sensor.createSensor({
+      section: '1#测点', part: 'well', name: 'x方向', type: 3,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100080001002100',
+      pos: [930, 250], title: '1#测点'
+    }),
+    sensor.createSensor({
+      section: '1#测点', part: 'well', name: 'y方向', type: 3,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100080001002200',
+      pos: [930, 250], title: '1#测点'
+    }),
+    sensor.createSensor({
+      section: '1#测点', part: 'well', name: 'z方向', type: 3,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100080001002300',
+      pos: [930, 250], title: '1#测点'
+    }),
+    sensor.createSensor({
+      section: '2#测点', part: 'well', name: 'x方向', type: 4,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100080001002600',
+      pos: [930, 300], title: '2#测点'
+    }),
+    sensor.createSensor({
+      section: '2#测点', part: 'well', name: 'y方向', type: 4,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100080001002700',
+      pos: [930, 300], title: '2#测点'
+    }),
+    sensor.createSensor({
+      section: '2#测点', part: 'well', name: 'z方向', type: 4,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100080001002800',
+      pos: [930, 300], title: '2#测点'
+    }),
+    sensor.createSensor({
+      section: '3#测点', part: 'well', name: 'x方向', type: 5,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100080001002B00',
+      pos: [930, 350], title: '3#测点'
+    }),
+    sensor.createSensor({
+      section: '3#测点', part: 'well', name: 'y方向', type: 5,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100080001002C00',
+      pos: [930, 350], title: '3#测点'
+    }),
+    sensor.createSensor({
+      section: '3#测点', part: 'well', name: 'z方向', type: 5,
+      high: 2, low: -2, unit: 'g', id: 'MSSK000100080001002D00',
+      pos: [930, 350], title: '3#测点'
+    }),
+  ]
+}

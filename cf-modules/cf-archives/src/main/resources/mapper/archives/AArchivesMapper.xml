@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.archives.archivesManage.mapper.AArchivesMapper">
+    
+    <resultMap type="com.szsk.archives.archivesManage.domain.AArchives" id="AArchivesResult">
+        <result property="fArchivesId"    column="f_archives_id"    />
+        <result property="fArchivesNumber"    column="f_archives_number"    />
+        <result property="fArchivesName"    column="f_archives_name"    />
+        <result property="fStoreroomId"    column="f_storeroom_id"    />
+        <result property="fArchivesTypeId"    column="f_archives_type_id"    />
+        <result property="fShelfNumber"    column="f_shelf_number"    />
+        <result property="fGrade"    column="f_grade"    />
+        <result property="fFileNum"    column="f_file_num"    />
+        <result property="fVolumeNum"    column="f_volume_num"    />
+        <result property="fAppendixId"    column="f_appendix_id"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fReceivePersion"    column="f_receive_persion"    />
+        <result property="fReceiveTime"    column="f_receive_time"    />
+        <result property="fLogoutTime"    column="f_logout_time"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fEndTime"    column="f_end_time"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectAArchivesVo">
+        select f_archives_id,f_reservoir_info_id,f_receive_persion,f_archives_number, f_archives_name, f_storeroom_id, f_archives_type_id, f_shelf_number, f_grade, f_file_num, f_volume_num, f_appendix_id, f_status, f_receive_time, f_logout_time, f_create_time, f_end_time from a_archives
+    </sql>
+
+    <select id="selectAArchivesList" parameterType="com.szsk.archives.archivesManage.domain.AArchives" resultMap="AArchivesResult">
+        <include refid="selectAArchivesVo"/>
+        <where>  
+            <if test="fArchivesNumber != null  and fArchivesNumber != ''"> and f_archives_number = #{fArchivesNumber}</if>
+            <if test="fReservoirInfoId != null  "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fArchivesName != null  and fArchivesName != ''"> and f_archives_name like concat('%', #{fArchivesName}, '%')</if>
+            <if test="fStoreroomId != null and fStoreroomId != '' "> and f_storeroom_id = #{fStoreroomId}</if>
+            <if test="fArchivesTypeId != null and fArchivesTypeId != '' "> and f_archives_type_id = #{fArchivesTypeId}
+                OR f_archives_type_id IN ((SELECT f_archives_type_id FROM a_archives_type WHERE f_parent_id = #{fArchivesTypeId}))
+            </if>
+            <if test="fShelfNumber != null  and fShelfNumber != ''"> and f_shelf_number = #{fShelfNumber}</if>
+            <if test="fGrade != null and fGrade != '' "> and f_grade = #{fGrade}</if>
+            <if test="fFileNum != null and fFileNum != '' "> and f_file_num = #{fFileNum}</if>
+            <if test="fVolumeNum != null and fVolumeNum != '' "> and f_volume_num = #{fVolumeNum}</if>
+            <if test="fAppendixId != null  and fAppendixId != ''"> and f_appendix_id = #{fAppendixId}</if>
+            <!--查询未注销的-->
+            and f_status != 2
+            <if test="fReceiveTime != null and fReceiveTime != '' "> and f_receive_time = #{fReceiveTime}</if>
+            <if test="fLogoutTime != null and fLogoutTime != '' "> and f_logout_time = #{fLogoutTime}</if>
+            <if test="fCreateTime != null and fCreateTime != '' "> and f_create_time = #{fCreateTime}</if>
+            <if test="fEndTime != null and fEndTime != '' "> and f_end_time = #{fEndTime}</if>
+            <if test="fReceivePersion != null and fReceivePersion != ''"> and f_receive_persion = #{fReceivePersion}</if>
+            ORDER BY f_receive_time DESC
+        </where>
+    </select>
+    
+    <select id="selectAArchivesById" parameterType="Long" resultMap="AArchivesResult">
+        <include refid="selectAArchivesVo"/>
+        where f_archives_id = #{fArchivesId}
+    </select>
+        
+    <insert id="insertAArchives" parameterType="com.szsk.archives.archivesManage.domain.AArchives">
+        insert into a_archives
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fArchivesId != null">f_archives_id,</if>
+            <if test="fArchivesNumber != null">f_archives_number,</if>
+            <if test="fArchivesName != null">f_archives_name,</if>
+            <if test="fStoreroomId != null">f_storeroom_id,</if>
+            <if test="fArchivesTypeId != null">f_archives_type_id,</if>
+            <if test="fShelfNumber != null">f_shelf_number,</if>
+            <if test="fGrade != null">f_grade,</if>
+            <if test="fFileNum != null">f_file_num,</if>
+            <if test="fVolumeNum != null">f_volume_num,</if>
+            <if test="fAppendixId != null">f_appendix_id,</if>
+            <if test="fStatus != null">f_status,</if>
+            f_receive_time,
+            <if test="fLogoutTime != null">f_logout_time,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+            <if test="fEndTime != null">f_end_time,</if>
+            <if test="fReceivePersion != null">f_receive_persion,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fArchivesId != null">#{fArchivesId},</if>
+            <if test="fArchivesNumber != null">#{fArchivesNumber},</if>
+            <if test="fArchivesName != null">#{fArchivesName},</if>
+            <if test="fStoreroomId != null">#{fStoreroomId},</if>
+            <if test="fArchivesTypeId != null">#{fArchivesTypeId},</if>
+            <if test="fShelfNumber != null">#{fShelfNumber},</if>
+            <if test="fGrade != null">#{fGrade},</if>
+            <if test="fFileNum != null">#{fFileNum},</if>
+            <if test="fVolumeNum != null">#{fVolumeNum},</if>
+            <if test="fAppendixId != null">#{fAppendixId},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+            now(),
+            <if test="fLogoutTime != null">#{fLogoutTime},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+            <if test="fEndTime != null">#{fEndTime},</if>
+            <if test="fReceivePersion != null">#{fReceivePersion},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAArchives" parameterType="com.szsk.archives.archivesManage.domain.AArchives">
+        update a_archives
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fArchivesNumber != null">f_archives_number = #{fArchivesNumber},</if>
+            <if test="fArchivesName != null">f_archives_name = #{fArchivesName},</if>
+            <if test="fStoreroomId != null">f_storeroom_id = #{fStoreroomId},</if>
+            <if test="fArchivesTypeId != null">f_archives_type_id = #{fArchivesTypeId},</if>
+            <if test="fShelfNumber != null">f_shelf_number = #{fShelfNumber},</if>
+            <if test="fGrade != null">f_grade = #{fGrade},</if>
+            <if test="fFileNum != null">f_file_num = #{fFileNum},</if>
+            <if test="fVolumeNum != null">f_volume_num = #{fVolumeNum},</if>
+            <if test="fAppendixId != null">f_appendix_id = #{fAppendixId},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+            <if test="fReceiveTime != null">f_receive_time = #{fReceiveTime},</if>
+            <if test="fLogoutTime != null">f_logout_time = #{fLogoutTime},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+            <if test="fEndTime != null">f_end_time = #{fEndTime},</if>
+            <if test="fReceivePersion != null">f_receive_persion = #{fReceivePersion},</if>
+        </trim>
+        where f_archives_id = #{fArchivesId}
+    </update>
+
+    <delete id="deleteAArchivesById" parameterType="Long">
+        delete from a_archives where f_archives_id = #{fArchivesId}
+    </delete>
+
+    <delete id="deleteAArchivesByIds" parameterType="String">
+        delete from a_archives where f_archives_id in 
+        <foreach item="fArchivesId" collection="array" open="(" separator="," close=")">
+            #{fArchivesId}
+        </foreach>
+    </delete>
+
+    <select id="queryDict" resultType="com.ruoyi.common.core.domain.SysDictData">
+        select dict_label as 'dictLabel',dict_value as 'dictValue' from sys_dict_data where status = 0 and dict_type=#{dictType} order by dict_sort
+    </select>
+
+    <select id="queryStoreroom" resultType="com.szsk.archives.archivesManage.domain.AStoreroom">
+        select f_storeroom_id AS 'fStoreroomId',f_storeroom_number AS 'fStoreroomNumber',f_storeroom_name as 'fStoreroomName' from a_storeroom  WHERE f_status='1' order by f_sort
+    </select>
+
+</mapper>

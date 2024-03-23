@@ -1,0 +1,1165 @@
+<template>
+  <div class="app-container">
+    <!-- 顶部 搜索栏 -->
+    <el-form :model="queryParams" ref="queryParams" v-show="showSearch" :inline="true">
+
+      <el-form-item label="名称" prop="fPlanName">
+        <el-input v-model="queryParams.fPlanName" placeholder="请输入计划名称"
+          clearable size="small" style="width: 240px"
+          @keyup.enter.native="handleQuery" />
+      </el-form-item>
+
+      <el-form-item label="状态" prop="fStatus">
+        <el-select v-model="queryParams.fStatus" placeholder="状态" clearable
+        size="small" style="width: 240px" >
+          <el-option v-for="item in approvalStatus" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+
+    </el-form>
+
+    <!-- 表格 显示 -->
+    <el-table :data="data">
+      <el-table-column width="55" align="center"/>
+      <el-table-column label="序号" align="center" prop="id" width="120">
+        <template scope="scope">
+          <span>{{(scope.$index + 1)}} </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="计划名称" align="center" prop="fPlanName" width="180"/>
+
+      <el-table-column label="计划时间" align="center" prop="fPreparationTime" :show-overflow-tooltip="true" width="150"/>
+      <el-table-column label="计划概述" align="center" prop="fPlanContent" width="380"/>
+      <!-- <el-table-column label="实施情况(处理情况)" align="center" prop="rMainImplStatus" width="380">
+        <template scope="scope">
+          <span v-if="scope.row.rMainImplStatus == -1" >未实施</span>
+          <span v-if="scope.row.rMainImplStatus == 0" >待提交</span>
+          <span v-if="scope.row.rMainImplStatus == 1" >待审核</span>
+          <span v-if="scope.row.rMainImplStatus == 2" >已审核</span>
+          <span v-if="scope.row.rMainImplStatus == 3" >待修改</span>
+        </template>
+      </el-table-column> -->
+
+      <el-table-column label="状态" align="center" prop="fStatus" width="180">
+        <template scope="scope">
+          <span v-if="scope.row.fStatus == 0" >待提交</span>
+          <span v-if="scope.row.fStatus == 1" >待审核</span>
+          <span v-if="scope.row.fStatus == 2" >待批准</span>
+          <span v-if="scope.row.fStatus == 3" >待实施</span>
+          <span v-if="scope.row.fStatus == 4" >待修改</span>
+          <span v-if="scope.row.fStatus == 5" >未通过</span>
+          <span v-if="scope.row.fStatus == 6" >实施待提交</span>
+          <span v-if="scope.row.fStatus == 7" >实施待审核</span>
+          <span v-if="scope.row.fStatus == 8" >已实施</span>
+          <span v-if="scope.row.fStatus == 9" >实施待修改</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button size="mini" type="text" @click="open1(scope.row)"
+          v-if="scope.row.fStatus == 0" >待提交 </el-button>
+          <el-button size="mini" type="text" @click="open1(scope.row)"
+          v-if="scope.row.fStatus == 1" >待审核 </el-button>
+          <el-button size="mini" type="text" @click="open1(scope.row)"
+          v-if="scope.row.fStatus == 2" >待批准 </el-button>
+          <el-button size="mini" type="text" @click="open1(scope.row)"
+          v-if="scope.row.fStatus == 3" >待实施 </el-button>
+          <el-button size="mini" type="text" @click="open1(scope.row)"
+          v-if="scope.row.fStatus == 4" >待修改 </el-button>
+          <el-button size="mini" type="text" @click="open1(scope.row)"
+          v-if="scope.row.fStatus == 5" >未通过 </el-button>
+          <el-button size="mini" type="text" @click="open(scope.row)"
+          v-if="scope.row.fStatus == 6">实施待提交 </el-button>
+          <el-button size="mini" type="text" @click="open(scope.row)"
+          v-if="scope.row.fStatus == 7">实施待审核 </el-button>
+          <el-button size="mini" type="text" @click="open(scope.row)"
+          v-if="scope.row.fStatus == 8">已实施 </el-button>
+          <el-button size="mini" type="text" @click="open(scope.row)"
+          v-if="scope.row.fStatus == 9">实施待修改 </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <pagination v-show="total>0" :total="total" :page.sync="queryParams.pageNum" :limit.sync="queryParams.pageSize"
+      @pagination="getList" />
+
+    <!-- 计划详情 弹窗 -->
+    <el-dialog title="计划详情" :visible.sync="editFormVisible1" width="80%" @close="initZi">
+      <mainPlan :rMaintenance="rMaintenance" :fileList="fileList" @close1="close1"></mainPlan>
+          <!-- <span slot="footer" class="dialog-footer">
+          <el-button @click="editFormVisible1 = false">取 消</el-button>
+
+          <el-button type="primary" @click="addPla"
+          v-if="rMaintenance.fStatus == 0 ">提 交</el-button>
+
+          <el-button type="primary" @click="modify"
+          v-if="rMaintenance.fStatus == 4 ">修 改</el-button>
+
+          <el-button type="primary" @click="review"
+          v-if="rMaintenance.fStatus == 1 ">提交审核</el-button>
+
+          <el-button type="primary" @click="approve"
+          v-if="rMaintenance.fStatus == 2 ">提交审批</el-button>
+
+          <el-button type="primary" @click="editFormVisible1 = false"
+          v-if="rMaintenance.fStatus == 3 ">确 定</el-button>
+
+
+        </span> -->
+    </el-dialog>
+
+    <el-dialog title="实施详情" :visible.sync="editFormVisible" width="80%" @close="initZi">
+      <mainDetails :rMainImpl="rMainImpl" :options="optionsList" :fileList="fileListImpl" @close1="close1"></mainDetails>
+      <!-- <span slot="footer" class="dialog-footer">
+        <el-button @click="editFormVisible = false">取 消</el-button>
+
+        <el-button type="primary" @click="addPlaImpl"
+        v-if="rMainImpl.fStatus == 0 ">提 交</el-button>
+
+        <el-button type="primary" @click="modifyImpl"
+        v-if="rMainImpl.fStatus == 3 ">修 改</el-button>
+
+        <el-button type="primary" @click="reviewImpl"
+        v-if="rMainImpl.fStatus == 1 ">提交审批</el-button>
+
+        <el-button type="primary" @click="editFormVisible = false" v-if="rMainImpl.fStatus == 2 ">确 定</el-button>
+
+
+      </span> -->
+    </el-dialog>
+
+    <!-- 下一流程 处理人 弹窗 -->
+    <el-dialog
+      title="选择处理人"
+      :visible.sync="nextVisible"
+      width="30%"
+      >
+      <el-radio v-model="radio" :label="item.userId" v-for="(item,index) in list" :key="index">{{item.nickName}}</el-radio>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="nextVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addSubmits">确 定</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- 下一流程 处理人 弹窗 -->
+    <el-dialog title="选择处理人" :visible.sync="nextVisibleImpl" width="30%">
+      <el-radio v-model="radioImpl" :label="item.userId" v-for="(item,index) in list" :key="index">{{item.nickName}}</el-radio>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="nextVisibleImpl = false">取 消</el-button>
+        <el-button type="primary" @click="addSubmitsImpl">确 定</el-button>
+      </span>
+    </el-dialog>
+
+  </div>
+</template>
+<script>
+import mainDetails from './mainDetails.vue';
+import mainPlan from './mainPlan.vue';
+//获得系统用户
+import {getUserList } from "@/api/security/planning"
+//获得Token
+import {getToken} from "@/utils/auth"
+//获得文件
+import {getFileById} from "@/api/file"
+//计划 API
+import { listMaintenance, getMaintenance, addMaintenance, updateMaintenance, delMaintenance} from "@/api/repair/rmaintenance"
+//实施 API
+import {listImpl, getImpl, addImpl, updateImpl, delImpl} from "@/api/repair/rmainimpl"
+export default {
+  components: {mainDetails,mainPlan},
+  name: "RightToolbar",
+  data() {
+    return {
+      // 文件上传
+      upload: {
+        // 设置上传的请求头部
+        headers: {Authorization: "Bearer " + getToken()},
+        // 上传的地址
+        url: "http://localhost/dev-api/file/upload"
+      },
+      fileList:[],
+
+      list:[],
+      //下一处理人 弹窗
+      nextVisible:false,
+      nextVisibleImpl:false,
+      //处理人
+      radio:'',
+      radioImpl:'',
+      //对象 计划
+      rMaintenance:{
+          //id
+          fId:'',
+          //计划名称
+          fPlanName:'',
+          //计划类型
+          fPlanType:'',
+          //预算
+          fBudget:'',
+          //计划概述
+          fPlanContent:'',
+          //计划附件
+          fPlanId:'',
+          //编制人
+          fPreparedBy:'',
+          //编制时间
+          fPreparationTime:'',
+
+          //审核意见
+          fReviewComments:'',
+          //审核结果
+          fReviewResult:'',
+          //审核人
+          fReviewPeople:'',
+          //审核时间
+          fReviewDate:'',
+
+          //审批意见
+          fAuditComments:'',
+          //审批结果
+          fAuditResult:'',
+          //审批人
+          fAuditPeople:'',
+          //审批时间
+          fAuditDate:'',
+
+          //创建人
+          fCreatePeople:'',
+          //创建时间
+          fCreateTime:'',
+          //状态 0:失效1：有效
+          fStatus:'',
+          //流程实例id
+          fActId:'',
+          //流程下一节点审核人
+          fActPersion:'',
+          //流程状态 流程状态
+          fActStatus:'',
+          //流程节点
+          fActNode:'',
+
+      },
+      //对象 计划 初始化
+      rMaintenanceInit:{
+          //id
+          fId:'',
+          //计划名称
+          fPlanName:'',
+          //计划类型
+          fPlanType:'',
+          //预算
+          fBudget:'',
+          //计划概述
+          fPlanContent:'',
+          //计划附件
+          fPlanId:'',
+          //编制人
+          fPreparedBy:'',
+          //编制时间
+          fPreparationTime:'',
+
+          //审核意见
+          fReviewComments:'',
+          //审核结果
+          fReviewResult:'',
+          //审核人
+          fReviewPeople:'',
+          //审核时间
+          fReviewDate:'',
+
+          //审批意见
+          fAuditComments:'',
+          //审批结果
+          fAuditResult:'',
+          //审批人
+          fAuditPeople:'',
+          //审批时间
+          fAuditDate:'',
+
+          //创建人
+          fCreatePeople:'',
+          //创建时间
+          fCreateTime:'',
+          //状态 0:失效1：有效
+          fStatus:'',
+          //流程实例id
+          fActId:'',
+          //流程下一节点审核人
+          fActPersion:'',
+          //流程状态 流程状态
+          fActStatus:'',
+          //流程节点
+          fActNode:'',
+
+      },
+      //对象 实施
+      rMainImplInit:{
+          //id
+          fId:'',
+          //计划编制id
+          fPreparedId:'',
+          //实施内容
+          fImplContent:'',
+          //实施内容附件id
+          fImplId:'',
+          //实施人
+          fImplPeople:'',
+          //实施时间
+          fImplTime:'',
+
+          //审核意见
+          fReviewComments:'',
+          //审核结果
+          fReviewResult:'',
+          //审核人
+          fReviewPeople:'',
+          //审核时间
+          fReviewDate:'',
+
+          //状态
+          fStatus:'',
+          //创建人
+          fCreatePeople:'',
+          //创建时间
+          fCreateTime:'',
+          //流程实例id
+          fActId:'',
+          //流程下一节点审核人
+          fActPersion:'',
+          //流程状态
+          fActStatus:'',
+          //流程节点
+          fActNode:'',
+      },
+      //对象 实施 初始化
+      rMainImpl:{
+          //id
+          fId:'',
+          //计划编制id
+          fPreparedId:'',
+          //实施内容
+          fImplContent:'',
+          //实施内容附件id
+          fImplId:'',
+          //实施人
+          fImplPeople:'',
+          //实施时间
+          fImplTime:'',
+
+          //审核意见
+          fReviewComments:'',
+          //审核结果
+          fReviewResult:'',
+          //审核人
+          fReviewPeople:'',
+          //审核时间
+          fReviewDate:'',
+
+          //状态
+          fStatus:'',
+          //创建人
+          fCreatePeople:'',
+          //创建时间
+          fCreateTime:'',
+          //流程实例id
+          fActId:'',
+          //流程下一节点审核人
+          fActPersion:'',
+          //流程状态
+          fActStatus:'',
+          //流程节点
+          fActNode:'',
+      },
+      //记录数
+      total:'',
+
+      options: [],
+      audit: [
+        { value: '选项1', label: '通过' },
+        { value: '选项2', label: '未通过' }
+      ],
+      options1: [
+        { value: '选项1', label: '汛前检查' },
+        { value: '选项2', label: '年度检查' },
+        { value: '选项3', label: '特别检查' }
+      ],
+      fileList:[],
+      // 显隐数据
+      // 弹出层标题
+      title: "显示/隐藏",
+      // 是否显示弹出层
+      editFormVisible: false,
+      editFormVisible1: false,
+      data: [],
+
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        planName: '',
+        status: '',
+      },
+      approvalStatus: [
+          {value: 0,label: '待提交'},
+          {value: 1,label: '待审核'},
+          {value: 2,label: '待批准'},
+          {value: 3,label: '待实施'},
+          {value: 4,label: '待修改'},
+          {value: 5,label: '未通过'},
+          {value: 6,label: '实施待提交'},
+          {value: 7,label: '实施待审核'},
+          {value: 8,label: '已实施'},
+          {value: 9,label: '实施待修改'},
+      ],
+      optionsList:'',
+      fileListImpl:'',
+
+    };
+  },
+  props: {
+    showSearch: {
+      type: Boolean,
+      default: true,
+    },
+    columns: {
+      type: Array,
+    },
+  },
+  created() {
+    this.getList()
+    this.personnel()
+    this.getListImpl()
+    //this.test()
+    // 显隐列初始默认隐藏列
+    for (let item in this.columns) {
+      if (this.columns[item].visible === false) {
+        this.value.push(parseInt(item));
+      }
+    }
+  },
+  methods: {
+    addSubmitsImpl() {
+      if(this.radioImpl == null || this.radioImpl == '') {
+        this.$message({
+          showClose: true,
+          message: '请选择处理人',
+          type: 'error'
+        });
+        return false
+      }
+      if(this.rMainImpl.fStatus == 0) {
+        this.rMainImpl.fStatus = 1
+        this.rMainImpl.fActPersion = this.radioImpl
+        updateImpl(this.rMainImpl).then(res => {
+          if(res.code == 200) {
+            updateMaintenance({fId:this.rMainImpl.fPreparedId,fStatus:7,fActPersion:this.radioImpl}).then(res => {
+              if(res.code == 200) {
+                console.log('提交成功')
+                this.rMainImpl = this.rMainImplInit
+                this.getList()
+                this.nextVisibleImpl = false
+                this.editFormVisible = false
+                this.fileListImpl = []
+                this.radioImpl = ''
+              }
+            })
+          }
+        })
+      }
+
+    },
+    reviewImpl() {
+        //是否填写 审核意见
+        if(this.rMainImpl.fReviewComments == null || this.rMainImpl.fReviewComments == '') {
+            this.$message({
+              showClose: true,
+              message: '请填写审核意见',
+              type: 'error'
+            });
+            return false
+        }
+        //是否选择 审核结果
+        if(this.rMainImpl.fReviewResult == null || this.rMainImpl.fReviewResult == '') {
+            this.$message({
+              showClose: true,
+              message: '请选择审核结果',
+              type: 'error'
+            });
+            return false
+        }
+        //是否填写 审核人
+        if(this.rMainImpl.fReviewPeople == null || this.rMainImpl.fReviewPeople == '') {
+            this.$message({
+              showClose: true,
+              message: '请填写审核人',
+              type: 'error'
+            });
+            return false
+        }
+        //是否填写 实施时间
+        if(this.rMainImpl.fReviewDate == null || this.rMainImpl.fReviewDate == '') {
+            this.$message({
+              showClose: true,
+              message: '请选择审核时间',
+              type: 'error'
+            });
+            return false
+        }
+        if(this.rMainImpl.fReviewResult == 1) {
+          this.rMainImpl.fStatus = 2
+          updateImpl(this.rMainImpl).then(res => {
+            if(res.code == 200) {
+              updateMaintenance({fId:this.rMainImpl.fPreparedId,fStatus:8,fActPersion:this.radioImpl}).then(res => {
+                if(res.code == 200) {
+                  console.log('提交成功')
+                  this.rMainImpl = this.rMainImplInit
+                  this.getList()
+                  this.nextVisibleImpl = false
+                  this.editFormVisible = false
+                  this.fileListImpl = []
+                  this.radioImpl = ''
+                }
+              })
+            }
+          })
+        }
+        else if(this.rMainImpl.fReviewResult == 2) {
+          this.rMainImpl.fStatus = 4
+          updateImpl(this.rMainImpl).then(res => {
+            if(res.code == 200) {
+              updateMaintenance({fId:this.rMainImpl.fPreparedId,fStatus:3}).then(res => {
+                if(res.code == 200) {
+                  console.log('提交成功')
+                  this.rMainImpl = this.rMainImplInit
+                  this.getList()
+                  this.nextVisibleImpl = false
+                  this.editFormVisible = false
+                  this.fileListImpl = []
+                  this.radioImpl = ''
+                }
+              })
+            }
+          })
+        }
+        else if(this.rMainImpl.fReviewResult == 3) {
+          this.rMainImpl.fStatus = 3
+          updateImpl(this.rMainImpl).then(res => {
+            if(res.code == 200) {
+              updateMaintenance({fId:this.rMainImpl.fPreparedId,fStatus:9}).then(res => {
+                if(res.code == 200) {
+                  console.log('提交成功')
+                  this.rMainImpl = this.rMainImplInit
+                  this.getList()
+                  this.nextVisibleImpl = false
+                  this.editFormVisible = false
+                  this.fileListImpl = []
+                  this.radioImpl = ''
+                }
+              })
+            }
+          })
+        }
+
+    },
+    addPlaImpl() {
+        //是否填写 计划编制
+        if(this.rMainImpl.fPreparedId == null || this.rMainImpl.fPreparedId == '') {
+            this.$message({
+              showClose: true,
+              message: '请选择计划名称',
+              type: 'error'
+            });
+            return false
+        }
+        //是否填写 实施内容
+        if(this.rMainImpl.fImplContent == null || this.rMainImpl.fImplContent == '') {
+            this.$message({
+              showClose: true,
+              message: '请填写实施内容',
+              type: 'error'
+            });
+            return false
+        }
+        //是否填写 实施人
+        if(this.rMainImpl.fImplPeople == null || this.rMainImpl.fImplPeople == '') {
+            this.$message({
+              showClose: true,
+              message: '请填写实施人',
+              type: 'error'
+            });
+            return false
+        }
+        //是否填写 实施时间
+        if(this.rMainImpl.fImplTime == null || this.rMainImpl.fImplTime == '') {
+            this.$message({
+              showClose: true,
+              message: '请选择实施时间',
+              type: 'error'
+            });
+            return false
+        }
+
+        this.rMainImpl.fStatus = 1
+        updateImpl(this.rMainImpl).then(res => {
+          if(res.code == 200) {
+            updateMaintenance({fId:this.rMainImpl.fPreparedId,fStatus:7,fActPersion:this.radioImpl}).then(res => {
+              if(res.code == 200) {
+                console.log('提交成功')
+                this.rMainImpl = this.rMainImplInit
+                this.getList()
+                this.nextVisibleImpl = false
+                this.editFormVisible = false
+                this.fileListImpl = []
+                this.radioImpl = ''
+              }
+            })
+          }
+        })
+    },
+    getListImpl() {
+      listMaintenance().then(res => {
+        if(res.code == 200) {
+          //res.rows.filter(obj => {
+          //  if(obj.fStatus == 3 && obj.rMainImplStatus == -1) {
+          //    this.optionsList.push(obj)
+          //  }
+          //})
+          this.optionsList = res.rows
+          console.log('初始化  查询',this.optionsList)
+        }
+      })
+    },
+    //测试 接口
+    test() {
+      console.log("测试接口 ===>")
+      listCustomize().then(res => {
+        console.log("测试接口 ===>",res.rows)
+      })
+    },
+    //点击 <下一个处理人> 弹窗 => <确定> 按钮
+    addSubmits() {
+      if(this.radio == null || this.radio == '') {
+        this.$message({
+          showClose: true,
+          message: '请选择处理人',
+          type: 'error'
+        });
+        return false
+      }
+
+      if(this.rMaintenance.fStatus == 0 ) {
+
+      }
+      //审核 完成
+      else if(this.rMaintenance.fStatus == 1) {
+        this.rMaintenance.fStatus = 2
+        updateMaintenance(this.rMaintenance).then(res => {
+          if(res.code == 200) {
+            this.msgSuccess("审核提交成功")
+            this.nextVisible = false
+            this.editFormVisible1 = false
+            this.rMaintenance.fStatus = ''
+            this.rMaintenance = this.rMaintenanceInit
+            this.fileList = []
+          }
+        })
+      }
+      //审批 完成
+      else if(this.rMaintenance.fStatus == 2) {
+        this.rMaintenance.fStatus = 3
+        updateMaintenance(this.rMaintenance).then(res => {
+          if(res.code == 200) {
+            this.msgSuccess("审批提交成功")
+            this.nextVisible = false
+            this.editFormVisible1 = false
+            this.rMaintenance.fStatus = ''
+            this.rMaintenance = this.rMaintenanceInit
+            this.fileList = []
+          }
+        })
+      }
+      //修改 完成
+      else if(this.rMaintenance.fStatus == 4) {
+
+      }
+    },
+    //获取处理人集合
+    personnel(){
+      console.log('获取处理人集合')
+      getUserList().then(response => {
+         console.log('获取处理人集合执行成功',response)
+        this.list = response.data
+      })
+    },
+    //列表 数据 查询
+    getList() {
+      listMaintenance(this.queryParams).then(res => {
+        if(res.code == 200) {
+          this.data = res.rows
+          this.total = res.total
+          console.log("初始化查询列表", res.rows)
+        }
+      })
+    },
+
+    open(val){
+
+      if(val.fStatus == 6) {
+        listImpl({fStatus:0,fPreparedId:val.fId}).then(res => {
+          if(res.code == 200) {
+            console.log('获得实施对象 待提交',res)
+            this.rMainImpl = res.rows[0]
+
+            console.log('查询文件',this.rMainImpl.fImplId)
+            if(this.rMainImpl.fImplId != null && this.rMainImpl.fImplId != '' ) {
+              console.log('查询文件',this.rMainImpl.fImplId)
+              getFileById({id:this.rMainImpl.fImplId}).then(result =>{
+                if (result) {
+                  this.fileListImpl = [{name:result.data.fOldFileName,url:result.data.fFilePath}];
+                  console.log("fileListImpl.url:",this.fileList[0].url);
+                  console.log("fileListImpl.name:",this.fileList[0].name);
+
+                }
+              })
+            }
+
+          }
+        })
+      }
+      else if(val.fStatus == 7) {
+        listImpl({fStatus:1,fPreparedId:val.fId}).then(res => {
+          if(res.code == 200) {
+            console.log('获得实施对象 已提交',res)
+            this.rMainImpl = res.rows[0]
+
+            console.log('查询文件',this.rMainImpl.fImplId)
+            if(this.rMainImpl.fImplId != null && this.rMainImpl.fImplId != '' ) {
+              console.log('查询文件',this.rMainImpl.fImplId)
+              getFileById({id:this.rMainImpl.fImplId}).then(result =>{
+                if (result) {
+                  this.fileListImpl = [{name:result.data.fOldFileName,url:result.data.fFilePath}];
+                  console.log("fileListImpl.url:",this.fileList[0].url);
+                  console.log("fileListImpl.name:",this.fileList[0].name);
+
+                }
+              })
+            }
+
+          }
+        })
+      }
+      else if(val.fStatus == 8) {
+        listImpl({fStatus:2,fPreparedId:val.fId}).then(res => {
+          if(res.code == 200) {
+            console.log('获得实施对象 已完成',res)
+            this.rMainImpl = res.rows[0]
+
+            console.log('查询文件',this.rMainImpl.fImplId)
+            if(this.rMainImpl.fImplId != null && this.rMainImpl.fImplId != '' ) {
+              console.log('查询文件',this.rMainImpl.fImplId)
+              getFileById({id:this.rMainImpl.fImplId}).then(result =>{
+                if (result) {
+                  this.fileListImpl = [{name:result.data.fOldFileName,url:result.data.fFilePath}];
+                  console.log("fileListImpl.url:",this.fileList[0].url);
+                  console.log("fileListImpl.name:",this.fileList[0].name);
+                }
+              })
+            }
+
+
+          }
+        })
+      }
+      else if(val.fStatus == 9) {
+        listImpl({fStatus:3,fPreparedId:val.fId}).then(res => {
+          if(res.code == 200) {
+            console.log('获得实施对象 待修改',res)
+            this.rMainImpl = res.rows[0]
+            this.rMainImpl.fStatus = 0
+
+            console.log('查询文件',this.rMainImpl.fImplId)
+            if(this.rMainImpl.fImplId != null && this.rMainImpl.fImplId != '' ) {
+              console.log('查询文件',this.rMainImpl.fImplId)
+              getFileById({id:this.rMainImpl.fImplId}).then(result =>{
+                if (result) {
+                  this.fileListImpl = [{name:result.data.fOldFileName,url:result.data.fFilePath}];
+                  console.log("fileListImpl.url:",this.fileList[0].url);
+                  console.log("fileListImpl.name:",this.fileList[0].name);
+                }
+              })
+            }
+
+          }
+        })
+      }
+
+      this.editFormVisible = true;
+    },
+    open1(val){
+      console.log("图片ID=========>",val.fPlanId)
+      if(val.fPlanId) {
+        getFileById({id:val.fPlanId}).then(result =>{
+          if (result) {
+            this.fileList = [{name:result.data.fOldFileName,url:result.data.fFilePath}];
+            console.log("fileList.url:",this.fileList[0].url);
+            console.log("fileList.name:",this.fileList[0].name);
+
+          }
+        })
+      }
+      console.log("文件列表",this.fileList)
+      this.editFormVisible1 = true;
+      this.rMaintenance = val
+      if(this.rMaintenance.fPlanType){
+        this.rMaintenance.fPlanType = this.rMaintenance.fPlanType.toString()
+      }
+    },
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1;
+      this.getList();
+    },
+
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.dateRange = [];
+      this.resetForm("queryParams");
+      this.handleQuery();
+    },
+    //修改 提交
+    modify() {
+      //是否填写 计划名称
+      if(this.rMaintenance.fPlanName == null || this.rMaintenance.fPlanName == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写计划名称',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 计划类型
+      if(this.rMaintenance.fPlanType == null || this.rMaintenance.fPlanType == '') {
+          this.$message({
+            showClose: true,
+            message: '请选择计划类型',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 预算
+      if(this.rMaintenance.fBudget == null || this.rMaintenance.fBudget == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写预算',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 计划概述
+      if(this.rMaintenance.fPlanContent == null || this.rMaintenance.fPlanContent == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写计划概述',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 编制人
+      if(this.rMaintenance.fPreparedBy == null || this.rMaintenance.fPreparedBy == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写编制人',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 编制时间
+      if(this.rMaintenance.fPreparationTime == null || this.rMaintenance.fPreparationTime == '') {
+        this.$message({
+            showClose: true,
+            message: '请选择编制时间',
+            type: 'error'
+          });
+        return false
+      }
+      this.rMaintenance.fStatus = 1
+      updateMaintenance(this.rMaintenance).then(res => {
+        if(res.code == 200) {
+          this.msgSuccess("修改提交成功")
+          this.nextVisible = false
+          this.editFormVisible1 = false
+          this.rMaintenance.fStatus = ''
+          this.rMaintenance = this.rMaintenanceInit
+          this.fileList = []
+        }
+      })
+    },
+    //提交
+    addPla() {
+      //是否填写 计划名称
+      if(this.rMaintenance.fPlanName == null || this.rMaintenance.fPlanName == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写计划名称',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 计划类型
+      if(this.rMaintenance.fPlanType == null || this.rMaintenance.fPlanType == '') {
+          this.$message({
+            showClose: true,
+            message: '请选择计划类型',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 预算
+      if(this.rMaintenance.fBudget == null || this.rMaintenance.fBudget == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写预算',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 计划概述
+      if(this.rMaintenance.fPlanContent == null || this.rMaintenance.fPlanContent == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写计划概述',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 编制人
+      if(this.rMaintenance.fPreparedBy == null || this.rMaintenance.fPreparedBy == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写编制人',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 编制时间
+      if(this.rMaintenance.fPreparationTime == null || this.rMaintenance.fPreparationTime == '') {
+        this.$message({
+            showClose: true,
+            message: '请选择编制时间',
+            type: 'error'
+          });
+        return false
+      }
+
+      this.rMaintenance.fStatus = 1
+      updateMaintenance(this.rMaintenance).then(res => {
+        if(res.code == 200) {
+          this.msgSuccess("提交成功")
+          this.nextVisible = false
+          this.editFormVisible1 = false
+          this.rMaintenance.fStatus = ''
+          this.rMaintenance = this.rMaintenanceInit
+          this.fileList = []
+          this.radio = ''
+        }
+      })
+      console.log("点击 点击 点击")
+    },
+    //审核提交
+    review() {
+      //是否填写 审核意见
+      if(this.rMaintenance.fReviewComments == null || this.rMaintenance.fReviewComments == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写审核意见',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 审核结果
+      if(this.rMaintenance.fReviewResult == null || this.rMaintenance.fReviewResult == '') {
+          this.$message({
+            showClose: true,
+            message: '请选择审核结果',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 审核人
+      if(this.rMaintenance.fReviewPeople == null || this.rMaintenance.fReviewPeople == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写审核人',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 审核时间
+      if(this.rMaintenance.fReviewDate == null || this.rMaintenance.fReviewDate == '') {
+        this.$message({
+            showClose: true,
+            message: '请选择审核时间',
+            type: 'error'
+          });
+        return false
+      }
+      //审批 未通过
+      if(this.rMaintenance.fReviewResult == 2) {
+        this.rMaintenance.fStatus = 5
+        updateMaintenance(this.rMaintenance).then(res => {
+          if(res.code == 200) {
+            this.msgSuccess("审批提交成功")
+            this.nextVisible = false
+            this.editFormVisible1 = false
+            this.rMaintenance.fStatus = ''
+            this.rMaintenance = this.rMaintenanceInit
+            this.fileList = []
+          }
+        })
+      }
+      //审批 驳回
+      else if(this.rMaintenance.fReviewResult == 3) {
+        this.rMaintenance.fStatus = 4
+        updateMaintenance(this.rMaintenance).then(res => {
+          if(res.code == 200) {
+            this.msgSuccess("审批提交成功")
+            this.nextVisible = false
+            this.editFormVisible1 = false
+            this.rMaintenance.fStatus = ''
+            this.rMaintenance = this.rMaintenanceInit
+            this.fileList = []
+          }
+        })
+      }
+      //审批 通过
+      else if(this.rMaintenance.fReviewResult == 1) {
+        this.rMaintenance.fStatus = 2
+        updateMaintenance(this.rMaintenance).then(res => {
+          if(res.code == 200) {
+            this.msgSuccess("审核提交成功")
+            this.nextVisible = false
+            this.editFormVisible1 = false
+            this.rMaintenance.fStatus = ''
+            this.rMaintenance = this.rMaintenanceInit
+            this.fileList = []
+          }
+        })
+      }
+    },
+    approve() {
+      //是否填写 审批意见
+      if(this.rMaintenance.fAuditComments == null || this.rMaintenance.fAuditComments == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写审批意见',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 审批结果
+      if(this.rMaintenance.fAuditResult == null || this.rMaintenance.fAuditResult == '') {
+          this.$message({
+            showClose: true,
+            message: '请选择审批结果',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 审核人
+      if(this.rMaintenance.fAuditPeople == null || this.rMaintenance.fAuditPeople == '') {
+          this.$message({
+            showClose: true,
+            message: '请填写审批人',
+            type: 'error'
+          });
+          return false
+      }
+      //是否填写 审批时间
+      if(this.rMaintenance.fAuditDate == null || this.rMaintenance.fAuditDate == '') {
+        this.$message({
+            showClose: true,
+            message: '请选择审批时间',
+            type: 'error'
+          });
+        return false
+      }
+      //审批 未通过
+      if(this.rMaintenance.fAuditResult == 2) {
+        this.rMaintenance.fStatus = 5
+        updateMaintenance(this.rMaintenance).then(res => {
+          if(res.code == 200) {
+            this.msgSuccess("审批提交成功")
+            this.nextVisible = false
+            this.editFormVisible1 = false
+            this.rMaintenance.fStatus = ''
+            this.rMaintenance = this.rMaintenanceInit
+            this.fileList = []
+          }
+        })
+      }
+      //审批 驳回
+      else if(this.rMaintenance.fAuditResult == 3) {
+        this.rMaintenance.fStatus = 4
+        updateMaintenance(this.rMaintenance).then(res => {
+          if(res.code == 200) {
+            this.msgSuccess("审批提交成功")
+            this.nextVisible = false
+            this.editFormVisible1 = false
+            this.rMaintenance.fStatus = ''
+            this.rMaintenance = this.rMaintenanceInit
+            this.fileList = []
+          }
+        })
+      }
+      //审批 通过
+      else if(this.rMaintenance.fAuditResult == 1) {
+        this.rMaintenance.fStatus = 3
+        updateMaintenance(this.rMaintenance).then(res => {
+          if(res.code == 200) {
+            this.msgSuccess("审批提交成功")
+            this.nextVisible = false
+            this.editFormVisible1 = false
+            this.rMaintenance.fStatus = ''
+            this.rMaintenance = this.rMaintenanceInit
+            this.fileList = []
+          }
+        })
+      }
+    },
+    //当弹窗  关闭
+    initZi() {
+      console.log("---------- 弹窗  关闭 ----------")
+      this.getList()
+      this.fileList = []
+      this.radio = ''
+      this.rMaintenance = this.rMaintenanceInit
+
+    },
+    // 关闭弹窗——计划
+    close1() {
+        this.editFormVisible1 = false
+        this.editFormVisible = false
+    },
+    // 关闭弹窗——实施
+    close() {
+        this.editFormVisible = false
+    },
+  },
+};
+</script>
+<style lang="scss" scoped>
+::v-deep .el-transfer__button {
+  border-radius: 50%;
+  padding: 12px;
+  display: block;
+  margin-left: 0px;
+}
+::v-deep .el-transfer__button:first-child {
+  margin-bottom: 10px;
+}
+</style>

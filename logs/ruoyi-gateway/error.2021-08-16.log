@@ -1,0 +1,15 @@
+09:39:20.112 [reactor-http-nio-11] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/analysis/list,异常信息:404 NOT_FOUND
+09:40:19.175 [reactor-http-nio-1] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/list,异常信息:404 NOT_FOUND
+09:42:49.235 [reactor-http-nio-2] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/list,异常信息:404 NOT_FOUND
+09:43:47.734 [reactor-http-nio-3] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/list,异常信息:404 NOT_FOUND
+09:46:52.570 [reactor-http-nio-4] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/list,异常信息:404 NOT_FOUND
+09:48:49.746 [reactor-http-nio-5] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/analysis/list,异常信息:404 NOT_FOUND
+09:50:53.710 [reactor-http-nio-8] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/analysis/list,异常信息:404 NOT_FOUND
+09:51:19.725 [reactor-http-nio-10] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/list,异常信息:404 NOT_FOUND
+09:52:45.537 [reactor-http-nio-11] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/list,异常信息:404 NOT_FOUND
+09:52:54.276 [reactor-http-nio-12] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/analysis/list,异常信息:404 NOT_FOUND
+10:02:02.501 [boundedElastic-5] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/archives/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for cf-archives"
+10:02:11.583 [boundedElastic-2] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/archives/archives/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for cf-archives"
+10:02:26.623 [boundedElastic-2] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/archives/archives/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for cf-archives"
+10:35:35.212 [reactor-http-nio-1] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/analysis/analysis/list,异常信息:404 NOT_FOUND
+11:01:23.423 [boundedElastic-2] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/code/gen/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for ruoyi-gen"

@@ -1,0 +1,341 @@
+<template>
+  <div class="app-container">
+    <el-form :model="queryParams" ref="queryForm" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="库房编号" prop="fStoreroomNumber">
+        <el-input
+          v-model="queryParams.fStoreroomNumber"
+          placeholder="请输入库房编号"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="库房名称" prop="fStoreroomName">
+        <el-input
+          v-model="queryParams.fStoreroomName"
+          placeholder="请输入库房名称"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="库房别名" prop="fStoreroomAlias">
+        <el-input
+          v-model="queryParams.fStoreroomAlias"
+          placeholder="请输入库房别名"
+          clearable
+          size="small"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item label="状态">
+        <el-select v-model="queryParams.fStatus" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+      </el-form-item>
+
+      <!-- <el-form-item label="创建时间" prop="fCreateTime">
+        <el-date-picker clearable size="small"
+          v-model="queryParams.fCreateTime"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="选择创建时间">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="更新时间" prop="fUpdateTime">
+        <el-date-picker clearable size="small"
+          v-model="queryParams.fUpdateTime"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="选择更新时间">
+        </el-date-picker>
+      </el-form-item> -->
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          v-hasPermi="['system:storeroom:add']"
+        >新增</el-button>
+      </el-col>
+
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
+
+    <el-table v-loading="loading" :data="storeroomList" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" align="center" />
+      <el-table-column label="序号" align="center"  type="index" width="60"/>
+      <el-table-column label="库房编号" align="center" prop="fStoreroomNumber" />
+      <el-table-column label="库房名称" align="center" prop="fStoreroomName" />
+      <el-table-column label="库房说明" align="center" prop="fStoreroomRemark" />
+      <el-table-column label="库房别名" align="center" prop="fStoreroomAlias" />
+      <el-table-column  label="状态" prop="fStatus" align="center">
+        <template slot-scope="scope">
+          <span v-if="scope.row.fStatus == 0">无效</span>
+          <span v-if="scope.row.fStatus == 1">有效</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="创建时间" align="center" prop="fCreateTime" width="200">
+        <template slot-scope="scope">
+          <!-- <span>{{ parseTime(scope.row.fCreateTime, '{y}-{m}-{d}') }}</span> -->
+          <span>{{ scope.row.fCreateTime}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="更新时间" align="center" prop="fUpdateTime" width="200">
+        <template slot-scope="scope">
+          <!-- <span>{{ parseTime(scope.row.fUpdateTime, '{y}-{m}-{d}') }}</span> -->
+          <span>{{ scope.row.fUpdateTime}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['system:storeroom:edit']"
+          >修改</el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['system:storeroom:remove']"
+          >删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
+
+    <!-- 添加或修改库房对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="50%" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
+        <el-form-item label="库房编号" prop="fStoreroomNumber">
+          <el-input v-model="form.fStoreroomNumber" placeholder="请输入库房编号" style="width: 95%"/>
+        </el-form-item>
+        <el-form-item label="库房名称" prop="fStoreroomName">
+          <el-input v-model="form.fStoreroomName" placeholder="请输入库房名称" style="width: 95%"/>
+        </el-form-item>
+        <el-form-item label="库房说明" prop="fStoreroomRemark" >
+          <el-input v-model="form.fStoreroomRemark" type="textarea"   maxlength="500" show-word-limit placeholder="请输入内容" style="width: 95%"/>
+        </el-form-item>
+        <el-form-item label="库房别名" prop="fStoreroomAlias">
+          <el-input v-model="form.fStoreroomAlias" placeholder="请输入库房别名" style="width: 95%"/>
+        </el-form-item>
+        <!-- <el-form-item label="排序" prop="fSort">
+          <el-input v-model="form.fSort" placeholder="请输入排序" />
+        </el-form-item> -->
+        <el-form-item label="状态">
+          <!-- <el-radio-group v-model="form.fStatus">
+            <el-radio label="1">有效</el-radio>
+            <el-radio label="0">无效</el-radio>
+          </el-radio-group> -->
+          <el-radio-group v-model="form.fStatus">
+            <el-radio :label="1">有效</el-radio>
+            <el-radio :label="0">无效</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <!-- <el-form-item label="创建时间" prop="fCreateTime">
+          <el-date-picker clearable size="small"
+            v-model="form.fCreateTime"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="选择创建时间">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="更新时间" prop="fUpdateTime">
+          <el-date-picker clearable size="small"
+            v-model="form.fUpdateTime"
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="选择更新时间">
+          </el-date-picker>
+        </el-form-item> -->
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+import { listStoreroom, getStoreroom, delStoreroom,updateStatus, addStoreroom, updateStoreroom } from "@/api/classifyManage/storeroom";
+
+export default {
+  name: "Storeroom",
+  data() {
+    return {
+      // 遮罩层
+      loading: true,
+      options: [{
+        value: '1',
+        label: '有效'
+      }, {
+        value: '0',
+        label: '无效'
+      }],
+      // 选中数组
+      ids: [],
+      // 非单个禁用
+      single: true,
+      // 非多个禁用
+      multiple: true,
+      // 显示搜索条件
+      showSearch: true,
+      // 总条数
+      total: 0,
+      // 库房表格数据
+      storeroomList: [],
+      // 弹出层标题
+      title: "",
+      // 是否显示弹出层
+      open: false,
+      fStatus: 0,
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        fStoreroomNumber: null,
+        fStoreroomName: null,
+        fStoreroomRemark: null,
+        fStoreroomAlias: null,
+        // fSort: null,
+        fStatus: null,
+        fCreateTime: null,
+        fUpdateTime: null
+      },
+      // 表单参数
+      form: {
+
+      },
+      // 表单校验
+      rules: {
+      }
+    };
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    /** 查询库房列表 */
+    getList() {
+      this.loading = true;
+      listStoreroom(this.queryParams).then(response => {
+        this.storeroomList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+      });
+    },
+    // 取消按钮
+    cancel() {
+      this.open = false;
+      this.reset();
+    },
+    // 表单重置
+    reset() {
+      this.form = {
+        fStoreroomId: null,
+        fStoreroomNumber: null,
+        fStoreroomName: null,
+        fStoreroomRemark: null,
+        fStoreroomAlias: null,
+        fSort: null,
+        fStatus: 1,
+        fCreateTime: null,
+        fUpdateTime: null
+      };
+
+      this.resetForm("form");
+    },
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1;
+      this.getList();
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.resetForm("queryForm");
+      this.handleQuery();
+    },
+    // 多选框选中数据
+    handleSelectionChange(selection) {
+      this.ids = selection.map(item => item.fStoreroomId)
+      this.single = selection.length!==1
+      this.multiple = !selection.length
+    },
+    /** 新增按钮操作 */
+    handleAdd() {
+      this.reset();
+      this.open = true;
+      this.title = "添加库房";
+    },
+    /** 修改按钮操作 */
+    handleUpdate(row) {
+      this.reset();
+      const fStoreroomId = row.fStoreroomId || this.ids
+      getStoreroom(fStoreroomId).then(response => {
+        this.form = response.data;
+        this.open = true;
+        this.title = "修改库房";
+      });
+    },
+    /** 提交按钮 */
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.form.fStoreroomId != null) {
+            updateStoreroom(this.form).then(response => {
+              this.msgSuccess("修改成功");
+              this.open = false;
+              this.getList();
+            });
+          } else {
+            addStoreroom(this.form).then(response => {
+              this.msgSuccess("新增成功");
+              this.open = false;
+              this.getList();
+            });
+          }
+        }
+      });
+    },
+    /** 删除按钮操作 */
+    handleDelete(row) {
+        updateStatus(row.fStoreroomId).then(response => {
+          this.getList();
+          this.msgSuccess("删除成功");
+        });
+    },
+    /** 导出按钮操作 */
+    handleExport() {
+      this.download('system/storeroom/export', {
+        ...this.queryParams
+      }, `system_storeroom.xlsx`)
+    }
+  }
+};
+</script>

@@ -1,0 +1,82 @@
+package com.szsk.archives.archivesManage.service;
+
+import java.util.List;
+
+import com.ruoyi.system.api.domain.SysDept;
+import com.szsk.archives.archivesManage.domain.ArchivesType;
+import com.szsk.archives.archivesManage.domain.vo.ArchivesTreeSelect;
+
+
+/**
+ * 档案分类 Service接口
+ * 
+ * @author cangfeng
+ * @date 2021-08-10
+ */
+public interface IArchivesTypeService
+{
+    /**
+     * 查询档案分类 
+     * 
+     * @param archivesTypeId 档案分类 ID
+     * @return 档案分类 
+     */
+    public ArchivesType selectarchivesTypeById(Long archivesTypeId);
+
+    /**
+     * 查询档案分类 列表
+     * 
+     * @param archivesType 档案分类 
+     * @return 档案分类 集合
+     */
+    public List<ArchivesType> selectarchivesTypeList(ArchivesType archivesType);
+
+    /**
+     * 新增档案分类 
+     * 
+     * @param archivesType 档案分类 
+     * @return 结果
+     */
+    public int insertarchivesType(ArchivesType archivesType);
+
+    /**
+     * 修改档案分类 
+     * 
+     * @param archivesType 档案分类 
+     * @return 结果
+     */
+    public int updatearchivesType(ArchivesType archivesType);
+
+    /**
+     * 批量删除档案分类 
+     * 
+     * @param archivesTypeIds 需要删除的档案分类 ID
+     * @return 结果
+     */
+    public int deletearchivesTypeByIds(Long[] archivesTypeIds);
+
+    /**
+     * 删除档案分类 信息
+     * 
+     * @param archivesTypeId 档案分类 ID
+     * @return 结果
+     */
+    public int deletearchivesTypeById(Long archivesTypeId);
+
+    /**
+     * 构建前端所需要树结构
+     *
+     * @param archivesTypes 档案分类
+     * @return 树结构列表
+     */
+    public List<ArchivesType> buildArchivesTree(List<ArchivesType> archivesTypes);
+
+    /**
+     * 构建前端所需要树结构
+     *
+     * @param archivesTypes 档案分类
+     * @return 树结构列表
+     */
+    public List<ArchivesTreeSelect> buildArchivesTypeTreeSelect(List<ArchivesType> archivesTypes);
+
+}

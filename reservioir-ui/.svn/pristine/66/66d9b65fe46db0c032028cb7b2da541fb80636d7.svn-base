@@ -1,0 +1,260 @@
+<template>
+  <div class="app-container">
+    <dv-border-box9 style="padding: 20px; height: 430px">
+      <div class="left info">
+        <result :title="`最小应力：`" :config="minConfig" :state="isMinSafe" :scope="`0-1000kpa`"></result>
+        <result :title="`最大应力：`" :config="maxConfig" :state="isMaxSafe" :scope="`0-1000kpa`"></result>
+      </div>
+
+      <div class="right info">
+        <result :title="`抗滑稳定系数：`" :config="kConfig" :state="isKSafe" :scope="`>1.08`"></result>
+        <result :title="`抗倾覆安全系数：`" :config="rConfig" :state="isRSafe" :scope="`>1.5`"></result>
+      </div>
+      <div class="btn-div"  style="margin-left: 40%">
+        <el-button type="danger"><a target="_blank"
+                                    :href="this.picName">查看计算原理</a></el-button>
+      </div>
+
+    </dv-border-box9>
+    <dv-border-box3 style="padding: 20px; height: 420px; background-color:#f1f8ff;">
+      <div style="height: 400px;min-width: 1300px;">
+        <div id="chart" style="height: 100%" :style="{'background': 'url('+bgc+') no-repeat '+ offset,
+      'backgroundSize': size}"></div>
+      </div>
+    </dv-border-box3>
+  </div>
+</template>
+
+
+<script>
+  import result from '@/views/collection/common/result'
+
+  export default {
+    name: "realtime",
+    components: {
+      result
+    },
+    data() {
+      let wall = this.reservoir.getGate().getWallAnalysis();
+      return {
+        wall: wall,
+        picName: "/files/" + this.common.CURRENT_RESERVOIR + "/wallTheory.pdf",
+        bgc: require(`@/assets/images/${this.common.CURRENT_RESERVOIR}/wall.jpg`),
+        offset: wall.data.backgroundOffset,
+        size: wall.data.backgroundSize,
+        isMinSafe: true,
+        isMaxSafe: true,
+        isKSafe: true,
+        isRSafe: true,
+        minConfig: {
+          number: [0]
+        },
+        maxConfig: {
+          number: [0]
+        },
+        kConfig: {
+          number: [0]
+        },
+        rConfig: {
+          number: [0]
+        },
+      }
+    },
+    methods: {
+      fillData() {
+        //进行数据填写
+        this.resultK = this.wall.computeK();
+        this.resultR = this.wall.computeR();
+        this.resultMaxPressure = this.wall.computeMaxPressure();
+        this.resultMinPressure = this.wall.computeMinPressure();
+
+        this.isKSafe = this.operator.isSafe(this.wall.computeK(), Number.MAX_VALUE, 1.08);
+        this.isRSafe = this.operator.isSafe(this.wall.computeR(), Number.MAX_VALUE, 1.5);
+        this.isMaxSafe = this.operator.isSafe(this.wall.computeMaxPressure(), 1000, 0);
+        this.isMinSafe = this.operator.isSafe(this.wall.computeMinPressure(), 1000, 0);
+
+        this.minConfig = this.operator.getConfig(this.resultMinPressure, 'kpa', this.isMinSafe);
+        this.maxConfig = this.operator.getConfig(this.resultMaxPressure, 'kpa', this.isMaxSafe);
+        this.kConfig = this.operator.getConfig(this.resultK, '', this.isKSafe);
+        this.rConfig = this.operator.getConfig(this.resultR, '', this.isRSafe);
+      },
+
+
+      displayWaterLevelLine() {
+        let chartWaterLevel = this.$echarts.init(document.getElementById('chart'));
+        let option = {
+          title: {
+            textStyle: {
+              color: '#000'
+            }
+          },
+          tooltip: {
+            trigger: "axis",
+            show: false
+          },
+          xAxis: [{
+            name: '',
+            type: 'value',
+            max: this.wall.data.xMax,
+            min: this.wall.data.xMin,
+            nameLocation: 'end',
+            axisLabel: {
+              show: false
+            }
+          }],
+          yAxis: [
+            {
+              name: '高程(m)',
+              type: 'value',
+              position: 'left',
+              max: this.wall.data.yMax,
+              min: this.wall.data.yMin,
+              axisLine: {
+                onZero: false
+              },
+              axisLabel: {
+                formatter: '{value} mm'
+              }
+            }
+          ],
+          series: [{
+            name: '水位',
+            type: 'line',
+            showSymbol: true,
+            smooth: false,
+            data: this.wall.getPoints(),
+            markPoint: {
+              symbol: 'arrow',
+              data: [
+                {
+                  value: '实时水位' + this.operator.getWaterLevel(),
+                  name: '实时水位',
+                  xAxis: 8.4,
+                  yAxis: this.operator.getWaterLevel()
+                }
+              ]
+            },
+            itemStyle: {
+              normal: {
+                color: '#0080ff',
+                lineStyle: {
+                  color: '#0080ff'
+                },
+                areaStyle: {
+                  color: '#0080ff'
+                }
+              }
+            },
+          }]
+        };
+        chartWaterLevel.setOption(option);
+      },
+      isSafe(value, max, min) {
+        if ((value > min && value < max) || (value === '--')) {
+          return true;
+        } else if ((value < min || value > max)) {
+          return false;
+        }
+        return true;
+      },
+
+    },
+    mounted() {
+      this.displayWaterLevelLine();
+      this.fillData();
+    }
+  }
+
+
+</script>
+
+<style scoped>
+  .app-container {
+    margin: 0;
+    background: url("../../../../assets/images/bg.png") repeat-y;
+    color: #dfe6ec;
+    height: 110vh;
+  }
+
+  .info {
+    position: absolute;
+    top: 20px;
+    width: 340px;
+  }
+
+  .left {
+    left: 5%;
+  }
+
+  .right {
+    left: 55%;
+  }
+
+  .btn-div {
+    left: 50%;
+    top: 160px;
+  }
+
+  fieldset img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+  }
+
+  .btn-div button {
+    height: 40px;
+    box-shadow: 10px 10px 5px #174867;
+    color: #ffffff;
+    background-color: #1f97ff;
+    width: 220px;
+    border-radius: 20px;
+  }
+
+  @keyframes alarm {
+    0% {
+      background: #ff7a59;
+    }
+    25% {
+      background: #ff9ea0;
+    }
+    50% {
+      background: #ffc6d0;
+    }
+    75% {
+      background: #ff9ea0;
+    }
+    100% {
+      background: #ff7a59;
+    }
+  }
+
+  #big-box img {
+    position: absolute;
+    z-index: 5
+  }
+
+  #div-section {
+    margin-left: 10%;
+    display: block;
+    position: fixed;
+    z-index: 999;
+  }
+
+  .layui-unselect > div {
+    color: #1c6ca1;
+    font-size: 18pt;
+    font-family: KaiTi, serif;
+  }
+
+  .layui-input-inline {
+    display: inline-block;
+    width: 50px;
+  }
+
+  label {
+    display: inline-block;
+    width: 60px;
+  }
+</style>

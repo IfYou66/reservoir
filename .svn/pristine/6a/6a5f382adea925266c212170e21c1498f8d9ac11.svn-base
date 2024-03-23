@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.emergency.mapper.MEmergencyPlanningMapper">
+
+    <resultMap type="com.szsk.reservoir.emergency.domain.MEmergencyPlanning" id="MEmergencyPlanningResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fPlanName"    column="f_plan_name"    />
+        <result property="fPlanNumber"    column="f_plan_number"    />
+        <result property="fPublishStartDate"    column="f_publish_start_date"    />
+        <result property="fPublishEndDate"    column="f_publish_end_date"    />
+        <result property="fPlanSummary"    column="f_plan_summary"    />
+        <result property="fPreparationTime"    column="f_preparation_time"    />
+        <result property="fPreparedBy"    column="f_prepared_by"    />
+        <result property="fPlanFileId"    column="f_plan_file_id"    />
+        <result property="fReviewComments"    column="f_review_comments"    />
+        <result property="fReviewResult"    column="f_review_result"    />
+        <result property="fReviewPeople"    column="f_review_people"    />
+        <result property="fReviewDate"    column="f_review_date"    />
+        <result property="fAuditComments"    column="f_audit_comments"    />
+        <result property="fAuditResult"    column="f_audit_result"    />
+        <result property="fAuditPeople"    column="f_audit_people"    />
+        <result property="fAuditDate"    column="f_audit_date"    />
+        <result property="fPublishContent"    column="f_publish_content"    />
+        <result property="fPublishPeople"    column="f_publish_people"    />
+        <result property="fPublishConfirmDate"    column="f_publish_confirm_date"    />
+        <result property="fActId"    column="f_act_id"    />
+        <result property="fActPersion"    column="f_act_persion"    />
+        <result property="fActStatus"    column="f_act_status"    />
+        <result property="fActNode"    column="f_act_node"    />
+        <result property="fCreateBy"    column="f_create_by"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+    </resultMap>
+
+    <sql id="selectMEmergencyPlanningVo">
+        select f_id, f_plan_name, f_plan_number, f_publish_start_date, f_publish_end_date, f_plan_summary, f_preparation_time, f_prepared_by, f_plan_file_id, f_review_comments, f_review_result, f_review_people, f_review_date, f_audit_comments, f_audit_result, f_audit_people, f_audit_date, f_publish_content, f_publish_people, f_publish_confirm_date, f_act_id, f_act_persion, f_act_status, f_act_node, f_create_by, f_create_time from m_emergency_planning
+    </sql>
+
+    <select id="selectMEmergencyPlanningList" parameterType="com.szsk.reservoir.emergency.domain.MEmergencyPlanning" resultMap="MEmergencyPlanningResult">
+        <include refid="selectMEmergencyPlanningVo"/>
+        <where>
+            <if test="fPlanName != null  and fPlanName != ''"> and f_plan_name like concat('%', #{fPlanName}, '%')</if>
+            <if test="fPlanNumber != null  and fPlanNumber != ''"> and f_plan_number = #{fPlanNumber}</if>
+            <if test="fPublishStartDate != null "> and f_publish_start_date = #{fPublishStartDate}</if>
+            <if test="fPublishEndDate != null "> and f_publish_end_date = #{fPublishEndDate}</if>
+            <if test="fPlanSummary != null  and fPlanSummary != ''"> and f_plan_summary = #{fPlanSummary}</if>
+            <if test="fPreparationTime != null "> and f_preparation_time = #{fPreparationTime}</if>
+            <if test="fPreparedBy != null  and fPreparedBy != ''"> and f_prepared_by = #{fPreparedBy}</if>
+            <if test="fPlanFileId != null "> and f_plan_file_id = #{fPlanFileId}</if>
+            <if test="fReviewComments != null  and fReviewComments != ''"> and f_review_comments = #{fReviewComments}</if>
+            <if test="fReviewResult != null "> and f_review_result = #{fReviewResult}</if>
+            <if test="fReviewPeople != null  and fReviewPeople != ''"> and f_review_people = #{fReviewPeople}</if>
+            <if test="fReviewDate != null "> and f_review_date = #{fReviewDate}</if>
+            <if test="fAuditComments != null  and fAuditComments != ''"> and f_audit_comments = #{fAuditComments}</if>
+            <if test="fAuditResult != null "> and f_audit_result = #{fAuditResult}</if>
+            <if test="fAuditPeople != null  and fAuditPeople != ''"> and f_audit_people = #{fAuditPeople}</if>
+            <if test="fAuditDate != null "> and f_audit_date = #{fAuditDate}</if>
+            <if test="fPublishContent != null  and fPublishContent != ''"> and f_publish_content = #{fPublishContent}</if>
+            <if test="fPublishPeople != null  and fPublishPeople != ''"> and f_publish_people = #{fPublishPeople}</if>
+            <if test="fPublishConfirmDate != null "> and f_publish_confirm_date = #{fPublishConfirmDate}</if>
+            <if test="fActId != null "> and f_act_id = #{fActId}</if>
+            <if test="fActStatus != null "> and f_act_status = #{fActStatus}</if>
+            <if test="fActNode != null  and fActNode != ''"> and f_act_node = #{fActNode}</if>
+            <if test="fCreateBy != null "> and ( f_create_by = #{fCreateBy} or f_act_persion = #{fCreateBy} )</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+        </where>
+        ORDER BY f_id DESC
+    </select>
+
+    <select id="selectMEmergencyPlanningById" parameterType="Long" resultMap="MEmergencyPlanningResult">
+        <include refid="selectMEmergencyPlanningVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <insert id="insertMEmergencyPlanning" parameterType="com.szsk.reservoir.emergency.domain.MEmergencyPlanning">
+        insert into m_emergency_planning
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fId != null">f_id,</if>
+            <if test="fPlanName != null">f_plan_name,</if>
+            <if test="fPlanNumber != null">f_plan_number,</if>
+            <if test="fPublishStartDate != null">f_publish_start_date,</if>
+            <if test="fPublishEndDate != null">f_publish_end_date,</if>
+            <if test="fPlanSummary != null">f_plan_summary,</if>
+            <if test="fPreparationTime != null">f_preparation_time,</if>
+            <if test="fPreparedBy != null">f_prepared_by,</if>
+            <if test="fPlanFileId != null">f_plan_file_id,</if>
+            <if test="fReviewComments != null">f_review_comments,</if>
+            <if test="fReviewResult != null">f_review_result,</if>
+            <if test="fReviewPeople != null">f_review_people,</if>
+            <if test="fReviewDate != null">f_review_date,</if>
+            <if test="fAuditComments != null">f_audit_comments,</if>
+            <if test="fAuditResult != null">f_audit_result,</if>
+            <if test="fAuditPeople != null">f_audit_people,</if>
+            <if test="fAuditDate != null">f_audit_date,</if>
+            <if test="fPublishContent != null">f_publish_content,</if>
+            <if test="fPublishPeople != null">f_publish_people,</if>
+            <if test="fPublishConfirmDate != null">f_publish_confirm_date,</if>
+            <if test="fActId != null">f_act_id,</if>
+            <if test="fActPersion != null">f_act_persion,</if>
+            <if test="fActStatus != null">f_act_status,</if>
+            <if test="fActNode != null">f_act_node,</if>
+            <if test="fCreateBy != null">f_create_by,</if>
+            <if test="fCreateTime == null"> f_create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fId != null">#{fId},</if>
+            <if test="fPlanName != null">#{fPlanName},</if>
+            <if test="fPlanNumber != null">#{fPlanNumber},</if>
+            <if test="fPublishStartDate != null">#{fPublishStartDate},</if>
+            <if test="fPublishEndDate != null">#{fPublishEndDate},</if>
+            <if test="fPlanSummary != null">#{fPlanSummary},</if>
+            <if test="fPreparationTime != null">#{fPreparationTime},</if>
+            <if test="fPreparedBy != null">#{fPreparedBy},</if>
+            <if test="fPlanFileId != null">#{fPlanFileId},</if>
+            <if test="fReviewComments != null">#{fReviewComments},</if>
+            <if test="fReviewResult != null">#{fReviewResult},</if>
+            <if test="fReviewPeople != null">#{fReviewPeople},</if>
+            <if test="fReviewDate != null">#{fReviewDate},</if>
+            <if test="fAuditComments != null">#{fAuditComments},</if>
+            <if test="fAuditResult != null">#{fAuditResult},</if>
+            <if test="fAuditPeople != null">#{fAuditPeople},</if>
+            <if test="fAuditDate != null">#{fAuditDate},</if>
+            <if test="fPublishContent != null">#{fPublishContent},</if>
+            <if test="fPublishPeople != null">#{fPublishPeople},</if>
+            <if test="fPublishConfirmDate != null">#{fPublishConfirmDate},</if>
+            <if test="fActId != null">#{fActId},</if>
+            <if test="fActPersion != null">#{fActPersion},</if>
+            <if test="fActStatus != null">#{fActStatus},</if>
+            <if test="fActNode != null">#{fActNode},</if>
+            <if test="fCreateBy != null">#{fCreateBy},</if>
+            <if test="fCreateTime == null">NOW(),</if>
+        </trim>
+    </insert>
+
+    <update id="updateMEmergencyPlanning" parameterType="com.szsk.reservoir.emergency.domain.MEmergencyPlanning">
+        update m_emergency_planning
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fPlanName != null">f_plan_name = #{fPlanName},</if>
+            <if test="fPlanNumber != null">f_plan_number = #{fPlanNumber},</if>
+            <if test="fPublishStartDate != null">f_publish_start_date = #{fPublishStartDate},</if>
+            <if test="fPublishEndDate != null">f_publish_end_date = #{fPublishEndDate},</if>
+            <if test="fPlanSummary != null">f_plan_summary = #{fPlanSummary},</if>
+            <if test="fPreparationTime != null">f_preparation_time = #{fPreparationTime},</if>
+            <if test="fPreparedBy != null">f_prepared_by = #{fPreparedBy},</if>
+            <if test="fPlanFileId != null">f_plan_file_id = #{fPlanFileId},</if>
+            <if test="fReviewComments != null">f_review_comments = #{fReviewComments},</if>
+            <if test="fReviewResult != null">f_review_result = #{fReviewResult},</if>
+            <if test="fReviewPeople != null">f_review_people = #{fReviewPeople},</if>
+            <if test="fReviewDate != null">f_review_date = #{fReviewDate},</if>
+            <if test="fAuditComments != null">f_audit_comments = #{fAuditComments},</if>
+            <if test="fAuditResult != null">f_audit_result = #{fAuditResult},</if>
+            <if test="fAuditPeople != null">f_audit_people = #{fAuditPeople},</if>
+            <if test="fAuditDate != null">f_audit_date = #{fAuditDate},</if>
+            <if test="fPublishContent != null">f_publish_content = #{fPublishContent},</if>
+            <if test="fPublishPeople != null">f_publish_people = #{fPublishPeople},</if>
+            <if test="fPublishConfirmDate != null">f_publish_confirm_date = #{fPublishConfirmDate},</if>
+            <if test="fActId != null">f_act_id = #{fActId},</if>
+            <if test="fActPersion != null">f_act_persion = #{fActPersion},</if>
+            <if test="fActStatus != null">f_act_status = #{fActStatus},</if>
+            <if test="fActNode != null">f_act_node = #{fActNode},</if>
+            <if test="fCreateBy != null">f_create_by = #{fCreateBy},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteMEmergencyPlanningById" parameterType="Long">
+        delete from m_emergency_planning where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteMEmergencyPlanningByIds" parameterType="String">
+        delete from m_emergency_planning where f_id in
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,123 @@
+package com.szsk.archives.archivesManage.controller;
+
+import java.util.Date;
+import java.util.List;
+import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.core.constant.HttpStatus;
+import com.ruoyi.common.core.utils.poi.ExcelUtil;
+import com.szsk.archives.archivesManage.domain.AArchives;
+import com.szsk.archives.archivesManage.domain.ABorrow;
+import com.szsk.archives.archivesManage.service.IAArchivesService;
+import com.szsk.archives.archivesManage.service.IABorrowService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.ruoyi.common.log.annotation.Log;
+import com.ruoyi.common.log.enums.BusinessType;
+import com.ruoyi.common.security.annotation.PreAuthorize;
+import com.ruoyi.common.core.web.controller.BaseController;
+import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.page.TableDataInfo;
+
+/**
+ * 借阅记录 Controller
+ *
+ * @author cangfeng
+ * @date 2021-08-12
+ */
+@RestController
+@RequestMapping("/borrow")
+public class ABorrowController extends BaseController {
+    @Autowired
+    private IABorrowService aBorrowService;
+
+    @Autowired
+    private IAArchivesService iaArchivesService;
+
+    /**
+     * 查询借阅记录 列表
+     */
+    @PreAuthorize(hasPermi = "system:borrow:list")
+    @GetMapping("/list")
+    public TableDataInfo list(ABorrow aBorrow, String archivesNumber) {
+        if (archivesNumber != null && !archivesNumber.equals("")) {
+            AArchives aArchives = new AArchives();
+            aArchives.setfArchivesNumber(archivesNumber);
+            List<AArchives> aArchives1 = iaArchivesService.selectAArchivesList(aArchives);
+            if (aArchives1 != null && aArchives1.size() > 0) {
+                aBorrow.setfArchivesId(aArchives1.get(0).getfArchivesId());
+            } else {
+                TableDataInfo tableDataInfo = new TableDataInfo();
+                tableDataInfo.setCode(HttpStatus.SUCCESS);
+                tableDataInfo.setMsg("查询成功");
+                return tableDataInfo;
+            }
+        }
+        startPage();
+        List<ABorrow> list = aBorrowService.selectABorrowList(aBorrow);
+        return getDataTable(list);
+    }
+
+    /**
+     * 导出借阅记录 列表
+     */
+    @PreAuthorize(hasPermi = "system:borrow:export")
+    @Log(title = "借阅记录 ", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    public void export(HttpServletResponse response, ABorrow aBorrow) throws IOException {
+        List<ABorrow> list = aBorrowService.selectABorrowList(aBorrow);
+        ExcelUtil<ABorrow> util = new ExcelUtil<ABorrow>(ABorrow.class);
+        util.exportExcel(response, list, "借阅记录 数据");
+    }
+
+    /**
+     * 获取借阅记录 详细信息
+     */
+    @PreAuthorize(hasPermi = "system:borrow:query")
+    @GetMapping(value = "/{fBorrowId}")
+    public AjaxResult getInfo(@PathVariable("fBorrowId") Long fBorrowId) {
+        return AjaxResult.success(aBorrowService.selectABorrowById(fBorrowId));
+    }
+
+    /**
+     * 新增借阅记录
+     */
+    @PreAuthorize(hasPermi = "system:borrow:add")
+    @Log(title = "借阅记录 ", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@RequestBody ABorrow aBorrow) {
+        System.out.println(aBorrow);
+        return toAjax(aBorrowService.insertABorrow(aBorrow));
+    }
+
+    /**
+     * 修改借阅记录
+     */
+    @PreAuthorize(hasPermi = "system:borrow:edit")
+    @Log(title = "借阅记录 ", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@RequestBody ABorrow aBorrow) {
+        if (aBorrow.getfState() == 2) {
+            //aBorrow.getfReturnTime(new Date());
+        }
+        return toAjax(aBorrowService.updateABorrow(aBorrow));
+    }
+
+    /**
+     * 删除借阅记录
+     */
+    @PreAuthorize(hasPermi = "system:borrow:remove")
+    @Log(title = "借阅记录 ", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{fBorrowIds}")
+    public AjaxResult remove(@PathVariable Long[] fBorrowIds) {
+        return toAjax(aBorrowService.deleteABorrowByIds(fBorrowIds));
+    }
+}

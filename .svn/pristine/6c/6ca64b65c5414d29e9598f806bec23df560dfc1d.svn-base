@@ -1,0 +1,93 @@
+package com.szsk.reservoir.run.service.Impl;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.szsk.reservoir.run.mapper.REventRecordMapper;
+import com.szsk.reservoir.run.domain.REventRecord;
+import com.szsk.reservoir.run.service.IREventRecordService;
+
+/**
+ * 事件记录 Service业务层处理
+ * 
+ * @author cangfeng
+ * @date 2021-08-25
+ */
+@Service
+public class REventRecordServiceImpl implements IREventRecordService 
+{
+    @Autowired
+    private REventRecordMapper rEventRecordMapper;
+
+    /**
+     * 查询事件记录 
+     * 
+     * @param fId 事件记录 ID
+     * @return 事件记录 
+     */
+    @Override
+    public REventRecord selectREventRecordById(Long fId)
+    {
+        return rEventRecordMapper.selectREventRecordById(fId);
+    }
+
+    /**
+     * 查询事件记录 列表
+     * 
+     * @param rEventRecord 事件记录 
+     * @return 事件记录 
+     */
+    @Override
+    public List<REventRecord> selectREventRecordList(REventRecord rEventRecord)
+    {
+        return rEventRecordMapper.getListBySecuimpId(Long.parseLong(rEventRecord.getfSecuimpId()));
+    }
+
+    /**
+     * 新增事件记录 
+     * 
+     * @param rEventRecord 事件记录 
+     * @return 结果
+     */
+    @Override
+    public int insertREventRecord(REventRecord rEventRecord)
+    {
+        return rEventRecordMapper.insertREventRecord(rEventRecord);
+    }
+
+    /**
+     * 修改事件记录 
+     * 
+     * @param rEventRecord 事件记录 
+     * @return 结果
+     */
+    @Override
+    public int updateREventRecord(REventRecord rEventRecord)
+    {
+        return rEventRecordMapper.updateREventRecord(rEventRecord);
+    }
+
+    /**
+     * 批量删除事件记录 
+     * 
+     * @param fIds 需要删除的事件记录 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteREventRecordByIds(Long[] fIds)
+    {
+        return rEventRecordMapper.deleteREventRecordByIds(fIds);
+    }
+
+    /**
+     * 删除事件记录 信息
+     * 
+     * @param fId 事件记录 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteREventRecordById(Long fId)
+    {
+        return rEventRecordMapper.deleteREventRecordById(fId);
+    }
+}

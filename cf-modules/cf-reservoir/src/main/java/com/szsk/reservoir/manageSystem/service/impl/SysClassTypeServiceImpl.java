@@ -1,0 +1,184 @@
+package com.szsk.reservoir.manageSystem.service.impl;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ruoyi.common.core.utils.StringUtils;
+import com.ruoyi.common.datascope.annotation.Reservoir;
+import com.szsk.reservoir.manageSystem.domain.SysClassType;
+import com.szsk.reservoir.manageSystem.domain.vo.SysClassTreeSelect;
+import com.szsk.reservoir.manageSystem.mapper.SysClassTypeMapper;
+import com.szsk.reservoir.manageSystem.service.ISysClassTypeService;
+
+/**
+ * 制度分类 Service业务层处理
+ * 
+ * @author cangfeng
+ * @date 2021-07-21
+ */
+@Service
+public class SysClassTypeServiceImpl implements ISysClassTypeService
+{
+    @Autowired
+    private SysClassTypeMapper sysClassTypeMapper;
+
+    /**
+     * 查询制度分类 
+     * 
+     * @param fTypeId 制度分类 ID
+     * @return 制度分类 
+     */
+    @Override
+    public SysClassType selectSysClassTypeById(Long fTypeId)
+    {
+        return sysClassTypeMapper.selectSysClassTypeById(fTypeId);
+    }
+
+    /**
+     * 查询制度分类 列表
+     * 
+     * @param sysClassType 制度分类 
+     * @return 制度分类 
+     */
+    @Override
+    @Reservoir
+    public List<SysClassType> selectSysClassTypeList(SysClassType sysClassType)
+    {
+        return sysClassTypeMapper.selectSysClassTypeList(sysClassType);
+    }
+
+    /**
+     * 新增制度分类 
+     * 
+     * @param sysClassType 制度分类 
+     * @return 结果
+     */
+    @Override
+    @Reservoir
+    public int insertSysClassType(SysClassType sysClassType)
+    {
+        return sysClassTypeMapper.insertSysClassType(sysClassType);
+    }
+
+    /**
+     * 修改制度分类 
+     * 
+     * @param sysClassType 制度分类 
+     * @return 结果
+     */
+    @Override
+    public int updateSysClassType(SysClassType sysClassType)
+    {
+        return sysClassTypeMapper.updateSysClassType(sysClassType);
+    }
+
+    /**
+     * 批量删除制度分类 
+     * 
+     * @param fTypeIds 需要删除的制度分类 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteSysClassTypeByIds(Long[] fTypeIds)
+    {
+        return sysClassTypeMapper.deleteSysClassTypeByIds(fTypeIds);
+    }
+
+    /**
+     * 删除制度分类 信息
+     * 
+     * @param fTypeId 制度分类 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteSysClassTypeById(Long fTypeId)
+    {
+        return sysClassTypeMapper.deleteSysClassTypeById(fTypeId);
+    }
+
+    /**
+     * 构建前端所需要下拉树结构
+     *
+     * @param sysClassTypes 部门列表
+     * @return 下拉树结构列表
+     */
+    @Override
+    public List<SysClassTreeSelect> buildArchivesTypeTreeSelect(List<SysClassType> sysClassTypes)
+    {
+        List<SysClassType> archivesTrees = buildSysClassTree(sysClassTypes);
+        return archivesTrees.stream().map(SysClassTreeSelect::new).collect(Collectors.toList());
+    }
+
+    public List<SysClassType> buildSysClassTree(List<SysClassType> sysClassTypes)
+    {
+        List<SysClassType> returnList = new ArrayList<SysClassType>();
+        List<Long> tempList = new ArrayList<Long>();
+        for (SysClassType sysClassType : sysClassTypes)
+        {
+            tempList.add(sysClassType.getfId());
+        }
+        for (Iterator<SysClassType> iterator = sysClassTypes.iterator(); iterator.hasNext();)
+        {
+            SysClassType archives = (SysClassType) iterator.next();
+            // 如果是顶级节点, 遍历该父节点的所有子节点
+            if (!tempList.contains(archives.getParentId()))
+            {
+                recursionFn(sysClassTypes, archives);
+                returnList.add(archives);
+            }
+        }
+        if (returnList.isEmpty())
+        {
+            returnList = sysClassTypes;
+        }
+        return returnList;
+    }
+
+    /**
+     * 递归列表
+     */
+    private void recursionFn(List<SysClassType> list, SysClassType t)
+    {
+        // 得到子节点列表
+        List<SysClassType> childList = getChildList(list, t);
+        t.setSysClassChildren(childList);
+        for (SysClassType tChild : childList)
+        {
+            if (hasChild(list, tChild))
+            {
+                recursionFn(list, tChild);
+            }
+        }
+    }
+
+    /**
+     * 得到子节点列表
+     */
+    private List<SysClassType> getChildList(List<SysClassType> list, SysClassType t)
+    {
+        List<SysClassType> tlist = new ArrayList<SysClassType>();
+        Iterator<SysClassType> it = list.iterator();
+        while (it.hasNext())
+        {
+            SysClassType n = (SysClassType) it.next();
+            if (StringUtils.isNotNull(n.getParentId()) && n.getParentId().longValue() == t.getfId().longValue())
+            {
+                tlist.add(n);
+            }
+        }
+        return tlist;
+    }
+
+    /**
+     * 判断是否有子节点
+     */
+    private boolean hasChild(List<SysClassType> list, SysClassType t)
+    {
+        return getChildList(list, t).size() > 0 ? true : false;
+    }
+}

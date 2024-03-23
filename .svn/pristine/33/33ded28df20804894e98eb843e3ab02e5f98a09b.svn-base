@@ -1,0 +1,206 @@
+package com.szsk.reservoir.manageSystem.domain;
+
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import com.ruoyi.common.core.annotation.Excel;
+import com.ruoyi.common.core.web.domain.BaseEntity;
+
+/**
+ * 参加培训人员对象 sys_join_training
+ * 
+ * @author cangfeng
+ * @date 2021-08-13
+ */
+public class SysJoinTraining extends BaseEntity
+{
+    private static final long serialVersionUID = 1L;
+
+    /** id */
+    private Long fId;
+
+    /** 培训表主键 */
+    private Long fTrainingId;
+
+    /** 姓名 */
+    @Excel(name = "姓名")
+    private String fName;
+
+    /** 性别 0：女1：男 */
+    @Excel(name = "性别 0：女1：男")
+    private Integer fGender;
+
+    /** 年龄 */
+    @Excel(name = "年龄")
+    private Long fAge;
+
+    /** 政治面貌 0：团员1：党员 */
+    @Excel(name = "政治面貌 0：团员1：党员")
+    private Integer fFace;
+
+    /** 职务 */
+    @Excel(name = "职务")
+    private String fJobContent;
+
+    /** 职称 */
+    @Excel(name = "职称")
+    private String fJobTitle;
+
+    /** 学历 0：专科1：本科 */
+    @Excel(name = "学历 0：专科1：本科")
+    private Integer fEducation;
+
+    /** 分数 */
+    @Excel(name = "分数")
+    private Long fFraction;
+
+    /** 培训时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "培训时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fTarTime;
+
+    /** 培训证明材料id */
+    @Excel(name = "培训证明材料id")
+    private Long fProve;
+
+    /** 状态 */
+    @Excel(name = "状态")
+    private Integer fStatus;
+    
+    public void setfId(Long fId) 
+    {
+        this.fId = fId;
+    }
+
+    public Long getfId() 
+    {
+        return fId;
+    }
+
+    public Long getfTrainingId() {
+        return fTrainingId;
+    }
+
+    public void setfTrainingId(Long fTrainingId) {
+        this.fTrainingId = fTrainingId;
+    }
+
+    public void setfName(String fName)
+    {
+        this.fName = fName;
+    }
+
+    public String getfName() 
+    {
+        return fName;
+    }
+    public void setfGender(Integer fGender) 
+    {
+        this.fGender = fGender;
+    }
+
+    public Integer getfGender() 
+    {
+        return fGender;
+    }
+    public void setfAge(Long fAge) 
+    {
+        this.fAge = fAge;
+    }
+
+    public Long getfAge() 
+    {
+        return fAge;
+    }
+    public void setfFace(Integer fFace) 
+    {
+        this.fFace = fFace;
+    }
+
+    public Integer getfFace() 
+    {
+        return fFace;
+    }
+    public void setfJobContent(String fJobContent) 
+    {
+        this.fJobContent = fJobContent;
+    }
+
+    public String getfJobContent() 
+    {
+        return fJobContent;
+    }
+    public void setfJobTitle(String fJobTitle) 
+    {
+        this.fJobTitle = fJobTitle;
+    }
+
+    public String getfJobTitle() 
+    {
+        return fJobTitle;
+    }
+    public void setfEducation(Integer fEducation) 
+    {
+        this.fEducation = fEducation;
+    }
+
+    public Integer getfEducation() 
+    {
+        return fEducation;
+    }
+    public void setfFraction(Long fFraction) 
+    {
+        this.fFraction = fFraction;
+    }
+
+    public Long getfFraction() 
+    {
+        return fFraction;
+    }
+    public void setfTarTime(Date fTarTime) 
+    {
+        this.fTarTime = fTarTime;
+    }
+
+    public Date getfTarTime() 
+    {
+        return fTarTime;
+    }
+    public void setfProve(Long fProve) 
+    {
+        this.fProve = fProve;
+    }
+
+    public Long getfProve() 
+    {
+        return fProve;
+    }
+    public void setfStatus(Integer fStatus) 
+    {
+        this.fStatus = fStatus;
+    }
+
+    public Integer getfStatus() 
+    {
+        return fStatus;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("fId", getfId())
+            .append("fName", getfName())
+            .append("fGender", getfGender())
+            .append("fAge", getfAge())
+            .append("fFace", getfFace())
+            .append("fJobContent", getfJobContent())
+            .append("fJobTitle", getfJobTitle())
+            .append("fEducation", getfEducation())
+            .append("fFraction", getfFraction())
+            .append("fTarTime", getfTarTime())
+            .append("fProve", getfProve())
+            .append("fStatus", getfStatus())
+            .toString();
+    }
+}

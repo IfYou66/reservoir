@@ -1,0 +1,12 @@
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\config\MinioConfig.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\config\ResourcesConfig.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\CFFileApplication.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\service\impl\FileServiceImpl.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\mapper\SysFileMapper.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\service\FastDfsSysFileServiceImpl.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\service\FileService.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\service\LocalSysFileServiceImpl.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\service\MinioSysFileServiceImpl.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\controller\SysFileController.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\service\ISysFileService.java
+D:\cangfeng-server\cf-modules\cf-file\src\main\java\com\ruoyi\file\utils\FileUploadUtils.java

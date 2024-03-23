@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="system">
+    <output-path>D:/a</output-path>
+    <root id="archive" name="system.jar">
+      <element id="module-output" name="cf-modules-system" />
+    </root>
+  </artifact>
+</component>

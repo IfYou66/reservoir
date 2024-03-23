@@ -1,0 +1,229 @@
+<template>
+  <div class="app-container">
+        <el-form :model="queryParams" ref="queryForm"  :inline="true">
+      <el-form-item label="名称" prop="fInstructionName">
+        <el-input
+          v-model="queryParams.fInstructionName"
+          placeholder="请输入名称"
+          clearable
+          size="small"
+          style="width: 240px"
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+
+      <el-form-item label="状态" prop="fActStatus">
+        <el-select
+          v-model="queryParams.fActStatus"
+          placeholder="状态"
+          clearable
+          size="small"
+          style="width: 240px"
+        >
+          <el-option
+            v-for="(item,index) in approvalStatus"
+            :key="index + 1"
+            :label="item"
+            :value="index + 1"
+          />
+        </el-select>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+
+    <el-table v-loading="loading" :data="tableData" border>
+<!--      <el-table-column width="55" align="center"/>-->
+<!--      <el-table-column label="序号" align="center" prop="id" width="120"/>-->
+      <el-table-column label="调度名称" align="center" prop="fInstructionName" :show-overflow-tooltip="true" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <!-- <el-button
+            size="mini"
+            type="text"
+          >{{ scope.row.fInstructionName }}
+          </el-button> -->
+          {{ scope.row.fInstructionName }}
+        </template>
+      </el-table-column>
+
+
+      <el-table-column label="接收时间" align="center" prop="fCreateTime" :show-overflow-tooltip="true" width="200"/>
+      <el-table-column label="调度说明" align="center" prop="fInstructionContent" width="380"/>
+
+      <el-table-column label="状态" align="center" prop="fActStatus" width="180">
+        <template slot-scope="{row}">
+          <span v-if="row.fActStatus == 1">待提交</span>
+          <span v-if="row.fActStatus == 2">待执行</span>
+          <span v-if="row.fActStatus == 3">待反馈</span>
+          <span v-if="row.fActStatus == 4">完成</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="{ row }">
+          <span v-if="row.fActStatus == '1'">
+            <el-button size="mini" type="text" @click="open(0,row)">提交</el-button>
+          </span>
+          <span v-if="row.fActStatus == '2' ">
+            <el-button size="mini" type="text" @click="open(0,row)">执行</el-button>
+          </span>
+          <span v-if="row.fActStatus == '3'">
+            <el-button size="mini" type="text" @click="open(1,row)">反馈</el-button>
+          </span>
+          <span style="margin-left: 5px" v-if="row.fActStatus == '4'">
+            <el-button size="mini" type="text" @click="open(1,row)">调度详情</el-button>
+          </span>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination
+      v-show="total>0"
+      :total="total"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+    />
+
+    <!-- 查看弹窗 -->
+    <el-dialog
+      title="调度管理-调度指令详情"
+      :visible.sync="editFormVisible"
+      width="1500px"
+      >
+        <instructionReceived ref="instruction" @shut="closeReview" @search="getList"></instructionReceived>
+
+    </el-dialog>
+
+  </div>
+</template>
+<script>
+import instructionReceived from './instructionReceived.vue';
+import { listInstruction } from "@/api/dispatch/instruction";
+import { getFileById } from "@/api/file";
+export default {
+  components: {instructionReceived},
+  name: "RightToolbar",
+  data() {
+    return {
+
+      file: {},
+
+      file1: {},
+
+      file2: {},
+
+      tableData: [],
+
+      total: 0,
+
+      // 显隐数据
+      // 弹出层标题
+      title: "显示/隐藏",
+      // 是否显示弹出层
+      editFormVisible: false,
+
+         // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        fInstructionName: undefined,
+        fActStatus: undefined
+      },
+      approvalStatus: ['待提交', '待执行', '待反馈', '完成']
+    };
+  },
+  props: {},
+  created() {
+    this.getList()
+  },
+  methods: {
+    /** 调度指令列表 */
+     getList() {
+       this.loading = true;
+       listInstruction(this.queryParams).then(
+         response => {
+           this.tableData = response.rows;
+           this.total = response.total;
+           this.loading = false;
+         }
+       );
+     },
+
+    open(type,row){
+      this.editFormVisible = true;
+      if (row.fSchedulingId) {
+        getFileById({id: row.fSchedulingId}).then(result => {
+          if (result) {
+            this.file = result.data
+            console.log('111',this.file)
+            this.$refs.instruction.init(row, type, this.file, this.file1,this.file2);
+          }
+        })
+      };
+      if (row.fOperateId) {
+        getFileById({id: row.fOperateId}).then(result => {
+          if (result) {
+            this.file1 = result.data
+            console.log('222',this.file1)
+            this.$refs.instruction.init(row, type, this.file, this.file1,this.file2);
+          }
+        })
+      }
+      if (row.fResultUrl) {
+        getFileById({id: row.fResultUrl}).then(result => {
+          if (result) {
+            this.file2 = result.data
+            console.log('333',this.file2)
+            this.$refs.instruction.init(row, type, this.file, this.file1,this.file2);
+          }
+        })
+      }
+        if(this.file && this.file1  && this.file2){
+          setTimeout(() =>{
+              // 调用子组件的方法
+              this.$nextTick(() => {
+                if (row.fResultUrl) {
+                  this.$refs.instruction.init(row, type, this.file, this.file1,this.file2);
+                } else {
+                  this.$refs.instruction.init(row, type, this.file, this.file1);
+                }
+              });
+          },4000);
+        }
+
+    },
+
+    closeReview(data) {
+       this.editFormVisible = data
+    },
+
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.pageNum = 1;
+      this.getList();
+    },
+
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.dateRange = [];
+      this.resetForm("queryForm");
+      this.handleQuery();
+    }
+  },
+};
+</script>
+<style lang="scss" scoped>
+::v-deep .el-transfer__button {
+  border-radius: 50%;
+  padding: 12px;
+  display: block;
+  margin-left: 0px;
+}
+::v-deep .el-transfer__button:first-child {
+  margin-bottom: 10px;
+}
+</style>

@@ -1,0 +1,109 @@
+10:38:17.472 [nacos-grpc-client-executor-887] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - [1661909169387_127.0.0.1_57792]Request stream error, switch server,error={}
+com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: UNAVAILABLE: io exception
+	at com.alibaba.nacos.shaded.io.grpc.Status.asRuntimeException(Status.java:533)
+	at com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$StreamObserverToCallListenerAdapter.onClose(ClientCalls.java:442)
+	at com.alibaba.nacos.shaded.io.grpc.PartialForwardingClientCallListener.onClose(PartialForwardingClientCallListener.java:39)
+	at com.alibaba.nacos.shaded.io.grpc.ForwardingClientCallListener.onClose(ForwardingClientCallListener.java:23)
+	at com.alibaba.nacos.shaded.io.grpc.ForwardingClientCallListener$SimpleForwardingClientCallListener.onClose(ForwardingClientCallListener.java:40)
+	at com.alibaba.nacos.shaded.io.grpc.internal.CensusStatsModule$StatsClientInterceptor$1$1.onClose(CensusStatsModule.java:700)
+	at com.alibaba.nacos.shaded.io.grpc.PartialForwardingClientCallListener.onClose(PartialForwardingClientCallListener.java:39)
+	at com.alibaba.nacos.shaded.io.grpc.ForwardingClientCallListener.onClose(ForwardingClientCallListener.java:23)
+	at com.alibaba.nacos.shaded.io.grpc.ForwardingClientCallListener$SimpleForwardingClientCallListener.onClose(ForwardingClientCallListener.java:40)
+	at com.alibaba.nacos.shaded.io.grpc.internal.CensusTracingModule$TracingClientInterceptor$1$1.onClose(CensusTracingModule.java:399)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:510)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:66)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl.close(ClientCallImpl.java:630)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl.access$700(ClientCallImpl.java:518)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInternal(ClientCallImpl.java:692)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:681)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at com.alibaba.nacos.shaded.io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+	at sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:247)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1140)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:347)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:148)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:697)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:632)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:549)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:511)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:918)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 common frames omitted
+10:38:17.471 [nacos-grpc-client-executor-888] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - [1661909165731_127.0.0.1_57784]Request stream error, switch server,error={}
+com.alibaba.nacos.shaded.io.grpc.StatusRuntimeException: UNAVAILABLE: io exception
+	at com.alibaba.nacos.shaded.io.grpc.Status.asRuntimeException(Status.java:533)
+	at com.alibaba.nacos.shaded.io.grpc.stub.ClientCalls$StreamObserverToCallListenerAdapter.onClose(ClientCalls.java:442)
+	at com.alibaba.nacos.shaded.io.grpc.PartialForwardingClientCallListener.onClose(PartialForwardingClientCallListener.java:39)
+	at com.alibaba.nacos.shaded.io.grpc.ForwardingClientCallListener.onClose(ForwardingClientCallListener.java:23)
+	at com.alibaba.nacos.shaded.io.grpc.ForwardingClientCallListener$SimpleForwardingClientCallListener.onClose(ForwardingClientCallListener.java:40)
+	at com.alibaba.nacos.shaded.io.grpc.internal.CensusStatsModule$StatsClientInterceptor$1$1.onClose(CensusStatsModule.java:700)
+	at com.alibaba.nacos.shaded.io.grpc.PartialForwardingClientCallListener.onClose(PartialForwardingClientCallListener.java:39)
+	at com.alibaba.nacos.shaded.io.grpc.ForwardingClientCallListener.onClose(ForwardingClientCallListener.java:23)
+	at com.alibaba.nacos.shaded.io.grpc.ForwardingClientCallListener$SimpleForwardingClientCallListener.onClose(ForwardingClientCallListener.java:40)
+	at com.alibaba.nacos.shaded.io.grpc.internal.CensusTracingModule$TracingClientInterceptor$1$1.onClose(CensusTracingModule.java:399)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl.closeObserver(ClientCallImpl.java:510)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl.access$300(ClientCallImpl.java:66)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl.close(ClientCallImpl.java:630)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl.access$700(ClientCallImpl.java:518)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInternal(ClientCallImpl.java:692)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ClientCallImpl$ClientStreamListenerImpl$1StreamClosed.runInContext(ClientCallImpl.java:681)
+	at com.alibaba.nacos.shaded.io.grpc.internal.ContextRunnable.run(ContextRunnable.java:37)
+	at com.alibaba.nacos.shaded.io.grpc.internal.SerializingExecutor.run(SerializingExecutor.java:123)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.IOException: 远程主机强迫关闭了一个现有的连接。
+	at sun.nio.ch.SocketDispatcher.read0(Native Method)
+	at sun.nio.ch.SocketDispatcher.read(SocketDispatcher.java:43)
+	at sun.nio.ch.IOUtil.readIntoNativeBuffer(IOUtil.java:223)
+	at sun.nio.ch.IOUtil.read(IOUtil.java:192)
+	at sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:380)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.buffer.PooledByteBuf.setBytes(PooledByteBuf.java:247)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.buffer.AbstractByteBuf.writeBytes(AbstractByteBuf.java:1140)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.socket.nio.NioSocketChannel.doReadBytes(NioSocketChannel.java:347)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:148)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:697)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:632)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:549)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:511)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:918)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 common frames omitted
+10:38:18.061 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:18.161 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:18.262 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:20.364 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:20.465 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:20.566 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:24.668 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:24.768 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:24.869 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:32.971 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:33.071 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:33.172 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:49.274 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:49.374 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:UNHEALTHY
+10:38:49.474 [com.alibaba.nacos.client.naming.updater.0] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:11.862 [com.alibaba.nacos.client.naming.updater.6] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:11.962 [com.alibaba.nacos.client.naming.updater.6] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:12.063 [com.alibaba.nacos.client.naming.updater.6] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:14.165 [com.alibaba.nacos.client.naming.updater.6] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:14.265 [com.alibaba.nacos.client.naming.updater.6] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:14.366 [com.alibaba.nacos.client.naming.updater.6] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:18.467 [com.alibaba.nacos.client.naming.updater.6] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:18.568 [com.alibaba.nacos.client.naming.updater.6] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:18.668 [com.alibaba.nacos.client.naming.updater.6] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:21.575 [com.alibaba.nacos.client.naming.updater.2] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:21.676 [com.alibaba.nacos.client.naming.updater.2] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:UNHEALTHY
+10:39:21.777 [com.alibaba.nacos.client.naming.updater.2] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ServiceQueryRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:UNHEALTHY

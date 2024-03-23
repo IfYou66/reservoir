@@ -1,0 +1,22 @@
+09:02:09.681 [reactor-http-nio-2] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/,异常信息:404 NOT_FOUND
+09:07:09.484 [reactor-http-nio-3] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/,异常信息:404 NOT_FOUND
+09:11:03.569 [reactor-http-nio-7] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/,异常信息:404 NOT_FOUND
+09:11:03.593 [reactor-http-nio-8] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/csrf,异常信息:404 NOT_FOUND
+09:11:03.595 [boundedElastic-5] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/code/v2/api-docs,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for ruoyi-gen"
+09:11:19.184 [boundedElastic-7] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/code/gen/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for ruoyi-gen"
+09:12:09.483 [reactor-http-nio-1] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/,异常信息:404 NOT_FOUND
+10:21:34.912 [reactor-http-nio-2] ERROR c.r.g.f.AuthFilter - [setUnauthorizedResponse,94] - [鉴权异常处理]请求路径:/collection/data/HHSK000300030600010800
+14:46:48.247 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - [report,40] - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+

@@ -1,0 +1,4 @@
+20:12:10.327 [reactor-http-nio-15] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/zaixianwenjuandiaocha/session,异常信息:404 NOT_FOUND
+20:12:10.327 [reactor-http-nio-16] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/zaixianwenjuandiaocha/img/back-img-bg.jpg,异常信息:404 NOT_FOUND
+20:13:35.368 [reactor-http-nio-17] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/zaixianwenjuandiaocha/img/back-img-bg.jpg,异常信息:404 NOT_FOUND
+20:13:37.786 [reactor-http-nio-18] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/zaixianwenjuandiaocha/img/back-img-bg.jpg,异常信息:404 NOT_FOUND

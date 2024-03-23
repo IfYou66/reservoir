@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.manageSystem.mapper.SysReservoirInfoMapper">
+    
+    <resultMap type="com.szsk.reservoir.manageSystem.domain.SysReservoirInfo" id="SysReservoirInfoResult">
+        <result property="id"    column="id"    />
+        <result property="fName"    column="f_name"    />
+        <result property="fRemark"    column="f_remark"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updatedId"    column="updated_id"    />
+        <result property="updatedTime"    column="updated_time"    />
+        <result property="fAdminUserId"    column="f_admin_user_id"    />
+        <result property="fAdminUserName"    column="f_admin_user_name"    />
+        <result property="fReservoirKey"    column="f_reservoir_key"    />
+        <result property="fTopLogoImg"    column="f_top_logo_img"    />
+    </resultMap>
+
+    <sql id="selectSysReservoirInfoVo">
+        select id,f_admin_user_id, f_top_logo_img,f_admin_user_name,f_reservoir_key,f_name, f_remark, create_id, create_time, updated_id, updated_time from sys_reservoir_info
+    </sql>
+
+    <select id="selectSysReservoirInfoList" parameterType="com.szsk.reservoir.manageSystem.domain.SysReservoirInfo" resultMap="SysReservoirInfoResult">
+        <include refid="selectSysReservoirInfoVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="fName != null  and fName != ''"> and f_name like concat('%', #{fName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSysReservoirInfoById" parameterType="Long" resultMap="SysReservoirInfoResult">
+        <include refid="selectSysReservoirInfoVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSysReservoirInfo" parameterType="com.szsk.reservoir.manageSystem.domain.SysReservoirInfo" 
+    	useGeneratedKeys="true" keyProperty="id">
+        insert into sys_reservoir_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="fAdminUserId != null">f_admin_user_id,</if>
+            <if test="fAdminUserName != null">f_admin_user_name,</if>
+            <if test="fReservoirKey != null">f_reservoir_key,</if>
+            <if test="fName != null and fName != ''">f_name,</if>
+            <if test="fRemark != null">f_remark,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updatedId != null">updated_id,</if>
+            <if test="updatedTime != null">updated_time,</if>
+            <if test="fTopLogoImg != null">f_top_logo_img,</if>
+          
+            
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+             <if test="fAdminUserId != null">#{fAdminUserId},</if>
+             <if test="fAdminUserName != null">#{fAdminUserName},</if>
+             <if test="fReservoirKey != null">#{fReservoirKey},</if>
+            <if test="fName != null and fName != ''">#{fName},</if>
+            <if test="fRemark != null">#{fRemark},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updatedId != null">#{updatedId},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+            <if test="fTopLogoImg != null">#{fTopLogoImg},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysReservoirInfo" parameterType="com.szsk.reservoir.manageSystem.domain.SysReservoirInfo">
+        update sys_reservoir_info
+        <trim prefix="SET" suffixOverrides=",">
+           <if test="fAdminUserId != null and fAdminUserId != ''">f_admin_user_id = #{fAdminUserId},</if>
+            <if test="fAdminUserName != null and fAdminUserName != ''">f_admin_user_name = #{fAdminUserName},</if>
+            <if test="fName != null and fName != ''">f_name = #{fName},</if>
+            <if test="fRemark != null">f_remark = #{fRemark},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updatedId != null">updated_id = #{updatedId},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+            <if test="fTopLogoImg != null">f_top_logo_img = #{fTopLogoImg},</if>
+             
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSysReservoirInfoById" parameterType="Long">
+        delete from sys_reservoir_info where id = #{id}
+    </delete>
+
+    <delete id="deleteSysReservoirInfoByIds" parameterType="String">
+        delete from sys_reservoir_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,127 @@
+package com.szsk.reservoir.risk.service.Impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.ruoyi.common.datascope.annotation.Reservoir;
+import com.szsk.reservoir.risk.domain.MRiskManagement;
+import com.szsk.reservoir.risk.mapper.MRiskManagementMapper;
+import com.szsk.reservoir.risk.service.IMRiskManagementService;
+import com.szsk.reservoir.workflow.service.WorkFlowService;
+
+/**
+ * 险情管理 Service业务层处理
+ *
+ * @author cangfeng
+ * @date 2021-08-19
+ */
+@Service
+public class MRiskManagementServiceImpl implements IMRiskManagementService {
+
+    @Autowired
+    private MRiskManagementMapper mRiskManagementMapper;
+
+    @Autowired
+    private WorkFlowService workFlowService;
+
+    /**
+     * 查询险情管理
+     *
+     * @param fId 险情管理 ID
+     * @return 险情管理
+     */
+    @Override
+    public MRiskManagement selectMRiskManagementById(Long fId)
+    {
+        return mRiskManagementMapper.selectMRiskManagementById(fId);
+    }
+
+    /**
+     * 查询险情管理 列表
+     *
+     * @param mRiskManagement 险情管理
+     * @return 险情管理
+     */
+    @Override
+    @Reservoir
+    public List<MRiskManagement> selectMRiskManagementList(MRiskManagement mRiskManagement)
+    {
+        return mRiskManagementMapper.selectMRiskManagementList(mRiskManagement);
+    }
+
+    /**
+     * 新增险情管理
+     *
+     * @param mRiskManagement 险情管理
+     * @return 结果
+     */
+    @Override
+    @Reservoir
+    public int insertMRiskManagement(MRiskManagement mRiskManagement)
+    {
+        return mRiskManagementMapper.insertMRiskManagement(mRiskManagement);
+    }
+
+    /**
+     * 修改险情管理
+     *
+     * @param mRiskManagement 险情管理
+     * @return 结果
+     */
+    @Override
+    public int updateMRiskManagement(MRiskManagement mRiskManagement)
+    {
+        //根据提交状态 判断下一步的流程
+        //若提交状态为 2 => 即通过审核
+        if(mRiskManagement.getfActStatus() == 1) {
+            // 指定字符  下一节点处理人  处理状态  业务的ID  流程的ID
+            workFlowService.taskReview("register", mRiskManagement.getfActNode(), "1",mRiskManagement.getfId().toString());
+        }
+        //若提交状态为 2 => 即通过审批
+        else if(mRiskManagement.getfActStatus() == 2) {
+            workFlowService.taskReview("register", mRiskManagement.getfActNode(),"2",mRiskManagement.getfId().toString());
+        }
+        else if(mRiskManagement.getfActStatus() == 3) {
+            workFlowService.taskReview("register", mRiskManagement.getfActNode(), "3",mRiskManagement.getfId().toString());
+        }
+        else if(mRiskManagement.getfActStatus() == 4) {
+            workFlowService.taskReview("register", mRiskManagement.getfActNode(), "4",mRiskManagement.getfId().toString());
+        }
+        //若提交状态为 5 => 即驳回修改
+        else if(mRiskManagement.getfActStatus() == 5){
+            workFlowService.taskReview("register", mRiskManagement.getfActNode(), "5",mRiskManagement.getfId().toString());
+        }
+        //若提交状态为 6 => 审核 未通过
+        else if(mRiskManagement.getfActStatus() == 6){
+            workFlowService.taskReview("register", mRiskManagement.getfActNode(), "6",mRiskManagement.getfId().toString());
+        }
+
+        return mRiskManagementMapper.updateMRiskManagement(mRiskManagement);
+    }
+
+    /**
+     * 批量删除险情管理
+     *
+     * @param fIds 需要删除的险情管理 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteMRiskManagementByIds(Long[] fIds)
+    {
+        return mRiskManagementMapper.deleteMRiskManagementByIds(fIds);
+    }
+
+    /**
+     * 删除险情管理 信息
+     *
+     * @param fId 险情管理 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteMRiskManagementById(Long fId)
+    {
+        return mRiskManagementMapper.deleteMRiskManagementById(fId);
+    }
+}

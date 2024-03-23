@@ -1,0 +1,18 @@
+# 生产环境配置
+ENV = 'production'
+
+#马河数字水库标准化管理系统/生产环境
+VUE_APP_BASE_API = '/prod-api'
+VUE_APP_CLOUD_API = '/cloud-api'
+VUE_APP_FIRST_API = '/first-api'
+VUE_APP_SECOND_API = '/second-api'
+VUE_APP_VIDEO_API = '/video-api'
+VUE_APP_RAIN_API = '/rain-api'
+VUE_APP_OUT_API = '/out-api'
+
+VUE_APP_FIRST_URL = 'http://58.58.27.77:10304'
+VUE_APP_SECOND_URL = 'http://58.58.27.77:10301'
+VUE_APP_CLOUD_URL = 'http://47.104.145.31:10301'
+VUE_APP_VIDEO_URL = 'http://58.58.27.77:8084'
+VUE_APP_RAIN_URL = 'https://api.heweather.net'
+VUE_APP_OUT_URL = 'http://58.58.27.77:20002'

@@ -1,0 +1,85 @@
+package com.szsk.reservoir.run.controller;
+
+
+import com.ruoyi.common.core.web.controller.BaseController;
+import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.page.TableDataInfo;
+import com.szsk.reservoir.run.domain.RSecurity;
+import com.szsk.reservoir.run.service.IRSecurityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+
+/**
+ * @author: wangcc
+ * @create: 2021/8/11 14:00
+ * @description:
+ **/
+@RestController
+@RequestMapping("planEdit")
+public class RSecurityController extends BaseController {
+
+    @Autowired
+    private IRSecurityService iRSecurityService;
+
+    /**
+     * 发起流程
+     * @param rSecurity
+     * @return
+     */
+    @PostMapping("/startWorkFlow")
+    public AjaxResult startWorkFlow(@RequestBody RSecurity rSecurity){
+        return iRSecurityService.planEditStartWorkFlow(rSecurity);
+    }
+
+    /**
+     * 流程审核
+     * @param rSecurity
+     * @return
+     */
+    @PostMapping("/taskReview")
+    public AjaxResult taskReview(@RequestBody RSecurity rSecurity){
+        return iRSecurityService.planEditTaskReview(rSecurity);
+    }
+
+    /**
+     * 流程审批
+     * @param rSecurity
+     * @return
+     */
+    @PostMapping("/taskApprove")
+    public AjaxResult taskApprove(@RequestBody RSecurity rSecurity){
+        return iRSecurityService.planEditTaskApprove(rSecurity);
+    }
+
+    /**
+     * 查询业务详情信息
+     * @return
+     */
+    @PostMapping("/getReviewTask")
+    public AjaxResult queryReviewTask(@RequestBody RSecurity rSecurity){
+        return iRSecurityService.queryBusiness(Long.valueOf(rSecurity.getfId()));
+    }
+
+    /**
+     * 获取用户列表
+     * @return
+     */
+    @PostMapping("/getUserList")
+    public AjaxResult queryUserList(){
+        return iRSecurityService.queryUserList();
+    }
+
+    /**
+     * 获取安检查询列表
+     * @return
+     */
+    @GetMapping("/getPlanList")
+    public TableDataInfo queryPlanList(RSecurity rSecurity){
+        List<RSecurity> rSecuritys = iRSecurityService.queryPlanList(rSecurity);
+        return getDataTable(rSecuritys);
+    }
+
+}

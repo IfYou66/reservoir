@@ -1,0 +1,102 @@
+<template>
+  <div id="app">
+    <router-view/>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'App',
+    data() {
+      /**
+       * 成功获取数据后的处理函数
+       * @param result 从服务器获取的数据
+       */
+      const request = require('@/api/collection/request');
+      const common = require('@/api/collection/common');
+      const reservoir = require('@/api/collection/' + common.CURRENT_RESERVOIR + '/reservoir');
+      const sensorList = require('@/api/collection/' + common.CURRENT_RESERVOIR + '/sensorList');
+      const operator = require('@/api/collection/operator');
+
+
+      let sendRequest = function () {                     //周期发送数据请求
+        reservoir.sendInfo();
+        setInterval(reservoir.sendInfo, common.TIME_SPAN);
+      }();
+
+      window.doSuccess = function (result) {
+        if (!result) return;
+        let sensors = common.loadSensors();
+        if (!sensors) {
+          sensors = sensorList.createSensors();
+        }
+        if (result.length > 2 && result[result.length - 1].SensorID === result[0].SensorID) {   //长效情况处理，此时获取的是一个小时的历史数据
+          let sensor = operator.getSensor(sensors, 'id', result[0].SensorID);
+          let newArr = [];
+          for (let i = 0; i < result.length; i++) {
+            let value = parseFloat(result[i].DataValue);
+            if (value > sensor.low && value < sensor.high && (i > 0 && result[i].RevTime !== result[i - 1].RevTime)) {
+              newArr.push(result[i]);
+            }
+          }
+          let isDam = sensor && sensor.part.indexOf('dam') >= 0;
+          let isGate = sensor && sensor.part.indexOf('gate') >= 0;
+          let isLevel = sensor.name === '水位';
+          if (isDam || isGate) {
+            let first, last;
+
+            if (newArr.length < 2) {
+              first = 0;
+              last = 0;
+            } else {
+              first = newArr[newArr.length - 1].DataValue;
+              last = newArr[0].DataValue;
+            }
+            let newValue = Math.abs(first - last);
+
+            let sen = operator.getSensor(sensors, 'tag', isDam ? 'dam-accumulate-down-speed' : 'gate-accumulate-down-speed');
+            if (sen && newValue > sen.value) {
+              operator.getSensor(sensors, 'tag', isDam ? 'dam-accumulate-down-speed' :
+                'gate-accumulate-down-speed').value = newValue.toFixed(sen.precision);
+            }
+          } else if (isLevel) {
+            let sum = 0;
+            let time = 0;
+            newArr = newArr.slice(newArr.length - 21 < 0 ? 0 : newArr.length - 21, newArr.length);
+            for (let i = 0; i < newArr.length; i++) {
+              if ((new Date(newArr[newArr.length - 1].RevTime) -
+                new Date(newArr[i].RevTime)) / 60 / 60 / 1000 <= 2) {
+                sum += newArr[i].DataValue;
+                time++;
+              }
+            }
+            sensor.setValue(sum / time);
+          }
+        } else {   //正常情况
+          let broken = false;
+          for (let i in sensors) {
+            for (let j in result) {
+              if (sensors[i].name === '水位' && sensors[i].smooth) continue;
+              if (sensors[i].id === result[j].SensorID && result[j].DataValue < common.BOUNDARY/2 && result[j].DataValue !== common.INVALID) {
+                sensors[i].setValue(result[j].DataValue);
+                sensors[i].setTime(result[j].RevTime);
+
+                //判断防渗透膜是否损坏
+                if (sensors[i].invalid) {
+                  if (sensors[i].value > sensors[i].min) {
+                    broken = true;
+                  }
+                }
+              }
+            }
+          }
+          localStorage.setItem('broken', broken);
+        }
+        common.refreshSensors(sensors);
+
+      };
+
+      return {};
+    }
+  }
+</script>

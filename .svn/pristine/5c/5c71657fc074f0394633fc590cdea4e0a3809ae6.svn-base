@@ -1,0 +1,1023 @@
+package com.szsk.reservoir.security.domain;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import com.ruoyi.common.core.annotation.Excel;
+
+
+/**
+ * 水库大坝工程基本信息 对象 m_engineering_information
+ *
+ * @author cangfeng
+ * @date 2021-08-14
+ */
+public class MEngineeringInformation {
+    private static final long serialVersionUID = 1L;
+
+    /** 工程ID */
+    private Long fId;
+
+    /** 注册登记号 */
+    @Excel(name = "注册登记号")
+    private String fRegistrationNumber;
+
+    /** 水库名称 */
+    @Excel(name = "水库名称")
+    private String fReservoirName;
+
+    /** 水库类型 */
+    @Excel(name = "水库类型")
+    private Integer fReservoirType;
+
+    /** 水库等别 */
+    @Excel(name = "水库等别")
+    private Integer fReservoirLevel;
+
+    /** 经度 */
+    @Excel(name = "经度")
+    private BigDecimal fLongitude;
+
+    /** 纬度 */
+    @Excel(name = "纬度")
+    private BigDecimal fLatitude;
+
+    /** 灌溉面积 */
+    @Excel(name = "灌溉面积")
+    private BigDecimal fIrrigationArea;
+
+    /** 所在河流 */
+    @Excel(name = "所在河流")
+    private String fRiver;
+
+    /** 乡镇供水 */
+    @Excel(name = "乡镇供水")
+    private BigDecimal fTownWaterSupply;
+
+    /** 管理单位 */
+    @Excel(name = "管理单位")
+    private String fManagementUnit;
+
+    /** 所在地址 */
+    @Excel(name = "所在地址")
+    private String fAddress;
+
+    /** 邮政编码 */
+    @Excel(name = "邮政编码")
+    private Integer fPostalCode;
+
+    /** 主管部门 */
+    @Excel(name = "主管部门")
+    private String fCompetentDepartment;
+
+    /** 集水面积 */
+    @Excel(name = "集水面积")
+    private BigDecimal fCatchmentArea;
+
+    /** 总库容 */
+    @Excel(name = "总库容")
+    private BigDecimal fTotalStorageCapacity;
+
+    /** 兴利库容 */
+    @Excel(name = "兴利库容")
+    private BigDecimal fBeneficialStorageCapacity;
+
+    /** 调洪库容 */
+    @Excel(name = "调洪库容")
+    private BigDecimal fRegulationStorageCapacity;
+
+    /** 总投资 */
+    @Excel(name = "总投资")
+    private BigDecimal fTotalInvestment;
+
+    /** 完成时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "完成时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fFinishDate;
+
+    /** 是否竣工验收（0否 1是） */
+    @Excel(name = "是否竣工验收", readConverterExp = "0=否,1=是")
+    private Integer fIfCompletion;
+
+    /** 竣工日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "竣工日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fCompletionDate;
+
+    /** 坝型（材料划分） */
+    @Excel(name = "坝型", readConverterExp = "材=料划分")
+    private Integer fDamTypeMaterial;
+
+    /** 坝型（结构划分） */
+    @Excel(name = "坝型", readConverterExp = "结=构划分")
+    private Integer fDamTypeStructure;
+
+    /** 主要功能 */
+    @Excel(name = "主要功能")
+    private String fMajorFunction;
+
+    /** 坝顶高程 */
+    @Excel(name = "坝顶高程")
+    private BigDecimal fCrestElevation;
+
+    /** 最大坝高 */
+    @Excel(name = "最大坝高")
+    private BigDecimal fMaximumDamHeight;
+
+    /** 坝顶长度 */
+    @Excel(name = "坝顶长度")
+    private BigDecimal fCrestLength;
+
+    /** 坝顶宽度 */
+    @Excel(name = "坝顶宽度")
+    private BigDecimal fCrestWidth;
+
+    /** 坝基防渗型式 */
+    @Excel(name = "坝基防渗型式")
+    private String fSeepagePreventionType;
+
+    /** 放水洞型式 */
+    @Excel(name = "放水洞型式")
+    private String fDewateringTunnelType;
+
+    /** 放水洞洞泾 */
+    @Excel(name = "放水洞洞泾")
+    private String fDewateringTunnelDiameter;
+
+    /** 放水洞最大放水量 */
+    @Excel(name = "放水洞最大放水量")
+    private BigDecimal fDewateringTunnelDischarge;
+
+    /** 副坝座数 */
+    @Excel(name = "副坝座数")
+    private Integer fAuxiliaryDamNum;
+
+    /** 工作闸门总数 */
+    @Excel(name = "工作闸门总数")
+    private Integer fSluiceGateNum;
+
+    /** 工作闸门名称 */
+    @Excel(name = "工作闸门名称")
+    private String fSluiceGateName;
+
+    /** 溢洪道型式 */
+    @Excel(name = "溢洪道型式")
+    private String fSpillwayType;
+
+    /** 溢洪道底高程 */
+    @Excel(name = "溢洪道底高程")
+    private BigDecimal fSpillwayBottomElevation;
+
+    /** 溢洪道顶高程 */
+    @Excel(name = "溢洪道顶高程")
+    private BigDecimal fSpillwayTopElevation;
+
+    /** 溢洪道顶宽 */
+    @Excel(name = "溢洪道顶宽")
+    private BigDecimal fSpillwayTopWidth;
+
+    /** 溢洪道最大泄量 */
+    @Excel(name = "溢洪道最大泄量")
+    private BigDecimal fSpillwayBottomDischarge;
+
+    /** 洪水标准设计 */
+    @Excel(name = "洪水标准设计")
+    private Integer fFloodStandardDesign;
+
+    /** 洪水标准校核 */
+    @Excel(name = "洪水标准校核")
+    private Integer fFloodStandardCheck;
+
+    /** 洪水标准实际 */
+    @Excel(name = "洪水标准实际")
+    private Integer fFloodStandardActual;
+
+    /** 水库下游影响铁路 */
+    @Excel(name = "水库下游影响铁路")
+    private BigDecimal fDownstreamImpactRailway;
+
+    /** 水库下游影响公路 */
+    @Excel(name = "水库下游影响公路")
+    private BigDecimal fDownstreamImpactHighway;
+
+    /** 水库下游影响村庄 */
+    @Excel(name = "水库下游影响村庄")
+    private Integer fDownstreamImpactVillage;
+
+    /** 水库下游影响人口 */
+    @Excel(name = "水库下游影响人口")
+    private BigDecimal fDownstreamImpactPeople;
+
+    /** 水库下游影响耕地 */
+    @Excel(name = "水库下游影响耕地")
+    private BigDecimal fDownstreamImpactFarmland;
+
+    /** 管理职工人数 */
+    @Excel(name = "管理职工人数")
+    private Integer fManagementStaffPeople;
+
+    /** 固定资源值 */
+    @Excel(name = "固定资源值")
+    private BigDecimal fFixedResourceValue;
+
+    /** 年度管理费用 */
+    @Excel(name = "年度管理费用")
+    private BigDecimal fAnnualManagementExpenses;
+
+    /** 年度水费收入 */
+    @Excel(name = "年度水费收入")
+    private BigDecimal fAnnualWaterRevenue;
+
+    /** 年度电费收入 */
+    @Excel(name = "年度电费收入")
+    private BigDecimal fAnnualElectricityRevenue;
+
+    /** 多种经营纯收入 */
+    @Excel(name = "多种经营纯收入")
+    private BigDecimal fNetOperatingIncome;
+
+    /** 大坝安全类别 */
+    @Excel(name = "大坝安全类别")
+    private Integer fDamSecurityCategory;
+
+    /** 大坝鉴定与否 */
+    @Excel(name = "大坝鉴定与否")
+    private Integer fDamIsAppraisal;
+
+    /** 大坝安全状态 */
+    @Excel(name = "大坝安全状态")
+    private String fSafetyStatus;
+
+    /** 工程信息附件ID */
+    @Excel(name = "工程信息附件ID")
+    private Long fEngineeringFileId;
+
+    /** 审核意见 */
+    @Excel(name = "审核意见")
+    private String fReviewComments;
+
+    /** 审核结果 */
+    @Excel(name = "审核结果")
+    private Integer fReviewRewult;
+
+    /** 审核人 */
+    @Excel(name = "审核人")
+    private Long fReviewPeople;
+
+    /** 审核时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "审核时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fReviewDate;
+
+    /** 审批意见 */
+    @Excel(name = "审批意见")
+    private String fAuditComments;
+
+    /** 审批结果 */
+    @Excel(name = "审批结果")
+    private Integer fAuditRewult;
+
+    /** 审批人 */
+    @Excel(name = "审批人")
+    private Long fAuditPeople;
+
+    /** 审批时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "审批时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fAuditDate;
+
+    /** 流程实例ID */
+    @Excel(name = "流程实例ID")
+    private Long fActId;
+
+    /** 下一节点审核人 */
+    @Excel(name = "下一节点审核人")
+    private Long fActPersion;
+
+    /** 流程状态 1已提交启动 2：审核中 3：驳回 4：审核完成 */
+    @Excel(name = "流程状态 1已提交启动 2：审核中 3：驳回 4：审核完成")
+    private Integer fActStatus;
+
+    /** 流程节点 */
+    @Excel(name = "流程节点")
+    private String fActNode;
+
+    public void setfId(Long fId)
+    {
+        this.fId = fId;
+    }
+
+    public Long getfId()
+    {
+        return fId;
+    }
+    public void setfRegistrationNumber(String fRegistrationNumber)
+    {
+        this.fRegistrationNumber = fRegistrationNumber;
+    }
+
+    public String getfRegistrationNumber()
+    {
+        return fRegistrationNumber;
+    }
+    public void setfReservoirName(String fReservoirName)
+    {
+        this.fReservoirName = fReservoirName;
+    }
+
+    public String getfReservoirName()
+    {
+        return fReservoirName;
+    }
+    public void setfReservoirType(Integer fReservoirType)
+    {
+        this.fReservoirType = fReservoirType;
+    }
+
+    public Integer getfReservoirType()
+    {
+        return fReservoirType;
+    }
+    public void setfReservoirLevel(Integer fReservoirLevel)
+    {
+        this.fReservoirLevel = fReservoirLevel;
+    }
+
+    public Integer getfReservoirLevel()
+    {
+        return fReservoirLevel;
+    }
+    public void setfLongitude(BigDecimal fLongitude)
+    {
+        this.fLongitude = fLongitude;
+    }
+
+    public BigDecimal getfLongitude()
+    {
+        return fLongitude;
+    }
+    public void setfLatitude(BigDecimal fLatitude)
+    {
+        this.fLatitude = fLatitude;
+    }
+
+    public BigDecimal getfLatitude()
+    {
+        return fLatitude;
+    }
+    public void setfIrrigationArea(BigDecimal fIrrigationArea)
+    {
+        this.fIrrigationArea = fIrrigationArea;
+    }
+
+    public BigDecimal getfIrrigationArea()
+    {
+        return fIrrigationArea;
+    }
+    public void setfRiver(String fRiver)
+    {
+        this.fRiver = fRiver;
+    }
+
+    public String getfRiver()
+    {
+        return fRiver;
+    }
+    public void setfTownWaterSupply(BigDecimal fTownWaterSupply)
+    {
+        this.fTownWaterSupply = fTownWaterSupply;
+    }
+
+    public BigDecimal getfTownWaterSupply()
+    {
+        return fTownWaterSupply;
+    }
+    public void setfManagementUnit(String fManagementUnit)
+    {
+        this.fManagementUnit = fManagementUnit;
+    }
+
+    public String getfManagementUnit()
+    {
+        return fManagementUnit;
+    }
+    public void setfAddress(String fAddress)
+    {
+        this.fAddress = fAddress;
+    }
+
+    public String getfAddress()
+    {
+        return fAddress;
+    }
+    public void setfPostalCode(Integer fPostalCode)
+    {
+        this.fPostalCode = fPostalCode;
+    }
+
+    public Integer getfPostalCode()
+    {
+        return fPostalCode;
+    }
+    public void setfCompetentDepartment(String fCompetentDepartment)
+    {
+        this.fCompetentDepartment = fCompetentDepartment;
+    }
+
+    public String getfCompetentDepartment()
+    {
+        return fCompetentDepartment;
+    }
+    public void setfCatchmentArea(BigDecimal fCatchmentArea)
+    {
+        this.fCatchmentArea = fCatchmentArea;
+    }
+
+    public BigDecimal getfCatchmentArea()
+    {
+        return fCatchmentArea;
+    }
+    public void setfTotalStorageCapacity(BigDecimal fTotalStorageCapacity)
+    {
+        this.fTotalStorageCapacity = fTotalStorageCapacity;
+    }
+
+    public BigDecimal getfTotalStorageCapacity()
+    {
+        return fTotalStorageCapacity;
+    }
+    public void setfBeneficialStorageCapacity(BigDecimal fBeneficialStorageCapacity)
+    {
+        this.fBeneficialStorageCapacity = fBeneficialStorageCapacity;
+    }
+
+    public BigDecimal getfBeneficialStorageCapacity()
+    {
+        return fBeneficialStorageCapacity;
+    }
+    public void setfRegulationStorageCapacity(BigDecimal fRegulationStorageCapacity)
+    {
+        this.fRegulationStorageCapacity = fRegulationStorageCapacity;
+    }
+
+    public BigDecimal getfRegulationStorageCapacity()
+    {
+        return fRegulationStorageCapacity;
+    }
+    public void setfTotalInvestment(BigDecimal fTotalInvestment)
+    {
+        this.fTotalInvestment = fTotalInvestment;
+    }
+
+    public BigDecimal getfTotalInvestment()
+    {
+        return fTotalInvestment;
+    }
+    public void setfFinishDate(Date fFinishDate)
+    {
+        this.fFinishDate = fFinishDate;
+    }
+
+    public Date getfFinishDate()
+    {
+        return fFinishDate;
+    }
+    public void setfIfCompletion(Integer fIfCompletion)
+    {
+        this.fIfCompletion = fIfCompletion;
+    }
+
+    public Integer getfIfCompletion()
+    {
+        return fIfCompletion;
+    }
+    public void setfCompletionDate(Date fCompletionDate)
+    {
+        this.fCompletionDate = fCompletionDate;
+    }
+
+    public Date getfCompletionDate()
+    {
+        return fCompletionDate;
+    }
+    public void setfDamTypeMaterial(Integer fDamTypeMaterial)
+    {
+        this.fDamTypeMaterial = fDamTypeMaterial;
+    }
+
+    public Integer getfDamTypeMaterial()
+    {
+        return fDamTypeMaterial;
+    }
+    public void setfDamTypeStructure(Integer fDamTypeStructure)
+    {
+        this.fDamTypeStructure = fDamTypeStructure;
+    }
+
+    public Integer getfDamTypeStructure()
+    {
+        return fDamTypeStructure;
+    }
+    public void setfMajorFunction(String fMajorFunction)
+    {
+        this.fMajorFunction = fMajorFunction;
+    }
+
+    public String getfMajorFunction()
+    {
+        return fMajorFunction;
+    }
+    public void setfCrestElevation(BigDecimal fCrestElevation)
+    {
+        this.fCrestElevation = fCrestElevation;
+    }
+
+    public BigDecimal getfCrestElevation()
+    {
+        return fCrestElevation;
+    }
+    public void setfMaximumDamHeight(BigDecimal fMaximumDamHeight)
+    {
+        this.fMaximumDamHeight = fMaximumDamHeight;
+    }
+
+    public BigDecimal getfMaximumDamHeight()
+    {
+        return fMaximumDamHeight;
+    }
+    public void setfCrestLength(BigDecimal fCrestLength)
+    {
+        this.fCrestLength = fCrestLength;
+    }
+
+    public BigDecimal getfCrestLength()
+    {
+        return fCrestLength;
+    }
+    public void setfCrestWidth(BigDecimal fCrestWidth)
+    {
+        this.fCrestWidth = fCrestWidth;
+    }
+
+    public BigDecimal getfCrestWidth()
+    {
+        return fCrestWidth;
+    }
+    public void setfSeepagePreventionType(String fSeepagePreventionType)
+    {
+        this.fSeepagePreventionType = fSeepagePreventionType;
+    }
+
+    public String getfSeepagePreventionType()
+    {
+        return fSeepagePreventionType;
+    }
+    public void setfDewateringTunnelType(String fDewateringTunnelType)
+    {
+        this.fDewateringTunnelType = fDewateringTunnelType;
+    }
+
+    public String getfDewateringTunnelType()
+    {
+        return fDewateringTunnelType;
+    }
+    public void setfDewateringTunnelDiameter(String fDewateringTunnelDiameter)
+    {
+        this.fDewateringTunnelDiameter = fDewateringTunnelDiameter;
+    }
+
+    public String getfDewateringTunnelDiameter()
+    {
+        return fDewateringTunnelDiameter;
+    }
+    public void setfDewateringTunnelDischarge(BigDecimal fDewateringTunnelDischarge)
+    {
+        this.fDewateringTunnelDischarge = fDewateringTunnelDischarge;
+    }
+
+    public BigDecimal getfDewateringTunnelDischarge()
+    {
+        return fDewateringTunnelDischarge;
+    }
+    public void setfAuxiliaryDamNum(Integer fAuxiliaryDamNum)
+    {
+        this.fAuxiliaryDamNum = fAuxiliaryDamNum;
+    }
+
+    public Integer getfAuxiliaryDamNum()
+    {
+        return fAuxiliaryDamNum;
+    }
+    public void setfSluiceGateNum(Integer fSluiceGateNum)
+    {
+        this.fSluiceGateNum = fSluiceGateNum;
+    }
+
+    public Integer getfSluiceGateNum()
+    {
+        return fSluiceGateNum;
+    }
+    public void setfSluiceGateName(String fSluiceGateName)
+    {
+        this.fSluiceGateName = fSluiceGateName;
+    }
+
+    public String getfSluiceGateName()
+    {
+        return fSluiceGateName;
+    }
+    public void setfSpillwayType(String fSpillwayType)
+    {
+        this.fSpillwayType = fSpillwayType;
+    }
+
+    public String getfSpillwayType()
+    {
+        return fSpillwayType;
+    }
+    public void setfSpillwayBottomElevation(BigDecimal fSpillwayBottomElevation)
+    {
+        this.fSpillwayBottomElevation = fSpillwayBottomElevation;
+    }
+
+    public BigDecimal getfSpillwayBottomElevation()
+    {
+        return fSpillwayBottomElevation;
+    }
+    public void setfSpillwayTopElevation(BigDecimal fSpillwayTopElevation)
+    {
+        this.fSpillwayTopElevation = fSpillwayTopElevation;
+    }
+
+    public BigDecimal getfSpillwayTopElevation()
+    {
+        return fSpillwayTopElevation;
+    }
+    public void setfSpillwayTopWidth(BigDecimal fSpillwayTopWidth)
+    {
+        this.fSpillwayTopWidth = fSpillwayTopWidth;
+    }
+
+    public BigDecimal getfSpillwayTopWidth()
+    {
+        return fSpillwayTopWidth;
+    }
+    public void setfSpillwayBottomDischarge(BigDecimal fSpillwayBottomDischarge)
+    {
+        this.fSpillwayBottomDischarge = fSpillwayBottomDischarge;
+    }
+
+    public BigDecimal getfSpillwayBottomDischarge()
+    {
+        return fSpillwayBottomDischarge;
+    }
+    public void setfFloodStandardDesign(Integer fFloodStandardDesign)
+    {
+        this.fFloodStandardDesign = fFloodStandardDesign;
+    }
+
+    public Integer getfFloodStandardDesign()
+    {
+        return fFloodStandardDesign;
+    }
+    public void setfFloodStandardCheck(Integer fFloodStandardCheck)
+    {
+        this.fFloodStandardCheck = fFloodStandardCheck;
+    }
+
+    public Integer getfFloodStandardCheck()
+    {
+        return fFloodStandardCheck;
+    }
+    public void setfFloodStandardActual(Integer fFloodStandardActual)
+    {
+        this.fFloodStandardActual = fFloodStandardActual;
+    }
+
+    public Integer getfFloodStandardActual()
+    {
+        return fFloodStandardActual;
+    }
+    public void setfDownstreamImpactRailway(BigDecimal fDownstreamImpactRailway)
+    {
+        this.fDownstreamImpactRailway = fDownstreamImpactRailway;
+    }
+
+    public BigDecimal getfDownstreamImpactRailway()
+    {
+        return fDownstreamImpactRailway;
+    }
+    public void setfDownstreamImpactHighway(BigDecimal fDownstreamImpactHighway)
+    {
+        this.fDownstreamImpactHighway = fDownstreamImpactHighway;
+    }
+
+    public BigDecimal getfDownstreamImpactHighway()
+    {
+        return fDownstreamImpactHighway;
+    }
+    public void setfDownstreamImpactVillage(Integer fDownstreamImpactVillage)
+    {
+        this.fDownstreamImpactVillage = fDownstreamImpactVillage;
+    }
+
+    public Integer getfDownstreamImpactVillage()
+    {
+        return fDownstreamImpactVillage;
+    }
+    public void setfDownstreamImpactPeople(BigDecimal fDownstreamImpactPeople)
+    {
+        this.fDownstreamImpactPeople = fDownstreamImpactPeople;
+    }
+
+    public BigDecimal getfDownstreamImpactPeople()
+    {
+        return fDownstreamImpactPeople;
+    }
+    public void setfDownstreamImpactFarmland(BigDecimal fDownstreamImpactFarmland)
+    {
+        this.fDownstreamImpactFarmland = fDownstreamImpactFarmland;
+    }
+
+    public BigDecimal getfDownstreamImpactFarmland()
+    {
+        return fDownstreamImpactFarmland;
+    }
+    public void setfManagementStaffPeople(Integer fManagementStaffPeople)
+    {
+        this.fManagementStaffPeople = fManagementStaffPeople;
+    }
+
+    public Integer getfManagementStaffPeople()
+    {
+        return fManagementStaffPeople;
+    }
+    public void setfFixedResourceValue(BigDecimal fFixedResourceValue)
+    {
+        this.fFixedResourceValue = fFixedResourceValue;
+    }
+
+    public BigDecimal getfFixedResourceValue()
+    {
+        return fFixedResourceValue;
+    }
+    public void setfAnnualManagementExpenses(BigDecimal fAnnualManagementExpenses)
+    {
+        this.fAnnualManagementExpenses = fAnnualManagementExpenses;
+    }
+
+    public BigDecimal getfAnnualManagementExpenses()
+    {
+        return fAnnualManagementExpenses;
+    }
+    public void setfAnnualWaterRevenue(BigDecimal fAnnualWaterRevenue)
+    {
+        this.fAnnualWaterRevenue = fAnnualWaterRevenue;
+    }
+
+    public BigDecimal getfAnnualWaterRevenue()
+    {
+        return fAnnualWaterRevenue;
+    }
+    public void setfAnnualElectricityRevenue(BigDecimal fAnnualElectricityRevenue)
+    {
+        this.fAnnualElectricityRevenue = fAnnualElectricityRevenue;
+    }
+
+    public BigDecimal getfAnnualElectricityRevenue()
+    {
+        return fAnnualElectricityRevenue;
+    }
+    public void setfNetOperatingIncome(BigDecimal fNetOperatingIncome)
+    {
+        this.fNetOperatingIncome = fNetOperatingIncome;
+    }
+
+    public BigDecimal getfNetOperatingIncome()
+    {
+        return fNetOperatingIncome;
+    }
+    public void setfDamSecurityCategory(Integer fDamSecurityCategory)
+    {
+        this.fDamSecurityCategory = fDamSecurityCategory;
+    }
+
+    public Integer getfDamSecurityCategory()
+    {
+        return fDamSecurityCategory;
+    }
+    public void setfDamIsAppraisal(Integer fDamIsAppraisal)
+    {
+        this.fDamIsAppraisal = fDamIsAppraisal;
+    }
+
+    public Integer getfDamIsAppraisal()
+    {
+        return fDamIsAppraisal;
+    }
+    public void setfSafetyStatus(String fSafetyStatus)
+    {
+        this.fSafetyStatus = fSafetyStatus;
+    }
+
+    public String getfSafetyStatus()
+    {
+        return fSafetyStatus;
+    }
+    public void setfEngineeringFileId(Long fEngineeringFileId)
+    {
+        this.fEngineeringFileId = fEngineeringFileId;
+    }
+
+    public Long getfEngineeringFileId()
+    {
+        return fEngineeringFileId;
+    }
+    public void setfReviewComments(String fReviewComments)
+    {
+        this.fReviewComments = fReviewComments;
+    }
+
+    public String getfReviewComments()
+    {
+        return fReviewComments;
+    }
+    public void setfReviewRewult(Integer fReviewRewult)
+    {
+        this.fReviewRewult = fReviewRewult;
+    }
+
+    public Integer getfReviewRewult()
+    {
+        return fReviewRewult;
+    }
+    public void setfReviewPeople(Long fReviewPeople)
+    {
+        this.fReviewPeople = fReviewPeople;
+    }
+
+    public Long getfReviewPeople()
+    {
+        return fReviewPeople;
+    }
+    public void setfReviewDate(Date fReviewDate)
+    {
+        this.fReviewDate = fReviewDate;
+    }
+
+    public Date getfReviewDate()
+    {
+        return fReviewDate;
+    }
+    public void setfAuditComments(String fAuditComments)
+    {
+        this.fAuditComments = fAuditComments;
+    }
+
+    public String getfAuditComments()
+    {
+        return fAuditComments;
+    }
+    public void setfAuditRewult(Integer fAuditRewult)
+    {
+        this.fAuditRewult = fAuditRewult;
+    }
+
+    public Integer getfAuditRewult()
+    {
+        return fAuditRewult;
+    }
+    public void setfAuditPeople(Long fAuditPeople)
+    {
+        this.fAuditPeople = fAuditPeople;
+    }
+
+    public Long getfAuditPeople()
+    {
+        return fAuditPeople;
+    }
+    public void setfAuditDate(Date fAuditDate)
+    {
+        this.fAuditDate = fAuditDate;
+    }
+
+    public Date getfAuditDate()
+    {
+        return fAuditDate;
+    }
+    public void setfActId(Long fActId)
+    {
+        this.fActId = fActId;
+    }
+
+    public Long getfActId()
+    {
+        return fActId;
+    }
+    public void setfActPersion(Long fActPersion)
+    {
+        this.fActPersion = fActPersion;
+    }
+
+    public Long getfActPersion()
+    {
+        return fActPersion;
+    }
+    public void setfActStatus(Integer fActStatus)
+    {
+        this.fActStatus = fActStatus;
+    }
+
+    public Integer getfActStatus()
+    {
+        return fActStatus;
+    }
+    public void setfActNode(String fActNode)
+    {
+        this.fActNode = fActNode;
+    }
+
+    public String getfActNode()
+    {
+        return fActNode;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+                .append("fId", getfId())
+                .append("fRegistrationNumber", getfRegistrationNumber())
+                .append("fReservoirName", getfReservoirName())
+                .append("fReservoirType", getfReservoirType())
+                .append("fReservoirLevel", getfReservoirLevel())
+                .append("fLongitude", getfLongitude())
+                .append("fLatitude", getfLatitude())
+                .append("fIrrigationArea", getfIrrigationArea())
+                .append("fRiver", getfRiver())
+                .append("fTownWaterSupply", getfTownWaterSupply())
+                .append("fManagementUnit", getfManagementUnit())
+                .append("fAddress", getfAddress())
+                .append("fPostalCode", getfPostalCode())
+                .append("fCompetentDepartment", getfCompetentDepartment())
+                .append("fCatchmentArea", getfCatchmentArea())
+                .append("fTotalStorageCapacity", getfTotalStorageCapacity())
+                .append("fBeneficialStorageCapacity", getfBeneficialStorageCapacity())
+                .append("fRegulationStorageCapacity", getfRegulationStorageCapacity())
+                .append("fTotalInvestment", getfTotalInvestment())
+                .append("fFinishDate", getfFinishDate())
+                .append("fIfCompletion", getfIfCompletion())
+                .append("fCompletionDate", getfCompletionDate())
+                .append("fDamTypeMaterial", getfDamTypeMaterial())
+                .append("fDamTypeStructure", getfDamTypeStructure())
+                .append("fMajorFunction", getfMajorFunction())
+                .append("fCrestElevation", getfCrestElevation())
+                .append("fMaximumDamHeight", getfMaximumDamHeight())
+                .append("fCrestLength", getfCrestLength())
+                .append("fCrestWidth", getfCrestWidth())
+                .append("fSeepagePreventionType", getfSeepagePreventionType())
+                .append("fDewateringTunnelType", getfDewateringTunnelType())
+                .append("fDewateringTunnelDiameter", getfDewateringTunnelDiameter())
+                .append("fDewateringTunnelDischarge", getfDewateringTunnelDischarge())
+                .append("fAuxiliaryDamNum", getfAuxiliaryDamNum())
+                .append("fSluiceGateNum", getfSluiceGateNum())
+                .append("fSluiceGateName", getfSluiceGateName())
+                .append("fSpillwayType", getfSpillwayType())
+                .append("fSpillwayBottomElevation", getfSpillwayBottomElevation())
+                .append("fSpillwayTopElevation", getfSpillwayTopElevation())
+                .append("fSpillwayTopWidth", getfSpillwayTopWidth())
+                .append("fSpillwayBottomDischarge", getfSpillwayBottomDischarge())
+                .append("fFloodStandardDesign", getfFloodStandardDesign())
+                .append("fFloodStandardCheck", getfFloodStandardCheck())
+                .append("fFloodStandardActual", getfFloodStandardActual())
+                .append("fDownstreamImpactRailway", getfDownstreamImpactRailway())
+                .append("fDownstreamImpactHighway", getfDownstreamImpactHighway())
+                .append("fDownstreamImpactVillage", getfDownstreamImpactVillage())
+                .append("fDownstreamImpactPeople", getfDownstreamImpactPeople())
+                .append("fDownstreamImpactFarmland", getfDownstreamImpactFarmland())
+                .append("fManagementStaffPeople", getfManagementStaffPeople())
+                .append("fFixedResourceValue", getfFixedResourceValue())
+                .append("fAnnualManagementExpenses", getfAnnualManagementExpenses())
+                .append("fAnnualWaterRevenue", getfAnnualWaterRevenue())
+                .append("fAnnualElectricityRevenue", getfAnnualElectricityRevenue())
+                .append("fNetOperatingIncome", getfNetOperatingIncome())
+                .append("fDamSecurityCategory", getfDamSecurityCategory())
+                .append("fDamIsAppraisal", getfDamIsAppraisal())
+                .append("fSafetyStatus", getfSafetyStatus())
+                .append("fEngineeringFileId", getfEngineeringFileId())
+                .append("fReviewComments", getfReviewComments())
+                .append("fReviewRewult", getfReviewRewult())
+                .append("fReviewPeople", getfReviewPeople())
+                .append("fReviewDate", getfReviewDate())
+                .append("fAuditComments", getfAuditComments())
+                .append("fAuditRewult", getfAuditRewult())
+                .append("fAuditPeople", getfAuditPeople())
+                .append("fAuditDate", getfAuditDate())
+                .append("fActId", getfActId())
+                .append("fActPersion", getfActPersion())
+                .append("fActStatus", getfActStatus())
+                .append("fActNode", getfActNode())
+                .toString();
+    }
+}

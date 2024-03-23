@@ -1,0 +1,130 @@
+import Vue from 'vue'
+
+import Cookies from 'js-cookie'
+
+import Element from 'element-ui'
+import './assets/styles/element-variables.scss'
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+import zrender from 'zrender'
+Vue.prototype.$zrender = zrender
+import BaiduMap from 'vue-baidu-map'
+Vue.use(BaiduMap,{ak:'LoZeZy44GLrZlcowqg9MMkqq'})
+import '@/assets/styles/index.scss' // global css
+import '@/assets/styles/ruoyi.scss' // ruoyi css
+import '@/assets/styles/evaluation.scss' // ruoyi css
+import App from './App'
+import store from './store'
+import router from './router'
+import permission from './directive/permission'
+import { download } from '@/utils/request'
+
+import './assets/icons' // icon
+import './permission' // permission control
+import { getDicts } from "@/api/system/dict/data";
+import { getConfigKey } from "@/api/system/config";
+import { parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, handleTree } from "@/utils/ruoyi";
+import Pagination from "@/components/Pagination";
+// 自定义表格工具扩展
+import RightToolbar from "@/components/RightToolbar"
+
+import dataV from '@jiaminghi/data-view'
+Vue.use(dataV)
+
+import 'quill/dist/quill.snow.css'
+
+
+//全局模块引入
+const common = require('@/api/collection/common');
+Vue.prototype.common=common;
+const calculator = require('@/api/collection/calculator');
+Vue.prototype.calculator=calculator;
+const reservoir = require('@/api/collection/'+ common.CURRENT_RESERVOIR + '/reservoir');
+Vue.prototype.reservoir=reservoir;
+const sensorList = require('@/api/collection/'+ common.CURRENT_RESERVOIR + '/sensorList');
+Vue.prototype.sensorList=sensorList;
+const base = require('@/api/collection/'+ common.CURRENT_RESERVOIR + '/base');
+Vue.prototype.base=base;
+const operator = require('@/api/collection/operator');
+Vue.prototype.operator=operator;
+const request = require('@/api/collection/request');
+Vue.prototype.request=request;
+const datetime = require('@/api/collection/datetime');
+Vue.prototype.datetime=datetime;
+const excel = require('@/api/collection/excel');
+Vue.prototype.excel=excel;
+
+import global from './global.vue'
+
+Vue.prototype.GLOBAL = global;
+
+
+
+Vue.prototype.openLoading = function(info) {
+  const loading = this.$loading({    // 声明一个loading对象
+    lock: true,                             // 是否锁屏
+    text: info?info:'加载中，请稍候...',      // 加载动画的文字
+    spinner: 'el-icon-loading',             // 引入的loading图标
+    background: 'rgba(0, 0, 0, 0.3)',       // 背景颜色
+    target: '.sub-main',                    // 需要遮罩的区域
+    body: true,
+    customClass: 'mask'                     // 遮罩层新增类名
+  })
+  setTimeout(function () {           // 设定定时器，超时200S后自动关闭遮罩层，避免请求失败时，遮罩层一直存在的问题
+    loading.close();                        // 关闭遮罩层
+  },200000);
+  return loading;
+}
+
+
+// 全局方法挂载
+Vue.prototype.getDicts = getDicts
+Vue.prototype.getConfigKey = getConfigKey
+Vue.prototype.parseTime = parseTime
+Vue.prototype.resetForm = resetForm
+Vue.prototype.addDateRange = addDateRange
+Vue.prototype.selectDictLabel = selectDictLabel
+Vue.prototype.selectDictLabels = selectDictLabels
+Vue.prototype.download = download
+Vue.prototype.handleTree = handleTree
+
+
+Vue.prototype.msgSuccess = function (msg) {
+  this.$message({ showClose: true, message: msg, type: "success" });
+}
+
+Vue.prototype.msgError = function (msg) {
+  this.$message({ showClose: true, message: msg, type: "error" });
+}
+
+Vue.prototype.msgInfo = function (msg) {
+  this.$message.info(msg);
+}
+
+// 全局组件挂载
+Vue.component('Pagination', Pagination)
+Vue.component('RightToolbar', RightToolbar)
+
+Vue.use(permission)
+
+/**
+ * If you don't want to use mock-server
+ * you want to use MockJs for mock api
+ * you can execute: mockXHR()
+ *
+ * Currently MockJs will be used in the production environment,
+ * please remove it before going online! ! !
+ */
+
+Vue.use(Element, {
+  size: Cookies.get('size') || 'medium' // set element-ui default size
+})
+
+Vue.config.productionTip = false
+
+new Vue({
+  el: '#app',
+  router,
+  store,
+  render: h => h(App)
+})

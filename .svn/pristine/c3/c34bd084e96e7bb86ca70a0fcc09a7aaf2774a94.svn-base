@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.manageSystem.mapper.SysManagementMapper">
+    
+    <resultMap type="com.szsk.reservoir.manageSystem.domain.SysManagement" id="SysManagementResult">
+        <result property="fId"    column="f_Id"    />
+        <result property="fSystemName"    column="f_system_name"    />
+        <result property="fTypeId"    column="f_type_id"    />
+        <result property="fSystemContent"    column="f_system_content"    />
+        <result property="fRemark"    column="f_remark"    />
+        <result property="fInstitutionId"    column="f_institution_id"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fUpdateTime"    column="f_update_time"    />
+    </resultMap>
+
+    <sql id="selectSysManagementVo">
+        select f_Id, f_system_name, f_type_id, f_system_content, f_remark, f_institution_id, f_status, f_create_time, f_update_time from sys_management
+    </sql>
+
+    <select id="selectSysManagementList" parameterType="com.szsk.reservoir.manageSystem.domain.SysManagement" resultMap="SysManagementResult">
+        <include refid="selectSysManagementVo"/>
+        <where>  
+            <if test="fSystemName != null  and fSystemName != ''"> and f_system_name like concat('%', #{fSystemName}, '%')</if>
+            <if test="fTypeId != null "> and f_type_id = #{fTypeId}</if>
+            <if test="fSystemContent != null  and fSystemContent != ''"> and f_system_content = #{fSystemContent}</if>
+            <if test="fRemark != null  and fRemark != ''"> and f_remark = #{fRemark}</if>
+            <if test="fInstitutionId != null  and fInstitutionId != ''"> and f_institution_id = #{fInstitutionId}</if>
+            <if test="fStatus != null "> and f_status = #{fStatus}</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+            <if test="fUpdateTime != null "> and f_update_time = #{fUpdateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysManagementById" parameterType="Long" resultMap="SysManagementResult">
+        <include refid="selectSysManagementVo"/>
+        where f_Id = #{fId}
+    </select>
+        
+    <insert id="insertSysManagement" parameterType="com.szsk.reservoir.manageSystem.domain.SysManagement">
+        insert into sys_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fId != null">f_Id,</if>
+            <if test="fSystemName != null">f_system_name,</if>
+            <if test="fTypeId != null">f_type_id,</if>
+            <if test="fSystemContent != null">f_system_content,</if>
+            <if test="fRemark != null">f_remark,</if>
+            <if test="fInstitutionId != null">f_institution_id,</if>
+            <if test="fStatus != null">f_status,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+            <if test="fUpdateTime != null">f_update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fId != null">#{fId},</if>
+            <if test="fSystemName != null">#{fSystemName},</if>
+            <if test="fTypeId != null">#{fTypeId},</if>
+            <if test="fSystemContent != null">#{fSystemContent},</if>
+            <if test="fRemark != null">#{fRemark},</if>
+            <if test="fInstitutionId != null">#{fInstitutionId},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+            <if test="fUpdateTime != null">#{fUpdateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysManagement" parameterType="com.szsk.reservoir.manageSystem.domain.SysManagement">
+        update sys_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fSystemName != null">f_system_name = #{fSystemName},</if>
+            <if test="fTypeId != null">f_type_id = #{fTypeId},</if>
+            <if test="fSystemContent != null">f_system_content = #{fSystemContent},</if>
+            <if test="fRemark != null">f_remark = #{fRemark},</if>
+            <if test="fInstitutionId != null">f_institution_id = #{fInstitutionId},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+            <if test="fUpdateTime != null">f_update_time = #{fUpdateTime},</if>
+        </trim>
+        where f_Id = #{fId}
+    </update>
+
+    <delete id="deleteSysManagementById" parameterType="Long">
+        delete from sys_management where f_Id = #{fId}
+    </delete>
+
+    <delete id="deleteSysManagementByIds" parameterType="String">
+        delete from sys_management where f_Id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

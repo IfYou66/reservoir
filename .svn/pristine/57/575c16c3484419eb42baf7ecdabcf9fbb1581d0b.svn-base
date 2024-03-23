@@ -1,0 +1,93 @@
+package com.szsk.reservoir.run.service.Impl;
+
+import java.util.List;
+
+import com.szsk.reservoir.run.domain.RMaintenance;
+import com.szsk.reservoir.run.mapper.RMaintenanceMapper;
+import com.szsk.reservoir.run.service.IRMaintenanceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * 维修养护编制 Service业务层处理
+ *
+ * @author cangfeng
+ * @date 2021-08-23
+ */
+@Service
+public class RMaintenanceServiceImpl implements IRMaintenanceService {
+    @Autowired
+    private RMaintenanceMapper rMaintenanceMapper;
+
+    /**
+     * 查询维修养护编制
+     *
+     * @param fId 维修养护编制 ID
+     * @return 维修养护编制
+     */
+    @Override
+    public RMaintenance selectRMaintenanceById(Integer fId)
+    {
+        return rMaintenanceMapper.selectRMaintenanceById(fId);
+    }
+
+    /**
+     * 查询维修养护编制 列表
+     *
+     * @param rMaintenance 维修养护编制
+     * @return 维修养护编制
+     */
+    @Override
+    public List<RMaintenance> selectRMaintenanceList(RMaintenance rMaintenance)
+    {
+        return rMaintenanceMapper.selectRMaintenanceList(rMaintenance);
+    }
+
+    /**
+     * 新增维修养护编制
+     *
+     * @param rMaintenance 维修养护编制
+     * @return 结果
+     */
+    @Override
+    public int insertRMaintenance(RMaintenance rMaintenance)
+    {
+        return rMaintenanceMapper.insertRMaintenance(rMaintenance);
+    }
+
+    /**
+     * 修改维修养护编制
+     *
+     * @param rMaintenance 维修养护编制
+     * @return 结果
+     */
+    @Override
+    public int updateRMaintenance(RMaintenance rMaintenance)
+    {
+        return rMaintenanceMapper.updateRMaintenance(rMaintenance);
+    }
+
+    /**
+     * 批量删除维修养护编制
+     *
+     * @param fIds 需要删除的维修养护编制 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteRMaintenanceByIds(Integer[] fIds)
+    {
+        return rMaintenanceMapper.deleteRMaintenanceByIds(fIds);
+    }
+
+    /**
+     * 删除维修养护编制 信息
+     *
+     * @param fId 维修养护编制 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteRMaintenanceById(Integer fId)
+    {
+        return rMaintenanceMapper.deleteRMaintenanceById(fId);
+    }
+}

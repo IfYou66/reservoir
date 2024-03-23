@@ -1,0 +1,24 @@
+<template>
+  <div class="app-container">
+    <iframe src="http://shuiku.succld.com/Reservoirs/page/flood/featureAnalysis.html" width="100%" height = '100%'
+            frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes"
+            style="position:absolute;top: 0px;left: 0px;"></iframe>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "realtime",
+    data(){
+      return {}
+    },
+    mounted() {
+    }
+  }
+
+
+</script>
+
+<style scoped>
+
+</style>

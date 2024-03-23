@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.archives.archivesManage.mapper.AStoreroomMapper">
+    
+    <resultMap type="com.szsk.archives.archivesManage.domain.AStoreroom" id="AStoreroomResult">
+        <result property="fStoreroomId"    column="f_storeroom_id"    />
+        <result property="fStoreroomNumber"    column="f_storeroom_number"    />
+        <result property="fStoreroomName"    column="f_storeroom_name"    />
+        <result property="fStoreroomRemark"    column="f_storeroom_remark"    />
+        <result property="fStoreroomAlias"    column="f_storeroom_alias"    />
+        <result property="fSort"    column="f_sort"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fUpdateTime"    column="f_update_time"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectAStoreroomVo">
+        select f_storeroom_id,f_reservoir_info_id, f_storeroom_number, f_storeroom_name, f_storeroom_remark, f_storeroom_alias, f_sort, f_status, f_create_time, f_update_time from a_storeroom
+    </sql>
+
+    <select id="selectAStoreroomList" parameterType="com.szsk.archives.archivesManage.domain.AStoreroom" resultMap="AStoreroomResult">
+        <include refid="selectAStoreroomVo"/>
+        <where>  
+            <if test="fStoreroomNumber != null  and fStoreroomNumber != ''"> and f_storeroom_number = #{fStoreroomNumber}</if>
+            <if test="fStoreroomName != null  and fStoreroomName != ''"> and f_storeroom_name like concat('%', #{fStoreroomName}, '%')</if>
+            <if test="fStoreroomRemark != null  and fStoreroomRemark != ''"> and f_storeroom_remark = #{fStoreroomRemark}</if>
+            <if test="fStoreroomAlias != null  and fStoreroomAlias != ''"> and f_storeroom_alias = #{fStoreroomAlias}</if>
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fSort != null "> and f_sort = #{fSort}</if>
+            <if test="fStatus != null "> and f_status = #{fStatus}</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+            <if test="fUpdateTime != null "> and f_update_time = #{fUpdateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectAStoreroomById" parameterType="Long" resultMap="AStoreroomResult">
+        <include refid="selectAStoreroomVo"/>
+        where f_storeroom_id = #{fStoreroomId}
+    </select>
+        
+    <insert id="insertAStoreroom" parameterType="com.szsk.archives.archivesManage.domain.AStoreroom" useGeneratedKeys="true" keyProperty="fStoreroomId">
+        insert into a_storeroom
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fStoreroomNumber != null">f_storeroom_number,</if>
+            <if test="fStoreroomName != null">f_storeroom_name,</if>
+            <if test="fStoreroomRemark != null">f_storeroom_remark,</if>
+            <if test="fStoreroomAlias != null">f_storeroom_alias,</if>
+            <if test="fSort != null">f_sort,</if>
+            <if test="fStatus != null">f_status,</if>
+            f_create_time,
+            <if test="fUpdateTime != null">f_update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fStoreroomNumber != null">#{fStoreroomNumber},</if>
+            <if test="fStoreroomName != null">#{fStoreroomName},</if>
+            <if test="fStoreroomRemark != null">#{fStoreroomRemark},</if>
+            <if test="fStoreroomAlias != null">#{fStoreroomAlias},</if>
+            <if test="fSort != null">#{fSort},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+            NOW(),
+            <if test="fUpdateTime != null">#{fUpdateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAStoreroom" parameterType="com.szsk.archives.archivesManage.domain.AStoreroom">
+        update a_storeroom
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fStoreroomNumber != null">f_storeroom_number = #{fStoreroomNumber},</if>
+            <if test="fStoreroomName != null">f_storeroom_name = #{fStoreroomName},</if>
+            <if test="fStoreroomRemark != null">f_storeroom_remark = #{fStoreroomRemark},</if>
+            <if test="fStoreroomAlias != null">f_storeroom_alias = #{fStoreroomAlias},</if>
+            <if test="fSort != null">f_sort = #{fSort},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+            f_update_time = NOW(),
+        </trim>
+        where f_storeroom_id = #{fStoreroomId}
+    </update>
+
+    <delete id="deleteAStoreroomById" parameterType="Long">
+        delete from a_storeroom where f_storeroom_id = #{fStoreroomId}
+    </delete>
+
+    <delete id="deleteAStoreroomByIds" parameterType="String">
+        delete from a_storeroom where f_storeroom_id in 
+        <foreach item="fStoreroomId" collection="array" open="(" separator="," close=")">
+            #{fStoreroomId}
+        </foreach>
+    </delete>
+</mapper>

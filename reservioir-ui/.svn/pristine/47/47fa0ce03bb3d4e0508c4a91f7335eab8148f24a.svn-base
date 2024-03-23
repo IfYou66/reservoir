@@ -1,0 +1,441 @@
+<template>
+  <div class="app-container">
+    <el-row :gutter="20">
+      <dv-border-box13 style="padding:15px; height: 70px">
+        <el-col :span="4">
+          <label class="layui-form-label">选择单元:</label>
+          <el-select v-model="unit" placeholder="请选择" @change="selectUnit(unit)">
+            <el-option
+              v-for="item in units"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="4">
+          <label class="layui-form-label">选择数据:</label>
+          <el-select v-model="type" placeholder="请选择" @change="select(type)">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="8">
+          <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选
+          </el-checkbox>
+          <el-checkbox-group style="display: inline-block; margin-left: 10px" v-model="checkedLines"
+                             @change="handleCheckedLinesChange">
+            <el-checkbox size="small" @change="changeLine(line)" v-for="line in lines" :label="line"
+                         :key="line">{{line}}
+            </el-checkbox>
+          </el-checkbox-group>
+        </el-col>
+        <el-col :span="8">
+          <el-button type="primary" @click="computeDischarge" icon="el-icon-edit">开始计算</el-button>
+          <el-button type="warning" @click="exportData" icon="el-icon-s-data">导出数据</el-button>
+          <el-button type="danger" icon="el-icon-help"><a target="_blank"
+                                                          :href="this.picName">计算原理</a></el-button>
+        </el-col>
+      </dv-border-box13>
+    </el-row>
+    <el-row :gutter="20">
+      <dv-border-box13 style="padding:15px; height: 70px">
+        <el-col :span="6">
+          <label class="layui-form-label">最大泄量:</label>
+          <label class="layui-form-label value" id="maxDischarge">{{maxDischarge}}</label>
+        </el-col>
+        <el-col :span="6">
+          <label class="layui-form-label">最高水位:</label>
+          <label class="layui-form-label value" id="maxWaterLevel">{{maxWaterLevel}}</label>
+        </el-col>
+        <el-col :span="6">
+          <label class="layui-form-label">最大库容:</label>
+          <label class="layui-form-label  value" id="maxCapacity">{{maxCapacity}}</label>
+        </el-col>
+        <el-col :span="6">
+          <label class="layui-form-label">发生时间:</label>
+          <label class="layui-form-label value" id="happenTime">{{happenTime}}</label>
+        </el-col>
+      </dv-border-box13>
+    </el-row>
+    <el-row :gutter="20">
+      <dv-border-box13 style="padding:15px; height: 460px">
+        <div class="layui-card-body" style="height: 400px;overflow: hidden;">
+          <div id="div-line" style="width: 100%;height: 400px;"></div>
+        </div>
+      </dv-border-box13>
+    </el-row>
+  </div>
+</template>
+
+<script>
+  let flood = require('@/api/collection/flood');
+  const lineOptions = ['水位线', '泄量线', '库容线'];
+  export default {
+    name: "floodAnalysis",
+    data() {
+      return {
+        debug: true,
+        loading: null,
+        activeName: 'history',
+        picName: "/files/" + this.common.CURRENT_RESERVOIR + "/floodTheory.pdf",
+        dataType: 'analog',
+        options: [{
+          value: 'analog',
+          label: '模拟数据'
+        }, {
+          value: 'real',
+          label: '真实数据'
+        }],
+        units: [{
+          value: 'baizhangya',
+          label: '百丈崖'
+        }, {
+          value: 'yuejin',
+          label: '跃进'
+        }, {
+          value: 'qujian',
+          label: '区间'
+        }],
+        type: 'analog',
+        chartRain: null,
+        unit: 'baizhangya',
+        area: '24.5平方千米',
+        slope: '0.015',
+        chartFloodLine: null,
+        checkAll: true,
+        checkedLines: ['水位线', '泄量线', '库容线'],
+        lines: lineOptions,
+        isIndeterminate: true,
+        maxDischarge: '',
+        maxWaterLevel: '',
+        maxCapacity: '',
+        happenTime: '',
+
+        lineChart: null,
+        lineOption: null,
+      }
+    },
+    methods: {
+      handleCheckAllChange(val) {
+        this.checkedLines = val ? lineOptions : [];
+        this.isIndeterminate = false;
+        if (this.lineChart) {
+          let that = this;
+          if (this.checkedLines.length !== 0) {
+            this.checkedLines.forEach(function (item) {
+              that.addSeries(item, that.getLineDataByName(item));
+            });
+          } else {
+            lineOptions.forEach(function (item) {
+              that.removeSeries(item);
+            });
+          }
+        }
+      },
+      changeLine(data) {
+        if (!this.lineChart) {
+          return;
+        }
+        if (this.checkedLines.indexOf(data) > -1) {
+          this.addSeries(data, this.getLineDataByName(data));
+        } else {
+          this.removeSeries(data);
+        }
+      },
+      handleCheckedLinesChange(value) {
+        let checkedCount = value.length;
+        this.checkAll = checkedCount === this.lines.length;
+        this.isIndeterminate = checkedCount > 0 && checkedCount < this.lines.length;
+      },
+      select(type) {
+        this.type = type;
+        this.getData();
+      },
+      selectUnit(unit) {
+        this.unit = unit;
+        if (this.chartFloodLine)
+          this.displayFloodLine(this.unit);
+      },
+
+      /* 计算泄洪线 */
+      computeDischarge() {
+        this.getData();
+        flood.computeFloodLinesForAll();
+        this.refreshData();
+        let maxItem = flood.getMaxItem(this.unit);
+        this.maxDischarge = maxItem ? maxItem.discharge.toFixed(2) : 0 + '万方';
+        this.maxWaterLevel = maxItem ? maxItem.waterLevel.toFixed(2) : 0 + 'm';
+        this.maxCapacity = maxItem ? maxItem.capacity.toFixed(2) : 0 + '万方';
+        this.happenTime = maxItem ? this.datetime.convertHourToTime(maxItem.hour).format('MM月dd日 hh时') : '';
+        return false;
+      },
+
+      //根据名称获取对应数据
+      getLineDataByName(lineName) {
+        return flood.getDischargeLine(this.unit, lineName);
+      },
+
+      /**
+       * 格式化excel数据
+       * @returns {[]}
+       */
+      formatExcelData() {
+        return flood.combineLinesData(this.unit, this.checkedLines);
+      },
+
+      //导出数据
+      exportData() {
+        if (!lineChart) {
+          this.$message.warning('请先开始计算，获取数据');
+          return;
+        }
+        let lineData, title;
+        let lines = this.checkedLines;
+        lineData = this.formatExcelData();
+        title = [];
+        title.push('时间');
+        for (let i = 0; i < lines.length; i++) {
+          title.push(lines[i]);
+        }
+        let lineName = this.unit + '调洪演算数据';
+        new this.excel.convert(lineData, lineName, title);
+      },
+
+
+      //获取数据
+      async getData() {
+        if (this.type === 'analog') {
+          this.debug = true;
+          flood.updateRandomDailyRains();
+          flood.updateRandomHourlyRains();
+        } else {
+          this.debug = false;
+          this.loading = this.openLoading("需要读取多天的历史数据，耗时较长，请稍候...");
+          let that = this;
+          await flood.updateDailyRains();
+          await flood.updateHourlyRains();
+          that.loading.close();
+        }
+      },
+
+      /**
+       * 初始化图表
+       */
+      initChart() {
+        this.lineChart = this.$echarts.init(document.getElementById('div-line'));
+        this.lineOption = {
+          color: ['rgba(155,216,231,0.88)', 'rgba(252,138,48,0.88)', 'rgba(19,255,21,0.88)', 'rgba(15,167,248,0.88)',
+            'rgba(229,136,227,0.88)', 'rgba(249,215,101,0.88)', 'rgba(141,237,231,0.88)', 'rgba(243,160,177,0.88)'],
+          legend: {
+            data: this.checkedLines,
+            right: '10%',
+            top: '0%',
+            itemWidth: 10,//图例的宽度
+            itemHeight: 10,//图例的高度
+            textStyle: {//图例文字的样式
+              color: '#8d44cc',
+              fontSize: 16
+            }
+          },
+
+          title: {
+            text: ''
+          },
+
+          dataZoom: [{
+            show: true,
+            realtime: true,
+            start: 0.01,
+            end: 100
+          }],
+
+          grid: {
+            left: '5%',
+            right: '4%',
+            bottom: '13%',
+            containLabel: true
+          },
+          xAxis: {
+            axisLine: {
+              show: true,
+              onZero: false,
+              lineStyle: {
+                color: '#eceebc'
+              }
+            },
+            axisLabel: {
+              formatter: '{value} ',
+              textStyle: {
+                color: '#eceebc'
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            name: '时间（h）',
+            type: 'time'
+          },
+          yAxis: {
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              show: true,
+              onZero: false,
+              lineStyle: {
+                color: '#93eea8'
+              }
+            },
+            axisLabel: {
+              formatter: '{value} ',
+              textStyle: {
+                color: '#93eea8'
+              }
+            },
+            name: '水位（m）',
+          },
+
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross',
+              label: {
+                backgroundColor: '#6a7985'
+              }
+            }
+          },
+          series: []
+        };
+        this.lineChart.setOption(this.lineOption, true);
+      },
+
+      //添加一条曲线
+      addSeries(name, items) {
+        let series = {
+          name: name,
+          type: 'line',
+          symbol: "none",
+          itemStyle: {
+            normal: {
+              label: {
+                show: false,//显示圆点顶部的数字
+                position: 'top',
+                formatter: function (params) {
+                  return params.value;
+                },
+                rich: {
+                  color1: {
+                    color: '#f7ba0e'
+                  },
+                  color2: {
+                    color: '#42a1fe'
+                  }
+                },
+                textStyle: {
+                  color: '#333'
+                }
+              }
+            },
+          },
+          data: items
+        };
+        this.lineOption.series.push(series);
+        this.lineOption.legend.data = this.checkedLines;
+        this.lineChart.setOption(this.lineOption);
+      },
+
+      //移除一条曲线
+      removeSeries(name) {
+        for (let i = 0; i < this.lineOption.series.length; i++) {
+          if (name === this.lineOption.series[i].name) {
+            this.lineOption.series.splice(i, 1);
+          }
+        }
+        this.lineOption.legend.data = this.checkedLines;
+        this.lineChart.setOption(this.lineOption, true);
+      },
+
+
+      /**
+       * 更新数据
+       */
+      refreshData() {
+        this.initChart();
+        this.loading = this.openLoading();
+        let that = this;
+        setTimeout(function () {
+          //开始获取数据
+          that.checkedLines.forEach(function (item) { //由于复选框一般选中的是多个,所以可以循环输出
+            let line = that.getLineDataByName(item);
+            that.addSeries(item, line);
+          });
+          that.loading.close();
+        }, 100);
+      }
+    },
+    mounted() {
+      this.computeDischarge();
+
+      window.addEventListener("resize", function () {
+        this.lineChart.resize();
+      });
+    }
+  }
+
+
+</script>
+
+<style scoped>
+  .chart {
+    height: 300px;
+    margin-top: 20px;
+  }
+
+  .app-container {
+    margin: 0;
+    background: url("../../../assets/images/bg.png") repeat-y;
+    color: #dfe6ec;
+    height: 130vh;
+  }
+
+  .value {
+    font-family: "Microsoft YaHei", 楷体, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu, serif;
+    font-size: 1.0rem;
+    text-align: left;
+    color: #1c6ca1;
+    font-weight: bold;
+    width: 190px;
+  }
+
+  .layui-card, .layui-card-body {
+    height: 100%;
+  }
+
+  ::v-deep .el-col {
+    line-height: 40px;
+  }
+
+  .layui-form-label {
+    width: 100px;
+  }
+
+  .layui-inline {
+    margin-bottom: 0;
+  }
+
+  .chart {
+    margin-top: 0;
+  }
+
+  ::v-deep .el-select {
+    width: 110px !important;
+  }
+
+  ::v-deep .el-checkbox--medium {
+    padding: 5px !important;
+  }
+</style>

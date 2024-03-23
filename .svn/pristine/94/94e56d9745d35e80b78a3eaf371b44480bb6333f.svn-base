@@ -1,0 +1,84 @@
+package com.szsk.reservoir.run.mapper;
+
+import com.ruoyi.system.api.domain.SysFile;
+import com.ruoyi.system.api.domain.SysUser;
+import com.szsk.reservoir.run.domain.RSecuImpl;
+import com.szsk.reservoir.run.domain.RSecurity;
+import io.lettuce.core.dynamic.annotation.Param;
+
+import java.util.List;
+
+/**
+ * 安全检查计划编制 Mapper接口
+ * 
+ * @author wangcc
+ * @date 2021-08-10
+ */
+public interface RSecurityMapper 
+{
+
+    /**
+     * 新增安全检查计划编制 
+     * 
+     * @param rSecurity 安全检查计划编制 
+     * @return 结果
+     */
+    public int insertRSecurity(RSecurity rSecurity);
+
+    /**
+     * 查询用户列表
+     * @param userId
+     * @return
+     */
+    public List<SysUser> queryUserList(String userId);
+
+    /**
+     * 查询业务信息
+     * @param  fId 主键ID
+     * @return
+     */
+    public RSecurity queryPlanEdit(Long fId);
+
+    /**
+     * 更新安全计划表
+     * @param rSecurity
+     * @return
+     */
+    public int updatePlanEdit(RSecurity rSecurity);
+
+    /**
+     * 修改下节点的审核人
+     * @return
+     * @param secu
+     */
+    public int updateFActPersion(RSecuImpl secu);
+
+    /**
+     * 获取文件信息
+     * @param id
+     * @return
+     */
+    public SysFile getFileInfo(Long id);
+
+    /**
+     * 安检查询列表
+     * @param rSecurity
+     * @return
+     */
+    public List<RSecurity> queryPlanList(RSecurity rSecurity);
+
+    /**
+     * 判断是否为管理员角色
+     * @param userId
+     * @return
+     */
+    public int ifAdmin(String userId);
+
+
+    /**
+     * 查询流程完成的计划
+     * @return
+     */
+    public List<RSecurity> processComplete();
+
+}

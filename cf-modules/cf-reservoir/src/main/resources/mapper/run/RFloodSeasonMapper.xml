@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.RFloodSeasonMapper">
+    
+    <resultMap type="com.szsk.reservoir.run.domain.RFloodSeason" id="RFloodSeasonResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fPlanName"    column="f_plan_name"    />
+        <result property="fPlanFileId"    column="f_plan_file_id"    />
+        <result property="fPlanOutline"    column="f_plan_outline"    />
+        <result property="fPlanDate"    column="f_plan_date"    />
+        <result property="fCreatePeople"    column="f_create_people"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectRFloodSeasonVo">
+        select f_id,f_reservoir_info_id, f_plan_name, f_plan_file_id, f_plan_outline, f_plan_date, f_create_people, f_create_time from r_flood_season
+    </sql>
+
+    <select id="selectRFloodSeasonList" parameterType="com.szsk.reservoir.run.domain.RFloodSeason" resultMap="RFloodSeasonResult">
+        <include refid="selectRFloodSeasonVo"/>
+        <where>  
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id  = #{fReservoirInfoId} </if>
+            <if test="fPlanName != null  and fPlanName != ''"> and f_plan_name like concat('%', #{fPlanName}, '%')</if>
+            <if test="fPlanOutline != null  and fPlanOutline != ''"> and f_plan_outline = #{fPlanOutline}</if>
+            <if test="fPlanDate != null  and fPlanDate != ''"> and f_plan_date = #{fPlanDate}</if>
+            <if test="fCreatePeople != null  and fCreatePeople != ''"> and f_create_people = #{fCreatePeople}</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+            <if test="fPlanDateStart != null and fPlanDateStart != ''"><!-- 开始时间检索 -->
+                and f_plan_date &gt;= #{fPlanDateStart}
+            </if>
+            <if test="fPlanDateEnd != null and fPlanDateEnd != ''"><!-- 结束时间检索 -->
+                and f_plan_date &lt;= #{fPlanDateEnd}
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectRFloodSeasonById" parameterType="Long" resultMap="RFloodSeasonResult">
+        <include refid="selectRFloodSeasonVo"/>
+        where f_id = #{fId}
+    </select>
+        
+    <insert id="insertRFloodSeason" parameterType="com.szsk.reservoir.run.domain.RFloodSeason" useGeneratedKeys="true" keyProperty="fId">
+        insert into r_flood_season
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if> 
+            <if test="fPlanName != null">f_plan_name,</if>
+            <if test="fPlanFileId != null">f_plan_file_id,</if>
+            <if test="fPlanOutline != null">f_plan_outline,</if>
+            <if test="fPlanDate != null">f_plan_date,</if>
+            <if test="fCreatePeople != null">f_create_people,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fPlanName != null">#{fPlanName},</if>
+            <if test="fPlanFileId != null">#{fPlanFileId},</if>
+            <if test="fPlanOutline != null">#{fPlanOutline},</if>
+            <if test="fPlanDate != null">#{fPlanDate},</if>
+            <if test="fCreatePeople != null">#{fCreatePeople},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRFloodSeason" parameterType="com.szsk.reservoir.run.domain.RFloodSeason">
+        update r_flood_season
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fPlanName != null">f_plan_name = #{fPlanName},</if>
+            <if test="fPlanFileId != null">f_plan_file_id = #{fPlanFileId},</if>
+            <if test="fPlanOutline != null">f_plan_outline = #{fPlanOutline},</if>
+            <if test="fPlanDate != null">f_plan_date = #{fPlanDate},</if>
+            <if test="fCreatePeople != null">f_create_people = #{fCreatePeople},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteRFloodSeasonById" parameterType="Long">
+        delete from r_flood_season where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteRFloodSeasonByIds" parameterType="String">
+        delete from r_flood_season where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

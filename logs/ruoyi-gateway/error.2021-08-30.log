@@ -1,0 +1,2 @@
+15:45:50.009 [boundedElastic-2] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/collection/device/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for cf-collection"
+15:45:52.569 [boundedElastic-3] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/collection/sensor/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for cf-collection"

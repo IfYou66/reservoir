@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.RSecuImplMapper">
+    
+    <resultMap type="com.szsk.reservoir.run.domain.RSecuImpl" id="RSecuImplResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fPlaneditId"    column="f_planedit_id"    />
+        <result property="fImplContent"    column="f_impl_content"    />
+        <result property="fReviewComments"    column="f_review_comments"    />
+        <result property="fReviewResult"    column="f_review_result"    />
+        <result property="fReviewPeople"    column="f_review_people"    />
+        <result property="fReviewDate"    column="f_review_date"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fCreatePeople"    column="f_create_people"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fActId"    column="f_act_id"    />
+        <result property="fActPersion"    column="f_act_persion"    />
+        <result property="fActStatus"    column="f_act_status"    />
+        <result property="fActNode"    column="f_act_node"    />
+    </resultMap>
+
+    <sql id="selectRSecuImplVo">
+        select f_id, f_planedit_id, f_impl_content, f_review_comments, f_review_result, f_review_people, f_review_date, f_status, f_create_people, f_create_time, f_act_id, f_act_persion, f_act_status, f_act_node from r_secu_impl
+    </sql>
+
+    <select id="selectRSecuImplList" parameterType="com.szsk.reservoir.run.domain.RSecuImpl" resultMap="RSecuImplResult">
+        <include refid="selectRSecuImplVo"/>
+        <where>  
+            <if test="fPlaneditId != null "> and f_planedit_id = #{fPlaneditId}</if>
+            <if test="fImplContent != null  and fImplContent != ''"> and f_impl_content = #{fImplContent}</if>
+            <if test="fReviewComments != null  and fReviewComments != ''"> and f_review_comments = #{fReviewComments}</if>
+            <if test="fReviewResult != null "> and f_review_result = #{fReviewResult}</if>
+            <if test="fReviewPeople != null  and fReviewPeople != ''"> and f_review_people = #{fReviewPeople}</if>
+            <if test="fReviewDate != null "> and f_review_date = #{fReviewDate}</if>
+            <if test="fStatus != null "> and f_status = #{fStatus}</if>
+            <if test="fCreatePeople != null  and fCreatePeople != ''"> and f_create_people = #{fCreatePeople}</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+            <if test="fActId != null  and fActId != ''"> and f_act_id = #{fActId}</if>
+            <if test="fActPersion != null  and fActPersion != ''"> and f_act_persion = #{fActPersion}</if>
+            <if test="fActStatus != null "> and f_act_status = #{fActStatus}</if>
+            <if test="fActNode != null  and fActNode != ''"> and f_act_node = #{fActNode}</if>
+        </where>
+    </select>
+    
+    <select id="selectRSecuImplById" parameterType="Long" resultMap="RSecuImplResult">
+        <include refid="selectRSecuImplVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <select id="selectRSecuImplByfPlaneditId" resultType="com.szsk.reservoir.run.domain.RSecuImpl" parameterType="Long" resultMap="RSecuImplResult">
+        <include refid="selectRSecuImplVo"/>
+        where f_planedit_id = #{fPlaneditId}
+    </select>
+
+    <insert id="insertRSecuImpl" parameterType="com.szsk.reservoir.run.domain.RSecuImpl" useGeneratedKeys="true" keyProperty="fId">
+        insert into r_secu_impl
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fPlaneditId != null">f_planedit_id,</if>
+            <if test="fImplContent != null">f_impl_content,</if>
+            <if test="fReviewComments != null">f_review_comments,</if>
+            <if test="fReviewResult != null">f_review_result,</if>
+            <if test="fReviewPeople != null">f_review_people,</if>
+            <if test="fReviewDate != null">f_review_date,</if>
+            <if test="fStatus != null">f_status,</if>
+            <if test="fCreatePeople != null">f_create_people,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+            <if test="fActId != null">f_act_id,</if>
+            <if test="fActPersion != null">f_act_persion,</if>
+            <if test="fActStatus != null">f_act_status,</if>
+            <if test="fActNode != null">f_act_node,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fPlaneditId != null">#{fPlaneditId},</if>
+            <if test="fImplContent != null">#{fImplContent},</if>
+            <if test="fReviewComments != null">#{fReviewComments},</if>
+            <if test="fReviewResult != null">#{fReviewResult},</if>
+            <if test="fReviewPeople != null">#{fReviewPeople},</if>
+            <if test="fReviewDate != null">#{fReviewDate},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+            <if test="fCreatePeople != null">#{fCreatePeople},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+            <if test="fActId != null">#{fActId},</if>
+            <if test="fActPersion != null">#{fActPersion},</if>
+            <if test="fActStatus != null">#{fActStatus},</if>
+            <if test="fActNode != null">#{fActNode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRSecuImpl" parameterType="com.szsk.reservoir.run.domain.RSecuImpl">
+        update r_secu_impl
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fPlaneditId != null">f_planedit_id = #{fPlaneditId},</if>
+            <if test="fImplContent != null">f_impl_content = #{fImplContent},</if>
+            <if test="fReviewComments != null">f_review_comments = #{fReviewComments},</if>
+            <if test="fReviewResult != null">f_review_result = #{fReviewResult},</if>
+            <if test="fReviewPeople != null">f_review_people = #{fReviewPeople},</if>
+            <if test="fReviewDate != null">f_review_date = #{fReviewDate},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+            <if test="fCreatePeople != null">f_create_people = #{fCreatePeople},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+            <if test="fActId != null">f_act_id = #{fActId},</if>
+            <if test="fActPersion != null">f_act_persion = #{fActPersion},</if>
+            <if test="fActStatus != null">f_act_status = #{fActStatus},</if>
+            <if test="fActNode != null">f_act_node = #{fActNode},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteRSecuImplById" parameterType="Long">
+        delete from r_secu_impl where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteRSecuImplByIds" parameterType="String">
+        delete from r_secu_impl where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

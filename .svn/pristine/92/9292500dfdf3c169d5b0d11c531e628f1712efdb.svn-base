@@ -1,0 +1,18 @@
+package com.ruoyi.common.core.utils;
+
+public class Constant {
+
+    // planEdit: 安全检查计划编制表
+    // 安全检查计划编制表
+    public static final String TABLENAME_A_PLAN_EDIT = "r_security";
+    // 安全检查计划编制流程表ID
+    public static final String WORKFLOW_INSTION_INSTRUCTIONS = "instructions";
+
+    // 全局通用长量
+    public static final int GLOBAL_NUM_ONE = 1;
+    public static final int GLOBAL_NUM_TWO = 2;
+    public static final int GLOBAL_NUM_THREE = 3;
+    public static final int GLOBAL_NUM_FOUR  = 4;
+    public static final int GLOBAL_NUM_FIVES = 5;
+    public static final int GLOBAL_NUM_SIX = 6;
+}

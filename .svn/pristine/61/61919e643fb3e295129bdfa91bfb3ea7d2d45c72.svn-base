@@ -1,0 +1,94 @@
+package com.szsk.reservoir.security.service.Impl;
+
+import java.util.List;
+
+import com.szsk.reservoir.security.domain.MEngineeringInformation;
+import com.szsk.reservoir.security.mapper.MEngineeringInformationMapper;
+import com.szsk.reservoir.security.service.IMEngineeringInformationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * 水库大坝工程基本信息 Service业务层处理
+ *
+ * @author cangfeng
+ * @date 2021-08-14
+ */
+@Service
+public class MEngineeringInformationServiceImpl implements IMEngineeringInformationService {
+
+    @Autowired
+    private MEngineeringInformationMapper mEngineeringInformationMapper;
+
+    /**
+     * 查询水库大坝工程基本信息
+     *
+     * @param fId 水库大坝工程基本信息 ID
+     * @return 水库大坝工程基本信息
+     */
+    @Override
+    public MEngineeringInformation selectMEngineeringInformationById(Long fId)
+    {
+        return mEngineeringInformationMapper.selectMEngineeringInformationById(fId);
+    }
+
+    /**
+     * 查询水库大坝工程基本信息 列表
+     *
+     * @param mEngineeringInformation 水库大坝工程基本信息
+     * @return 水库大坝工程基本信息
+     */
+    @Override
+    public List<MEngineeringInformation> selectMEngineeringInformationList(MEngineeringInformation mEngineeringInformation)
+    {
+        return mEngineeringInformationMapper.selectMEngineeringInformationList(mEngineeringInformation);
+    }
+
+    /**
+     * 新增水库大坝工程基本信息
+     *
+     * @param mEngineeringInformation 水库大坝工程基本信息
+     * @return 结果
+     */
+    @Override
+    public int insertMEngineeringInformation(MEngineeringInformation mEngineeringInformation)
+    {
+        return mEngineeringInformationMapper.insertMEngineeringInformation(mEngineeringInformation);
+    }
+
+    /**
+     * 修改水库大坝工程基本信息
+     *
+     * @param mEngineeringInformation 水库大坝工程基本信息
+     * @return 结果
+     */
+    @Override
+    public int updateMEngineeringInformation(MEngineeringInformation mEngineeringInformation)
+    {
+        return mEngineeringInformationMapper.updateMEngineeringInformation(mEngineeringInformation);
+    }
+
+    /**
+     * 批量删除水库大坝工程基本信息
+     *
+     * @param fIds 需要删除的水库大坝工程基本信息 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteMEngineeringInformationByIds(Long[] fIds)
+    {
+        return mEngineeringInformationMapper.deleteMEngineeringInformationByIds(fIds);
+    }
+
+    /**
+     * 删除水库大坝工程基本信息 信息
+     *
+     * @param fId 水库大坝工程基本信息 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteMEngineeringInformationById(Long fId)
+    {
+        return mEngineeringInformationMapper.deleteMEngineeringInformationById(fId);
+    }
+}

@@ -1,0 +1,17 @@
+package com.szsk.reservoir.security.mapper;
+
+import com.szsk.reservoir.security.domain.MBorder;
+
+import java.util.List;
+
+/**
+ * 工程划界 Mapper接口
+ * 
+ * @author wangcc
+ * @date 2021-08-23
+ */
+public interface MBorderMapper
+{
+    // 查询地图坐标
+    public List<MBorder> queryLabelList(String group);
+}

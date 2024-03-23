@@ -1,0 +1,278 @@
+package com.szsk.archives.archivesManage.domain;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.core.annotation.Excel;
+import com.ruoyi.common.core.web.domain.BaseEntity;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.util.Date;
+
+/**
+ * 档案 对象 a_archives
+ * 
+ * @author cangfeng
+ * @date 2021-07-21
+ */
+public class AArchives extends BaseEntity
+{
+    private static final long serialVersionUID = 1L;
+
+    /** 是否可以借阅 */
+    private Integer ifBorrow;
+
+    public Integer getIfBorrow() {
+        return ifBorrow;
+    }
+
+    public void setIfBorrow(Integer ifBorrow) {
+        this.ifBorrow = ifBorrow;
+    }
+
+    /** id */
+    private Long fArchivesId;
+
+    /** 档案编码 */
+    @Excel(name = "档案编码")
+    private String fArchivesNumber;
+
+    /** 档案名称 */
+    @Excel(name = "档案名称")
+    private String fArchivesName;
+
+    /** 库房ID */
+    @Excel(name = "库房ID")
+    private Integer fStoreroomId;
+
+    /** 档案分类ID */
+    @Excel(name = "档案分类ID")
+    private Integer fArchivesTypeId;
+
+    /** 书架编号 */
+    @Excel(name = "书架编号")
+    private String fShelfNumber;
+
+    /** 绝密等级 */
+    @Excel(name = "绝密等级")
+    private Integer fGrade;
+
+    /** 责任人 */
+    @Excel(name = "责任人")
+    private String fReceivePersion;
+
+    /** 文件份数 */
+    @Excel(name = "文件份数")
+    private Integer fFileNum;
+
+    /** 卷内张数 */
+    @Excel(name = "卷内张数")
+    private Integer fVolumeNum;
+
+    /** 附件id */
+    @Excel(name = "附件id")
+    private String fAppendixId;
+
+    /** 档案状态 0:在库1：出库2：注销 */
+    @Excel(name = "档案状态 0:在库1：出库2：注销")
+    private Integer fStatus;
+
+    /** 接收时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "接收时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date fReceiveTime;
+
+    /** 注销时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "注销时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fLogoutTime;
+
+    /** 起始时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "起始时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fCreateTime;
+
+    /** 结束时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "结束时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fEndTime;
+
+    /**
+     * 注销或更改
+     */
+    private Integer logOffOrModify;
+    
+
+    public Integer getLogOffOrModify() {
+        return logOffOrModify;
+    }
+
+    public void setLogOffOrModify(Integer logOffOrModify) {
+        this.logOffOrModify = logOffOrModify;
+    }
+
+    public String getfAppendixId() {
+        return fAppendixId;
+    }
+
+    public void setfAppendixId(String fAppendixId) {
+        this.fAppendixId = fAppendixId;
+    }
+
+    public String getfReceivePersion() {
+        return fReceivePersion;
+    }
+
+    public void setfReceivePersion(String fReceivePersion) {
+        this.fReceivePersion = fReceivePersion;
+    }
+
+    public void setfArchivesId(Long fArchivesId)
+    {
+        this.fArchivesId = fArchivesId;
+    }
+
+    public Long getfArchivesId()
+    {
+        return fArchivesId;
+    }
+    public void setfArchivesNumber(String fArchivesNumber) 
+    {
+        this.fArchivesNumber = fArchivesNumber;
+    }
+
+    public String getfArchivesNumber() 
+    {
+        return fArchivesNumber;
+    }
+    public void setfArchivesName(String fArchivesName) 
+    {
+        this.fArchivesName = fArchivesName;
+    }
+
+    public String getfArchivesName() 
+    {
+        return fArchivesName;
+    }
+    public void setfStoreroomId(Integer fStoreroomId) 
+    {
+        this.fStoreroomId = fStoreroomId;
+    }
+
+    public Integer getfStoreroomId() 
+    {
+        return fStoreroomId;
+    }
+    public void setfArchivesTypeId(Integer fArchivesTypeId) 
+    {
+        this.fArchivesTypeId = fArchivesTypeId;
+    }
+
+    public Integer getfArchivesTypeId() 
+    {
+        return fArchivesTypeId;
+    }
+    public void setfShelfNumber(String fShelfNumber) 
+    {
+        this.fShelfNumber = fShelfNumber;
+    }
+
+    public String getfShelfNumber() 
+    {
+        return fShelfNumber;
+    }
+    public void setfGrade(Integer fGrade) 
+    {
+        this.fGrade = fGrade;
+    }
+
+    public Integer getfGrade() 
+    {
+        return fGrade;
+    }
+    public void setfFileNum(Integer fFileNum) 
+    {
+        this.fFileNum = fFileNum;
+    }
+
+    public Integer getfFileNum() 
+    {
+        return fFileNum;
+    }
+    public void setfVolumeNum(Integer fVolumeNum) 
+    {
+        this.fVolumeNum = fVolumeNum;
+    }
+
+    public Integer getfVolumeNum() 
+    {
+        return fVolumeNum;
+    }
+
+
+    public void setfStatus(Integer fStatus) 
+    {
+        this.fStatus = fStatus;
+    }
+
+    public Integer getfStatus() 
+    {
+        return fStatus;
+    }
+    public void setfReceiveTime(Date fReceiveTime) 
+    {
+        this.fReceiveTime = fReceiveTime;
+    }
+
+    public Date getfReceiveTime() 
+    {
+        return fReceiveTime;
+    }
+    public void setfLogoutTime(Date fLogoutTime) 
+    {
+        this.fLogoutTime = fLogoutTime;
+    }
+
+    public Date getfLogoutTime() 
+    {
+        return fLogoutTime;
+    }
+    public void setfCreateTime(Date fCreateTime) 
+    {
+        this.fCreateTime = fCreateTime;
+    }
+
+    public Date getfCreateTime() 
+    {
+        return fCreateTime;
+    }
+    public void setfEndTime(Date fEndTime) 
+    {
+        this.fEndTime = fEndTime;
+    }
+
+    public Date getfEndTime() 
+    {
+        return fEndTime;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("fArchivesId", getfArchivesId())
+            .append("fArchivesNumber", getfArchivesNumber())
+            .append("fArchivesName", getfArchivesName())
+            .append("fStoreroomId", getfStoreroomId())
+            .append("fArchivesTypeId", getfArchivesTypeId())
+            .append("fShelfNumber", getfShelfNumber())
+            .append("fGrade", getfGrade())
+            .append("fFileNum", getfFileNum())
+            .append("fVolumeNum", getfVolumeNum())
+            .append("fAppendixId", getfAppendixId())
+            .append("fStatus", getfStatus())
+            .append("fReceiveTime", getfReceiveTime())
+            .append("fLogoutTime", getfLogoutTime())
+            .append("fCreateTime", getfCreateTime())
+            .append("fEndTime", getfEndTime())
+            .toString();
+    }
+}

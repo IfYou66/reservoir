@@ -1,0 +1,198 @@
+<template>
+  <div class="app-container">
+    <div class="app-container">
+      <dv-border-box9 style="padding: 20px; height: 400px">
+        <div class="left info">
+          <result :title="`最小应力：`" :config="minConfig" :state="isOpenMinSafe" :scope="`0-1000kpa`"></result>
+          <result :title="`最大应力：`" :config="maxConfig" :state="isOpenMaxSafe" :scope="`0-1000kpa`"></result>
+        </div>
+
+        <div class="right info">
+          <result :title="`抗滑稳定系数：`" :config="kConfig" :state="isOpenKSafe" :scope="`>1.08`"></result>
+          <div class="btn-div" style="margin-top: 40px">
+            <el-button type="danger"><a target="_blank"
+                                        :href="this.picName">查看计算原理</a></el-button>
+          </div>
+        </div>
+      </dv-border-box9>
+      <dv-border-box3 style="padding: 20px; height: 420px; background-color:#f1f8ff;">
+        <div style="height: 370px;min-width: 1200px;">
+          <div id="chart" style="height: 100%" :style="{'background': 'url('+bgc+') no-repeat '+ offset,
+      'backgroundSize': size}"></div>
+        </div>
+      </dv-border-box3>
+    </div>
+  </div>
+</template>
+
+
+<script>
+  import result from '@/views/collection/common/result'
+
+  export default {
+    name: "realtime",
+    components: {
+      result
+    },
+    data() {
+      let tunnel = this.reservoir.getTunnel().getControlAnalysis();
+      return {
+        tunnel: tunnel,
+        picName: "/files/" + this.common.CURRENT_RESERVOIR + "/tunnelTheory.pdf",
+        bgc: require(`@/assets/images/${this.common.CURRENT_RESERVOIR}/tunnel.jpg`),
+        offset: tunnel.data.backgroundOffset,
+        size: tunnel.data.backgroundSize,
+        isMinSafe: true,
+        isMaxSafe: true,
+        isKSafe: true,
+        minConfig: {
+          number: [0]
+        },
+        maxConfig: {
+          number: [0]
+        },
+        kConfig: {
+          number: [0]
+        },
+      }
+    },
+    methods: {
+      fillData() {
+        //进行数据填写
+        this.resultK = this.tunnel.computeK();
+        this.resultMaxPressure = this.tunnel.computeMaxPressure();
+        this.resultMinPressure = this.tunnel.computeMinPressure();
+
+        this.isKSafe = this.operator.isSafe(this.tunnel.computeK(), Number.MAX_VALUE, 1.08);
+        this.isMaxSafe = this.operator.isSafe(this.tunnel.computeMaxPressure(), 1000, 0);
+        this.isMinSafe = this.operator.isSafe(this.tunnel.computeMinPressure(), 1000, 0);
+        this.minConfig = this.operator.getConfig(this.resultMinPressure, 'kpa', this.isMinSafe);
+        this.maxConfig = this.operator.getConfig(this.resultMaxPressure, 'kpa', this.isMaxSafe);
+        this.kConfig = this.operator.getConfig(this.resultK, '', this.isKSafe);
+      },
+      displayWaterLevelLine() {
+        let chartWaterLevel = this.$echarts.init(document.getElementById('chart'));
+        let option = {
+          title: {
+            textStyle: {
+              color: '#000'
+            }
+          },
+          tooltip: {
+            trigger: "axis",
+            show: false
+          },
+          xAxis: [{
+            name: '',
+            type: 'value',
+            max: this.tunnel.data.xMax,
+            min: this.tunnel.data.xMin,
+            nameLocation: 'end',
+            axisLabel: {
+              show: false
+            }
+          }],
+          yAxis: [
+            {
+              name: '高程(m)',
+              type: 'value',
+              position: 'left',
+              max: this.tunnel.data.yMax,
+              min: this.tunnel.data.yMin,
+              axisLine: {
+                onZero: false
+              },
+              axisLabel: {
+                formatter: '{value} mm'
+              }
+            }
+          ],
+          series: [{
+            name: '水位',
+            type: 'line',
+            showSymbol: true,
+            smooth: false,
+            data: this.tunnel.getPoints(),
+            markPoint: {
+              symbol: 'arrow',
+              data: [
+                {
+                  value: '实时水位' + this.operator.getWaterLevel(),
+                  name: '实时水位',
+                  xAxis: 8.4,
+                  yAxis: this.operator.getWaterLevel()
+                }
+              ]
+            },
+            itemStyle: {
+              normal: {
+                color: '#0080ff',
+                lineStyle: {
+                  color: '#0080ff'
+                },
+                areaStyle: {
+                  color: '#0080ff'
+                }
+              }
+            },
+          }]
+        };
+        chartWaterLevel.setOption(option);
+      },
+      isSafe(value, max, min) {
+        if ((value > min && value < max) || (value === '--')) {
+          return true;
+        } else if ((value < min || value > max)) {
+          return false;
+        }
+        return true;
+      },
+
+    },
+    mounted() {
+      this.displayWaterLevelLine();
+      this.fillData();
+    }
+  }
+
+
+</script>
+
+<style scoped>
+  .app-container {
+    margin: 0;
+    background: url("../../../../assets/images/bg.png") repeat-y;
+    color: #dfe6ec;
+    height: 100vh;
+  }
+
+  .info {
+    position: absolute;
+    top: 0px;
+    width: 340px;
+  }
+
+  .left {
+    left: 5%;
+  }
+
+  .right {
+    left: 55%;
+  }
+
+  .btn-div {
+    left: 50%;
+    top: 160px;
+  }
+
+  .btn-div button {
+    height: 40px;
+    box-shadow: 10px 10px 5px #174867;
+    color: #ffffff;
+    background-color: #1f97ff;
+    width: 220px;
+    border-radius: 20px;
+  }
+
+
+</style>

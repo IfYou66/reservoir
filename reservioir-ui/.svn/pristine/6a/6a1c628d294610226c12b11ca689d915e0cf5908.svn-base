@@ -1,0 +1,44 @@
+import request from '@/utils/request'
+
+// 查询设备字段列表
+export function listDevice(query) {
+  return request({
+    url: '/collection/device/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询设备字段详细
+export function getDevice(id) {
+  return request({
+    url: '/collection/device/' + id,
+    method: 'get'
+  })
+}
+
+// 新增设备字段
+export function addDevice(data) {
+  return request({
+    url: '/collection/device',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改设备字段
+export function updateDevice(data) {
+  return request({
+    url: '/collection/device',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除设备字段
+export function delDevice(id) {
+  return request({
+    url: '/collection/device/' + id,
+    method: 'delete'
+  })
+}

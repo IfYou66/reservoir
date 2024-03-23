@@ -1,0 +1,222 @@
+<template>
+  <div class="app-container">
+    <dv-border-box9 style="padding: 20px; height: 80px">
+      <el-header>
+        <div id="div-section">
+          <el-col :span="12">
+            <label class="layui-form-label">断面选择:</label>
+            <el-select v-model="sectionIndex" placeholder="请选择" @change="selectSection(sectionIndex)">
+              <el-option
+                v-for="(item,i) in sections"
+                :key="item"
+                :label="item"
+                :value="i">
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="6" :offset=6>
+            <dv-decoration6 style="width: 170px; height:40px"></dv-decoration6>
+          </el-col>
+        </div>
+      </el-header>
+    </dv-border-box9>
+    <dv-border-box9 style="padding: 5px; height: 200px">
+      <div class="left info">
+        <result :title="`上游坝坡稳定系数：`" :config="upConfig" :state="upSafe" :scope="`<1.3`"></result>
+      </div>
+      <div class="right info">
+        <result :title="`下游坝坡稳定系数：`" :config="downConfig" :state="downSafe" :scope="`<1.3`"></result>
+      </div>
+    </dv-border-box9>
+    <dv-border-box9 style="height: 360px">
+      <div>
+        <div id="chart" style="height: 360px;width:100%;min-width: 1300px;"></div>
+      </div>
+    </dv-border-box9>
+  </div>
+</template>
+
+<script>
+  import result from '@/views/collection/common/result'
+
+  export default {
+    name: "realtime",
+    components: {
+      result
+    },
+    data() {
+      let sensors = this.common.getData('damSeepage');
+      let sections = this.operator.getAttrArray(sensors, 'section').filter(function (item) {
+        return item.indexOf('TBD') < 0;
+      });
+      let seepage = this.reservoir.getDam().getStableAnalysis(false);
+      let stable = this.operator.findArrayItemByAttrValue(seepage.stables, 'name', sections[0]);
+      return {
+        upConfig:{
+          number: [0]
+        },
+        downConfig:{
+          number: [0]
+        },
+        sensors: sensors,
+        sections: sections,
+        sectionIndex: 0,
+        seepage: seepage,
+        safeStableUpPara: 0,
+        safeStableDownPara: 0,
+        sensor: this.operator.findArrayItemByAttrValue(this.common.loadSensors(), 'name', '坝坡稳定系数K'),
+        stable: stable,
+        upSafe: true,
+        downSafe: true,
+      }
+    },
+    methods: {
+      selectSection(sectionIndex) {
+        this.sectionIndex = sectionIndex;
+        this.displayWaterLevelLine(sectionIndex);
+      },
+      displayWaterLevelLine(index) {
+        let chartWaterLevel = this.$echarts.init(document.getElementById('chart'));
+        chartWaterLevel.setOption(this.seepage[index].createDam(2), true);
+      },
+    },
+    mounted() {
+      this.displayWaterLevelLine(0);
+      this.sensor = this.operator.findArrayItemByAttrValue(this.common.loadSensors(), 'name', '坝坡稳定系数K');
+
+      let max = this.sensor.max;
+      let min = this.sensor.min;
+      this.upSafe = this.operator.isSafe(this.stable.stableUp, max, min);
+      this.downSafe = this.operator.isSafe(this.stable.stableDown, max, min);
+      this.upConfig = this.operator.getConfig(this.stable.stableUp,'', this.upSafe);
+      this.downConfig = this.operator.getConfig(this.stable.stableDown,'', this.downSafe);
+    }
+  }
+
+
+</script>
+
+<style scoped>
+  ::v-deep .w-label {
+    font-size: 22px;
+    font-family: 楷体, serif;
+    color: #1c84c6;
+    text-align: center;
+  }
+
+  .app-container {
+    margin: 0;
+    background: url("../../../../assets/images/bg.png") repeat-y;
+    color: #dfe6ec;
+    height: 110vh;
+  }
+
+  .layui-form-label {
+    font-size: 18px;
+    font-family: KaiTi, serif;
+    width: 140px;
+    padding: 0;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+  }
+
+  .danger {
+    animation: alarm 1s linear infinite;
+    color: red;
+  }
+
+  fieldset {
+    background: rgba(18, 255, 75, 0.3);
+    border-color: rgb(255, 40, 28);
+    border-style: solid;
+    border-width: 2px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px;
+    line-height: 30px;
+    list-style: none;
+    padding: 5px 10px;
+    margin-bottom: 2px;
+  }
+
+  fieldset legend {
+    color: #302A2A;
+    font: bold 20px Verdana, Geneva, sans-serif;
+    text-align: left;
+    text-shadow: 2px 2px 2px rgb(88, 126, 156);
+  }
+
+  .info {
+    position: absolute;
+    top: 0px;
+    width: 340px;
+  }
+
+  .left {
+    left: 5%;
+  }
+
+  .right {
+    left: 55%;
+  }
+
+  fieldset img {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    position: relative;
+    top: -2px;
+  }
+
+  .btn-div button {
+    height: 40px;
+    box-shadow: 10px 10px 5px #174867;
+    color: #ffffff;
+    background-color: #1f97ff;
+    width: 220px;
+    border-radius: 20px;
+  }
+
+  @keyframes alarm {
+    0% {
+      color: #ff7a59;
+    }
+    25% {
+      color: #ff9ea0;
+    }
+    50% {
+      color: #ffc6d0;
+    }
+    75% {
+      color: #ff9ea0;
+    }
+    100% {
+      color: #ff7a59;
+    }
+  }
+
+  #big-box img {
+    position: absolute;
+    z-index: 5
+  }
+
+  #div-section {
+    display: block;
+    z-index: 999;
+  }
+
+  .layui-unselect > div {
+    color: #1c6ca1;
+    font-size: 18pt;
+    font-family: KaiTi, serif;
+  }
+
+  .layui-input-inline {
+    display: inline-block;
+    width: 50px;
+  }
+
+
+</style>

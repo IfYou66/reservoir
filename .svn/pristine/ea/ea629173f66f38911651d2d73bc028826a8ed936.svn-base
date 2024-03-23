@@ -1,0 +1,16 @@
+package com.szsk.reservoir.workflow.mapper;
+
+import java.util.Map;
+
+/**
+ * @author: wangcc
+ * @create: 2021/8/10 12:04
+ * @description:
+ **/
+public interface WorkFlowMappper {
+
+    /**
+     * 删除流程
+     */
+     public int updateBusinessActiviti(Map<String, Object> params);
+}

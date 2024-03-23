@@ -1,0 +1,594 @@
+<template>
+  <div class="app-container">
+
+    <el-row class="from-top">
+      <el-col :span="24">
+        <div style="margin: 0 auto;display: flex;align-items: center;width: 100%;justify-content:center;">
+          <div style="position: relative;">
+            <img src="../../../assets/images/jin.png" />
+            <div style="position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;">1.编制</div>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active>1? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')" />
+            <div
+              :style="active>1? 'position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">
+              2.审核</div>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active>=3? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')" />
+            <div
+              :style="active>1? 'position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">
+              3.审批</div>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active==4? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')" />
+            <div
+              :style="active>1? 'position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">
+              4.完成</div>
+          </div>
+        </div>
+      </el-col>
+    </el-row>
+    <div class="from-div">
+      <el-row>
+        <el-col :span="24" class="from-div-title" style="background-color: rgba(215, 215, 215, 1); text-align: right;">
+          <div style="margin-right: 15px">
+            <!-- <el-button type="primary" size="small" @click>提交</el-button>
+            <el-button type="primary" size="small">下载</el-button> -->
+            <el-button type="primary" size="small" @click="handleAdd">新建</el-button>
+            <el-button type="primary" size="small" @click="addSubmits">提交</el-button>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24" class="from-div-title">
+          水库大坝除险加固一览表
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col-left">
+          项目名称
+        </el-col>
+        <el-col :span="8" class="from-border-right">
+          <el-input :disabled="active != 1 || reinforcement.fReviewResult" v-model="reinforcement.fProjectName"
+            placeholder="请输入内容"></el-input>
+        </el-col>
+        <el-col :span="3" class="from-col-left">
+          项目时间
+        </el-col>
+        <el-col :span="10" style="text-align: center ;line-height: 40px;">
+          <el-date-picker :disabled="active != 1 || reinforcement.fReviewResult"
+            v-model="reinforcement.fProjectStartDate" type="date" style="width: 40%;" placeholder="开始时间">
+          </el-date-picker>
+          ~
+          <el-date-picker :disabled="active != 1 || reinforcement.fReviewResult" v-model="reinforcement.fProjectEndDate"
+            type="date" style="width: 40%;" placeholder="结束时间">
+          </el-date-picker>
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-borderibht">
+          项目概述
+        </el-col>
+        <el-col :span="21" style="height: 400px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            项目概述：
+          </div>
+          <el-input   maxlength="500" show-word-limit :disabled="active != 1 || reinforcement.fReviewResult" type="textarea" :rows="8" placeholder="请输入内容"
+            v-model="reinforcement.fProjectSummary">
+          </el-input>
+          <div style="display:flex;justify-content:space-between;margin-top: 100px;">
+            <div style="width: 200px;margin-top: -60px;margin-left: 20px;">
+              <el-upload style="margin-left: 15px;margin-top: 15px" class="upload-demo" :headers="GLOBAL.headers()"
+               :before-upload = "beforeAvatarUpload"
+                :action="GLOBAL.httpUrl" :on-preview="handlePreview" :on-remove="handleRemove"
+                 multiple :on-success="uploadedSuccess" :show-file-list="true"
+                :auto-upload="true" :limit="1" :on-exceed="handleExceed" :file-list="fileList">
+                <el-button size="small" type="primary" :disabled="active != 1 || reinforcement.fReviewResult">点击上传</el-button>
+                <div slot="tip" class="el-upload__tip" style="margin-top: 15px">上传文件不得超过100M</div>
+              </el-upload>
+            </div>
+            <div style="font-size: 20px;margin-right: 10px;width:300px;margin-top: -5px;">
+              <div style="text-align: left">
+                <div style="display:inline;">编制人：<el-input :disabled="active != 1 || reinforcement.fReviewResult"
+                    v-model="reinforcement.fPreparedBy" placeholder="请输入内容"
+                    style="width:220px;border: 1px solid #DCDFE6;"></el-input>
+                </div>
+                <div class="block" style="transform:translateY(10%)">
+                  <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                  <el-date-picker :disabled="active != 1 || reinforcement.fReviewResult" type="datetime"
+                    style="border: 1px solid #DCDFE6;" v-model="reinforcement.fPreparationTime" placeholder="选择日期"
+                    format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss">
+                  </el-date-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col">
+          项目审核
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            审核意见：
+          </div>
+          <el-input  maxlength="500" show-word-limit  :disabled="active != 2" type="textarea" :rows="3" v-model="reinforcement.fReviewComments"
+            placeholder="请输入内容">
+          </el-input>
+          <div class="from-select">
+            <div style="margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;">
+                审核结果：
+              </div>
+              <el-select :disabled="active != 2" v-model="reinforcement.fReviewResult" clearable placeholder="请选择">
+                <el-option v-for="item in audit.result" :key="item.dictValue" :label="item.dictLabel"
+                  :value="item.dictValue">
+                </el-option>
+              </el-select>
+            </div>
+            <div>
+              <span>审核人：<el-input :disabled="active != 2" v-model="reinforcement.fReviewPeople" placeholder="请输入内容"
+                  style="width:180px;">
+                </el-input></span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                <el-date-picker :disabled="active != 2" type="datetime" v-model="reinforcement.fReviewDate"
+                  placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss">
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col">
+          项目审批
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            审批意见：
+          </div>
+          <el-input  maxlength="500" show-word-limit  :disabled="active != 3" type="textarea" :rows="3" v-model="reinforcement.fAuditComments"
+            placeholder="请输入内容">
+          </el-input>
+          <div class="from-select">
+            <div style="margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;">
+                审批结果：
+              </div>
+              <el-select :disabled="active != 3" v-model="reinforcement.fAuditResult" clearable placeholder="请选择">
+                <el-option v-for="item in audit.result" :key="item.dictValue" :label="item.dictLabel"
+                  :value="item.dictValue">
+                </el-option>
+              </el-select>
+            </div>
+            <div>
+              <span>审批人：<el-input :disabled="active != 3" v-model="reinforcement.fAuditPeople" placeholder="请输入内容"
+                  style="width:180px;">
+                </el-input></span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                <el-date-picker :disabled="active != 3" type="datetime" v-model="reinforcement.fAuditDate"
+                  placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss">
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+
+    <div class="from-div" style="border: 0px">
+      <div class="table-head" style="margin-top:40px;width:100%;margin:0 auto;">
+        除险加固提交记录
+      </div>
+      <el-table :data="reinforcementList" class="from-top" border style="margin:0 auto;width:100%;">
+        <el-table-column label=" 序号" align="center" type="index" width="300" />
+        <el-table-column label="编制时间" align="center" prop="fPreparationTime">
+          <template slot-scope="scope">
+            <span>{{ parseTime(scope.row.fPreparationTime, '{y}-{m}-{d}') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="编制人" align="center" prop="fPreparedBy" />
+        <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+          <template slot-scope="scope">
+            <el-button size="mini" type="text" @click="dialog(scope.row)">
+              查看
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+
+
+
+
+    <el-dialog title="详情" :visible.sync="dialogVisible" width="80%">
+      <!--      <el-row class="from-top">-->
+      <!--      <el-col :span="24">-->
+      <!--        <el-steps :active="1" simple>-->
+      <!--          <el-step title="编制" icon="el-icon-edit"></el-step>-->
+      <!--          <el-step title="审核" icon="el-icon-upload"></el-step>-->
+      <!--          <el-step title="审批" icon="el-icon-picture"></el-step>-->
+      <!--        </el-steps>-->
+      <!--      </el-col>-->
+      <!--    </el-row>-->
+      <div class="from-div">
+        <el-row>
+          <el-col :span="24" class="from-div-title">
+            水库大坝除险加固一览表
+          </el-col>
+        </el-row>
+        <el-row class="from-border-bottom">
+          <el-col :span="3" class="from-col-left">
+            项目名称
+          </el-col>
+          <el-col :span="8" class="from-border-right">
+            <el-input v-model="reinforcement.fProjectName" :disabled="disabled" placeholder="请输入内容"></el-input>
+          </el-col>
+          <el-col :span="3" class="from-col-left">
+            项目时间
+          </el-col>
+          <el-col :span="10" style="text-align: center ;line-height: 40px;">
+            <el-date-picker v-model="reinforcement.fProjectStartDate" type="date" style="width: 40%;"
+              placeholder="开始时间" :disabled="disabled">
+            </el-date-picker>
+            ~
+            <el-date-picker v-model="reinforcement.fProjectEndDate" type="date" :disabled="disabled" style="width: 40%;" placeholder="结束时间">
+            </el-date-picker>
+          </el-col>
+        </el-row>
+        <el-row class="from-border-bottom">
+          <el-col :span="3" class="from-borderibht">
+            项目概述
+          </el-col>
+          <el-col :span="21" style="height: 400px;">
+            <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+              项目概述：
+            </div>
+            <el-input  maxlength="500" show-word-limit  type="textarea" :disabled="disabled" :rows="8" placeholder="请输入内容" v-model="reinforcement.fProjectSummary">
+            </el-input>
+            <div style="display:flex;justify-content:space-between;margin-top: 70px;">
+              <div style="width: 200px;margin-left: 20px;">
+                <el-upload class="upload-demo" 
+                :headers="GLOBAL.headers()"
+                :action="GLOBAL.httpUrl"
+                  :on-preview="handlePreview" :on-remove="handleRemove"  multiple
+                   :before-upload = "beforeAvatarUpload"
+                  :limit="3" :on-exceed="handleExceed" :file-list="fileList" :disabled="disabled">
+                  <el-button size="small" type="primary" :disabled="disabled">点击上传</el-button>
+				  <div slot="tip" class="el-upload__tip" style="margin-top: 15px">上传文件不得超过100M</div>
+                </el-upload>
+              </div>
+              <div style="font-size: 20px;margin-right: 10px;width:300px;margin-top: -5px;">
+                <div style="text-align: left">
+                  <div style="display:inline;">编制人：<el-input :disabled="disabled" v-model="reinforcement.fPreparedBy" placeholder="请输入内容"
+                      style="width:220px;border: 1px solid #DCDFE6;"></el-input>
+                  </div>
+                  <div class="block" style="transform:translateY(10%)">
+                    <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                    <el-date-picker type="datetime" style="border: 1px solid #DCDFE6;"
+                      v-model="reinforcement.fPreparationTime" placeholder="选择日期" format="yyyy 年 MM 月 dd 日"
+                      value-format="yyyy-MM-dd HH:mm:ss" :disabled="disabled">
+                    </el-date-picker>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </el-col>
+        </el-row>
+
+        <el-row class="from-border-bottom">
+          <el-col :span="3" class="from-col">
+            项目审核
+          </el-col>
+          <el-col :span="21" style="height: 50px;">
+            <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+              审核意见：
+            </div>
+            <el-input  maxlength="500" show-word-limit :disabled="disabled"  type="textarea" :rows="3" v-model="reinforcement.fReviewComments" placeholder="请输入内容">
+            </el-input>
+            <div class="from-select">
+              <div style="margin-left: 10px;">
+                <div style="font-size: 16px;font-weight: 700;display:inline;">
+                  审核结果：
+                </div>
+                <el-select v-model="reinforcement.fReviewResult" clearable placeholder="请选择" :disabled="disabled">
+                  <el-option v-for="item in audit.result" :key="item.dictValue" :label="item.dictLabel"
+                    :value="item.dictValue">
+                  </el-option>
+                </el-select>
+              </div>
+              <div>
+                <span>审核人：<el-input v-model="reinforcement.fReviewPeople" :disabled="disabled" placeholder="请输入内容" style="width:180px;">
+                  </el-input></span>
+                <div class="block" style="display:inline;margin-left:10px;">
+                  <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                  <el-date-picker type="datetime" v-model="reinforcement.fReviewDate" placeholder="选择日期"
+                    format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss" :disabled="disabled">
+                  </el-date-picker>
+                </div>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+
+        <el-row class="from-border-bottom">
+          <el-col :span="3" class="from-col">
+            项目审批
+          </el-col>
+          <el-col :span="21" style="height: 50px;">
+            <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+              审批意见：
+            </div>
+            <el-input  maxlength="500" show-word-limit :disabled="disabled"  type="textarea" :rows="3" v-model="reinforcement.fAuditComments" placeholder="请输入内容">
+            </el-input>
+            <div class="from-select">
+              <div style="margin-left: 10px;">
+                <div style="font-size: 16px;font-weight: 700;display:inline;">
+                  审批结果：
+                </div>
+                <el-select v-model="reinforcement.fAuditResult" clearable placeholder="请选择" :disabled="disabled">
+                  <el-option v-for="item in audit.result" :key="item.dictValue" :label="item.dictLabel"
+                    :value="item.dictValue">
+                  </el-option>
+                </el-select>
+              </div>
+              <div>
+                <span>审批人：<el-input v-model="reinforcement.fAuditPeople" :disabled="disabled" placeholder="请输入内容" style="width:180px;">
+                  </el-input></span>
+                <div class="block" style="display:inline;margin-left:10px;">
+                  <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                  <el-date-picker type="datetime" v-model="reinforcement.fAuditDate" placeholder="选择日期"
+                    format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss" :disabled="disabled">
+                  </el-date-picker>
+                </div>
+              </div>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+  import {
+    getDictByType,
+    startWorkFlow,
+    taskReview,
+    latelyReinforcement,
+    listReinforcement,
+    getReinforcement,
+    delReinforcement,
+    addReinforcement,
+    updateReinforcement
+  } from "@/api/security/reinforcement.js";
+  import {
+    getUserList,
+  } from "@/api/security/planning";
+  import {
+    getToken
+  } from "@/utils/auth";
+  import {
+    getFileById
+  } from "@/api/file";
+
+  export default {
+
+    data() {
+      return {
+        userList: [],
+        nextVisible: false,
+        audit: [],
+        disabled: true,
+        // 水库大坝除险加固 表格数据
+        reinforcementList: [],
+        reinforcement: {
+          fProjectStartDate: null,
+          fProjectEndDate: null,
+          fProjectName: null,
+          fProjectDate: null,
+          fProjectSummary: null,
+          fPreparedBy: null,
+          fPreparationTime: null,
+          fReinforcementFileId: null,
+          fReviewComments: null,
+          fReviewResult: null,
+          fReviewPeople: null,
+          fReviewDate: null,
+          fAuditComments: null,
+          fAuditResult: null,
+          fAuditPeople: null,
+          fAuditDate: null,
+          fActId: null,
+          fActPersion: null,
+          fActStatus: null,
+          fActNode: null
+        },
+        active: 1,
+        info: {
+          // stockDate: this.getNowTime(), //日期
+        },
+        dialogVisible: false,
+        textarea: '',
+        value1: '',
+        value2: '',
+        value3: '',
+        value4: '',
+        input: '',
+        value: '',
+        textarea1: '',
+        textarea2: '',
+        fileList: []
+      };
+    },
+    created() {
+      this.getList();
+      this.Personnel();
+      this.getLately();
+      this.getAudit();
+    },
+    methods: {
+      beforeAvatarUpload(file){
+            const isLt100M = file.size / 1024 / 1024 < 100;
+               if (!isLt100M) {
+                      this.$message.error('上传文件大小不能超过 100MB!');
+                      return false
+                  }
+            },
+      getFile() {
+        console.log('fileList = []');
+        this.fileList = [];
+        if (this.reinforcement.fReinforcementFileId) {
+          getFileById({
+            id: this.reinforcement.fReinforcementFileId
+          }).then(result => {
+            if (result) {
+              this.fileList = [{
+                name: result.data.fOldFileName,
+                url: result.data.fFilePath
+              }];
+              console.log("fileList.url:", this.fileList[0].url);
+            }
+          })
+        }
+      },
+      getAudit() {
+        getDictByType().then(response => {
+          this.audit = response.data
+        })
+      },
+      Personnel() {
+        getUserList().then(response => {
+          this.userList = response.data
+        })
+      },
+      addSubmits() {
+        console.log("this.audit", this.audit)
+        if (this.active == 1) {
+          this.openStartWorkFlow()
+        } else {
+          this.openTaskReview();
+        }
+      },
+      openStartWorkFlow() {
+        if (this.reinforcement.fProjectName == null) {
+          this.$message.error("请填写项目名称")
+          return false
+        } else if (this.reinforcement.fProjectStartDate == null) {
+          this.$message.error("请填写项目开始时间")
+          return false
+        } else if (this.reinforcement.fProjectEndDate == null) {
+          this.$message.error("请填写项目完成时间")
+          return false
+        } else if (this.reinforcement.fProjectSummary == null) {
+          this.$message.error("请填写项目概述")
+          return false
+        } else if (this.reinforcement.fPreparedBy == null) {
+          this.$message.error("请填写编制人")
+          return false
+        } else if (this.reinforcement.fPreparationTime == null) {
+          this.$message.error("请填写编制时间")
+          return false
+        } else {
+          startWorkFlow(this.reinforcement).then(response => {
+            this.msgSuccess("提交成功");
+            this.getLately();
+            this.nextVisible = false;
+          });
+        }
+
+      },
+      openTaskReview() {
+        taskReview(this.reinforcement).then(response => {
+          this.msgSuccess("提交成功");
+          this.getLately();
+          this.nextVisible = false;
+        });
+      },
+      /** 新增按钮操作 */
+      handleAdd() {
+        this.active = 1;
+        this.reinforcement = {};
+        this.fileList = [];
+      },
+      /** 查询水库大坝除险加固 列表 */
+      getList() {
+        listReinforcement(this.queryParams).then(response => {
+          this.reinforcementList = response.rows;
+          this.total = response.total;
+        });
+      },
+      /** 获取最近 */
+      getLately() {
+        this.loading = true;
+        latelyReinforcement().then(response => {
+          this.reinforcement = response.data;
+          this.loading = false;
+          this.getFile();
+          if (this.reinforcement.fReviewResult) {
+            this.reinforcement.fReviewResult = this.reinforcement.fReviewResult.toString();
+          }
+          if (this.reinforcement.fAuditResult) {
+            this.reinforcement.fAuditResult = this.reinforcement.fAuditResult.toString();
+          }
+          if (this.reinforcement.fActStatus == 3) {
+            this.active = 4;
+          } else if (this.reinforcement.fActStatus == 2) {
+            this.active = 3;
+          } else if (this.reinforcement.fActStatus == 1) {
+            this.active = 2;
+          } else {
+            this.active = 1;
+          }
+        });
+      },
+      dialog(row) {
+        this.dialogVisible = true;
+        this.reinforcement = row;
+        if (this.reinforcement.fReviewResult) {
+          this.reinforcement.fReviewResult = this.reinforcement.fReviewResult.toString();
+        }
+        if (this.reinforcement.fAuditResult) {
+          this.reinforcement.fAuditResult = this.reinforcement.fAuditResult.toString();
+        }
+
+      },
+      uploadedSuccess(response, file, fileList) {
+        this.reinforcement.fReinforcementFileId = response.data.fId;
+        this.getFile();
+      },
+      handleRemove(file, fileList) {
+        this.GLOBAL.commonFun(this.reinforcement.fReinforcementFileId);
+        this.reinforcement.fReinforcementFileId = '';
+      },
+      handlePreview(file) {
+        // window.location.href = this.fileList[0].url;
+		window.open(this.fileList[0].url);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${file.name}？`);
+      }
+    }
+  };
+</script>
+<style lang="scss">
+  .color409 {
+    color: #409eff;
+    cursor: pointer;
+  }
+</style>

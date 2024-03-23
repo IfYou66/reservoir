@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.security.mapper.MReinforcementMapper">
+
+    <resultMap type="com.szsk.reservoir.security.domain.MReinforcement" id="MReinforcementResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fProjectName"    column="f_project_name"    />
+        <result property="fProjectStartDate"    column="f_project_start_date"    />
+        <result property="fProjectEndDate"    column="f_project_end_date"    />
+        <result property="fProjectSummary"    column="f_project_summary"    />
+        <result property="fPreparedBy"    column="f_prepared_by"    />
+        <result property="fPreparationTime"    column="f_preparation_time"    />
+        <result property="fReinforcementFileId"    column="f_reinforcement_file_id"    />
+        <result property="fReviewComments"    column="f_review_comments"    />
+        <result property="fReviewResult"    column="f_review_result"    />
+        <result property="fReviewPeople"    column="f_review_people"    />
+        <result property="fReviewDate"    column="f_review_date"    />
+        <result property="fAuditComments"    column="f_audit_comments"    />
+        <result property="fAuditResult"    column="f_audit_result"    />
+        <result property="fAuditPeople"    column="f_audit_people"    />
+        <result property="fAuditDate"    column="f_audit_date"    />
+        <result property="fActId"    column="f_act_id"    />
+        <result property="fActPersion"    column="f_act_persion"    />
+        <result property="fActStatus"    column="f_act_status"    />
+        <result property="fActNode"    column="f_act_node"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectMReinforcementVo">
+        select f_id, f_reservoir_info_id,f_project_name, f_project_start_date, f_project_end_date, f_project_summary, f_prepared_by, f_preparation_time, f_reinforcement_file_id, f_review_comments, f_review_result, f_review_people, f_review_date, f_audit_comments, f_audit_result, f_audit_people, f_audit_date, f_act_id, f_act_persion, f_act_status, f_act_node from m_reinforcement
+    </sql>
+
+    <select id="selectMReinforcementList" parameterType="com.szsk.reservoir.security.domain.MReinforcement" resultMap="MReinforcementResult">
+        <include refid="selectMReinforcementVo"/>
+        <where>
+            <if test="fProjectName != null  and fProjectName != ''"> and f_project_name like concat('%', #{fProjectName}, '%')</if>
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fProjectStartDate != null "> and f_project_start_date = #{fProjectStartDate}</if>
+            <if test="fProjectEndDate != null "> and f_project_end_date = #{fProjectEndDate}</if>
+            <if test="fProjectSummary != null  and fProjectSummary != ''"> and f_project_summary = #{fProjectSummary}</if>
+            <if test="fPreparedBy != null "> and f_prepared_by = #{fPreparedBy}</if>
+            <if test="fPreparationTime != null "> and f_preparation_time = #{fPreparationTime}</if>
+            <if test="fReinforcementFileId != null "> and f_reinforcement_file_id = #{fReinforcementFileId}</if>
+            <if test="fReviewComments != null  and fReviewComments != ''"> and f_review_comments = #{fReviewComments}</if>
+            <if test="fReviewResult != null "> and f_review_result = #{fReviewResult}</if>
+            <if test="fReviewPeople != null  and fReviewPeople != ''"> and f_review_people = #{fReviewPeople}</if>
+            <if test="fReviewDate != null "> and f_review_date = #{fReviewDate}</if>
+            <if test="fAuditComments != null  and fAuditComments != ''"> and f_audit_comments = #{fAuditComments}</if>
+            <if test="fAuditResult != null "> and f_audit_result = #{fAuditResult}</if>
+            <if test="fAuditPeople != null  and fAuditPeople != ''"> and f_audit_people = #{fAuditPeople}</if>
+            <if test="fAuditDate != null "> and f_audit_date = #{fAuditDate}</if>
+            <if test="fActId != null "> and f_act_id = #{fActId}</if>
+            <if test="fActPersion != null "> and f_act_persion = #{fActPersion}</if>
+            <if test="fActStatus != null "> and f_act_status = #{fActStatus}</if>
+            <if test="fActNode != null  and fActNode != ''"> and f_act_node = #{fActNode}</if>
+        </where>
+        ORDER BY
+        f_id DESC
+    </select>
+
+    <select id="latelyReinforcement" parameterType="Long" resultMap="MReinforcementResult">
+        <include refid="selectMReinforcementVo"/>
+         <where>  
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+        </where>
+        ORDER BY  f_id DESC LIMIT 1
+    </select>
+
+    <select id="selectMReinforcementById" parameterType="Long" resultMap="MReinforcementResult">
+        <include refid="selectMReinforcementVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <insert id="insertMReinforcement" parameterType="com.szsk.reservoir.security.domain.MReinforcement" useGeneratedKeys="true" keyProperty="fId">
+        insert into m_reinforcement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fId != null">f_id,</if>
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fProjectName != null">f_project_name,</if>
+            <if test="fProjectStartDate != null">f_project_start_date,</if>
+            <if test="fProjectEndDate != null">f_project_end_date,</if>
+            <if test="fProjectSummary != null">f_project_summary,</if>
+            <if test="fPreparedBy != null">f_prepared_by,</if>
+            <if test="fPreparationTime != null">f_preparation_time,</if>
+            <if test="fReinforcementFileId != null">f_reinforcement_file_id,</if>
+            <if test="fReviewComments != null">f_review_comments,</if>
+            <if test="fReviewResult != null">f_review_result,</if>
+            <if test="fReviewPeople != null">f_review_people,</if>
+            <if test="fReviewDate != null">f_review_date,</if>
+            <if test="fAuditComments != null">f_audit_comments,</if>
+            <if test="fAuditResult != null">f_audit_result,</if>
+            <if test="fAuditPeople != null">f_audit_people,</if>
+            <if test="fAuditDate != null">f_audit_date,</if>
+            <if test="fActId != null">f_act_id,</if>
+            <if test="fActPersion != null">f_act_persion,</if>
+            <if test="fActStatus != null">f_act_status,</if>
+            <if test="fActNode != null">f_act_node,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fId != null">#{fId},</if>
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fProjectName != null">#{fProjectName},</if>
+            <if test="fProjectStartDate != null">#{fProjectStartDate},</if>
+            <if test="fProjectEndDate != null">#{fProjectEndDate},</if>
+            <if test="fProjectSummary != null">#{fProjectSummary},</if>
+            <if test="fPreparedBy != null">#{fPreparedBy},</if>
+            <if test="fPreparationTime != null">#{fPreparationTime},</if>
+            <if test="fReinforcementFileId != null">#{fReinforcementFileId},</if>
+            <if test="fReviewComments != null">#{fReviewComments},</if>
+            <if test="fReviewResult != null">#{fReviewResult},</if>
+            <if test="fReviewPeople != null">#{fReviewPeople},</if>
+            <if test="fReviewDate != null">#{fReviewDate},</if>
+            <if test="fAuditComments != null">#{fAuditComments},</if>
+            <if test="fAuditResult != null">#{fAuditResult},</if>
+            <if test="fAuditPeople != null">#{fAuditPeople},</if>
+            <if test="fAuditDate != null">#{fAuditDate},</if>
+            <if test="fActId != null">#{fActId},</if>
+            <if test="fActPersion != null">#{fActPersion},</if>
+            <if test="fActStatus != null">#{fActStatus},</if>
+            <if test="fActNode != null">#{fActNode},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMReinforcement" parameterType="com.szsk.reservoir.security.domain.MReinforcement">
+        update m_reinforcement
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fProjectName != null">f_project_name = #{fProjectName},</if>
+            <if test="fProjectStartDate != null">f_project_start_date = #{fProjectStartDate},</if>
+            <if test="fProjectEndDate != null">f_project_end_date = #{fProjectEndDate},</if>
+            <if test="fProjectSummary != null">f_project_summary = #{fProjectSummary},</if>
+            <if test="fPreparedBy != null">f_prepared_by = #{fPreparedBy},</if>
+            <if test="fPreparationTime != null">f_preparation_time = #{fPreparationTime},</if>
+            <if test="fReinforcementFileId != null">f_reinforcement_file_id = #{fReinforcementFileId},</if>
+            <if test="fReviewComments != null">f_review_comments = #{fReviewComments},</if>
+            <if test="fReviewResult != null">f_review_result = #{fReviewResult},</if>
+            <if test="fReviewPeople != null">f_review_people = #{fReviewPeople},</if>
+            <if test="fReviewDate != null">f_review_date = #{fReviewDate},</if>
+            <if test="fAuditComments != null">f_audit_comments = #{fAuditComments},</if>
+            <if test="fAuditResult != null">f_audit_result = #{fAuditResult},</if>
+            <if test="fAuditPeople != null">f_audit_people = #{fAuditPeople},</if>
+            <if test="fAuditDate != null">f_audit_date = #{fAuditDate},</if>
+            <if test="fActId != null">f_act_id = #{fActId},</if>
+            <if test="fActPersion != null">f_act_persion = #{fActPersion},</if>
+            <if test="fActStatus != null">f_act_status = #{fActStatus},</if>
+            <if test="fActNode != null">f_act_node = #{fActNode},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteMReinforcementById" parameterType="Long">
+        delete from m_reinforcement where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteMReinforcementByIds" parameterType="String">
+        delete from m_reinforcement where f_id in
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

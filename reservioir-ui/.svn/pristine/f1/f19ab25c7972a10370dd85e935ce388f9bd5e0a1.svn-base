@@ -1,0 +1,176 @@
+﻿export let CURRENT_RESERVOIR = sessionStorage.getItem('CURRENT_RESERVOIR');
+if (!CURRENT_RESERVOIR) {
+  CURRENT_RESERVOIR = "mahe";
+}
+
+
+
+export const DEBUG = true;
+export const COMMON_IMAGE_PATH = '../../../../assets/images/common/';
+export const RESERVOIR_DATA_PATH = '../../../assets/js/' + CURRENT_RESERVOIR + '/';
+
+export const POINT_URL = 'http://58.58.27.77:8083/getPoint/serverPoint.ashx';
+export const SENSOR_URL = '/second-api/getSensor/serverSensor.ashx';
+export const SENSOR_URL_NEW = '/first-api/getSensor/serverSensor.ashx';
+export const SENSOR_URL_CLOUD = '/cloud-api/getSensor/serverSensor.ashx';
+export const POINT_LAST_COMMOND = 'getPointLast';
+export const SENSOR_LAST_COMMOND = 'getSensorLast';
+export const POINT_RECORD_COMMOND = 'getPointRecord';
+export const SENSOR_RECORD_COMMOND = 'getSensorRecord';
+
+export const TIME_SPAN = 1000 * 5 * 60; //时间间隔，用来周期发送请求
+export const BOUNDARY = 9007199254740992; //用来表示上下限
+export const INVALID = -100;   //表示无效值
+
+export const DAY = {
+  TODAY: 0,
+  TOMORROW: -1,
+  THE_DAY_AFTER_TOMORROW: -2,
+  THREE_DAYS_FROM_NOW: -3
+};
+
+const sensorList = require('@/api/collection/' + CURRENT_RESERVOIR + '/sensorList');
+const common = require('@/api/collection/common');
+const operator = require('@/api/collection/operator');
+
+
+/**
+ *对Date的扩展，将 Date 转化为指定格式的String
+ *月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+ *年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+ *例子：
+ *(new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+ *(new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
+ */
+Date.prototype.format = function (fmt) {
+  let o = {
+    "M+": this.getMonth() + 1, //月份
+    "d+": this.getDate(), //日
+    "h+": this.getHours(), //小时
+    "m+": this.getMinutes(), //分
+    "s+": this.getSeconds(), //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    "S": this.getMilliseconds() //毫秒
+  };
+  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for (let k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
+};
+
+
+/**
+ * 存储session存储的键值对
+ * @param key 键
+ * @param value 值
+ */
+function setKey(key, value) {
+  window.sessionStorage.setItem(key, value);
+}
+
+/**
+ * 根据key读取session中存储的value
+ * @param key 键
+ * @returns {string} 值
+ */
+function getKey(key) {
+  let tempData = window.sessionStorage.getItem(key);
+  if (tempData) {
+    tempData = JSON.parse(tempData);
+  }
+  return tempData;
+}
+
+/**
+ * @param part 页面名称
+ * @returns {[]} 页面传感器数据
+ */
+export function getData(part) {
+  let sens = common.loadSensors();
+  if (!sens) {
+    sens = sensorList.createSensors();
+  }
+  return operator.getSensors(sens, 'part', part);
+}
+
+/**
+ * 加载所有传感器
+ * @returns {string}
+ */
+export function loadSensors() {
+  let sens = getKey('sensors');
+  let sensors = sensorList.createSensors();
+  if (!sens) {
+    return sensors;
+  }
+  if (sens.length === sensors.length) {
+    for (let i = 0; i < sensors.length; i++) {
+      sensors[i].value = sens[i].value;
+    }
+  } else {
+    console.log('数组长度不一致');
+    sensors = sensorList.createSensors();
+  }
+  return sensors;
+}
+
+/**
+ * 刷新传感器数据
+ * @param newData 新数据
+ */
+export function refreshSensors(newData) {
+  if (!newData) return;
+  let sensors = loadSensors();
+  for (let i in sensors) {
+    for (let j in newData) {
+      if (isSame(sensors[i], newData[j])) {
+        sensors[i].value = newData[j].value;
+        sensors[i].time = newData[j].time;
+      }
+    }
+  }
+  setKey('sensors', JSON.stringify(sensors));
+}
+
+/**
+ * 用来判断两个传感器是否同一个
+ * @param sensor
+ * @param sen
+ * @returns {boolean}
+ */
+function isSame(sensor, sen) {
+  if (sensor.tag && sen.tag) {
+    return sensor.tag === sen.tag;
+  } else {
+    return sensor.part === sen.part && sensor.section === sen.section && sensor.name === sen.name;
+  }
+}
+
+export function switchContent() {
+
+  /*document.body.innerHTML = "<div class=\"error-page\">\n" +
+    "    <img class=\"error-page-img\" src=\"../../assets/images/ic_403.png\">\n" +
+    "    <div class=\"error-page-info\">\n" +
+    "        <h1>抱歉!</h1>\n" +
+    "        <div class=\"error-page-info-desc\">正在施工中...</div>\n" +
+    "        <div>\n" +
+    "            <button ew-href=\"page/realtime/introduction.html\" class=\"layui-btn\">返回首页</button>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>";*/
+}
+
+export function correct(value, bias) {
+  if (typeof bias === 'string') {
+    return eval(value + bias);
+  } else if (typeof bias === 'function') {
+    return bias(value);
+  }
+}
+
+
+
+
+
+
+

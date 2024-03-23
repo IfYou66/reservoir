@@ -1,0 +1,444 @@
+<template>
+  <div class="app-container">
+    <el-row class="from-top">
+      <el-col :span="24">
+        <div style="margin: 0 auto;display: flex;align-items: center;width: 100%;justify-content:center;">
+          <div style="position: relative;">
+            <img src="../../../assets/images/jin.png" />
+            <div style="position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;">1.编制</div>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active>1? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')" />
+            <div :style="active>1? 'position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">
+              2.审核</div>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active>=3? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')" />
+            <div :style="active>1? 'position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">
+              3.审批</div>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active==4? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')" />
+            <div :style="active>1? 'position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">
+              4.完成</div>
+          </div>
+        </div>
+      </el-col>
+
+    </el-row>
+    <div class="from-div">
+      <el-row>
+        <el-col :span="24" class="from-div-title" style="background-color: rgba(215, 215, 215, 1); text-align: right;">
+          <div style="margin-right: 10px">
+            <el-button type="primary" size="small" @click="handleAdd">暂存</el-button>
+            <el-button type="primary" size="small" @click="submitForm">提交</el-button>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="24" class="from-div-title">
+          年度调度编制表
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col-left">
+          调度名称
+        </el-col>
+        <el-col :span="8" class="from-border-right">
+          <el-input v-model="rControl.fDispatchName" placeholder="请输入内容"></el-input>
+        </el-col>
+        <el-col :span="3" class="from-col-left">
+          调度类型
+        </el-col>
+        <el-col :span="3" style="line-height: 40px;border-right: #a4d5ff 1px solid;">
+          <div>
+            <el-select v-model="rControl.fDispatchType" placeholder="请选择">
+              <el-option v-for="item in audit.planType" :key="item.dictValue" :label="item.dictLabel" :value="item.dictValue">
+              </el-option>
+            </el-select>
+          </div>
+        </el-col>
+
+        <el-col :span="3" class="from-col-left">
+          预算（元）
+        </el-col>
+        <el-col :span="4" class="from-border-right">
+          <el-input v-model="rControl.fBudget" placeholder="预算（元）"></el-input>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-borderibht">
+          调度内容
+        </el-col>
+        <el-col :span="21" style="height: 400px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            调度概述：
+          </div>
+          <el-input  maxlength="500" show-word-limit  type="textarea" :rows="8" placeholder="请输入内容" v-model="rControl.fDispatchContent">
+          </el-input>
+          <div style="display:flex;justify-content:space-between;margin-top: 100px;">
+            <div style="width: 200px;margin-top: -60px;margin-left: 20px;">
+              <el-upload style="margin-left: 15px;margin-top: 15px" class="upload-demo" :headers="GLOBAL.headers()"
+                :action="GLOBAL.httpUrl" :on-preview="handlePreview" :on-remove="handleRemove" 
+                multiple :on-success="uploadedSuccess" :show-file-list="true" :auto-upload="true" :limit="1" :on-exceed="handleExceed"
+                :file-list="fileList" :before-upload = "beforeAvatarUpload" data-type = "">
+                <el-button size="small" type="primary">上传附件</el-button>
+                <div slot="tip" class="el-upload__tip" style="margin-top: 15px">上传文件不得超过100M</div>
+              </el-upload>
+            </div>
+            <div style="font-size: 20px;margin-right: 10px;width:300px;margin-top: -5px;">
+              <div style="text-align: left">
+                <div style="display:inline;">编制人：<el-input v-model="rControl.fEditPersion" placeholder="请输入内容" style="width:220px;border: 1px solid #DCDFE6;"></el-input>
+                </div>
+                <div class="block" style="transform:translateY(10%)">
+                  <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                  <el-date-picker type="date" style="border: 1px solid #DCDFE6;" v-model="rControl.fEditTime"
+                    placeholder="选择日期" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss">
+                  </el-date-picker>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col">
+          调度审核
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            审核意见：
+          </div>
+          <el-input  maxlength="500" show-word-limit  disabled type="textarea" :rows="3" v-model="rControl.fAuditContent" placeholder="请输入内容">
+          </el-input>
+          <div class="from-select">
+            <div style="margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;">
+                审核结果：
+              </div>
+              <el-select disabled v-model="rControl.fAuditResult" clearable placeholder="请选择">
+                <el-option disabled v-for="item in audit.sysResult" :key="item.dictValue" :label="item.dictLabel"
+                  :value="item.dictValue">
+                </el-option>
+              </el-select>
+            </div>
+            <div>
+              <span>审核人：<el-input disabled v-model="rControl.fAuditPersion" placeholder="请输入内容" style="width:180px;">
+                </el-input>
+              </span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                <el-date-picker disabled type="date" v-model="rControl.fAuditTime" placeholder="选择日期" format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd HH:mm:ss">
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col">
+          调度批准
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            审批意见：
+          </div>
+          <el-input  maxlength="500" show-word-limit  type="textarea" disabled :rows="3" v-model="rControl.fApproveContent" placeholder="请输入内容">
+          </el-input>
+          <div class="from-select">
+            <div style="margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;">
+                审批结果：
+              </div>
+              <el-select disabled v-model="rControl.fApproveResult" clearable placeholder="请选择">
+                <el-option disabled v-for="item in audit.sysResult" :key="item.dictValue" :label="item.dictLabel"
+                  :value="item.dictValue">
+                </el-option>
+              </el-select>
+            </div>
+            <div>
+              <span>审批人：<el-input disabled v-model="rControl.fApprovePersion" placeholder="请输入内容" style="width:180px;">
+                </el-input>
+              </span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'" />
+                <el-date-picker disabled type="dates" v-model="rControl.fApproveTime" placeholder="选择日期" format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd HH:mm:ss">
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+
+    <!-- 下一流程 处理人 弹窗 -->
+    <el-dialog
+      title="选择处理人"
+      :visible.sync="nextVisible"
+      width="30%"
+      :before-close="handleClose">
+      <el-radio v-model="radio" :label="item.userId" v-for="(item,index) in list" :key="index">{{item.nickName}}</el-radio>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="nextVisible = false">取 消</el-button>
+        <el-button type="primary" @click="addSubmits">确 定</el-button>
+      </span>
+    </el-dialog>
+
+  </div>
+</template>
+<script>
+  import {
+    planDataQuery
+  } from "@/api/emergency/emergency";
+  import {
+    listControl,
+    getControl,
+    delControl,
+    addControl,
+    updateControl,
+    startWorkFlow,
+    taskReview,
+    latelyControl,
+    getDictByType
+  } from "@/api/reservoir/annualEstablishment";
+  import {
+    getUserList,
+  } from "@/api/security/planning";
+  import {
+    getToken
+  } from "@/utils/auth";
+  import {
+    getFileById
+  } from "@/api/file";
+  export default {
+
+    data() {
+      return {
+        userList: [],
+        nextVisible: false,
+        form: {},
+        rControl: {
+          //年度计划名称
+          fDispatchName:'',
+          //年度计划类型
+          fDispatchType:'',
+          //预算
+          fBudget:'',
+
+          //计划概述
+          fDispatchContent:'',
+          //年度计划附件
+          fDispatchId:'',
+          //编制人
+          fEditPersion:'',
+          //编制时间
+          fEditTime:'',
+
+          //审核意见
+          fAuditContent:'',
+          //审核结果
+          fAuditResult:'',
+          //审核人
+          fAuditPersion:'',
+          //审核时间
+          fAuditTime:'',
+
+          //审批意见
+          fApproveContent:'',
+          //审批结果
+          fApproveResult:'',
+          //审批人
+          fApprovePersion:'',
+          //审批时间
+          fApproveTime:'',
+
+          //流程实例ID
+          fActId:'',
+          //下一节点审核人
+          fActPersion:'',
+          //流程状态 1已提交启动 2：批准中 3：发布 4：发布完成 5：驳回 6：不同意删除
+          fActStatus:'',
+          //流程节点
+          fActNode:'',
+
+          //创建人
+          fCreateBy:'',
+          //创建时间
+          fCreateTime:'',
+        },
+        active: 1,
+        textarea: '',
+        textarea1: '',
+        textarea2: '',
+        fileList: [],
+        audit: [],
+      };
+    },
+    created() {
+      this.Personnel();
+      this.getDitc();
+      this.getLatelyControl()
+    },
+    methods: {
+      beforeAvatarUpload(file){
+      const isLt100M = file.size / 1024 / 1024 < 100;
+         if (!isLt100M) {
+                this.$message.error('上传文件大小不能超过 100MB!');
+                return false
+            }
+      },
+
+      getFile() {
+        console.log('fileList = []');
+        this.fileList = [];
+        if (this.rControl.fDispatchId) {
+          getFileById({
+            id: this.rControl.fDispatchId
+          }).then(result => {
+            if (result) {
+              this.fileList = [{
+                name: result.data.fOldFileName,
+                url: result.data.fFilePath
+              }];
+              console.log("fileList.url:", this.fileList[0].url);
+            }
+          })
+        }
+      },
+      init() {
+        console.log('初始化')
+        if( this.status == 1 ) {
+          console.log('初始化',this.emergencyPass)
+
+          //查询是否 为暂存
+          if(this.rControl.fActStatus == 0) {
+            this.active = 1
+            console.log("为暂存")
+          }
+          //查询是否  为待审核
+          else if(this.rControl.fActStatus == 1){
+            this.active = 2
+            console.log("为待审核")
+          }
+          //查询是否  为待批准
+          else if(this.rControl.fActStatus == 2){
+            this.active = 3
+            console.log("为待审核批准")
+          }
+          //查询是否  为完成
+          else if(this.rControl.fActStatus == 3){
+            this.active = 4
+            console.log("为完成")
+          }
+          //查询是否  为驳回
+          else if(this.emergencyPass.fActStatus == 5){
+            this.active = 0
+            console.log("为驳回")
+          }
+          //查询是否  不同意删除
+          else if(this.emergencyPass.fActStatus == 6){
+            this.active = 5
+            console.log("不同意删除")
+          }
+        }
+
+      },
+
+      getDitc() {
+        getDictByType().then(response => {
+          this.audit = response.data
+        })
+      },
+      Personnel() {
+        getUserList().then(response => {
+          this.userList = response.data
+        })
+      },
+      openStartWorkFlow() {
+        if (this.rControl.fDispatchName == null || this.rControl.fDispatchName == '') {
+          this.$message.error("请填写计划名称")
+          return false
+        } else if (this.rControl.fDispatchType == null || this.rControl.fDispatchType == '') {
+          this.$message.error("请填写计划类型")
+          return false
+        } else if (this.rControl.fBudget == null || this.rControl.fBudget == '') {
+          this.$message.error("请填写预算")
+          return false
+        } else if (this.rControl.fDispatchContent == null || this.rControl.fDispatchContent == '') {
+          this.$message.error("请填写计划概述")
+          return false
+        } else if (this.rControl.fEditPersion == null || this.rControl.fEditPersion == '') {
+          this.$message.error("请填写编制人")
+          return false
+        } else if (this.rControl.fEditTime == null || this.rControl.fEditTime == '') {
+          this.$message.error("请填写编制时间")
+          return false
+        } else {
+          this.rControl.fActStatus = 1
+          this.rControl.fActPersion = this.radio
+          addControl(this.rControl).then(response => {
+            if (response.code == 200) {
+              this.msgSuccess("提交成功");
+              this.init()
+              this.nextVisible = false;
+              this.getLatelyControl();
+            }
+
+          });
+        }
+      },
+
+      uploadedSuccess(response, file, fileList) {
+        this.rControl.fDispatchId = response.data.fId;
+        this.getFile();
+      },
+      handleRemove(file, fileList) {
+        this.GLOBAL.commonFun(this.rControl.fDispatchId);
+        this.rControl.fDispatchId = '';
+      },
+      handlePreview(file) {
+		  // window.location.href = this.fileList[0].url;
+		  window.open(this.fileList[0].url);
+	  },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${file.name}？`);
+      },
+
+      submitForm() {
+        this.openStartWorkFlow()
+      },
+      /** 新增按钮操作 */
+      handleAdd() {
+        //将状态 设为 暂存
+        this.rControl.fActStatus = 0
+        // 提交表单  暂存
+        addControl(this.rControl).then(response => {
+          this.msgSuccess("暂存成功");
+          this.getLatelyControl();
+        });
+      },
+      rControlInNull() {
+        this.rControl = {};
+        this.fileList = [];
+      },
+      getLatelyControl() {
+        this.rControlInNull()
+      },
+    }
+  };
+</script>
+<style lang="scss">
+  .color409 {
+    color: #409eff;
+    cursor: pointer;
+  }
+</style>

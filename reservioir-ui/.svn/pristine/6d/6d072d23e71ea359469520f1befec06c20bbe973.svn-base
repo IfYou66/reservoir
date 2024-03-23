@@ -1,0 +1,44 @@
+<template>
+  <div class="app-container">
+    <div style="position: absolute; margin-left: 35%;margin-top: 5%">
+      <img :src="errGif" width="313" height="428" alt="Girl has dropped her ice cream.">
+      <div class="error-page-info">
+        <h1>抱歉!</h1>
+        <span class="error-page-info-desc">正在施工中...</span>
+        <ul class="list-unstyled" style="display: inline-block">
+          <li class="link-type" style="list-style: none">
+            <router-link to="/">
+              <el-button type="primary" round>回首页</el-button>
+            </router-link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import errGif from '@/assets/ic_403.png'
+
+  export default {
+    name: 'Page402',
+    data() {
+      return {
+        errGif: errGif + '?' + +new Date()
+      }
+    },
+    methods: {
+      back() {
+        if (this.$route.query.noGoBack) {
+          this.$router.push({path: '/'})
+        } else {
+          this.$router.go(-1)
+        }
+      }
+    }
+  }
+</script>
+
+<style lang="scss" scoped>
+
+</style>

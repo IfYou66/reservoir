@@ -1,0 +1,1358 @@
+<template>
+  <div class="app-container">
+
+    <el-row class="from-top">
+      <!-- <el-col :span="24">
+        <el-steps :active="1" simple>
+          <el-step title="编制" icon="el-icon-edit"></el-step>
+          <el-step title="审核" icon="el-icon-upload"></el-step>
+          <el-step title="批准" icon="el-icon-picture"></el-step>
+          <el-step title="实施" icon="el-icon-picture"></el-step>
+          <el-step title="评价" icon="el-icon-picture"></el-step>
+          <el-step title="完成" icon="el-icon-picture"></el-step>
+        </el-steps>
+      </el-col> -->
+
+      <!-- <el-col :span="24">
+        <div style="margin: 0 auto;display: flex;align-items: center;justify-content:center;width: 100% ;">
+          <div style="position: relative;">
+            <img src="../../../assets/images/01s.png"/>
+            <div style="position: absolute;top:27px;left: 23px;width: 50%;color: #FFFFFF;">编制</div>
+          </div>
+          <div style="position: relative;width: 20%;">
+            <img :src="require(active>1? '../../../assets/images/04.png':'../../../assets/images/05.png')"
+                 style="width: 100%;height: 18px;"/>
+            <img v-if="active==1" :src="require(active==1? '../../../assets/images/07.gif':'../../../assets/images/06.gif')"
+                 style="position: absolute;top: 0px;left: 80px;height: 80%;width: 20%;"/>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active>1? '../../../assets/images/01s.png':'../../../assets/images/01.png')"/>
+            <div
+              :style="active>1? 'position: absolute;top: 27px;left: 23px;width: 50%;color: #FFFFFF;':'position: absolute;top: 27px;left: 23px;width: 50%;color: #999999;'">
+              审核
+            </div>
+          </div>
+          <div style="position: relative;width: 20%;">
+            <img :src="require(active>2? '../../../assets/images/04.png':'../../../assets/images/05.png')"
+                 style="width: 100%;height: 18px;"/>
+            <img v-if="active==2 || active==1" :src="require(active==2? '../../../assets/images/07.gif':'../../../assets/images/06.gif')"
+                 style="position: absolute;top: 0px;left: 80px;height: 80%;width: 20%;"/>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active>2? '../../../assets/images/01s.png':'../../../assets/images/01.png')"/>
+            <div
+              :style="active>1? 'position: absolute;top: 27px;left: 23px;width: 50%;color: #FFFFFF;':'position: absolute;top: 27px;left: 23px;width: 50%;color: #999999;'">
+              批准
+            </div>
+          </div>
+          <div style="position: relative;width: 20%;">
+            <img :src="require(active>3? '../../../assets/images/04.png':'../../../assets/images/05.png')"
+                 style="width: 100%;height: 18px;"/>
+            <img v-if="active<4" :src="require(active==3? '../../../assets/images/07.gif':'../../../assets/images/06.gif')"
+                 style="position: absolute;top: 0px;left: 80px;height: 80%;width: 20%;"/>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active>3? '../../../assets/images/01s.png':'../../../assets/images/01.png')"/>
+            <div
+              :style="active>1? 'position: absolute;top: 27px;left: 23px;width: 60%;color: #FFFFFF;':'position: absolute;top: 27px;left: 23px;width: 70%;color: #999999;'">
+              实施
+            </div>
+          </div>
+          <div style="position: relative;width: 20%;">
+            <img :src="require(active>4? '../../../assets/images/04.png':'../../../assets/images/05.png')"
+                 style="width: 100%;height: 18px;"/>
+            <img v-if="active<5" :src="require(active==4? '../../../assets/images/07.gif':'../../../assets/images/06.gif')"
+                 style="position: absolute;top: 0px;left: 80px;height: 80%;width: 20%;"/>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active>4? '../../../assets/images/01s.png':'../../../assets/images/01.png')"/>
+            <div
+              :style="active>1? 'position: absolute;top: 27px;left: 23px;width: 50%;color: #FFFFFF;':'position: absolute;top: 27px;left: 23px;width: 50%;color: #999999;'">
+              评价
+            </div>
+          </div>
+          <div style="position: relative;width: 20%;">
+            <img :src="require(active==6? '../../../assets/images/04.png':'../../../assets/images/05.png')"
+                 style="width: 100%;height: 18px;"/>
+            <img v-if="active!=6" :src="require(active==5? '../../../assets/images/07.gif':'../../../assets/images/06.gif')"
+                 style="position: absolute;top: 0px;left: 80px;height: 80%;width: 20%;"/>
+          </div>
+          <div style="position: relative;">
+            <img :src="require(active==6? '../../../assets/images/01s.png':'../../../assets/images/01.png')"/>
+            <div
+              :style="active>1? 'position: absolute;top: 27px;left: 23px;width: 50%;color: #FFFFFF;':'position: absolute;top: 27px;left: 23px;width: 50%;color: #999999;'">
+              完成
+            </div>
+          </div>
+        </div>
+      </el-col> -->
+
+      <el-col :span="24">
+        <div style="margin: 0 auto;display: flex;align-items: center;width: 100%;justify-content:center;">
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;" src="../../../assets/images/jin.png"/>
+            <div style="position: absolute;top: 10px;left: 60px;width: 50%;color: #FFFFFF;">1.编制</div>
+          </div>
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;"
+                 :src="require(active>1? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')"/>
+            <div
+              :style="active>1? 'position: absolute;top: 10px;left: 60px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 60px;width: 50%;color: #757575;'">
+              2.审核
+            </div>
+          </div>
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;"
+                 :src="require(active>2? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')"/>
+            <div
+              :style="active>2? 'position: absolute;top: 10px;left: 60px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 60px;width: 50%;color: #757575;'">
+              3.批准
+            </div>
+          </div>
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;"
+                 :src="require(active>3? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')"/>
+            <div
+              :style="active>3? 'position: absolute;top: 10px;left: 60px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 60px;width: 50%;color: #757575;'">
+              4.实施
+            </div>
+          </div>
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;"
+                 :src="require(active>4? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')"/>
+            <div
+              :style="active>4? 'position: absolute;top: 10px;left: 60px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 60px;width: 50%;color: #757575;'">
+              5.评价
+            </div>
+          </div>
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;"
+                 :src="require(active==6? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')"/>
+            <div
+              :style="active==6? 'position: absolute;top: 10px;left: 60px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 60px;width: 50%;color: #757575;'">
+              6.完成
+            </div>
+          </div>
+        </div>
+      </el-col>
+
+
+    </el-row>
+    <div class="from-div">
+      <el-row>
+        <el-col :span="24"
+                class="from-div-title"
+                style="background-color: rgba(215, 215, 215, 1); text-align: right;"
+
+        >
+          <el-button v-if="active == 1 && formData.fId == null || formData.fId == null" type="primary" size="small" style="margin-right: 5px" @click="submit(0)">暂存</el-button>
+
+          <el-button v-if="active == 1" type="primary" size="small" style="margin-right: 20px" @click="submit(1)">提交
+          </el-button>
+          <el-button v-if="active == 2 " type="primary" size="small" style="margin-right: 20px" @click="verify">审核
+          </el-button>
+          <el-button v-if="active == 3 " type="primary" size="small" style="margin-right: 20px" @click="approve">审批
+          </el-button>
+          <el-button v-if="active == 4 " type="primary" size="small" style="margin-right: 20px" @click="implement">实施
+          </el-button>
+          <el-button v-if="active == 5 " type="primary" size="small" style="margin-right: 20px" @click="mark">评分
+          </el-button>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24"
+                class="from-div-title"
+        >
+          培训计划实施一览表
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col-left">
+          计划名称
+        </el-col>
+        <el-col :span="8" class="from-border-right">
+          <el-input v-model="formData.fPlanName" clearable placeholder="请输入内容"
+                    v-bind:disabled="active != 1? true : false"></el-input>
+        </el-col>
+        <el-col :span="3" class="from-col-left">
+          评价方式
+        </el-col>
+        <el-col :span="3" class="from-col-left">
+          <el-select
+            v-model="formData.fEvaWay"
+            placeholder="评价方式"
+            clearable
+            size="small"
+            v-bind:disabled="active != 1? true : false"
+          >
+            <el-option
+              v-for="(item,index) in dict.assessMode"
+              :key="item.dictValue"
+              :label="item.dictLabel"
+              :value="item.dictValue"
+            />
+          </el-select>
+        </el-col>
+
+        <el-col :span="3" class="from-col-left">
+          预算(元)
+        </el-col>
+        <el-col :span="4" class="from-border-right">
+          <el-input v-model="formData.fBudget" clearable placeholder="请输入内容"
+                    v-bind:disabled="active != 1? true : false"></el-input>
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col-left">
+          培训时间
+        </el-col>
+        <el-col :span="10" style="text-align: center ;line-height: 40px;">
+          <el-date-picker v-model="formData.fStartTime" type="datetime" style="width: 40%;" placeholder="开始时间"
+                          :readonly="active!=1">
+          </el-date-picker>
+          ~
+          <el-date-picker v-model="formData.fEndTime" type="datetime" style="width: 40%;" placeholder="结束时间"
+                          :readonly="active!=1">
+          </el-date-picker>
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-borderibht">
+          培训内容
+        </el-col>
+        <el-col :span="21" style="height: 400px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            培训概述：
+          </div>
+          <el-input type="textarea"  maxlength="500" show-word-limit  :rows="8" placeholder="请输入内容" v-model="formData.fTraContent"
+                    v-bind:disabled="active != 1? true : false"/>
+          <div style="display:flex;justify-content:space-between;margin-top: 70px;">
+            <div style="width: 200px;margin-left: 20px;">
+              <el-upload style="margin-left: 15px;" class="upload-demo"
+                         :headers="GLOBAL.headers()"
+                         :action="GLOBAL.httpUrl"
+                         :on-preview="handlePreview" :on-remove="removeTrain"  multiple
+                         :on-success="train"
+                         :show-file-list="true"
+                         :auto-upload="true"
+                         :limit="1"
+                         :disabled="active != 1"
+                         :on-exceed="handleExceed" :file-list="fileList">
+                <el-button size="small" type="primary" :disabled="active != 1">培训内容</el-button>
+                               <div slot="tip" class="el-upload__tip" style="margin-top: 15px">上传文件不得超过100M</div>
+              </el-upload>
+            </div>
+            <div style="font-size: 20px;margin-right: -8px;width:300px;transform:translateY(-15%);">
+              <div style="text-align: left">
+                <div style="margin-left:-20px;display:inline;">编制人：
+                  <el-input v-model="formData.fPreparedBy" placeholder="请输入编制人名称"
+                            v-bind:disabled="active != 1? true : false"
+                            style="width:220px;border: 1px solid #DCDFE6;margin-left: -6px"></el-input>
+                </div>
+                <div>
+                  <div class="block" style="transform:translateY(15%);margin-left: -20px">
+                    <span v-html="'时&ensp;&ensp;间：'"/>
+                    <el-date-picker style="border: 1px solid #DCDFE6;"
+                                    type="date"
+                                    v-model="formData.fPreparationTime"
+                                    placeholder="选择日期"
+                                    v-bind:disabled="active != 1? true : false"
+                    >
+                    </el-date-picker>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom" style="position: relative">
+        <el-col :span="3" class="from-borderibht">
+          参加人员
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <el-button size="small" type="primary" style="margin:5px;float:right;margin-right:17px;" :disabled="active != 1"
+                     @click="add">
+            参加人员
+          </el-button>
+          <div class="table-head" style="margin:0 auto;margin-top:40px;width:98%;">
+            参加人员列表
+          </div>
+          <el-table :data="formData.joinTrainingList" class="from-top" border style="width: 98%;margin:0 auto;">
+            <!--            <el-table-column label="序号" align="center" prop="id"/>-->
+            <el-table-column label="姓名" align="center" prop="fName"/>
+            <el-table-column label="性别" align="center" prop="fGender">
+              <template slot-scope="scope">
+                <span v-for="(item,index) in dict.gender" v-if="item.dictValue == scope.row.fGender">
+                  {{ item.dictLabel }}
+                </span>
+              </template>
+            </el-table-column>
+            >
+            <el-table-column label="年龄" align="center" prop="fAge"/>
+            <el-table-column label="政治面貌" align="center" prop="fFace">
+              <template slot-scope="scope">
+                <span v-for="(item,index) in dict.politicalStatus" v-if="item.dictValue == scope.row.fFace">
+                  {{ item.dictLabel }}
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column label="职务" align="center" prop="fJobContent"/>
+            <el-table-column label="职称" align="center" prop="fJobTitle"/>
+            <el-table-column label="学历" align="center" prop="fEducation">
+              <template slot-scope="scope">
+                <span v-for="(item,index) in dict.education" v-if="item.dictValue == scope.row.fEducation">
+                  {{ item.dictLabel }}
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="200">
+              <template slot-scope="scope">
+                  <el-button size="mini" type="text" @click="detail(scope.row)" :disabled="active != 1">详情
+                  </el-button>
+                  <el-button size="mini" type="text" @click="edit(scope)" :disabled="active != 1">编辑
+                  </el-button>
+                  <el-button size="mini" type="text" @click="remove(scope)" :disabled="active != 1">删除
+                  </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+
+          <!--          <div class="block" style="text-align: right;margin-top: 5px;margin-right: 7px">-->
+          <!--            <el-pagination-->
+          <!--              background-->
+          <!--              @size-change="handleSizeChange"-->
+          <!--              @current-change="handleCurrentChange"-->
+          <!--              :current-page="currentPage"-->
+          <!--              :page-size="3"-->
+          <!--              layout="total, prev, pager, next, jumper"-->
+          <!--              :total="3">-->
+          <!--            </el-pagination>-->
+          <!--          </div>-->
+
+          <div class="from-select" style="float:right;margin-top: 15px;position: absolute;bottom: 10px;right: 10px">
+            <div>
+              <span>培训人：<el-input v-model="formData.fTraPersion" placeholder="培训人"
+                                  v-bind:disabled="active != 1? true : false"
+                                  style="width:180px;"></el-input></span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'"/>
+                <el-date-picker
+                  type="date"
+                  v-model="formData.fTraTime"
+                  v-bind:disabled="active != 1? true : false"
+                >
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col">
+          计划审核
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            审核意见：
+          </div>
+          <el-input type="textarea"  maxlength="500" show-word-limit  :rows="3" v-model="formData.fReviewComments" placeholder="请输入内容"
+                    v-bind:disabled="active != 2? true : false">
+          </el-input>
+          <div class="from-select">
+            <div style="margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;">
+                审核结果：
+              </div>
+              <el-select v-model="formData.fReviewResult" clearable placeholder="请选择"
+                         v-bind:disabled="active != 2? true : false">
+                <el-option v-for="item in dict.result" :key="item.dictValue" :label="item.dictLabel"
+                           :value="item.dictValue">
+                </el-option>
+              </el-select>
+            </div>
+            <div>
+              <span>审核人：<el-input v-model="formData.fReviewPeople" placeholder="审核人"
+                                  v-bind:disabled="active != 2? true : false"
+                                  style="width:180px;"></el-input></span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'"/>
+                <el-date-picker
+                  type="date"
+                  v-model="formData.fReviewDate"
+                  placeholder="选择日期"
+                  v-bind:disabled="active != 2? true : false"
+                >
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col">
+          计划批准
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            审批意见：
+          </div>
+          <el-input type="textarea" maxlength="500" show-word-limit  :rows="3" v-model="formData.fAuditComments" placeholder="请输入内容"
+                    v-bind:disabled="active != 3? true : false">
+          </el-input>
+          <div class="from-select">
+            <div style="margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;">
+                审批结果：
+              </div>
+              <el-select v-model="formData.fAuditResult" clearable placeholder="请选择"
+                         v-bind:disabled="active != 3? true : false">
+                <el-option v-for="item in dict.result" :key="item.dictValue" :label="item.dictLabel"
+                           :value="item.dictValue">
+                </el-option>
+              </el-select>
+            </div>
+            <div>
+              <span>审批人：<el-input v-model="formData.fAuditPeople" placeholder="审批人"
+                                  v-bind:disabled="active != 3? true : false"
+                                  style="width:180px;"></el-input></span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'"/>
+                <el-date-picker
+                  type="date"
+                  v-model="formData.fAuditDate"
+                  placeholder="选择日期"
+                  v-bind:disabled="active != 3? true : false"
+                >
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+
+      <el-row class="from-border-bottom">
+        <div>
+          <el-col :span="3" class="from-col" style="line-height:190px;">
+            计划实施
+          </el-col>
+
+          <el-col :span="9" style="height: 30px;">
+            <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+              实施内容：
+            </div>
+            <el-input type="textarea" maxlength="500" show-word-limit  :rows="3" v-model="formData.fImpContent" placeholder="请输入内容"
+                      v-bind:disabled="active != 4? true : false">
+            </el-input>
+          </el-col>
+          <el-col :span="3" class="from-col-about" style="line-height: 130px">
+            总结报告
+          </el-col>
+          <el-col :span="9" style="height: 90px;">
+            <div style="width: 200px;margin-top: 20px;margin-left: 20px;">
+              <el-upload style="margin-left: 15px;" class="upload-demo"
+
+                         :headers="GLOBAL.headers()"
+                         :action="GLOBAL.httpUrl"
+                         :on-preview="handlePreview" :on-remove="handleRemove"  multiple
+                         :on-success="uploadedSuccess"
+                         :show-file-list="true"
+                         :auto-upload="true"
+                         :limit="1"
+                         :on-exceed="handleExceed" :file-list="fileLists">
+                <el-button :disabled="active != 4" size="small" type="primary">实施资料上传</el-button>
+                               <div slot="tip" class="el-upload__tip" style="margin-top: 15px">上传文件不得超过100M</div>
+              </el-upload>
+            </div>
+          </el-col>
+        </div>
+        <div style="width: 87.5%;height: 60px;float: right;border-top: #a4d5ff 1px solid;padding:10px">
+          <div style="text-align: right;">
+            <div style="margin-bottom:10px;">
+              <span>实施人：<el-input v-model="formData.fImpPersion" placeholder="实施人"
+                                  v-bind:disabled="active != 4? true : false"
+                                  style="width:180px;border: 1px solid #DCDFE6;"></el-input></span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'"/>
+                <el-date-picker style="border: 1px solid #DCDFE6;"
+                                type="date"
+                                v-model="formData.fImpTime"
+                                placeholder="选择日期"
+                                v-bind:disabled="active != 4? true : false"
+                >
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </div>
+      </el-row>
+
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col-form">
+          人员考核
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div class="table-head" style="margin:0 auto;margin-top:5px;width:98%;">
+            考核人员列表
+          </div>
+          <el-table :data="formData.joinTrainingList" class="from-top" border style="width: 98%;margin:0 auto;">
+            <el-table-column label="姓名" align="center" prop="fName"/>
+            <el-table-column label="性别" align="center" prop="fGender">
+              <template slot-scope="scope">
+                <span v-for="(item,index) in dict.gender" v-if="item.dictValue == scope.row.fGender">
+                  {{ item.dictLabel }}
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column label="年龄" align="center" prop="fAge"/>
+            <el-table-column label="政治面貌" align="center" prop="fFace">
+              <template slot-scope="scope">
+                <span v-for="(item,index) in dict.politicalStatus" v-if="item.dictValue == scope.row.fFace">
+                  {{ item.dictLabel }}
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column label="职务" align="center" prop="fJobContent"/>
+            <el-table-column label="职称" align="center" prop="fJobTitle"/>
+            <el-table-column label="学历" align="center" prop="fEducation">
+              <template slot-scope="scope">
+                <span v-for="(item,index) in dict.education" v-if="item.dictValue == scope.row.fEducation">
+                  {{ item.dictLabel }}
+                </span>
+              </template>
+            </el-table-column>
+            <el-table-column label="分数" align="center" prop="fFraction"/>
+            <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="150">
+              <template slot-scope="{row}">
+                  <el-button size="mini" type="text" @click="scoring(row)" :disabled="active != 5">打分
+                  </el-button>
+                  <el-button size="mini" type="text" @click="detail(row)" :disabled="active != 5">详情
+                  </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-col>
+      </el-row>
+    </div>
+
+    <!--打分-->
+    <el-dialog :modal="false" title="培训人员打分" :visible.sync="dialogFormVisible" width="30%" style="margin-top: 12%">
+
+      <div style="margin-left: 130px">
+        <span style="font-size: 18px">得分：</span>
+        <span>
+        <el-input-number v-model="joinData.fFraction" @change="handleChange" :min="10" :max="100"
+                         label="描述文字"></el-input-number>
+      </span>
+      </div>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="scoringOK">确 定</el-button>
+      </div>
+    </el-dialog>
+
+
+    <!-- 培训人员 -->
+    <el-dialog title="培训人员" :visible.sync="open" :before-close="cancel" width="35%" append-to-body>
+      <el-form ref="form" :model="joinData" :inline="true" class="demo-form-inline">
+
+        <el-form-item label="姓名" prop="">
+          <el-input style="width: 200px" v-model="joinData.fName" placeholder="请输入姓名" :disabled="disable == 1"/>
+        </el-form-item>
+
+        <el-form-item label="性别" prop="">
+          <el-select style="width: 200px" v-model="joinData.fGender" placeholder="请选择性别" :disabled="disable == 1">
+            <el-option v-for="item in dict.gender" :key="item.dictValue" :label="item.dictLabel"
+                       :value="item.dictValue">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="年龄" prop="">
+          <el-input style="width: 200px" v-model="joinData.fAge" placeholder="请输入年龄" :disabled="disable == 1"/>
+        </el-form-item>
+
+        <el-form-item label="政治面貌" prop="">
+          <el-select style="width: 200px" v-model="joinData.fFace" placeholder="请选择" :disabled="disable == 1">
+            <el-option v-for="item in dict.politicalStatus" :key="item.dictValue" :label="item.dictLabel"
+                       :value="item.dictValue">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="职务" prop="">
+          <el-input style="width: 200px" v-model="joinData.fJobContent" placeholder="请输入职务" :disabled="disable == 1"/>
+        </el-form-item>
+
+        <el-form-item label="职称" prop="">
+          <el-input style="width: 200px" v-model="joinData.fJobTitle" placeholder="请输入职称" :disabled="disable == 1"/>
+        </el-form-item>
+
+        <el-form-item label="学历" prop="">
+          <el-select v-model="joinData.fEducation" placeholder="请选择" style="width: 200px" :disabled="disable == 1">
+            <el-option v-for="item in dict.education" :key="item.dictValue" :label="item.dictLabel"
+                       :value="item.dictValue">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm" :disabled="disable == 1">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
+<!--    <el-dialog-->
+<!--      title="选择处理人"-->
+<!--      :visible.sync="dialogVisible"-->
+<!--      :modal="false"-->
+<!--      width="30%">-->
+<!--      <el-radio v-model="formData.fActPersion" :label="item.userId" v-for="(item,index) in userList" :key="index">-->
+<!--        {{ item.nickName }}-->
+<!--      </el-radio>-->
+<!--      &lt;!&ndash; <el-radio v-model="radio" label="2">备选项</el-radio> &ndash;&gt;-->
+<!--      <span slot="footer" class="dialog-footer">-->
+<!--        <el-button @click="dialogVisible = false">取 消</el-button>-->
+<!--        <el-button type="primary" @click="addTraining">确 定</el-button>-->
+<!--      </span>-->
+<!--    </el-dialog>-->
+
+
+  </div>
+</template>
+
+<script>
+
+import {getToken} from "@/utils/auth";
+import {
+  addTraining,
+  updateTraining,
+  queryDataDictionary
+} from "@/api/indemnification/training";
+import {
+  getUserList
+} from "@/api/security/planning";
+
+import { edit } from "@/api/indemnification/joinTraining";
+
+export default {
+  components: {},
+  // props:['data'],
+  data() {
+    return {
+
+      userList: [],
+
+      // dialogVisible: false,
+
+      dict: {
+        assessMode: [],
+        result: [],
+        gender: [],
+        politicalStatus: [],
+        education: [],
+      },
+
+      type: '',
+      indexs: '',
+
+      // 文件上传
+      upload: {
+        // 设置上传的请求头部
+        headers: {Authorization: "Bearer " + getToken()},
+        // 上传的地址
+        url: process.env.VUE_APP_BASE_API + "/file/upload"
+      },
+
+      dialogFormVisible: false,
+
+      currentPage: 1,
+
+      active: 1,
+
+      info: {
+        stockDate: this.getNowTime(),  //日期
+      },
+      formData: {
+
+        /** id */
+        fId: null,
+
+        /** 计划名称 */
+        fPlanName: null,
+
+        /** 评价方式 */
+        fEvaWay: null,
+
+        /** 预算 */
+        fBudget: null,
+
+        /** 培训开始时间 */
+        fStartTime: null,
+
+        /** 培训结束时间 */
+        fEndTime: null,
+
+        /** 培训概述 */
+        fTraContent: null,
+
+        /** 附件id */
+        fTraId: null,
+
+        /** 编制人 */
+        fPreparedBy: null,
+
+        /** 编制时间 */
+        fPreparationTime: null,
+
+        /** 培训人 */
+        fTraPersion: null,
+
+        /** 培训时间 */
+        fTraTime: null,
+
+        /** 审核意见 */
+        fReviewComments: null,
+
+        /** 审核结果 */
+        fReviewResult: null,
+
+        /** 审核人 */
+        fReviewPeople: null,
+
+        /** 审核时间 */
+        fReviewDate: null,
+
+        /** 审批意见 */
+        fAuditComments: null,
+
+        /** 审批结果 */
+        fAuditResult: null,
+
+        /** 审批人 */
+        fAuditPeople: null,
+
+        /** 审批时间 */
+        fAuditDate: null,
+
+        /** 实施内容 */
+        fImpContent: null,
+
+        /** 实施总结附件id */
+        fImpId: '',
+
+        /** 实施人 */
+        fImpPersion: null,
+
+        /** 实施时间 */
+        fImpTime: null,
+
+        /** 培训照片id */
+        fPhoto: null,
+
+        /** 状态 0:无效1：有效 */
+        fStatus: null,
+
+        /** 流程实例id */
+        fActId: null,
+
+        // /** 流程下一环节审核人 */
+        // fActPersion: null,
+
+        /** 流程状态 1已提交启动 2：审核中 3：驳回 4：审核完成 */
+        fActStatus: null,
+
+        /** 流程节点 */
+        fActNode: null,
+
+        /** 培训人员集合 */
+        joinTrainingList: [],
+
+        /**
+         * 暂存或提交 1提交 0暂存
+         */
+        holdOrSubmit: null,
+
+        /**
+         * 当前登陆人
+         */
+        landingPersonId: null,
+
+        /**
+         * 创建人
+         */
+        fCreatePeople: null
+
+      },
+
+      disable: '',
+
+      joinData: {
+        /** id */
+        fId: null,
+
+        /** 培训表主键 */
+        fTrainingId: null,
+
+        /** 姓名 */
+        fName: null,
+
+        /** 性别 0：女1：男 */
+        fGender: null,
+
+        /** 年龄 */
+        fAge: null,
+
+        /** 政治面貌 0：团员1：党员 */
+        fFace: null,
+
+        /** 职务 */
+        fJobContent: null,
+
+        /** 职称 */
+        fJobTitle: null,
+
+        /** 学历 0：专科1：本科 */
+        fEducation: null,
+
+        /** 分数 */
+        fFraction: null,
+
+        /** 培训时间 */
+        fTarTime: null,
+
+        /** 培训证明材料id */
+        fProve: null,
+
+        /** 状态 */
+        fStatus: null,
+      },
+
+      open: false,
+
+      fileList: [],
+
+      fileLists: [],
+
+    };
+  },
+  created() {
+
+
+  },
+  mounted() {
+    this.Personnel()
+    this.queryDataDictionary()
+  },
+  methods: {
+
+    init(data, file, files) {
+      console.log('11111',data)
+      console.log('12312',file)
+      // if (data.fActNode == 'audit') {
+      //   this.active = 2
+      // } else if (data.fActNode == 'approve') {
+      //   this.active = 3
+      // } else if (data.fActNode == 'impl') {
+      //   this.active = 4
+      // } else if (data.fActNode == 'score') {
+      //   this.active = 5
+      // } else if (data.fActStatus == '6') {
+      //   this.active = 6
+      // }
+      this.active = data.fActStatus
+      this.formData = data;
+
+      if(this.formData.fEvaWay){
+        this.formData.fEvaWay = this.formData.fEvaWay.toString()
+      }
+      if(this.formData.fReviewResult){
+        this.formData.fReviewResult = this.formData.fReviewResult.toString()
+      }
+      if(this.formData.fAuditResult){
+        this.formData.fAuditResult = this.formData.fAuditResult.toString()
+      }
+
+
+      if (file) {
+        this.fileList = file
+      }
+      if (files) {
+        this.fileLists = files
+      }
+    },
+
+    clearForm() {
+      this.formData = {
+
+        /** id */
+        fId: null,
+
+        /** 计划名称 */
+        fPlanName: null,
+
+        /** 评价方式 */
+        fEvaWay: null,
+
+        /** 预算 */
+        fBudget: null,
+
+        /** 培训开始时间 */
+        fStartTime: null,
+
+        /** 培训结束时间 */
+        fEndTime: null,
+
+        /** 培训概述 */
+        fTraContent: null,
+
+        /** 附件id */
+        fTraId: null,
+
+        /** 编制人 */
+        fPreparedBy: null,
+
+        /** 编制时间 */
+        fPreparationTime: null,
+
+        /** 培训人 */
+        fTraPersion: null,
+
+        /** 培训时间 */
+        fTraTime: null,
+
+        /** 审核意见 */
+        fReviewComments: null,
+
+        /** 审核结果 */
+        fReviewResult: null,
+
+        /** 审核人 */
+        fReviewPeople: null,
+
+        /** 审核时间 */
+        fReviewDate: null,
+
+        /** 审批意见 */
+        fAuditComments: null,
+
+        /** 审批结果 */
+        fAuditResult: null,
+
+        /** 审批人 */
+        fAuditPeople: null,
+
+        /** 审批时间 */
+        fAuditDate: null,
+
+        /** 实施内容 */
+        fImpContent: null,
+
+        /** 实施总结附件id */
+        fImpId: null,
+
+        /** 实施人 */
+        fImpPersion: null,
+
+        /** 实施时间 */
+        fImpTime: null,
+
+        /** 培训照片id */
+        fPhoto: null,
+
+        /** 状态 0:无效1：有效 */
+        fStatus: null,
+
+        /** 流程实例id */
+        fActId: null,
+
+        // /** 流程下一环节审核人 */
+        // fActPersion: null,
+
+        /** 流程状态 1已提交启动 2：审核中 3：驳回 4：审核完成 */
+        fActStatus: null,
+
+        /** 流程节点 */
+        fActNode: null,
+
+        /** 培训人员集合 */
+        joinTrainingList: [],
+
+        /**
+         * 暂存或提交 1提交 0暂存
+         */
+        holdOrSubmit: null
+
+      },
+      this.fileList = []
+    },
+
+    Personnel() {
+      getUserList().then(response => {
+        this.userList = response.data
+      })
+    },
+
+    submitForm() {
+      if (this.type == 1) {
+        this.formData.joinTrainingList.push(this.joinData)
+        this.open = false
+        this.joinData = {}
+      }
+      if (this.type == 2) {
+        this.formData.joinTrainingList[this.indexs] = this.joinData
+        this.open = false
+        this.joinData = {}
+      }
+
+    },
+
+    submit(or) {
+      if (this.active == 1) {
+        if (this.formData.fPlanName == null) {
+          this.$message.error("请填写计划名称")
+          return false
+        } else if (this.formData.fEvaWay == null) {
+          this.$message.error("请选择评价方式")
+          return false
+        } else if (this.formData.fBudget == null) {
+          this.$message.error("请填写预算")
+          return false
+        } else if (this.formData.fStartTime == null) {
+          this.$message.error("请选择培训开始时间")
+          return false
+        } else if (this.formData.fEndTime == null) {
+          this.$message.error("请选择培训结束时间")
+          return false
+        } else if (this.formData.fTraContent == null) {
+          this.$message.error("请填写培训概述")
+          return false
+        } else if (this.formData.fTraId == null) {
+          this.$message.error("请上传培训内容的文件")
+          return false
+        } else if (this.formData.fPreparedBy == null) {
+          this.$message.error("请填写编制人")
+          return false
+        } else if (this.formData.fPreparationTime == null) {
+          this.$message.error("请选择编制时间")
+          return false
+        } else if (this.formData.joinTrainingList.length <= 0) {
+          this.$message.error("请添加参加人员")
+          return false
+        } else if (this.formData.fTraPersion == null) {
+          this.$message.error("请填写培训人")
+          return false
+        } else if (this.formData.fTraTime == null) {
+          this.$message.error("请选择培训时间")
+          return false
+        }
+        this.formData.holdOrSubmit = or
+        if (or == 1) {
+          // this.dialogVisible = true;
+          this.addTraining()
+        } else {
+          this.addTraining()
+        }
+      }
+    },
+
+    addTraining() {
+
+      // if (this.formData.holdOrSubmit == 1) {
+      //   if (this.formData.fActPersion == null) {
+      //     this.$message.error("请选择流程下一环节审核人")
+      //     return false
+      //   }
+      // }
+      if (this.formData.fId != null && this.formData.fId != '') {
+        updateTraining(this.formData).then(res => {
+          if (res.code == 200) {
+            this.$message.success("培训编制成功");
+            // this.dialogVisible = false;
+            // 调用父组件方法关闭弹窗
+            this.$emit("shut", false)
+            // 调用父组件方法查询列表
+            this.$emit("search")
+          } else {
+            this.$message.error("培训编制失败");
+          }
+        });
+      } else {
+        addTraining(this.formData).then(res => {
+          if (res.code == 200) {
+            if (this.formData.holdOrSubmit == 1) {
+              this.$message.success("培训编制提交成功");
+            } else {
+              this.msgSuccess("培训编制暂存成功");
+            }
+            this.clearForm();
+            // this.dialogVisible = false
+          } else {
+            if (this.formData.holdOrSubmit == 1) {
+              this.$message.error("培训编制提交失败");
+            } else {
+              this.msgError("培训编制暂存失败");
+            }
+          }
+        });
+      }
+    },
+
+    verify() {
+      if (this.active === 2) {
+        if (this.formData.fReviewComments == null && this.formData.fReviewComments == '') {
+          this.$message.error("请填写审核意见")
+          return false
+        } else if (this.formData.fReviewResult == null && this.formData.fReviewResult == '') {
+          this.$message.error("请选择审核结果")
+          return false
+        } else if (this.formData.fReviewPeople == null && this.formData.fReviewPeople == '') {
+          this.$message.error("请填写审核人")
+          return false
+        } else if (this.formData.fReviewDate == null && this.formData.fReviewDate == '') {
+          this.$message.error("请选择审核时间")
+          return false
+        }
+        // this.dialogVisible = true
+        this.addTraining()
+      }
+    },
+
+    approve() {
+      if (this.active === 3) {
+        if (this.formData.fAuditComments == null && this.formData.fAuditComments == '') {
+          this.$message.error("请填写审批意见")
+          return false
+        } else if (this.formData.fAuditResult == null && this.formData.fAuditResult == '') {
+          this.$message.error("请选择审批结果")
+          return false
+        } else if (this.formData.fAuditPeople == null && this.formData.fAuditPeople == '') {
+          this.$message.error("请填写审批人")
+          return false
+        } else if (this.formData.fAuditDate == null && this.formData.fAuditDate == '') {
+          this.$message.error("请选择审批时间")
+          return false
+        }
+        // this.dialogVisible = true
+        this.addTraining()
+      }
+    },
+
+    implement() {
+      if (this.active === 4) {
+        if (this.formData.fImpContent == null && this.formData.fImpContent == '') {
+          this.$message.error("请填写实施内容")
+          return false
+        } else if (this.formData.fImpId == null && this.formData.fImpId == '') {
+          this.$message.error("请上传实施总报告")
+          return false
+        } else if (this.formData.fImpPersion == null && this.formData.fImpPersion == '') {
+          this.$message.error("请填写实施人")
+          return false
+        } else if (this.formData.fImpTime == null && this.formData.fImpTime == '') {
+          this.$message.error("请选择实施时间")
+          return false
+        }
+        // this.dialogVisible = true
+        this.addTraining()
+      }
+    },
+
+    mark() {
+      if (this.active === 5) {
+        if (this.joinData.fFraction == null && this.joinData.fFraction == '') {
+          this.$message.error("请给参加人员打分")
+          return false
+        }
+        updateTraining(this.formData).then(res => {
+          if (res.code == 200) {
+            this.$message.success("培训编制成功");
+            // this.dialogVisible = false;
+            // 调用接口
+            // 调用父组件方法关闭弹窗
+            this.$emit("shut", false)
+            // 调用父组件方法查询列表
+            this.$emit("search")
+          } else {
+            this.$message.error("培训编制失败");
+          }
+        });
+      }
+    },
+
+
+    queryDataDictionary() {
+      queryDataDictionary().then(res => {
+        this.dict.assessMode = res.data.assessMode
+        this.dict.result = res.data.result
+        this.dict.gender = res.data.gender
+        this.dict.politicalStatus = res.data.politicalStatus
+        this.dict.education = res.data.education
+      });
+    },
+
+    scoring(row) {
+      this.dialogFormVisible = true
+      this.joinData = row
+    },
+
+    scoringOK() {
+      if (this.joinData.fFraction != null) {
+        edit(this.joinData).then(res => {
+          if (res.code == 200) {
+            this.$message.success("打分成功");
+            this.dialogFormVisible = false;
+          } else {
+            this.$message.error("打分失败");
+          }
+        });
+      }
+    },
+
+    handleChange(value) {
+      console.log(value);
+    },
+
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+    },
+
+    add() {
+      this.open = true
+      this.type = 1
+      this.disable = 0
+    },
+
+    edit(row) {
+      this.open = true;
+      this.joinData = row.row
+      this.indexs = row.$index
+      this.type = 2
+      this.disable = 0
+    },
+
+    // 查看详情
+    detail(row) {
+      this.open = true
+      this.joinData = row
+      // 性别
+      this.joinData.fGender = this.joinData.fGender.toString()
+      // 政治面貌
+      this.joinData.fFace = this.joinData.fFace.toString()
+      // 学历
+      this.joinData.fEducation = this.joinData.fEducation.toString()
+      this.disable = 1
+    },
+
+    remove(row) {
+      this.formData.joinTrainingList.splice(row.$index)
+    },
+
+    cancel() {
+      this.joinData = {}
+      this.open = false;
+    },
+
+
+    train(response, file, fileList) {
+      this.formData.fTraId = response.data.fId
+      this.fileList = [{
+        name:response.data.fOldFileName,
+        url:response.data.fFilePath
+      }]
+    },
+
+    uploadedSuccess(response, file, fileList) {
+      this.formData.fImpId = response.data.fId
+    },
+
+    removeTrain() {
+      this.GLOBAL.commonFun(this.formData.fTraId)
+    },
+
+    handleRemove(file, fileList) {
+      this.GLOBAL.commonFun(this.formData.fImpId)
+    },
+
+    handlePreview(file) {
+      // window.location.href = this.fileList[0].url;
+	  window.open(this.fileList[0].url);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+
+
+    //处理默认选中当前日期
+    getNowTime() {
+      var now = new Date();
+      var year = now.getFullYear(); //得到年份
+      var month = now.getMonth(); //得到月份
+      var date = now.getDate(); //得到日期
+      var hour = " 00:00:00"; //默认时分秒 如果传给后台的格式为年月日时分秒，就需要加这个，如若不需要，此行可忽略
+      month = month + 1;
+      month = month.toString().padStart(2, "0");
+      date = date.toString().padStart(2, "0");
+      var defaultDate = `${year}-${month}-${date}${hour}`;
+      console.log(defaultDate)
+      return defaultDate;
+      this.$set(this.info, "stockDate", defaultDate);
+    },
+
+
+  }
+}
+;
+</script>
+<style lang="scss">
+
+.color409 {
+  color: #409eff;
+  cursor: pointer;
+}
+
+.from-col-about {
+  text-align: center;
+  line-height: 160px;
+  border-right: #a4d5ff 1px solid;
+  border-left: #a4d5ff 1px solid;
+}
+
+.from-col-form {
+  text-align: center;
+  line-height: 280px;
+  border-right: #a4d5ff 1px solid;
+}
+
+//.el-dialog{
+//  display: flex;
+//  flex-direction: column;
+//  margin:0 !important;
+//  position:absolute;
+//  top:35%;
+//  left:50%;
+//  transform:translate(-50%,-50%);
+//  /*height:600px;*/
+//  max-height:calc(100% - 30px);
+//  max-width:calc(100% - 30px);
+//}
+//.el-dialog .el-dialog__body{
+//  flex:1;
+//  overflow: auto;
+//}
+
+</style>

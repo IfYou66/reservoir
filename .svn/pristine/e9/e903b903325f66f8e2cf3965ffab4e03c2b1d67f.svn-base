@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.manageSystem.mapper.SysClassTypeMapper">
+    
+    <resultMap type="com.szsk.reservoir.manageSystem.domain.SysClassType" id="SysClassTypeResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fTypeName"    column="f_type_name"    />
+        <result property="fParentId"    column="f_parent_id"    />
+        <result property="fCode"    column="f_code"    />
+        <result property="fRemark"    column="f_remark"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fOperationStatus"    column="f_operation_status"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+        <result property="fIfTabShow"    column="f_if_tab_show"    />
+    </resultMap>
+
+    <sql id="selectSysClassTypeVo">
+        select f_id,f_reservoir_info_id, f_if_tab_show,f_type_name, f_parent_id, f_code, f_remark, f_status,f_operation_status, f_create_time from sys_class_type
+    </sql>
+
+    <select id="selectSysClassTypeList" parameterType="com.szsk.reservoir.manageSystem.domain.SysClassType" resultMap="SysClassTypeResult">
+        <include refid="selectSysClassTypeVo"/>
+        <where>  
+            <if test="fTypeName != null  and fTypeName != ''"> and f_type_name like concat('%', #{fTypeName}, '%')</if>
+            <if test="fIfTabShow != null "> and f_if_tab_show = #{fIfTabShow}</if>
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fParentId != null "> and f_parent_id = #{fParentId}</if>
+            <if test="fCode != null  and fCode != ''"> and f_code = #{fCode}</if>
+            <if test="fParentCode != null  and fParentCode != ''"> 
+            	and f_parent_id in(
+            		select  f_id FROM sys_class_type  ct WHERE ct.f_code = #{fParentCode}
+            	)
+            </if>
+            <if test="fRemark != null  and fRemark != ''"> and f_remark = #{fRemark}</if>
+            <if test="fStatus != null "> and f_status = #{fStatus}</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysClassTypeById" parameterType="Long" resultMap="SysClassTypeResult">
+        <include refid="selectSysClassTypeVo"/>
+        where f_id = #{fId}
+    </select>
+        
+    <insert id="insertSysClassType" parameterType="com.szsk.reservoir.manageSystem.domain.SysClassType">
+        insert into sys_class_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fId != null">f_id,</if>
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fIfTabShow != null">f_if_tab_show,</if>
+            <if test="fTypeName != null">f_type_name,</if>
+            <if test="fParentId != null">f_parent_id,</if>
+            <if test="fCode != null">f_code,</if>
+            <if test="fRemark != null">f_remark,</if>
+            <if test="fStatus != null">f_status,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fId != null">#{fId},</if>
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if> 
+            <if test="fIfTabShow != null">#{fIfTabShow},</if>
+            <if test="fTypeName != null">#{fTypeName},</if>
+            <if test="fParentId != null">#{fParentId},</if>
+            <if test="fCode != null">#{fCode},</if>
+            <if test="fRemark != null">#{fRemark},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysClassType" parameterType="com.szsk.reservoir.manageSystem.domain.SysClassType">
+        update sys_class_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fTypeName != null">f_type_name = #{fTypeName},</if>
+            <if test="fParentId != null">f_parent_id = #{fParentId},</if>
+            <if test="fCode != null">f_code = #{fCode},</if>
+            <if test="fRemark != null">f_remark = #{fRemark},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+            <if test="fIfTabShow != null">f_if_tab_show = #{fIfTabShow},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteSysClassTypeById" parameterType="Long">
+        delete from sys_class_type where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteSysClassTypeByIds" parameterType="String">
+        delete from sys_class_type where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

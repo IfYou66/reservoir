@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.archives.archivesManage.mapper.ABorrowMapper">
+
+    <resultMap type="com.szsk.archives.archivesManage.domain.ABorrow" id="ABorrowResult">
+        <result property="fBorrowId"    column="f_borrow_id"    />
+        <result property="fArchivesId"    column="f_archives_id"    />
+        <result property="fBorrower"    column="f_borrower"    />
+        <result property="fState"    column="f_state"    />
+        <result property="fReturnTime"    column="f_return_time"    />
+        <result property="fBorrowerTime"    column="f_borrower_time"    />
+        <result property="fAuditPersion"    column="f_audit_persion"    />
+        <result property="fAuditTime"    column="f_audit_time"    />
+        <result property="fAuditOpinion"    column="f_audit_opinion"    />
+        <result property="fAuditStatus"    column="f_audit_status"    />
+        <result property="fArchivesName"   column="f_archives_name" />
+        <result property="fStoreroomName"  column="f_storeroom_name" />
+        <result property="fArchivesNumber" column="f_archives_number"/>
+    </resultMap>
+
+    <sql id="selectABorrowVo">
+        select
+        f_borrow_id ,
+        a_borrow.f_archives_id ,
+        f_borrower ,
+        f_state ,
+        f_return_time ,
+        f_borrower_time ,
+        f_audit_persion ,
+        f_audit_time ,
+        f_audit_opinion ,
+        f_audit_status ,
+        f_archives_name ,
+        f_storeroom_name,
+        a_archives.f_archives_number
+        from a_borrow
+        join a_archives on a_archives.f_archives_id = a_borrow.f_archives_id
+        join a_storeroom on a_storeroom.f_storeroom_id = a_archives.f_storeroom_id
+    </sql>
+
+    <select id="selectABorrowList" parameterType="com.szsk.archives.archivesManage.domain.ABorrow" resultMap="ABorrowResult">
+        <include refid="selectABorrowVo"/>
+
+        <where>
+        	<if test="fReservoirInfoId != null  "> and a_archives.f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fArchivesId != null and fArchivesId != ''"> and a_borrow.f_archives_id = #{fArchivesId}</if>
+            <if test="fBorrower != null  and fBorrower != ''"> and f_borrower = #{fBorrower}</if>
+            <if test="fState != null "> and f_state = #{fState}</if>
+            <if test="fReturnTime != null "> and f_return_time = #{fReturnTime}</if>
+            <if test="fBorrowerTime != null "> and f_borrower_time = #{fBorrowerTime}</if>
+            <if test="fAuditPersion != null  and fAuditPersion != ''"> and f_audit_persion = #{fAuditPersion}</if>
+            <if test="fAuditTime != null "> and f_audit_time = #{fAuditTime}</if>
+            <if test="fAuditOpinion != null  and fAuditOpinion != ''"> and f_audit_opinion = #{fAuditOpinion}</if>
+            <if test="fAuditStatus != null and fAuditStatus != '' "> and f_audit_status = #{fAuditStatus}</if>
+            <if test="fArchivesName != null and fArchivesName != ''"> and f_archives_name  like concat('%', #{fArchivesName}, '%')</if>
+            <if test="fStoreroomName != null and fStoreroomName != ''"> and f_storeroom_name  like concat('%', #{fStoreroomName}, '%')</if>
+        </where>
+        ORDER BY f_borrow_id DESC
+    </select>
+
+    <select id="selectABorrowById" parameterType="Long" resultMap="ABorrowResult">
+        <include refid="selectABorrowVo"/>
+        where f_borrow_id = #{fBorrowId}
+    </select>
+
+    <insert id="insertABorrow" parameterType="com.szsk.archives.archivesManage.domain.ABorrow" useGeneratedKeys="true" keyProperty="fBorrowId">
+        insert into a_borrow
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fArchivesId != null">f_archives_id,</if>
+            <if test="fBorrower != null">f_borrower,</if>
+            <if test="fState != null">f_state,</if>
+            <if test="fReturnTime != null">f_return_time,</if>
+            <if test="fBorrowerTime != null">f_borrower_time,</if>
+            <if test="fAuditPersion != null">f_audit_persion,</if>
+            <if test="fAuditTime != null">f_audit_time,</if>
+            <if test="fAuditOpinion != null">f_audit_opinion,</if>
+            <if test="fAuditStatus != null">f_audit_status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fArchivesId != null">#{fArchivesId},</if>
+            <if test="fBorrower != null">#{fBorrower},</if>
+            <if test="fState != null">#{fState},</if>
+            <if test="fReturnTime != null">#{fReturnTime},</if>
+            <if test="fBorrowerTime != null">#{fBorrowerTime},</if>
+            <if test="fAuditPersion != null">#{fAuditPersion},</if>
+            <if test="fAuditTime != null">#{fAuditTime},</if>
+            <if test="fAuditOpinion != null">#{fAuditOpinion},</if>
+            <if test="fAuditStatus != null">#{fAuditStatus},</if>
+        </trim>
+    </insert>
+
+    <update id="updateABorrow" parameterType="com.szsk.archives.archivesManage.domain.ABorrow">
+        update a_borrow
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fArchivesId != null">f_archives_id = #{fArchivesId},</if>
+            <if test="fBorrower != null">f_borrower = #{fBorrower},</if>
+            <if test="fState != null">f_state = #{fState},</if>
+            <if test="fReturnTime != null">f_return_time = #{fReturnTime},</if>
+            <if test="fBorrowerTime != null">f_borrower_time = #{fBorrowerTime},</if>
+            <if test="fAuditPersion != null">f_audit_persion = #{fAuditPersion},</if>
+            <if test="fAuditTime != null">f_audit_time = #{fAuditTime},</if>
+            <if test="fAuditOpinion != null">f_audit_opinion = #{fAuditOpinion},</if>
+            <if test="fAuditStatus != null">f_audit_status = #{fAuditStatus},</if>
+        </trim>
+        where f_borrow_id = #{fBorrowId}
+    </update>
+
+    <delete id="deleteABorrowById" parameterType="Long">
+        delete from a_borrow where f_borrow_id = #{fBorrowId}
+    </delete>
+
+    <delete id="deleteABorrowByIds" parameterType="String">
+        delete from a_borrow where f_borrow_id in
+        <foreach item="fBorrowId" collection="array" open="(" separator="," close=")">
+            #{fBorrowId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,1185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="system" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="95dfcceb-7833-4100-970e-41d7f17dbe2e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/cf-common/cf-common-datasource/cf-common-datasource.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cf-common/cf-common-security/cf-common-security.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/run-auth.bat" beforeDir="false" afterPath="$PROJECT_DIR$/bin/run-auth.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/run-gateway.bat" beforeDir="false" afterPath="$PROJECT_DIR$/bin/run-gateway.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/run-modules-file.bat" beforeDir="false" afterPath="$PROJECT_DIR$/bin/run-modules-file.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/run-modules-gen.bat" beforeDir="false" afterPath="$PROJECT_DIR$/bin/run-modules-gen.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/run-modules-job.bat" beforeDir="false" afterPath="$PROJECT_DIR$/bin/run-modules-job.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/run-modules-system.bat" beforeDir="false" afterPath="$PROJECT_DIR$/bin/run-modules-system.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/run-monitor.bat" beforeDir="false" afterPath="$PROJECT_DIR$/bin/run-monitor.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-api/cf-api-system/target" beforeDir="true" />
+      <change beforePath="$PROJECT_DIR$/cf-auth/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-auth/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-gateway/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-gateway/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-archives/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-archives/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-archives/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-archives/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-file/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-file/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-file/target/cf-modules-file.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-file/target/cf-modules-file.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-file/target/classes/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-file/target/classes/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-file/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-file/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-file/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-file/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-gen/target/cf-modules-gen.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-gen/target/cf-modules-gen.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-gen/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-gen/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-gen/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-gen/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-job/target/cf-modules-job.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-job/target/cf-modules-job.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-job/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-job/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-job/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-job/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/run/controller/RSecurityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/run/controller/RSecurityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/run/service/Impl/RSecurityServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/run/service/Impl/RSecurityServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-system/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-system/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysDeptMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysDeptMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysLogininforMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysLogininforMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysNoticeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysNoticeMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysOperLogMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysOperLogMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysPostMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysPostMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysRoleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysRoleMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysUserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-system/target/classes/mapper/system/SysUserMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/cf-system/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/cf-system/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cf-modules/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/cf-modules/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="nacos_config@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="nacos_config@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="nacos_config@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="nacos_config: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>CSensor</find>
+      <find>csensorList</find>
+      <find>insert</find>
+      <find>cSensorList</find>
+      <find>selectCSensorValueById</find>
+      <find>createBy</find>
+      <find>selectCSensorVo</find>
+      <find>com.cf.collection.domain.CDevice</find>
+      <find>CAlarm</find>
+      <find>cf-collection</find>
+      <find>overriding</find>
+      <find>spring-boot-starter-web</find>
+      <find>6379</find>
+      <find>1qazxsw2</find>
+      <find>database</find>
+      <find>Nacos</find>
+      <find>/code</find>
+      <find>9100</find>
+      <find>port: 9200</find>
+      <find>captcha</find>
+      <find>RemoteDictService</find>
+      <find>SecurityAutoConfiguration</find>
+      <find>org.activiti</find>
+      <find>runtimeServiceBean</find>
+      <find>cf-system</find>
+      <find>cf-reservoir</find>
+      <find>active: dev</find>
+      <find>环境配置</find>
+      <find>#active: dev</find>
+      <find>6380</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>com.cf.collection.domain.CSensor</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/reservoir" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/cf-modules/cf-analysis/src/main/resources/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-analysis/pom.xml" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-analysis/src/main/java/com/cf/analysis/controller/AArchivesController.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-analysis/src/main/java/com/cf/analysis/CFAnalysisApplication.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/controller/DeviceController.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/resources/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/domain/Sensor.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/domain/SensorValue.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/CFCollectionApplication.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/service/impl/ICDeviceService.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/domain/CDevice.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/pom.xml" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/domain/CSensorValue.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/service/impl/CSensorValueServiceImpl.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/service/ICSensorValueService.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/controller/CSensorValueController.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/resources/mapper/CDeviceMapper.xml" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/mapper/CDeviceMapper.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/service/impl/CDeviceServiceImpl.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/service/ICDeviceService.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/controller/CDeviceController.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/service/ICSensorService.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/service/impl/CSensorServiceImpl.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/mapper/CSensorMapper.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/resources/mapper/CSensorMapper.xml" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/java/com/cf/collection/controller/CSensorController.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-collection/src/main/resources/mapper/CAlarmMapper.xml" />
+        <option value="$PROJECT_DIR$/bin/run-modules-gen.bat" />
+        <option value="$PROJECT_DIR$/bin/run-gateway.bat" />
+        <option value="$PROJECT_DIR$/bin/run-modules-file.bat" />
+        <option value="$PROJECT_DIR$/bin/run-modules-job.bat" />
+        <option value="$PROJECT_DIR$/bin/run-modules-reservoir.bat" />
+        <option value="$PROJECT_DIR$/bin/run-modules-system.bat" />
+        <option value="$PROJECT_DIR$/bin/run-monitor.bat" />
+        <option value="$PROJECT_DIR$/bin/run-auth.bat" />
+        <option value="$PROJECT_DIR$/cf-modules/pom.xml" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-archives/src/main/java/com/szsk/archives/test/MD5Util.java" />
+        <option value="$PROJECT_DIR$/cf-common/cf-common-core/src/main/java/com/ruoyi/common/core/base/BaseServiceImpl.java" />
+        <option value="$PROJECT_DIR$/cf-api/cf-api-system/src/main/java/com/ruoyi/system/api/RemoteLogService.java" />
+        <option value="$PROJECT_DIR$/cf-api/cf-api-system/src/main/java/com/ruoyi/system/api/a" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/run/controller/RSecurityController.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/run/service/Impl/RSecurityServiceImpl.java" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/resources/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-system/src/main/resources/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-file/src/main/resources/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/cf-modules/cf-archives/src/main/resources/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/cf-auth/src/main/resources/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/cf-gateway/src/main/resources/bootstrap.yml" />
+        <option value="$PROJECT_DIR$/logs/cangfeng-system/error.log" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\developTools\apache-maven-3.6.1\mvn_resp" />
+        <option name="mavenHome" value="D:\developTools\apache-maven-3.6.1" />
+        <option name="userSettingsFile" value="D:\developTools\apache-maven-3.6.1\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1023" />
+    <option name="y" value="6" />
+    <option name="width" value="1939" />
+    <option name="height" value="1048" />
+  </component>
+  <component name="ProjectId" id="2doRXBOGVymFMETpyABJdQ0CS9W" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-auth" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-auth" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-auth" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-auth" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-auth" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-auth" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="ruoyi" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-auth" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com" type="462c0819:PsiDirectoryNode" />
+              <item name="ruoyi" type="462c0819:PsiDirectoryNode" />
+              <item name="auth" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-auth" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-collection" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-collection" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-collection" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-collection" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-collection" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-system" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-modules" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-system" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+              <item name="system" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cf" type="b2602c69:ProjectViewProjectNode" />
+              <item name="digtal_reservioir" type="462c0819:PsiDirectoryNode" />
+              <item name="cf-visual" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="NBKnowledgePane" />
+    </panes>
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.CFArchivesApplication.executor": "Run",
+    "Spring Boot.CFAuthApplication.executor": "Run",
+    "Spring Boot.CFFileApplication.executor": "Run",
+    "Spring Boot.CFGatewatApplication.executor": "Run",
+    "Spring Boot.CFMonitorApplication.executor": "Run",
+    "Spring Boot.CFSystemApplication.executor": "Run",
+    "Spring Boot.ReservoirApplication.executor": "Run",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/GraduationProject/final/reservioir/reservioir",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "全局库",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.4172662",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "spring.configuration.checksum": "26266b19417e000b7a1011e54a898e5e",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RebelAgentSelection">
+    <selection>jr</selection>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.cf.analysis.controller" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\svn\digtal_reservioir\cf-modules\cf-collection\src\main\resources\mapper" />
+      <recent name="D:\svn\digtal_reservioir\cf-modules\cf-collection\src\main\java\com\cf\collection\service\impl" />
+      <recent name="D:\svn\digtal_reservioir\cf-modules\cf-collection\src\main\java\com\cf\collection\service" />
+      <recent name="D:\svn\digtal_reservioir\cf-modules\cf-collection\src\main\java\com\cf\collection\mapper" />
+      <recent name="D:\svn\digtal_reservioir\cf-modules\cf-collection\src\main\java\com\cf\collection\domain" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.CFAuthApplication">
+    <configuration name="CFCollectionApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.cf.collection.CFCollectionApplication" />
+      <module name="cf-modules-collection" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cf.collection.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CSensorValueServiceImpl" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.cf.collection.service.impl.CSensorValueServiceImpl" />
+      <module name="cf-modules-collection" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cf.collection.service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MD5Util" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.szsk.archives.test.MD5Util" />
+      <module name="cf-modules-archives" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.szsk.archives.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CFArchivesApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="cf-modules-archives" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.szsk.archives.CFArchivesApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CFAuthApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="cf-auth" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ruoyi.auth.CFAuthApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ruoyi.auth.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CFCollectionApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="cf-modules-collection" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.cf.collection.CFCollectionApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cf.collection.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CFFileApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="cf-modules-file" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ruoyi.file.CFFileApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CFGatewatApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="cf-gateway" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ruoyi.gateway.CFGatewatApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CFGenApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="cf-modules-gen" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ruoyi.gen.CFGenApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CFJobApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="cf-modules-job" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ruoyi.job.CFJobApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CFMonitorApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="cf-visual-monitor" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ruoyi.modules.monitor.CFMonitorApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CFSystemApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="cf-modules-system" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.ruoyi.system.CFSystemApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ReservoirApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="cf-modules-reservoir" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.szsk.reservoir.ReservoirApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.CFCollectionApplication" />
+      <item itemvalue="Application.CSensorValueServiceImpl" />
+      <item itemvalue="Application.MD5Util" />
+      <item itemvalue="Spring Boot.CFArchivesApplication" />
+      <item itemvalue="Spring Boot.CFFileApplication" />
+      <item itemvalue="Spring Boot.CFGatewatApplication" />
+      <item itemvalue="Spring Boot.CFGenApplication" />
+      <item itemvalue="Spring Boot.CFJobApplication" />
+      <item itemvalue="Spring Boot.CFMonitorApplication" />
+      <item itemvalue="Spring Boot.CFSystemApplication" />
+      <item itemvalue="Spring Boot.ReservoirApplication" />
+      <item itemvalue="Spring Boot.CFAuthApplication" />
+      <item itemvalue="Spring Boot.CFCollectionApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.CFAuthApplication" />
+        <item itemvalue="Spring Boot.CFCollectionApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\26095\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="95dfcceb-7833-4100-970e-41d7f17dbe2e" name="Default Changelist" comment="" />
+      <created>1629076934007</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1629076934007</updated>
+      <workItem from="1629076935340" duration="20278000" />
+      <workItem from="1629161996084" duration="10396000" />
+      <workItem from="1629178811267" duration="3861000" />
+      <workItem from="1629182970629" duration="6185000" />
+      <workItem from="1629248224847" duration="905000" />
+      <workItem from="1629868888280" duration="1310000" />
+      <workItem from="1630068663347" duration="1435000" />
+      <workItem from="1630222547249" duration="738000" />
+      <workItem from="1630573347541" duration="4354000" />
+      <workItem from="1630821710822" duration="1673000" />
+      <workItem from="1630824873196" duration="2308000" />
+      <workItem from="1630934960058" duration="1901000" />
+      <workItem from="1631062491148" duration="336000" />
+      <workItem from="1631696630201" duration="40000" />
+      <workItem from="1632117579162" duration="6811000" />
+      <workItem from="1632153306987" duration="84000" />
+      <workItem from="1633615294625" duration="156000" />
+      <workItem from="1637074650405" duration="346000" />
+      <workItem from="1640094985179" duration="697000" />
+      <workItem from="1640133943341" duration="7000" />
+      <workItem from="1640272307109" duration="2390000" />
+      <workItem from="1640350136111" duration="2348000" />
+      <workItem from="1640401249503" duration="338000" />
+      <workItem from="1640512013915" duration="728000" />
+      <workItem from="1640592906486" duration="11000" />
+      <workItem from="1640610084714" duration="315000" />
+      <workItem from="1640657592753" duration="197000" />
+      <workItem from="1640701082315" duration="622000" />
+      <workItem from="1640756849586" duration="16000" />
+      <workItem from="1641092980389" duration="239000" />
+      <workItem from="1641220903515" duration="278000" />
+      <workItem from="1641283622015" duration="7000" />
+      <workItem from="1641608878379" duration="636000" />
+      <workItem from="1641646000830" duration="1594000" />
+      <workItem from="1641692271530" duration="632000" />
+      <workItem from="1641698567608" duration="638000" />
+      <workItem from="1643033350100" duration="31000" />
+      <workItem from="1647081196255" duration="1254000" />
+      <workItem from="1647174667832" duration="466000" />
+      <workItem from="1647230035196" duration="16000" />
+      <workItem from="1647838145843" duration="1194000" />
+      <workItem from="1647914048878" duration="1427000" />
+      <workItem from="1647919705059" duration="5000" />
+      <workItem from="1653560956453" duration="940000" />
+      <workItem from="1653573706442" duration="22000" />
+      <workItem from="1655531896409" duration="2116000" />
+      <workItem from="1655563544815" duration="23000" />
+      <workItem from="1655732253801" duration="717000" />
+      <workItem from="1655820253951" duration="683000" />
+      <workItem from="1658392849745" duration="2329000" />
+      <workItem from="1658720235697" duration="1309000" />
+      <workItem from="1659407884977" duration="18000" />
+      <workItem from="1661843363450" duration="669000" />
+      <workItem from="1661851695858" duration="662000" />
+      <workItem from="1661909096596" duration="666000" />
+      <workItem from="1662001944886" duration="69000" />
+      <workItem from="1662022831643" duration="30000" />
+      <workItem from="1662041185318" duration="10000" />
+      <workItem from="1663418919274" duration="3161000" />
+      <workItem from="1663490289407" duration="4000" />
+      <workItem from="1670332656619" duration="678000" />
+      <workItem from="1670371615323" duration="60000" />
+      <workItem from="1683253275690" duration="2751000" />
+      <workItem from="1683269464110" duration="4363000" />
+      <workItem from="1683332445306" duration="7000" />
+      <workItem from="1685241963819" duration="1893000" />
+      <workItem from="1685256786400" duration="478000" />
+      <workItem from="1698238444757" duration="1658000" />
+      <workItem from="1698459209821" duration="624000" />
+      <workItem from="1701778049099" duration="2079000" />
+      <workItem from="1701960900768" duration="1478000" />
+      <workItem from="1702014395864" duration="61000" />
+      <workItem from="1702715090335" duration="1368000" />
+      <workItem from="1702804814668" duration="2031000" />
+      <workItem from="1703034194774" duration="7000" />
+      <workItem from="1703320909912" duration="1302000" />
+      <workItem from="1703379923402" duration="2796000" />
+      <workItem from="1703389416381" duration="9000" />
+      <workItem from="1703399116488" duration="5182000" />
+      <workItem from="1703478661313" duration="2043000" />
+      <workItem from="1703508797417" duration="9048000" />
+      <workItem from="1703601091497" duration="2144000" />
+      <workItem from="1703683146112" duration="13000" />
+      <workItem from="1710672487402" duration="754000" />
+      <workItem from="1710673390909" duration="2677000" />
+      <workItem from="1710757862326" duration="10000" />
+      <workItem from="1711111192964" duration="4510000" />
+      <workItem from="1711159386880" duration="9000" />
+      <workItem from="1711180973861" duration="691000" />
+      <workItem from="1711190941680" duration="1385000" />
+      <workItem from="1711194777760" duration="580000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="134465000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1023" y="6" width="1939" height="1048" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49568966" visible="true" weight="0.16550615" />
+      <window_info id="Structure" order="1" sideWeight="0.50431037" side_tool="true" weight="0.19186047" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" sideWeight="0.50431037" side_tool="true" weight="0.19186047" />
+      <window_info id="Web" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3297587" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.8820809" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.6072386" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32923076" />
+      <window_info anchor="bottom" id="Spring" order="7" weight="0.32923076" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3283237" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.18153846" />
+      <window_info anchor="bottom" id="Java Enterprise" order="12" weight="0.3297587" />
+      <window_info anchor="bottom" id="Database Changes" order="13" />
+      <window_info anchor="bottom" id="Version Control" order="14" weight="0.32716763" />
+      <window_info anchor="bottom" id="Database Console" order="15" weight="0.32923076" />
+      <window_info anchor="bottom" id="Run Dashboard" order="16" visible="true" weight="0.19486581" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Database" order="6" visible="true" weight="0.16764863" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Bean Validation" order="9" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="cDevice" />
+        <watch expression="sql" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/cf-api/cf-api-system/target/maven-archiver/pom.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-common/cf-common-log/src/main/resources/META-INF/spring.factories">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-common/cf-common-redis/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-common/cf-common-redis/src/main/java/com/ruoyi/common/redis/configure/RedisConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-archives/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-archives/src/main/resources/mapper/archives/AArchivesMapper.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-common/cf-common-log/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-common/cf-common-datascope/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="509">
+          <caret line="17" column="18" lean-forward="true" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/4b714c96-fd31-460f-bcb8-f71393373938/console.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/ruoyi-gateway/error.2021-08-17.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="4" column="99" selection-start-line="4" selection-start-column="99" selection-end-line="4" selection-end-column="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://4b714c96-fd31-460f-bcb8-f71393373938/schema/nacos_config/table/config_info">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-api/cf-api-system/src/main/java/com/ruoyi/system/api/a" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="1369">
+            <caret line="37" column="63" selection-start-line="37" selection-start-column="63" selection-end-line="37" selection-end-column="63" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-gateway/src/main/java/com/ruoyi/gateway/config/CaptchaConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-gateway/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="444">
+          <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-gateway/src/main/resources/banner.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-gateway/src/main/resources/logback.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/run/controller/RSecurityController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="936">
+          <caret line="26" column="34" selection-start-line="26" selection-start-column="34" selection-end-line="26" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/run/service/Impl/RSecurityServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="828">
+          <caret line="48" column="19" selection-start-line="48" selection-start-column="19" selection-end-line="48" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-common/cf-common-core/src/main/java/com/ruoyi/common/core/utils/Constant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2772">
+          <caret line="77" column="28" selection-start-line="77" selection-start-column="28" selection-end-line="77" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-api/cf-api-system/src/main/java/com/ruoyi/system/api/RemoteUserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-auth/src/main/resources/logback.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="64" column="23" lean-forward="true" selection-start-line="64" selection-start-column="23" selection-end-line="64" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/ReservoirApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="23" column="42" lean-forward="true" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/emergency/controller/MEmergencyPlanningController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="27" column="13" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/emergency/service/Impl/MEmergencyPlanningServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="113">
+          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/activiti/activiti-engine/6.0.0/activiti-engine-6.0.0.jar!/org/activiti/engine/TaskService.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/activiti/activiti-engine/6.0.0/activiti-engine-6.0.0.jar!/org/activiti/engine/IdentityService.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-216">
+          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/activiti/activiti-engine/6.0.0/activiti-engine-6.0.0.jar!/org/activiti/engine/RuntimeService.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="27" column="17" selection-start-line="27" selection-start-column="17" selection-end-line="27" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/java/com/szsk/reservoir/workflow/service/Impl/WorkFlowImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="41">
+          <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-reservoir/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="115" column="50" lean-forward="true" selection-start-line="115" selection-start-column="50" selection-end-line="115" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-api/cf-api-system/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-540" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-api/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-api/cf-api-system/src/main/resources/META-INF/spring.factories">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-reservoir/src/main/resources/bootstrap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-system/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1872">
+          <caret line="11" column="33" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-648" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-system/src/main/resources/bootstrap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="11" column="16" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-auth/src/main/resources/bootstrap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-file/src/main/resources/bootstrap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="12" column="16" selection-start-line="9" selection-start-column="2" selection-end-line="12" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-archives/src/main/resources/bootstrap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="12" column="16" selection-start-line="9" selection-start-column="2" selection-end-line="12" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-gateway/src/main/resources/bootstrap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="35">
+          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-system/src/main/java/com/ruoyi/system/CFSystemApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-system/src/main/java/com/ruoyi/system/service/impl/SysUserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="41" column="19" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
+          <folding>
+            <element signature="e#2197#2198#0" expanded="true" />
+            <element signature="e#2261#2262#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-system/src/main/java/com/ruoyi/system/mapper/SysUserMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3333">
+          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/cangfeng-system/error.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/cangfeng-reservoir/error.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="1261" column="40" selection-start-line="1261" selection-start-column="40" selection-end-line="1261" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-system/src/main/resources/mapper/system/SysUserMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="21" column="64" lean-forward="true" selection-start-line="21" selection-start-column="64" selection-end-line="21" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logs/cangfeng-reservoir/info.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="915" column="10" selection-start-line="915" selection-start-column="10" selection-end-line="915" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-collection/pom.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cf-modules/cf-collection/src/main/resources/bootstrap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-295" />
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>system</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>cf-modules-collection</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8.0_191</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: aopalliance:aopalliance:1.0</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

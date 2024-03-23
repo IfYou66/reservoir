@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.security.mapper.MBorderMapper">
+    
+    <resultMap type="com.szsk.reservoir.security.domain.MBorder" id="MBorderResult">
+        <result property="fId"    column="f_id"/>
+        <result property="fLabel"    column="f_label"/>
+        <result property="fGroup"    column="f_group"/>
+        <result property="fCreateTime"    column="f_create_time"/>
+        <result property="fUpdateTime"    column="f_update_time"/>
+        <result property="fSort"    column="f_sort"/>
+    </resultMap>
+
+    <select id="queryLabelList" resultMap="MBorderResult" parameterType="java.lang.String">
+        select f_id,f_label,f_group,f_create_time,f_update_time,f_sort from m_border where f_group = #{group} order by f_sort
+    </select>
+</mapper>

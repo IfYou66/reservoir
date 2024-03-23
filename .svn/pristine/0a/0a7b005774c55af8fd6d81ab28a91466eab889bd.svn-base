@@ -1,0 +1,522 @@
+package com.szsk.reservoir.run.domain;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import com.ruoyi.common.core.annotation.Excel;
+import com.ruoyi.common.core.web.domain.BaseEntity;
+
+/**
+ * 项目申报 对象 r_pro_report
+ *
+ * @author cangfeng
+ * @date 2021-08-23
+ */
+public class RProReport extends BaseEntity{
+    private static final long serialVersionUID = 1L;
+
+    /** id */
+    private Long fId;
+
+    /** 项目名称 */
+    @Excel(name = "项目名称")
+    private String fPerName;
+
+    /** 预算 */
+    @Excel(name = "预算")
+    private BigDecimal fBudget;
+
+    /** 项目概况 */
+    @Excel(name = "项目概况")
+    private String fProContent;
+
+    /** 项目概况附件id */
+    @Excel(name = "项目概况附件id")
+    private Long fProId;
+
+    /** 编制人 */
+    @Excel(name = "编制人")
+    private String fPreparedBy;
+
+    /** 编制时间 */
+    @Excel(name = "编制时间")
+    private String fPreparationTime;
+
+    /** 审批意见 */
+    @Excel(name = "审批意见")
+    private String fAuditComments;
+
+    /** 审批结果 */
+    @Excel(name = "审批结果")
+    private Integer fAuditResult;
+
+    /** 审批人 */
+    @Excel(name = "审批人")
+    private String fAuditPeople;
+
+    /** 审批时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "审批时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fAuditDate;
+
+    /** 勘察设计内容 */
+    @Excel(name = "勘察设计内容")
+    private String fDesignContent;
+
+    /** 勘察设计附件id */
+    @Excel(name = "勘察设计附件id")
+    private Long fDesignId;
+
+    /** 勘察设计单位 */
+    @Excel(name = "勘察设计单位")
+    private String fDesignUnit;
+
+    /** 勘察设计时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "勘察设计时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fDesignTime;
+
+    /** 招投标概况内容 */
+    @Excel(name = "招投标概况内容")
+    private String fTenderContent;
+
+    /** 招投标附件id */
+    @Excel(name = "招投标附件id")
+    private Long fTenderId;
+
+    /** 投标人 */
+    @Excel(name = "投标人")
+    private String fTenderPersion;
+
+    /** 投标时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "投标时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fTenderTime;
+
+    /** 项目实施概况内容 */
+    @Excel(name = "项目实施概况内容")
+    private String fProimplContent;
+
+    /** 项目实施内容附件id */
+    @Excel(name = "项目实施内容附件id")
+    private Long fProimplId;
+
+    /** 项目实施人 */
+    @Excel(name = "项目实施人")
+    private String fProimplPersion;
+
+    /** 项目实施时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "项目实施时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fProimplTime;
+
+    /** 评价验收意见 */
+    @Excel(name = "评价验收意见")
+    private String fAcceptanceContent;
+
+    /** 验收专家名单 */
+    @Excel(name = "验收专家名单")
+    private String fAcceptanceList;
+
+    /** 评价验收附件id */
+    @Excel(name = "评价验收附件id")
+    private Long fAcceptanceId;
+
+    /** 专家验收组长 */
+    @Excel(name = "专家验收组长")
+    private String fAcceptancePersion;
+
+    /** 验收时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "验收时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fAcceptanceTime;
+
+    /** 状态 */
+    @Excel(name = "状态")
+    private Integer fStatus;
+
+    /** 创建人 */
+    @Excel(name = "创建人")
+    private String fCreatePeople;
+
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fCreateTime;
+
+    /** 流程实例id */
+    @Excel(name = "流程实例id")
+    private Long fActId;
+
+    /** 流程下一节点审核人 */
+    @Excel(name = "流程下一节点审核人")
+    private Long fActPersion;
+
+    /** 流程状态 流程状态 1:待审核 2：待审批 3：审批完成 4：驳回 */
+    @Excel(name = "流程状态 流程状态 1:待审核 2：待审批 3：审批完成 4：驳回")
+    private Integer fActStatus;
+
+    /** 流程节点 */
+    @Excel(name = "流程节点")
+    private String fActNode;
+    
+
+    public void setfId(Long fId)
+    {
+        this.fId = fId;
+    }
+
+    public Long getfId()
+    {
+        return fId;
+    }
+    public void setfPerName(String fPerName)
+    {
+        this.fPerName = fPerName;
+    }
+
+    public String getfPerName()
+    {
+        return fPerName;
+    }
+    public void setfBudget(BigDecimal fBudget)
+    {
+        this.fBudget = fBudget;
+    }
+
+    public BigDecimal getfBudget()
+    {
+        return fBudget;
+    }
+    public void setfProContent(String fProContent)
+    {
+        this.fProContent = fProContent;
+    }
+
+    public String getfProContent()
+    {
+        return fProContent;
+    }
+    public void setfProId(Long fProId)
+    {
+        this.fProId = fProId;
+    }
+
+    public Long getfProId()
+    {
+        return fProId;
+    }
+    public void setfPreparedBy(String fPreparedBy)
+    {
+        this.fPreparedBy = fPreparedBy;
+    }
+
+    public String getfPreparedBy()
+    {
+        return fPreparedBy;
+    }
+    public void setfPreparationTime(String fPreparationTime)
+    {
+        this.fPreparationTime = fPreparationTime;
+    }
+
+    public String getfPreparationTime()
+    {
+        return fPreparationTime;
+    }
+    public void setfAuditComments(String fAuditComments)
+    {
+        this.fAuditComments = fAuditComments;
+    }
+
+    public String getfAuditComments()
+    {
+        return fAuditComments;
+    }
+    public void setfAuditResult(Integer fAuditResult)
+    {
+        this.fAuditResult = fAuditResult;
+    }
+
+    public Integer getfAuditResult()
+    {
+        return fAuditResult;
+    }
+    public void setfAuditPeople(String fAuditPeople)
+    {
+        this.fAuditPeople = fAuditPeople;
+    }
+
+    public String getfAuditPeople()
+    {
+        return fAuditPeople;
+    }
+    public void setfAuditDate(Date fAuditDate)
+    {
+        this.fAuditDate = fAuditDate;
+    }
+
+    public Date getfAuditDate()
+    {
+        return fAuditDate;
+    }
+    public void setfDesignContent(String fDesignContent)
+    {
+        this.fDesignContent = fDesignContent;
+    }
+
+    public String getfDesignContent()
+    {
+        return fDesignContent;
+    }
+    public void setfDesignId(Long fDesignId)
+    {
+        this.fDesignId = fDesignId;
+    }
+
+    public Long getfDesignId()
+    {
+        return fDesignId;
+    }
+    public void setfDesignUnit(String fDesignUnit)
+    {
+        this.fDesignUnit = fDesignUnit;
+    }
+
+    public String getfDesignUnit()
+    {
+        return fDesignUnit;
+    }
+    public void setfDesignTime(Date fDesignTime)
+    {
+        this.fDesignTime = fDesignTime;
+    }
+
+    public Date getfDesignTime()
+    {
+        return fDesignTime;
+    }
+    public void setfTenderContent(String fTenderContent)
+    {
+        this.fTenderContent = fTenderContent;
+    }
+
+    public String getfTenderContent()
+    {
+        return fTenderContent;
+    }
+    public void setfTenderId(Long fTenderId)
+    {
+        this.fTenderId = fTenderId;
+    }
+
+    public Long getfTenderId()
+    {
+        return fTenderId;
+    }
+    public void setfTenderPersion(String fTenderPersion)
+    {
+        this.fTenderPersion = fTenderPersion;
+    }
+
+    public String getfTenderPersion()
+    {
+        return fTenderPersion;
+    }
+    public void setfTenderTime(Date fTenderTime)
+    {
+        this.fTenderTime = fTenderTime;
+    }
+
+    public Date getfTenderTime()
+    {
+        return fTenderTime;
+    }
+    public void setfProimplContent(String fProimplContent)
+    {
+        this.fProimplContent = fProimplContent;
+    }
+
+    public String getfProimplContent()
+    {
+        return fProimplContent;
+    }
+    public void setfProimplId(Long fProimplId)
+    {
+        this.fProimplId = fProimplId;
+    }
+
+    public Long getfProimplId()
+    {
+        return fProimplId;
+    }
+    public void setfProimplPersion(String fProimplPersion)
+    {
+        this.fProimplPersion = fProimplPersion;
+    }
+
+    public String getfProimplPersion()
+    {
+        return fProimplPersion;
+    }
+    public void setfProimplTime(Date fProimplTime)
+    {
+        this.fProimplTime = fProimplTime;
+    }
+
+    public Date getfProimplTime()
+    {
+        return fProimplTime;
+    }
+    public void setfAcceptanceContent(String fAcceptanceContent)
+    {
+        this.fAcceptanceContent = fAcceptanceContent;
+    }
+
+    public String getfAcceptanceContent()
+    {
+        return fAcceptanceContent;
+    }
+    public void setfAcceptanceList(String fAcceptanceList)
+    {
+        this.fAcceptanceList = fAcceptanceList;
+    }
+
+    public String getfAcceptanceList()
+    {
+        return fAcceptanceList;
+    }
+    public void setfAcceptanceId(Long fAcceptanceId)
+    {
+        this.fAcceptanceId = fAcceptanceId;
+    }
+
+    public Long getfAcceptanceId()
+    {
+        return fAcceptanceId;
+    }
+    public void setfAcceptancePersion(String fAcceptancePersion)
+    {
+        this.fAcceptancePersion = fAcceptancePersion;
+    }
+
+    public String getfAcceptancePersion()
+    {
+        return fAcceptancePersion;
+    }
+    public void setfAcceptanceTime(Date fAcceptanceTime)
+    {
+        this.fAcceptanceTime = fAcceptanceTime;
+    }
+
+    public Date getfAcceptanceTime()
+    {
+        return fAcceptanceTime;
+    }
+    public void setfStatus(Integer fStatus)
+    {
+        this.fStatus = fStatus;
+    }
+
+    public Integer getfStatus()
+    {
+        return fStatus;
+    }
+    public void setfCreatePeople(String fCreatePeople)
+    {
+        this.fCreatePeople = fCreatePeople;
+    }
+
+    public String getfCreatePeople()
+    {
+        return fCreatePeople;
+    }
+    public void setfCreateTime(Date fCreateTime)
+    {
+        this.fCreateTime = fCreateTime;
+    }
+
+    public Date getfCreateTime()
+    {
+        return fCreateTime;
+    }
+    public void setfActId(Long fActId)
+    {
+        this.fActId = fActId;
+    }
+
+    public Long getfActId()
+    {
+        return fActId;
+    }
+    public void setfActPersion(Long fActPersion)
+    {
+        this.fActPersion = fActPersion;
+    }
+
+    public Long getfActPersion()
+    {
+        return fActPersion;
+    }
+    public void setfActStatus(Integer fActStatus)
+    {
+        this.fActStatus = fActStatus;
+    }
+
+    public Integer getfActStatus()
+    {
+        return fActStatus;
+    }
+    public void setfActNode(String fActNode)
+    {
+        this.fActNode = fActNode;
+    }
+
+    public String getfActNode()
+    {
+        return fActNode;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+                .append("fId", getfId())
+                .append("fPerName", getfPerName())
+                .append("fBudget", getfBudget())
+                .append("fProContent", getfProContent())
+                .append("fProId", getfProId())
+                .append("fPreparedBy", getfPreparedBy())
+                .append("fPreparationTime", getfPreparationTime())
+                .append("fAuditComments", getfAuditComments())
+                .append("fAuditResult", getfAuditResult())
+                .append("fAuditPeople", getfAuditPeople())
+                .append("fAuditDate", getfAuditDate())
+                .append("fDesignContent", getfDesignContent())
+                .append("fDesignId", getfDesignId())
+                .append("fDesignUnit", getfDesignUnit())
+                .append("fDesignTime", getfDesignTime())
+                .append("fTenderContent", getfTenderContent())
+                .append("fTenderId", getfTenderId())
+                .append("fTenderPersion", getfTenderPersion())
+                .append("fTenderTime", getfTenderTime())
+                .append("fProimplContent", getfProimplContent())
+                .append("fProimplId", getfProimplId())
+                .append("fProimplPersion", getfProimplPersion())
+                .append("fProimplTime", getfProimplTime())
+                .append("fAcceptanceContent", getfAcceptanceContent())
+                .append("fAcceptanceList", getfAcceptanceList())
+                .append("fAcceptanceId", getfAcceptanceId())
+                .append("fAcceptancePersion", getfAcceptancePersion())
+                .append("fAcceptanceTime", getfAcceptanceTime())
+                .append("fStatus", getfStatus())
+                .append("fCreatePeople", getfCreatePeople())
+                .append("fCreateTime", getfCreateTime())
+                .append("fActId", getfActId())
+                .append("fActPersion", getfActPersion())
+                .append("fActStatus", getfActStatus())
+                .append("fActNode", getfActNode())
+                .toString();
+    }
+}

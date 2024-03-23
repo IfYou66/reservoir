@@ -1,0 +1,6 @@
+17:11:43.682 [boundedElastic-2] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/code/gen/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for ruoyi-gen"
+17:12:11.863 [reactor-http-nio-4] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/,异常信息:404 NOT_FOUND
+17:12:11.902 [reactor-http-nio-5] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/csrf,异常信息:404 NOT_FOUND
+17:37:03.722 [boundedElastic-6] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/collection/device/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for cf-collection"
+17:37:06.583 [boundedElastic-2] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/collection/sensor/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for cf-collection"
+19:21:33.091 [boundedElastic-3] ERROR c.r.g.h.GatewayExceptionHandler - [handle,56] - [网关异常处理]请求路径:/code/gen/list,异常信息:503 SERVICE_UNAVAILABLE "Unable to find instance for ruoyi-gen"

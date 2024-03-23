@@ -1,0 +1,61 @@
+package com.szsk.archives.archivesManage.mapper;
+
+import java.util.List;
+import com.szsk.archives.archivesManage.domain.ArchivesType;
+
+/**
+ * 档案分类 Mapper接口
+ * 
+ * @author cangfeng
+ * @date 2021-08-10
+ */
+public interface ArchivesTypeMapper
+{
+    /**
+     * 查询档案分类 
+     * 
+     * @param archivesTypeId 档案分类 ID
+     * @return 档案分类 
+     */
+    public ArchivesType selectarchivesTypeById(Long archivesTypeId);
+
+    /**
+     * 查询档案分类 列表
+     * 
+     * @param archivesType 档案分类 
+     * @return 档案分类 集合
+     */
+    public List<ArchivesType> selectarchivesTypeList(ArchivesType archivesType);
+
+    /**
+     * 新增档案分类 
+     * 
+     * @param archivesType 档案分类 
+     * @return 结果
+     */
+    public int insertarchivesType(ArchivesType archivesType);
+
+    /**
+     * 修改档案分类 
+     * 
+     * @param archivesType 档案分类 
+     * @return 结果
+     */
+    public int updatearchivesType(ArchivesType archivesType);
+
+    /**
+     * 删除档案分类 
+     * 
+     * @param archivesTypeId 档案分类 ID
+     * @return 结果
+     */
+    public int deletearchivesTypeById(Long archivesTypeId);
+
+    /**
+     * 批量删除档案分类 
+     * 
+     * @param archivesTypeIds 需要删除的数据ID
+     * @return 结果
+     */
+    public int deletearchivesTypeByIds(Long[] archivesTypeIds);
+}

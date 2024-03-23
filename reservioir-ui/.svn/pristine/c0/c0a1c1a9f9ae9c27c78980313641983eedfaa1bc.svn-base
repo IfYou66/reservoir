@@ -1,0 +1,201 @@
+<template>
+  <div class="app-container">
+    <el-tabs @tab-click="handleClick" v-model="activeName">
+      <el-tab-pane :label="point.name" :name="point.name" v-for="(point,i) in points">
+        <div style="float:left;width: 10%;">
+          <div v-for="(item,i) in point.points" :key="i">
+            <el-radio v-model="order"
+                      :label="item.id" border @change="select(i)" :value="i">{{item.name}}
+            </el-radio>
+          </div>
+        </div>
+        <div style="float:left;width:89%;" :id="point.name">
+          <div id="controls" @click="setControls"
+               style="z-index:12; display:none;width:100%;height:700px;position: absolute;bottom:0;left:0;">
+            <input type="button" class="doControl" value=""
+                   style="background-image: url('../../../assets/images/data/up.png');position:absolute;top:-21px;right:42%;"
+                   @mousedown="startControl(0)" @mouseup="stopControl"/>
+            <input type="button" class="doControl" value=""
+                   style="background-image: url('../../../assets/images/data/down.png');position:absolute;bottom:21px;right:42%;"
+                   @mousedown="startControl(1)" @mouseup="stopControl"/>
+            <input type="button" class="doControl" value=""
+                   style="background-image: url('../../../assets/images/data/left.png');position:absolute;bottom:50%;left:16%;"
+                   @mousedown="startControl(2)" @mouseup="stopControl"/>
+            <input type="button" class="doControl" value=""
+                   style="background-image: url('../../../assets/images/data/right.png');position:absolute;bottom:50%;right:26px;"
+                   @mousedown="startControl(3)" @mouseup="stopControl"/>
+            <input type="button" class="doControl" value=""
+                   style="background-image: url('../../../assets/images/data/max.png');position:absolute;top:0;right:26px;"
+                   @mousedown="startControl(8)" @mouseup="stopControl"/>
+            <input type="button" class="doControl" value=""
+                   style="background-image: url('../../../assets/images/data/min.png');position:absolute;top:30px;right:26px;"
+                   @mousedown="startControl(9)" @mouseup="stopControl"/>
+          </div>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
+</template>
+<script>
+
+  export default {
+    name: "vd",
+    data() {
+      return {
+        points: this.reservoir.getVideo(),
+        activeName: this.reservoir.getVideo()[0].name,
+        order: 0,
+        videoID: "",
+        urlServer: '/video-api/Handler.ashx',
+        player: null,
+        tabIndex: 0,
+        video: this.reservoir.getVideo()
+      };
+    },
+
+    methods: {
+      handleClick(tab, event) {
+        this.tabIndex = tab.index;
+        this.videoID = this.video[this.tabIndex].videoId;
+        this.order = 1;
+        this.doPointView();
+      },
+
+      setControls() {
+        let getDisplay = document.getElementById('controls').style.display;
+        if (getDisplay === 'none') {
+          document.getElementById('controls').style.display = 'block';
+        } else {
+          document.getElementById('controls').style.display = 'none';
+        }
+      },
+      startControl(direction) {
+        let name = "startControl";
+        if (this.videoID.length > 0) {
+          let data = {name: name, value: videoID, direction: direction};
+          this.sendRequest(this.urlServer, data, this.handle);
+        }
+      },
+      stopControl() {
+        let name = "stopControl";
+        if (this.videoID.length > 0) {
+          let data = {name: name, value: this.videoID};
+          this.sendRequest(this.urlServer, data, this.handle);
+        }
+      },
+      select() {
+        this.videoID = this.video[this.tabIndex].videoId;
+        this.doPreset(this.order);
+      },
+      doPointView() {
+        let name = "getPointView";
+        if (this.videoID.length > 0) {
+          let data = {name: name, value: this.videoID};
+          this.sendRequest(this.urlServer, data, this.handle);
+        }
+      },
+      sendRequest(url, data, handle) {
+        if (data) {
+          url += '?';
+        }
+        const keys = Object.keys(data);
+        for (let i = 0; i < keys.length; i++) {
+          url += keys[i] + '=' + data[keys[i]] + '&';
+        }
+        url = (url + '').substring(0, url.length - 1);
+        this.request.sendRequest(url, this.handle);
+      },
+      doPreset(index) {
+        this.movePreset(index);
+      },
+      setVideo(hls) {
+        let pNode = document.querySelector("#player");
+        if (pNode) {
+          pNode.parentElement.innerHTML = '';
+        }
+        let view = document.querySelector("#" + this.video[this.tabIndex].name);
+        view.innerHTML += '<video class="player" id="player" muted="muted"  poster="" playsInline webkit-playsinline autoplay> <source id="hls" src="' + hls + '" type="application/x-mpegURL" /> </video>';
+        this.player = this.iniPlayer(hls);
+      },
+      movePreset(index) {
+        let name = "movePreset";
+        if (this.videoID.length > 0) {
+          let data = {name: name, value: this.videoID, index: index};
+          this.sendRequest(this.urlServer, data, this.handle);
+        }
+      },
+      clearPreset(index) {
+        let name = "clearPreset";
+        if (this.videoID.length > 0) {
+          let data = {name: name, value: this.videoID, index: index};
+          this.sendRequest(this.urlServer, data, this.handle);
+        }
+      },
+      iniPlayer(hls) {
+        let player = new EZUIPlayer("player");
+        player.on('error', function () {
+        });
+        player.on('play', function () {
+        });
+        player.on('pause', function () {
+        });
+        player.on('waiting', function () {
+        });
+        return player;
+      },
+      handle(obj) {
+        for (let i = 0; i < obj.length; i++) {
+          this.setVideo(obj[i].HLS);
+          break;
+        }
+      }
+    },
+    mounted() {
+      const oScript = document.createElement('script');
+      oScript.type = 'text/javascript';
+      oScript.src = 'http://58.58.27.77:8084/js/ezuikit.js';
+      document.body.appendChild(oScript);
+
+      this.tabIndex = 0;
+      this.videoID = this.video[0].videoId;
+      this.order = 1;
+      this.doPointView();
+    }
+
+  }
+</script>
+
+<style scoped>
+  ::v-deep .el-tabs__nav-scroll > div > div {
+    background-color: #9fecff44;
+    width: 170px !important;
+    color: #b2d9bc;
+  }
+
+  ::v-deep .el-tabs__item.is-active {
+    background-color: #efe6e68c;
+  }
+
+  .app-container {
+    margin: 0;
+    background: url("../../../assets/images/bg.png") repeat-y;
+    color: #dfe6ec;
+    height: 100vh;
+  }
+
+  .el-radio{
+    width: 95%;
+    color: #dfe6ec;
+  }
+
+  ::v-deep .el-radio__label{
+    color: #e4ecc6;
+    font-size: 13pt !important;
+  }
+
+  ::v-deep .player {
+    width: 1400px;
+    height: 800px;
+    background-color: black;
+  }
+</style>

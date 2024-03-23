@@ -1,0 +1,138 @@
+package com.szsk.reservoir.security.controller;
+
+import java.util.List;
+import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+
+import com.szsk.reservoir.security.domain.MSafetyAppraisal;
+import com.szsk.reservoir.security.service.IMSafetyAppraisalService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.ruoyi.common.log.annotation.Log;
+import com.ruoyi.common.log.enums.BusinessType;
+import com.ruoyi.common.security.annotation.PreAuthorize;
+import com.szsk.reservoir.security.domain.MReinforcement;
+import com.szsk.reservoir.security.service.IMReinforcementService;
+import com.ruoyi.common.core.web.controller.BaseController;
+import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.utils.poi.ExcelUtil;
+import com.ruoyi.common.core.web.page.TableDataInfo;
+
+/**
+ * 水库大坝除险加固 Controller
+ * 
+ * @author cangfeng
+ * @date 2021-08-17
+ */
+@RestController
+@RequestMapping("/reinforcement")
+public class MReinforcementController extends BaseController
+{
+    @Autowired
+    private IMReinforcementService mReinforcementService;
+    @Autowired
+    private IMSafetyAppraisalService mSafetyAppraisalService;
+
+    /**
+     * 查询水库大坝除险加固 列表
+     */
+    @GetMapping("/list")
+    public TableDataInfo list(MReinforcement mReinforcement)
+    {
+        startPage();
+        List<MReinforcement> list = mReinforcementService.selectMReinforcementList(mReinforcement);
+        return getDataTable(list);
+    }
+
+    /**
+     * 导出水库大坝除险加固 列表
+     */
+    @Log(title = "水库大坝除险加固 ", businessType = BusinessType.EXPORT)
+    @PostMapping("/export")
+    public void export(HttpServletResponse response, MReinforcement mReinforcement) throws IOException
+    {
+        List<MReinforcement> list = mReinforcementService.selectMReinforcementList(mReinforcement);
+        ExcelUtil<MReinforcement> util = new ExcelUtil<MReinforcement>(MReinforcement.class);
+        util.exportExcel(response, list, "水库大坝除险加固 数据");
+    }
+
+    /**
+     * 获取水库大坝除险加固 详细信息
+     */
+    @GetMapping(value = "/{fId}")
+    public AjaxResult getInfo(@PathVariable("fId") Long fId)
+    {
+        return AjaxResult.success(mReinforcementService.selectMReinforcementById(fId));
+    }
+
+    /**
+     * 新增水库大坝除险加固 
+     */
+    @Log(title = "水库大坝除险加固 ", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@RequestBody MReinforcement mReinforcement)
+    {
+        return toAjax(mReinforcementService.insertMReinforcement(mReinforcement));
+    }
+
+    /**
+     * 修改水库大坝除险加固 
+     */
+    @Log(title = "水库大坝除险加固 ", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@RequestBody MReinforcement mReinforcement)
+    {
+        return toAjax(mReinforcementService.updateMReinforcement(mReinforcement));
+    }
+
+    /**
+     * 删除水库大坝除险加固 
+     */
+    @Log(title = "水库大坝除险加固 ", businessType = BusinessType.DELETE)
+	@DeleteMapping("/{fIds}")
+    public AjaxResult remove(@PathVariable Long[] fIds)
+    {
+        return toAjax(mReinforcementService.deleteMReinforcementByIds(fIds));
+    }
+
+    /**
+     * 获取最近
+     */
+    @GetMapping("/latelyReinforcement")
+    public AjaxResult latelyReinforcement(MReinforcement mReinforcement)
+    {
+        return AjaxResult.success(mReinforcementService.latelyReinforcement(mReinforcement));
+    }
+
+    /**
+     * 流程
+     */
+    @Log(title = "安全鉴定流程 ", businessType = BusinessType.INSERT)
+    @PostMapping("/startWorkFlow")
+    public AjaxResult startWorkFlow(@RequestBody MReinforcement mReinforcement)
+    {
+        return mReinforcementService.startWorkFlow(mReinforcement);
+    }
+    @Log(title = "安全鉴定流程 ", businessType = BusinessType.INSERT)
+    @PostMapping("/taskReview")
+    public AjaxResult taskReview(@RequestBody MReinforcement mReinforcement)
+    {
+        return mReinforcementService.taskReview(mReinforcement);
+    }
+
+    /**
+     * dict
+     */
+    @GetMapping("/getDictByType")
+    public AjaxResult getDictByType()
+    {
+        return mSafetyAppraisalService.getDictByType();
+    }
+}

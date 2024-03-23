@@ -1,0 +1,1232 @@
+<template>
+  <div class="app-container">
+    <el-row style="width: 100%">
+      <!-- <el-col :span="24">
+        <div style="margin: 0 auto;display: flex;align-items: center;justify-content:center;width: 80% ;">
+          <div style="position: relative;">
+            <img src="../../../assets/images/01s.png"/>
+            <div  style="position: absolute;top: 17px;left: 23px;width: 50%;color: #FFFFFF;">检查实施</div>
+          </div>
+          <div  style="position: relative;width: 20%;" >
+            <img :src="require(active>1? '../../../assets/images/04.png':'../../../assets/images/05.png')" style="width: 100%;height: 18px;"/>
+            <img v-if="active==1" :src="require(active==1? '../../../assets/images/07.gif':'../../../assets/images/06.gif')" style="position: absolute;top: 0px;left: 100px;height: 80%;width: 10%;"/>
+            </div>
+          <div  style="position: relative;">
+            <img :src="require(active>1? '../../../assets/images/01s.png':'../../../assets/images/01.png')" />
+            <div  :style="active>1? 'position: absolute;top: 17px;left: 23px;width: 50%;color: #FFFFFF;':'position: absolute;top: 17px;left: 23px;width: 50%;color: #999999;'">事件上报</div>
+            </div>
+          <div  style="position: relative;width: 20%;">
+            <img :src="require(active>2? '../../../assets/images/04.png':'../../../assets/images/05.png')" style="width: 100%;height: 18px;"/>
+            <img v-if="active==2 || active==1" :src="require(active==2? '../../../assets/images/07.gif':'../../../assets/images/06.gif')" style="position: absolute;top: 0px;left: 100px;height: 80%;width: 10%;"/>
+            </div>
+          <div   style="position: relative;">
+            <img :src="require(active>2? '../../../assets/images/01s.png':'../../../assets/images/01.png')"/>
+            <div  :style="active>1? 'position: absolute;top: 17px;left: 23px;width: 50%;color: #FFFFFF;':'position: absolute;top: 17px;left: 23px;width: 50%;color: #999999;'">事件处理</div>
+            </div>
+            <div  style="position: relative;width: 20%;">
+              <img :src="require(active==4? '../../../assets/images/04.png':'../../../assets/images/05.png')" style="width: 100%;height: 18px;"/>
+              <img v-if="active!=4" :src="require(active==3? '../../../assets/images/07.gif':'../../../assets/images/06.gif')" style="position: absolute;top: 0px;left: 100px;height: 80%;width: 10%;"/>
+              </div>
+            <div   style="position: relative;">
+              <img :src="require(active==4? '../../../assets/images/01s.png':'../../../assets/images/01.png')" />
+              <div  :style="active>1? 'position: absolute;top: 10px;left: 23px;width: 50%;color: #FFFFFF;':'position: absolute;top: 9px;left: 23px;width: 50%;color: #999999;'">安全情况审核</div>
+              </div>
+        </div>
+      </el-col> -->
+      <el-col :span="24">
+        <div style="margin: 0 auto;display: flex;align-items: center;width: 100%;justify-content:center;">
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;" src="../../../assets/images/jin.png"/>
+            <div style="position: absolute;top: 10px;left: 80px;width: 50%;color: #FFFFFF;">1.检查实施</div>
+          </div>
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;" :src="require(active > 5? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')"/>
+            <div
+              :style="active > 5? 'position: absolute;top: 10px;left: 80px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">
+              2.事件上报
+            </div>
+          </div>
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;" :src="require(active >= 7? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')"/>
+            <div
+              :style="active >= 7? 'position: absolute;top: 10px;left: 80px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">
+              3.事件处理
+            </div>
+          </div>
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;" :src="require(active > 7? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')"/>
+            <div
+              :style="active > 7? 'position: absolute;top: 10px;left: 80px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">
+              4.安全情况审核
+            </div>
+          </div>
+          <div style="position: relative;">
+            <img style="width: 100%;height: 45px;" :src="require(active > 8? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')"/>
+            <div
+              :style="active > 8? 'position: absolute;top: 10px;left: 80px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">
+              5.完成
+            </div>
+          </div>
+
+        </div>
+      </el-col>
+    </el-row>
+    <div class="from-div">
+
+      <el-row>
+        <el-col :span="24"
+                class="from-div-title"
+                style="background-color: rgba(215, 215, 215, 1); text-align: right;"
+        >
+          <div style="margin-right: 5px">
+            <el-button v-if="active == 5 && formData.fId == null || formData.fId == '' " type="primary" size="small"
+                       style="margin-right: 5px" @click="submit(0)">暂存
+            </el-button>
+            <el-button v-if="active == 5" type="primary" size="small" style="margin-right: 20px" @click="submit(1)">事件上报
+            </el-button>
+            <el-button v-if="active == 6" type="primary" size="small" style="margin-right: 20px" @click="handle">处置保存
+            </el-button>
+            <el-button v-if="active == 7" type="primary" size="small" style="margin-right: 20px" @click="event">事件保存
+            </el-button>
+            <el-button v-if="active == 8" type="primary" size="small" style="margin-right: 20px" @click="check">审核
+            </el-button>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row>
+        <el-col :span="24"
+                class="from-div-title"
+        >
+          安全检查实施表
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col-left">
+          计划名称
+        </el-col>
+        <el-col :span="8" style="line-height: 40px;">
+          <div>
+            <div v-if="select == 1">
+              <el-select v-model="formData.fPlaneditId" placeholder="请选择" :disabled="active != 5">
+                <el-option v-for="item in tableData" :key="item.fId" :label="item.fPlanName" :value="item.fId">
+                </el-option>
+              </el-select>
+            </div>
+            <div v-if="select == 0">
+              <el-input v-model="planName" placeholder="计划名称" style="width:100%;" disabled/>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col">
+          计划实施
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            实施内容:
+          </div>
+          <el-input  maxlength="500" show-word-limit  type="textarea" :rows="3" placeholder="请输入内容" v-model="formData.fImplContent"
+                    :disabled="active != 5">
+          </el-input>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col" style="line-height: 400px;min-height:400px">
+          检查列表
+        </el-col>
+        <el-col :span="21">
+          <div style="width:98%;margin:0 auto;">
+            <el-button size="small" type="primary" style="float:right;margin-top:5px;" @click="addCensor"
+                       :disabled="active != 5">检查记录
+            </el-button>
+          </div>
+          <div class="table-head" style="width:98%;margin:0 auto;margin-top:40px;">
+            检查记录列表
+          </div>
+          <el-table :data="formData.recordList" style="width:98%;margin:0 auto;" border>
+            <!--            <el-table-column label="序号"  align="center" prop="id" />-->
+            <el-table-column label="检查内容" align="center" prop="fCheckContent" :show-overflow-tooltip="true"/>
+            <el-table-column label="检查时间" width="120px;" align="center" prop="fCheckTime"/>
+            <el-table-column label="检查人" align="center" prop="fCheckPersion" width="120px;"/>
+            <!-- <el-table-column label="图片" align="center" prop="fPhoto"/> -->
+            <el-table-column label="图片" align="center" prop="fPhoto"  width="120px;">
+              <template slot-scope="scope">
+                <el-image :src="scope.row.imageUrl" style="width: 120px" :preview-src-list="[scope.row.imageUrl]"></el-image>
+                <!-- <el-image src="../../../assets/images/jin.png" style="width: 200px" :preview-src-list="'../../../assets/images/jin.png' "></el-image> -->
+
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="120px;" align="center" class-name="small-padding fixed-width">
+              <template slot-scope="scope">
+                <el-button size="mini" type="text" @click="inspectEdit(scope)" :disabled="active != 5">编辑</el-button>
+                <el-button size="mini" type="text" @click="inspectDelete(scope)" :disabled="active != 5">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col" style="line-height: 400px;min-height:400px">
+          事件列表
+        </el-col>
+        <el-col :span="21">
+          <div style="width:98%;margin:0 auto;">
+            <el-button size="small" type="primary" style="float:right;margin-top:5px;" @click="addHappening"
+                       :disabled="active != 6">事件记录
+            </el-button>
+          </div>
+          <div class="table-head" style="width:98%;margin:0 auto;margin-top:40px;">
+            事件记录列表
+          </div>
+          <el-table :data="recordData" style="width:98%;margin:0 auto;" border>
+            <el-table-column label="事件名称" align="center" prop="fEventName"  width="200px;"/>
+            <el-table-column label="事件等级" align="center" prop="fEventLevel" width="120px;">
+              <template slot-scope="{ row }">
+                <span v-for="item in dict.eventLevel" v-if="row.fEventLevel == item.dictValue">{{ item.dictLabel }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="事件描述" align="center" prop="fEventContent"/>
+            <el-table-column label="发生时间" width="120px;" align="center" prop="fEventTime" />
+            <el-table-column label="上报人" align="center" prop="fEditPersion"  />
+            <!-- <el-table-column label="图片" align="center" prop="fPhoto"/> -->
+            <el-table-column label="图片" align="center" prop="fPhoto"  width="120px;">
+              <template slot-scope="scope">
+                <el-image :src="scope.row.imageUrl1" style="width: 120px" :preview-src-list="[scope.row.imageUrl1]"></el-image>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="120px;" align="center" class-name="small-padding fixed-width">
+              <template slot-scope="scope">
+                <el-button size="mini" type="text" :disabled="active != 6" @click="eventEdit(scope.row)">编辑</el-button>
+                <el-button size="mini" type="text" :disabled="active != 6" @click="eventDelete(scope.row)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-col>
+      </el-row>
+
+
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col" style="line-height: 500px;min-height:400px">
+          处置结果
+        </el-col>
+        <el-col :span="21">
+          <div style="width:98%;margin:0 auto;">
+            <el-button size="small" type="primary" style="float:right;margin-top:5px;" @click="addHandle"
+                       :disabled="active != 7">处置上传
+            </el-button>
+          </div>
+          <div class="table-head" style="width:98%;margin:0 auto;margin-top:40px;">
+            处置结果列表
+          </div>
+          <el-table :data="handleData" style="width:98%;margin:0 auto;" border>
+            <!--            <el-table-column label="序号" align="center" prop="id"/>-->
+            <el-table-column label="事件名称" align="center" prpo="fEventId">
+              <template slot-scope="{row}">
+                 <span v-for="(item,index) in recordData" v-if="item.fId == row.fEventId">
+                  {{ item.fEventName }}
+                </span>
+              </template>
+            </el-table-column>
+            <!-- <el-table-column label="事件描述" align="center" width="200px;" prop="p2" /> -->
+            <el-table-column label="处置内容" align="center"  prop="fProcessContent"/>
+            <el-table-column label="处置时间" align="center" width="120px;" prop="fProcessTime"/>
+            <el-table-column label="处置人" align="center" prop="fProcessPeople" width="120px;"/>
+            <el-table-column label="处置后图片" align="center" prop="fProcessPhoto" width="120px;">
+              <template slot-scope="scope">
+                <el-image  :src="scope.row.imageUrl2" style="width: 120px" :preview-src-list="[scope.row.imageUrl2]"></el-image>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" align="center" width="180px;" class-name="small-padding fixed-width">
+              <template slot-scope="scope">
+                <el-button size="mini" type="text" :disabled="active != 7" @click="resultEdit(scope.row)">编辑</el-button>
+                <el-button size="mini" type="text" :disabled="active != 7" @click="resultDeleted(scope.row)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom">
+        <el-col :span="3" class="from-col">
+          安检审核
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <div style="font-size: 16px;font-weight: 700;padding: 10px;">
+            审核意见：
+          </div>
+          <el-input  maxlength="500" show-word-limit  type="textarea" placeholder="请输入内容" :rows="3" v-model="formData.fReviewComments"
+                    :disabled="active != 8">
+          </el-input>
+          <div class="from-select">
+            <div style="margin-left: 10px;">
+              <div style="font-size: 16px;font-weight: 700;display:inline;">
+                审核结果：
+              </div>
+              <el-select v-model="formData.fReviewResult" clearable placeholder="请选择"
+                         :disabled="active != 8">
+                <el-option v-for="item in dict.result" :key="item.dictValue" :label="item.dictLabel"
+                           :value="item.dictValue">
+                </el-option>
+              </el-select>
+
+            </div>
+            <div>
+              <span>审核人：<el-input v-model="formData.fReviewPeople" placeholder="审核人" style="width:180px;"
+                                  :disabled="active != 8"></el-input></span>
+              <div class="block" style="display:inline;margin-left:10px;">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'"/>
+                <el-date-picker
+                  type="date"
+                  v-model="formData.fReviewDate"
+                  placeholder="选择日期"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  :disabled="active != 8"
+                >
+                </el-date-picker>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </div>
+
+    <!-- 检查记录 -->
+    <el-dialog title="检查记录" :visible.sync="open2" width="700px" append-to-body>
+      <el-form ref="form" :model="checkForm" :inline="true" class="demo-form-inline"  label-width="150px">
+
+        <el-form-item label="检查内容">
+          <el-input style="width: 530px" v-model="checkForm.fCheckContent" :autosize="{ minRows: 4, maxRows: 6}"
+                   maxlength="500" show-word-limit   type="textarea" placeholder="请输入描述内容"></el-input>
+        </el-form-item>
+
+        <el-form-item label="检查时间" prop="">
+          <el-date-picker style="width:  200px" v-model="checkForm.fCheckTime" placeholder="发生时间"
+                          format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="检查人" prop="">
+          <el-input v-model="checkForm.fCheckPersion" style="width:220px;" placeholder="请输入上报人名称" maxlength="50"/>
+        </el-form-item>
+
+        <el-form-item label="上传图片" prop="">
+          <el-upload
+            class="avatar-uploader"
+
+            :headers="GLOBAL.headers()"
+            :action="GLOBAL.httpUrl"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="checkForm.imageUrl" :src="checkForm.imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="inspection">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
+    <!-- 事件记录 -->
+    <el-dialog title="事件记录" :visible.sync="open" width="700px" append-to-body>
+      <el-form ref="form" :model="recordForm" :inline="true" class="demo-form-inline"  label-width="150px">
+        <el-form-item label="事件名称" prop="">
+          <el-input style="width:  200px" v-model="recordForm.fEventName" placeholder="请输入事件名称" maxlength="50"/>
+        </el-form-item>
+
+        <el-form-item label="事件等级" prop="">
+          <el-select v-model="recordForm.fEventLevel" placeholder="请选择事件等级" style="width:220px;">
+            <el-option v-for="item in dict.eventLevel" :key="item.dictValue" :label="item.dictLabel" :value="item.dictValue">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="事件描述">
+          <el-input style="width: 530px" v-model="recordForm.fEventContent" :autosize="{ minRows: 4, maxRows: 6}"
+                   maxlength="500" show-word-limit   type="textarea" placeholder="请输入描述内容"></el-input>
+        </el-form-item>
+
+
+        <el-form-item label="发生时间" prop="">
+          <el-date-picker style="width:  200px" v-model="recordForm.fEventTime" placeholder="发生时间"
+                          format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="上报人" prop="">
+          <el-input v-model="recordForm.fEditPersion" style="width:220px;" placeholder="请输入上报人名称" maxlength="50"/>
+        </el-form-item>
+
+        <el-form-item label="处置前图片" prop="" label-width="150px">
+          <el-upload
+
+            class="avatar-uploader"
+            :headers="GLOBAL.headers()"
+            :action="GLOBAL.httpUrl"
+            :show-file-list="false"
+            :on-success="eventList"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="recordForm.imageUrl1" :src="recordForm.imageUrl1" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="eventOK">确 定</el-button>
+        <el-button @click="eventCanceled">取 消</el-button>
+      </div>
+    </el-dialog>
+
+
+    <!-- 处置上传 -->
+    <el-dialog title="处置上传" :visible.sync="open1" width="700px" append-to-body>
+      <el-form ref="form" :model="handleForm" label-position="labelPosition" label-width="150px">
+
+        <el-form-item label="事件名称" prop="">
+          <el-select v-model="handleForm.fEventId" placeholder="请选择">
+            <el-option v-for="item in recordData" :key="item.fId" :label="item.fEventName" :value="item.fId">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="处置人" prop="">
+          <el-input style="width: 500px" v-model="handleForm.fProcessPeople" placeholder="请输入处置人名称"/>
+        </el-form-item>
+
+        <el-form-item label="处置内容">
+          <el-input style="width: 500px" v-model="handleForm.fProcessContent" :autosize="{ minRows: 4, maxRows: 6}"
+                    maxlength="500" show-word-limit  type="textarea" placeholder="请输入处置内容"></el-input>
+        </el-form-item>
+
+        <el-form-item label="处置时间">
+          <el-date-picker type="date" v-model="handleForm.fProcessTime" maxlength="11" placeholder="处置时间"
+                          format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss">
+          </el-date-picker>
+        </el-form-item>
+
+        <el-form-item label="处置后图片">
+          <el-upload
+
+            class="avatar-uploader"
+            :headers="GLOBAL.headers()"
+            :action="GLOBAL.httpUrl"
+            :show-file-list="false"
+            :on-success="resultList"
+            :before-upload="beforeAvatarUpload">
+            <img v-if="handleForm.imageUrl2" :src="handleForm.imageUrl2" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="resultOk">确 定</el-button>
+        <el-button @click="resultCanceled">取 消</el-button>
+      </div>
+    </el-dialog>
+
+
+<!--    <el-dialog-->
+<!--      title="选择处理人"-->
+<!--      :visible.sync="dialogVisible"-->
+<!--      :modal="false"-->
+<!--      width="30%">-->
+<!--      <el-radio v-model="formData.fActPersion" :label="item.userId" v-for="(item,index) in userList" :key="index">-->
+<!--        {{ item.nickName }}-->
+<!--      </el-radio>-->
+<!--      <span slot="footer" class="dialog-footer">-->
+<!--        <el-button @click="dialogVisible = false">取 消</el-button>-->
+<!--        <el-button type="primary" @click="addAndUpdate">确 定</el-button>-->
+<!--      </span>-->
+<!--    </el-dialog>-->
+
+
+  </div>
+
+</template>
+<script>
+import {
+  getList
+} from "@/api/security/planning";
+import { addEventRecord, updateEventRecord, delEventRecord, listEventRecord } from "@/api/security/eventRecord";
+import { addProcess, updateProcess, delProcess, listProcess } from "@/api/security/process";
+// import {getToken} from "@/utils/auth";
+import {addImpl, updateImpl} from "@/api/security/impl";
+import {
+  getUserList
+} from "@/api/security/planning";
+import {
+  queryDataDictionary,
+  dataQuery
+} from "@/api/indemnification/training";
+export default {
+
+  data() {
+    return {
+      imageUrls:'../../../assets/images/01s.png',
+
+      dict: {
+        eventLevel: [],
+        result: []
+      },
+
+      select: 1,
+
+      planName:'',
+
+      active: 5,
+
+      // dialogVisible: false,
+
+      imageUrl: '',
+
+      imageUrl1: '',
+
+      imageUrl2: '',
+
+      type: '',
+
+      index: '',
+
+      formData: {
+        /** id */
+        fId: null,
+
+        /** 计划编制id */
+        fPlaneditId: null,
+
+        /** 实施内容 */
+        fImplContent: null,
+
+        /** 审核意见 */
+        fReviewComments: null,
+
+        /** 审核结果 0:不同意1：同意 */
+        fReviewResult: null,
+
+        /** 审核人 */
+        fReviewPeople: null,
+
+        /** 审核时间 */
+        fReviewDate: null,
+
+        /** 状态 */
+        fStatus: null,
+
+        /** 创建人 */
+        fCreatePeople: null,
+
+        /** 创建时间 */
+        fCreateTime: null,
+
+        /** 流程实例id */
+        fActId: null,
+
+        // /** 流程下一节点审核人 */
+        // fActPersion: null,
+
+        /** 流程状态 流程状态 1:待审核 2：待审批 3：审批完成 4：驳回 */
+        fActStatus: null,
+
+        /** 流程节点 */
+        fActNode: null,
+
+        /**
+         * 暂存或提交 1提交 0暂存
+         */
+        holdOrSubmit: null,
+
+        /**
+         * 当前登陆人
+         */
+        landingPersonId: null,
+
+        /**
+         * 检查记录集合
+         */
+        recordList: []
+
+      },
+
+      tableData: [],
+
+      checkForm: {
+        imageUrl:null,
+        /** id */fId: null,
+
+        /** 安全检查实施表id */
+        fSecuimpId: null,
+
+        /** 检查内容 */
+        fCheckContent: null,
+
+        /** 检查时间 */
+        fCheckTime: null,
+
+        /** 检查人 */
+        fCheckPersion: null,
+
+        /** 图片 */
+        fPhoto: null,
+
+        /** 状态 0:无效1：有效 */
+        fStatus: null
+      },
+
+      recordForm: {
+        imageUrl1:null,
+        /** id */
+        fId: null,
+
+        /** 安全检查实施表id */
+        fSecuimpId: null,
+
+        /** 事件名称 */
+        fEventName: null,
+
+        /** 事件等级 */
+        fEventLevel: null,
+
+        /** 事件描述 */
+        fEventContent: null,
+
+        /** 发生时间 */
+        fEventTime: null,
+
+        /** 上报人 */
+        fEditPersion: null,
+
+        /** 图片 */
+        fPhoto: null,
+
+        /** 处置内容 */
+        fHandleContent: null,
+
+        /** 处置时间 */
+        fHandleTime: null,
+
+        /** 处置人 */
+        fHandlePersion: null,
+
+        /** 状态 0:无效1：有效 */
+        fStatus: null
+      },
+
+      recordData: [],
+
+      handleForm: {
+        imageUrl2:null,
+        /** id */
+        fId: null,
+
+        /** 事件id */
+        fEventId: null,
+
+        /** 实施id */
+        fImplId: null,
+
+        /** 处置内容 */
+        fProcessContent: null,
+
+        /** 处置人 */
+        fProcessPeople: null,
+
+        /** 处置时间 */
+        fProcessTime: null,
+
+        /** 处置后图片 */
+        fProcessPhoto: null
+
+      },
+
+      handleData: [],
+
+      info: {
+        stockDate: this.getNowTime(),  //日期
+      },
+      open: false,
+      open1: false,
+      open2: false,
+
+      // 文件上传
+      // upload: {
+      //   // 设置上传的请求头部
+      //   headers: {Authorization: "Bearer " + getToken()},
+      //   // 上传的地址
+      //   url: process.env.VUE_APP_BASE_API + "/file/upload"
+      // },
+      userList: [],
+
+    };
+  },
+  created() {
+    this.getList();
+    this.Personnel();
+    this.queryDataDictionary()
+    this.dataQuery()
+  },
+  methods: {
+
+    init(row,data,type) {
+      this.getList()
+      // 显示流程节点
+      this.active = row.fActStatus
+      this.formData = data
+      // 控制显示输入框
+      this.select = type
+      // 控制显示计划名称
+      this.planName = row.fPlanName
+      // 计划名称
+      this.formData.fPlaneditId = this.formData.fPlaneditId.toString()
+      if (data.recordList) {
+        this.formData.recordList = data.recordList
+      }
+      if (data.eventRecordList) {
+        this.recordData = data.eventRecordList
+      }
+      if (data.eventProcessList) {
+        this.handleData = data.eventProcessList
+      }
+      if (data.fReviewResult) {
+        this.formData.fReviewResult = this.formData.fReviewResult.toString()
+      }
+    },
+
+    addHappening() {
+      this.open = true;
+    },
+    addCensor() {
+      this.type = 0
+      this.open2 = true;
+    },
+    addHandle() {
+      this.open1 = true;
+    },
+    cancel() {
+      this.open = false;
+      this.open1 = false;
+      this.open2 = false;
+    },
+
+    inspection() {
+      if (this.type == 0) {
+        this.formData.recordList.push(this.checkForm);
+      } else {
+        this.formData.recordList[this.index] = this.checkForm
+      }
+      this.open2 = false;
+      this.removeCheckForm();
+    },
+
+    inspectEdit(row) {
+      this.type = 1
+      this.checkForm = row.row
+      this.index = row.$index
+      this.open2 = true
+
+    },
+
+    inspectDelete(row) {
+      this.formData.recordList.splice(row.$index)
+    },
+
+    getList() {
+      getList().then(result => {
+        if (result.code == 200) {
+          this.tableData = result.data
+        }
+      });
+    },
+
+    Personnel() {
+      getUserList().then(response => {
+        this.userList = response.data
+      })
+    },
+
+    queryDataDictionary() {
+      queryDataDictionary().then(res => {
+        this.dict.result = res.data.result
+      });
+    },
+
+    submit(type) {
+      if (this.formData.fPlaneditId == null) {
+        this.$message.error("请选择计划名称")
+        return false
+      } else if (this.formData.fImplContent == null) {
+        this.$message.error("请填写实施内容")
+        return false
+      } else if (this.formData.recordList.length <= 0) {
+        this.$message.error("请添加检查记录")
+        return false
+      }
+      this.formData.holdOrSubmit = type
+      // if (type == 1) {
+      //   this.dialogVisible = true;
+      // } else {
+        this.addAndUpdate()
+      // }
+    },
+
+    handle() {
+      if (this.recordData.length <= 0) {
+        this.msgError("请添加事件记录")
+        return false
+      }
+      this.addAndUpdate();
+    },
+
+    event() {
+      if (this.handleData.length <= 0) {
+        this.msgError("请添加处置结果")
+        return false
+      }
+      this.addAndUpdate();
+    },
+
+    check() {
+      if (this.formData.fReviewComments == null) {
+        this.$message.error("请填写审意见")
+        return false
+      } else if (this.formData.fReviewResult == null) {
+        this.$message.error("请选择审核结果")
+        return false
+      } else if (this.formData.fReviewPeople == null) {
+        this.$message.error("请填写审核人")
+        return false
+      }
+      if (this.formData.fReviewDate == null) {
+        this.$message.error("请选择审核时间")
+        return false
+      }
+      this.addAndUpdate()
+    },
+
+    addAndUpdate() {
+      // if (this.formData.holdOrSubmit == 1) {
+      //   if (this.formData.fActPersion == null) {
+      //     this.$message.error("请选择流程下一环节审核人")
+      //     return false
+      //   }
+      // }
+      if (this.formData.fId != null && this.formData.fId != '') {
+        updateImpl(this.formData).then(res => {
+          if (res.code == 200) {
+            if (this.formData.holdOrSubmit == 1) {
+              this.$message.success("安全检查实施提交成功");
+            } else {
+              this.msgSuccess("安全审核实施暂存成功");
+            }
+            // this.dialogVisible = false;
+            // 调用父组件方法关闭弹窗
+            this.$emit("shut", false)
+            // 调用父组件方法查询列表
+            this.$emit("search")
+          } else {
+            if (this.formData.holdOrSubmit == 1) {
+              this.$message.error("安全检查实施提交失败");
+            } else {
+              this.msgError("安全检查实施暂存失败");
+            }
+          }
+        });
+      } else {
+        addImpl(this.formData).then(res => {
+          if (res.code == 200) {
+            this.$message.success("安全检查实施成功");
+            this.clearForm()
+            // this.dialogVisible = false
+          } else {
+            this.$message.error("安全检查实施失败")
+          }
+        });
+      }
+    },
+
+    dataQuery() {
+      var query = { dictType: 'eventLevel' }
+      dataQuery(query).then(res => {
+        if (res.code == 200) {
+          this.dict.eventLevel = res.data
+        }
+      });
+    },
+
+    //处理默认选中当前日期
+    getNowTime() {
+      var now = new Date();
+      var year = now.getFullYear(); //得到年份
+      var month = now.getMonth(); //得到月份
+      var date = now.getDate(); //得到日期
+      var hour = " 00:00:00"; //默认时分秒 如果传给后台的格式为年月日时分秒，就需要加这个，如若不需要，此行可忽略
+      month = month + 1;
+      month = month.toString().padStart(2, "0");
+      date = date.toString().padStart(2, "0");
+      var defaultDate = `${year}-${month}-${date}${hour}`;
+      console.log(defaultDate)
+      return defaultDate;
+      this.$set(this.info, "stockDate", defaultDate);
+    },
+
+    // 检查记录列表图片
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(1111,this.imageUrl)
+      this.checkForm.fPhoto = res.data.fId
+      this.checkForm.imageUrl = this.imageUrl
+    },
+
+    // 事件列表图片
+    eventList(res, file) {
+      this.imageUrl1 = URL.createObjectURL(file.raw);
+      this.recordForm.fPhoto = res.data.fId
+      this.recordForm.imageUrl1 = this.imageUrl1
+    },
+
+    // 处置结果列表图片
+    resultList(res, file) {
+      this.imageUrl2 = URL.createObjectURL(file.raw);
+      this.handleForm.fProcessPhoto = res.data.fId
+      this.handleForm.imageUrl2 = this.imageUrl2
+    },
+
+    beforeAvatarUpload(file){
+          const isLt100M = file.size / 1024 / 1024 < 100;
+             if (!isLt100M) {
+                    this.$message.error('上传文件大小不能超过 100MB!');
+                    return false
+                }
+          },
+
+    // 新增修改事件记录
+    eventOK() {
+      if (this.recordForm.fId) {
+        console.log('123123123')
+        updateEventRecord(this.recordForm).then(res => {
+          if (res.code == 200) {
+            this.msgSuccess("事件记录编辑成功");
+            this.listEventRecord()
+            this.open = false;
+          } else {
+            this.msgError("事件编辑失败");
+          }
+        });
+      } else {
+        // 安全检查实施表id
+        this.recordForm.fSecuimpId = this.formData.fId;
+        addEventRecord(this.recordForm).then(res => {
+          if (res.code == 200) {
+            this.msgSuccess("事件记录新增成功");
+            this.listEventRecord()
+            this.removeRecordForm()
+            this.open = false
+          } else {
+            this.msgError("事件记录新增失败");
+          }
+        });
+      }
+    },
+
+    // 编辑事件记录
+    eventEdit(row) {
+      this.recordForm = row
+      this.open = true
+    },
+
+    // 删除事件记录
+    eventDelete(row) {
+      this.$confirm('是否确认删除事件记录 编号为"' + row.fId + '"的数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return delEventRecord(row.fId);
+      }).then(() => {
+        this.listEventRecord();
+        this.msgSuccess("删除成功");
+      }).catch(() => {});
+    },
+
+    // 获取事件记录列表
+    listEventRecord() {
+      // 根据实施id查询列表
+      var query = { fSecuimpId: this.formData.fId }
+      listEventRecord(query).then(res => {
+        if (res.code == 200) {
+          this.recordData = res.rows
+        }
+      });
+    },
+
+    // 事件记录弹窗关闭
+    eventCanceled() {
+      this.removeRecordForm()
+      this.open = false
+    },
+
+    // 新增编辑处置结果
+    resultOk() {
+      if (this.handleForm.fId) {
+        updateProcess(this.handleForm).then(res => {
+          if (res.code == 200) {
+            this.msgSuccess("处置结果编辑成功");
+            this.listProcess()
+            this.removeHandleForm()
+            this.open1 = false
+          } else {
+            this.msgError("处置结果编辑失败");
+          }
+        });
+      } else {
+        // 实施表id
+        this.handleForm.fImplId = this.formData.fId
+        addProcess(this.handleForm).then(res => {
+          if (res.code == 200) {
+            this.msgSuccess("处置结果新增成功");
+            this.listProcess();
+            this.removeHandleForm();
+            this.open1 = false;
+          } else {
+            this.msgError("处置结果新增失败");
+          }
+        });
+      }
+    },
+
+    // 编辑处置结果
+    resultEdit(row) {
+      this.handleForm = row
+      this.open1 = true
+    },
+
+    // 删除处置结果
+    resultDeleted(row) {
+      this.$confirm('是否确认删除处置结果 编号为"' + row.fId + '"的数据项?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return delProcess(row.fId);
+      }).then(() => {
+        this.listProcess();
+        this.msgSuccess("删除成功");
+      }).catch(() => {});
+    },
+
+    // 获取处置结果列表
+    listProcess() {
+      var query = { fImplId: this.formData.fId }
+      listProcess(query).then(res => {
+        if (res.code == 200) {
+          this.handleData = res.rows
+        }
+      });
+    },
+
+    // 关闭处置结果弹窗
+    resultCanceled() {
+      this.removeHandleForm()
+      this.open1 = false
+    },
+
+    removeCheckForm() {
+      this.checkForm = {
+        imageUrl:null,
+        /** id */fId: null,
+
+        /** 安全检查实施表id */
+        fSecuimpId: null,
+
+        /** 检查内容 */
+        fCheckContent: null,
+
+        /** 检查时间 */
+        fCheckTime: null,
+
+        /** 检查人 */
+        fCheckPersion: null,
+
+        /** 图片 */
+        fPhoto: null,
+
+        /** 状态 0:无效1：有效 */
+        fStatus: null
+      },
+        this.imageUrl = ''
+    },
+
+    removeRecordForm() {
+      this.recordForm = {
+        /** id */
+        imageUrl1:null,
+        fId: null,
+
+        /** 安全检查实施表id */
+        fSecuimpId: null,
+
+        /** 事件名称 */
+        fEventName: null,
+
+        /** 事件等级 */
+        fEventLevel: null,
+
+        /** 事件描述 */
+        fEventContent: null,
+
+        /** 发生时间 */
+        fEventTime: null,
+
+        /** 上报人 */
+        fEditPersion: null,
+
+        /** 图片 */
+        fPhoto: null,
+
+        /** 处置内容 */
+        fHandleContent: null,
+
+        /** 处置时间 */
+        fHandleTime: null,
+
+        /** 处置人 */
+        fHandlePersion: null,
+
+        /** 状态 0:无效1：有效 */
+        fStatus: null
+      }
+    },
+
+    removeHandleForm() {
+      this.handleForm = {
+        imageUrl2:null,
+        /** id */
+        fId: null,
+
+        /** 事件id */
+        fEventId: null,
+
+        /** 实施id */
+        fImplId: null,
+
+        /** 处置内容 */
+        fProcessContent: null,
+
+        /** 处置人 */
+        fProcessPeople: null,
+
+        /** 处置时间 */
+        fProcessTime: null,
+
+        /** 处置后图片 */
+        fProcessPhoto: null
+
+      }
+    },
+
+    clearForm() {
+      this.formData = {
+        /** id */
+        fId: null,
+
+        /** 计划编制id */
+        fPlaneditId: null,
+
+        /** 实施内容 */
+        fImplContent: null,
+
+        /** 审核意见 */
+        fReviewComments: null,
+
+        /** 审核结果 0:不同意1：同意 */
+        fReviewResult: null,
+
+        /** 审核人 */
+        fReviewPeople: null,
+
+        /** 审核时间 */
+        fReviewDate: null,
+
+        /** 状态 */
+        fStatus: null,
+
+        /** 创建人 */
+        fCreatePeople: null,
+
+        /** 创建时间 */
+        fCreateTime: null,
+
+        /** 流程实例id */
+        fActId: null,
+
+        // /** 流程下一节点审核人 */
+        // fActPersion: null,
+
+        /** 流程状态 流程状态 1:待审核 2：待审批 3：审批完成 4：驳回 */
+        fActStatus: null,
+
+        /** 流程节点 */
+        fActNode: null,
+
+        /**
+         * 暂存或提交 1提交 0暂存
+         */
+        holdOrSubmit: null,
+
+        /**
+         * 当前登陆人
+         */
+        landingPersonId: null,
+
+        /**
+         * 检查记录集合
+         */
+        recordList: []
+      }
+    }
+
+  }
+};
+</script>
+<style lang="scss">
+.color409 {
+  color: #409eff;
+  cursor: pointer;
+}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 118px;
+  height: 118px;
+  line-height: 118px;
+  text-align: center;
+}
+
+.avatar {
+  width: 118px;
+  height: 118px;
+  display: block;
+}
+  .el-image-viewer__wrapper {
+    z-index: 99999999 !important;
+  }
+
+</style>

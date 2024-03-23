@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.risk.mapper.MRiskManagementMapper">
+
+    <resultMap type="com.szsk.reservoir.risk.domain.MRiskManagement" id="MRiskManagementResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fRiskName"    column="f_risk_name"    />
+        <result property="fRiskType"    column="f_risk_type"    />
+        <result property="fRiskNumber"    column="f_risk_number"    />
+        <result property="fRiskFindDate"    column="f_risk_find_date"    />
+        <result property="fRiskSummary"    column="f_risk_summary"    />
+        <result property="fRecordPeople"    column="f_record_people"    />
+        <result property="fRecordDate"    column="f_record_date"    />
+        <result property="fRiskInfoFileId"    column="f_risk_info_file_id"    />
+        <result property="fResponseSituation"    column="f_response_situation"    />
+        <result property="fResponsePeople"    column="f_response_people"    />
+        <result property="fResponseDate"    column="f_response_date"    />
+        <result property="fResponseInfoFileId"    column="f_response_info_file_id"    />
+        <result property="fDisposalResults"    column="f_disposal_results"    />
+        <result property="fDisposalPeople"    column="f_disposal_people"    />
+        <result property="fDisposalDate"    column="f_disposal_date"    />
+        <result property="fDisposalInfoFileId"    column="f_disposal_info_file_id"    />
+        <result property="fInspectionOpinions"    column="f_inspection_opinions"    />
+        <result property="fInspectionResults"    column="f_inspection_results"    />
+        <result property="fInspectionPeople"    column="f_inspection_people"    />
+        <result property="fInspectionDate"    column="f_inspection_date"    />
+        <result property="fActId"    column="f_act_id"    />
+        <result property="fActPersion"    column="f_act_persion"    />
+        <result property="fActStatus"    column="f_act_status"    />
+        <result property="fActNode"    column="f_act_node"    />
+        <result property="fCreateBy"    column="f_create_by"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+    </resultMap>
+
+    <sql id="selectMRiskManagementVo">
+        select f_id, f_risk_name, f_risk_type, f_risk_number, f_risk_find_date, f_risk_summary, f_record_people, f_record_date, f_risk_info_file_id, f_response_situation, f_response_people, f_response_date, f_response_info_file_id, f_disposal_results, f_disposal_people, f_disposal_date, f_disposal_info_file_id, f_inspection_opinions, f_inspection_results, f_inspection_people, f_inspection_date, f_act_id, f_act_persion, f_act_status, f_act_node, f_create_by, f_create_time from m_risk_management
+    </sql>
+
+    <select id="selectMRiskManagementList" parameterType="com.szsk.reservoir.risk.domain.MRiskManagement" resultMap="MRiskManagementResult">
+        <include refid="selectMRiskManagementVo"/>
+        <where>
+            <if test="fRiskName != null  and fRiskName != ''"> and f_risk_name like concat('%', #{fRiskName}, '%')</if>
+            <if test="fRiskType != null "> and f_risk_type = #{fRiskType}</if>
+            <if test="fRiskNumber != null  and fRiskNumber != ''"> and f_risk_number = #{fRiskNumber}</if>
+            <if test="fRiskFindDate != null "> and f_risk_find_date = #{fRiskFindDate}</if>
+            <if test="fRiskSummary != null  and fRiskSummary != ''"> and f_risk_summary = #{fRiskSummary}</if>
+            <if test="fRecordPeople != null  and fRecordPeople != ''"> and f_record_people = #{fRecordPeople}</if>
+            <if test="fRecordDate != null "> and f_record_date = #{fRecordDate}</if>
+            <if test="fRiskInfoFileId != null "> and f_risk_info_file_id = #{fRiskInfoFileId}</if>
+            <if test="fResponseSituation != null  and fResponseSituation != ''"> and f_response_situation = #{fResponseSituation}</if>
+            <if test="fResponsePeople != null  and fResponsePeople != ''"> and f_response_people = #{fResponsePeople}</if>
+            <if test="fResponseDate != null "> and f_response_date = #{fResponseDate}</if>
+            <if test="fResponseInfoFileId != null "> and f_response_info_file_id = #{fResponseInfoFileId}</if>
+            <if test="fDisposalResults != null  and fDisposalResults != ''"> and f_disposal_results = #{fDisposalResults}</if>
+            <if test="fDisposalPeople != null  and fDisposalPeople != ''"> and f_disposal_people = #{fDisposalPeople}</if>
+            <if test="fDisposalDate != null "> and f_disposal_date = #{fDisposalDate}</if>
+            <if test="fDisposalInfoFileId != null "> and f_disposal_info_file_id = #{fDisposalInfoFileId}</if>
+            <if test="fInspectionOpinions != null  and fInspectionOpinions != ''"> and f_inspection_opinions = #{fInspectionOpinions}</if>
+            <if test="fInspectionResults != null "> and f_inspection_results = #{fInspectionResults}</if>
+            <if test="fInspectionPeople != null  and fInspectionPeople != ''"> and f_inspection_people = #{fInspectionPeople}</if>
+            <if test="fInspectionDate != null "> and f_inspection_date = #{fInspectionDate}</if>
+            <if test="fActId != null "> and f_act_id = #{fActId}</if>
+            <if test="fActPersion != null "> and f_act_persion = #{fActPersion}</if>
+            <if test="fActStatus != null "> and f_act_status = #{fActStatus}</if>
+            <if test="fActNode != null  and fActNode != ''"> and f_act_node = #{fActNode}</if>
+            <if test="fCreateBy != null "> and f_create_by = #{fCreateBy}</if>
+            <if test="fCreateTime != null "> and f_create_time = #{fCreateTime}</if>
+        </where>
+        ORDER BY f_id DESC
+    </select>
+
+    <select id="selectMRiskManagementById" parameterType="Long" resultMap="MRiskManagementResult">
+        <include refid="selectMRiskManagementVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <insert id="insertMRiskManagement" parameterType="com.szsk.reservoir.risk.domain.MRiskManagement" useGeneratedKeys="true" keyProperty="fId">
+        insert into m_risk_management
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fRiskName != null">f_risk_name,</if>
+            <if test="fRiskType != null">f_risk_type,</if>
+            <if test="fRiskNumber != null">f_risk_number,</if>
+            <if test="fRiskFindDate != null">f_risk_find_date,</if>
+            <if test="fRiskSummary != null">f_risk_summary,</if>
+            <if test="fRecordPeople != null">f_record_people,</if>
+            <if test="fRecordDate != null">f_record_date,</if>
+            <if test="fRiskInfoFileId != null">f_risk_info_file_id,</if>
+            <if test="fResponseSituation != null">f_response_situation,</if>
+            <if test="fResponsePeople != null">f_response_people,</if>
+            <if test="fResponseDate != null">f_response_date,</if>
+            <if test="fResponseInfoFileId != null">f_response_info_file_id,</if>
+            <if test="fDisposalResults != null">f_disposal_results,</if>
+            <if test="fDisposalPeople != null">f_disposal_people,</if>
+            <if test="fDisposalDate != null">f_disposal_date,</if>
+            <if test="fDisposalInfoFileId != null">f_disposal_info_file_id,</if>
+            <if test="fInspectionOpinions != null">f_inspection_opinions,</if>
+            <if test="fInspectionResults != null">f_inspection_results,</if>
+            <if test="fInspectionPeople != null">f_inspection_people,</if>
+            <if test="fInspectionDate != null">f_inspection_date,</if>
+            <if test="fActId != null">f_act_id,</if>
+            <if test="fActPersion != null">f_act_persion,</if>
+            <if test="fActStatus != null">f_act_status,</if>
+            <if test="fActNode != null">f_act_node,</if>
+            <if test="fCreateBy != null">f_create_by,</if>
+            <if test="fCreateTime == null">f_create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fRiskName != null">#{fRiskName},</if>
+            <if test="fRiskType != null">#{fRiskType},</if>
+            <if test="fRiskNumber != null">#{fRiskNumber},</if>
+            <if test="fRiskFindDate != null">#{fRiskFindDate},</if>
+            <if test="fRiskSummary != null">#{fRiskSummary},</if>
+            <if test="fRecordPeople != null">#{fRecordPeople},</if>
+            <if test="fRecordDate != null">#{fRecordDate},</if>
+            <if test="fRiskInfoFileId != null">#{fRiskInfoFileId},</if>
+            <if test="fResponseSituation != null">#{fResponseSituation},</if>
+            <if test="fResponsePeople != null">#{fResponsePeople},</if>
+            <if test="fResponseDate != null">#{fResponseDate},</if>
+            <if test="fResponseInfoFileId != null">#{fResponseInfoFileId},</if>
+            <if test="fDisposalResults != null">#{fDisposalResults},</if>
+            <if test="fDisposalPeople != null">#{fDisposalPeople},</if>
+            <if test="fDisposalDate != null">#{fDisposalDate},</if>
+            <if test="fDisposalInfoFileId != null">#{fDisposalInfoFileId},</if>
+            <if test="fInspectionOpinions != null">#{fInspectionOpinions},</if>
+            <if test="fInspectionResults != null">#{fInspectionResults},</if>
+            <if test="fInspectionPeople != null">#{fInspectionPeople},</if>
+            <if test="fInspectionDate != null">#{fInspectionDate},</if>
+            <if test="fActId != null">#{fActId},</if>
+            <if test="fActPersion != null">#{fActPersion},</if>
+            <if test="fActStatus != null">#{fActStatus},</if>
+            <if test="fActNode != null">#{fActNode},</if>
+            <if test="fCreateBy != null">#{fCreateBy},</if>
+            <if test="fCreateTime == null">now(),</if>
+        </trim>
+    </insert>
+
+    <update id="updateMRiskManagement" parameterType="com.szsk.reservoir.risk.domain.MRiskManagement">
+        update m_risk_management
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fRiskName != null">f_risk_name = #{fRiskName},</if>
+            <if test="fRiskType != null">f_risk_type = #{fRiskType},</if>
+            <if test="fRiskNumber != null">f_risk_number = #{fRiskNumber},</if>
+            <if test="fRiskFindDate != null">f_risk_find_date = #{fRiskFindDate},</if>
+            <if test="fRiskSummary != null">f_risk_summary = #{fRiskSummary},</if>
+            <if test="fRecordPeople != null">f_record_people = #{fRecordPeople},</if>
+            <if test="fRecordDate != null">f_record_date = #{fRecordDate},</if>
+            <if test="fRiskInfoFileId != null">f_risk_info_file_id = #{fRiskInfoFileId},</if>
+            <if test="fResponseSituation != null">f_response_situation = #{fResponseSituation},</if>
+            <if test="fResponsePeople != null">f_response_people = #{fResponsePeople},</if>
+            <if test="fResponseDate != null">f_response_date = #{fResponseDate},</if>
+            <if test="fResponseInfoFileId != null">f_response_info_file_id = #{fResponseInfoFileId},</if>
+            <if test="fDisposalResults != null">f_disposal_results = #{fDisposalResults},</if>
+            <if test="fDisposalPeople != null">f_disposal_people = #{fDisposalPeople},</if>
+            <if test="fDisposalDate != null">f_disposal_date = #{fDisposalDate},</if>
+            <if test="fDisposalInfoFileId != null">f_disposal_info_file_id = #{fDisposalInfoFileId},</if>
+            <if test="fInspectionOpinions != null">f_inspection_opinions = #{fInspectionOpinions},</if>
+            <if test="fInspectionResults != null">f_inspection_results = #{fInspectionResults},</if>
+            <if test="fInspectionPeople != null">f_inspection_people = #{fInspectionPeople},</if>
+            <if test="fInspectionDate != null">f_inspection_date = #{fInspectionDate},</if>
+            <if test="fActId != null">f_act_id = #{fActId},</if>
+            <if test="fActPersion != null">f_act_persion = #{fActPersion},</if>
+            <if test="fActStatus != null">f_act_status = #{fActStatus},</if>
+            <if test="fActNode != null">f_act_node = #{fActNode},</if>
+            <if test="fCreateBy != null">f_create_by = #{fCreateBy},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteMRiskManagementById" parameterType="Long">
+        delete from m_risk_management where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteMRiskManagementByIds" parameterType="String">
+        delete from m_risk_management where f_id in
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,67 @@
+package com.szsk.reservoir.security.mapper;
+
+import java.util.List;
+import com.szsk.reservoir.security.domain.MCancellation;
+
+/**
+ * 水库大坝注销 Mapper接口
+ * 
+ * @author cangfeng
+ * @date 2021-08-14
+ */
+public interface MCancellationMapper 
+{
+    /**
+     * 查询最近
+     * 
+     * @return 水库大坝注销
+     */
+    public MCancellation getLatelyCancellation(MCancellation mCancellation);
+    /**
+     * 查询水库大坝注销
+     *
+     * @param fId 水库大坝注销 ID
+     * @return 水库大坝注销
+     */
+    public MCancellation selectMCancellationById(Long fId);
+
+    /**
+     * 查询水库大坝注销 列表
+     * 
+     * @param mCancellation 水库大坝注销 
+     * @return 水库大坝注销 集合
+     */
+    public List<MCancellation> selectMCancellationList(MCancellation mCancellation);
+
+    /**
+     * 新增水库大坝注销 
+     * 
+     * @param mCancellation 水库大坝注销 
+     * @return 结果
+     */
+    public int insertMCancellation(MCancellation mCancellation);
+
+    /**
+     * 修改水库大坝注销 
+     * 
+     * @param mCancellation 水库大坝注销 
+     * @return 结果
+     */
+    public int updateMCancellation(MCancellation mCancellation);
+
+    /**
+     * 删除水库大坝注销 
+     * 
+     * @param fId 水库大坝注销 ID
+     * @return 结果
+     */
+    public int deleteMCancellationById(Long fId);
+
+    /**
+     * 批量删除水库大坝注销 
+     * 
+     * @param fIds 需要删除的数据ID
+     * @return 结果
+     */
+    public int deleteMCancellationByIds(Long[] fIds);
+}

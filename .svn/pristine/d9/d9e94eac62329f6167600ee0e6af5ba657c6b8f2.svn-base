@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.security.mapper.MFloodMaterialsMapper">
+
+    <resultMap type="com.szsk.reservoir.security.domain.MFloodMaterials" id="MFloodMaterialsResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fMaterialsName"    column="f_materials_name"    />
+        <result property="fSpecification"    column="f_specification"    />
+        <result property="fEffective"    column="f_effective"    />
+        <result property="fStorageAddress"    column="f_storage_address"    />
+        <result property="fStorageRequirement"    column="f_storage_requirement"    />
+        <result property="fPurpose"    column="f_purpose"    />
+        <result property="fManufacturer"    column="f_manufacturer"    />
+        <result property="fUnit"    column="f_unit"    />
+        <result property="fNum"    column="f_num"    />
+        <result property="fPrice"    column="f_price"    />
+        <result property="fClassify"    column="f_classify"    />
+        <result property="fCreateBy"    column="f_create_by"    />
+        <result property="fCreateDate"    column="f_create_date"    />
+        <result property="fUpdateBy"    column="f_update_by"    />
+        <result property="fUpdateDate"    column="f_update_date"    />
+    </resultMap>
+
+    <sql id="selectMFloodMaterialsVo">
+        select f_id, f_materials_name, f_specification, f_effective, f_storage_address, f_storage_requirement, f_purpose, f_manufacturer, f_unit, f_num, f_price, f_classify, f_create_by, f_create_date, f_update_by, f_update_date from m_flood_materials
+    </sql>
+
+    <select id="selectMFloodMaterialsList" parameterType="com.szsk.reservoir.security.domain.MFloodMaterials" resultMap="MFloodMaterialsResult">
+        <include refid="selectMFloodMaterialsVo"/>
+        <where>
+            <if test="fMaterialsName != null  and fMaterialsName != ''"> and f_materials_name like concat('%', #{fMaterialsName}, '%')</if>
+            <if test="fSpecification != null  and fSpecification != ''"> and f_specification = #{fSpecification}</if>
+            <if test="fEffective != null "> and f_effective = #{fEffective}</if>
+            <if test="fStorageAddress != null  and fStorageAddress != ''"> and f_storage_address = #{fStorageAddress}</if>
+            <if test="fStorageRequirement != null  and fStorageRequirement != ''"> and f_storage_requirement = #{fStorageRequirement}</if>
+            <if test="fPurpose != null  and fPurpose != ''"> and f_purpose = #{fPurpose}</if>
+            <if test="fManufacturer != null  and fManufacturer != ''"> and f_manufacturer = #{fManufacturer}</if>
+            <if test="fUnit != null  and fUnit != ''"> and f_unit = #{fUnit}</if>
+            <if test="fNum != null "> and f_num = #{fNum}</if>
+            <if test="fPrice != null "> and f_price = #{fPrice}</if>
+            <if test="fClassify != null "> and f_classify = #{fClassify}</if>
+            <if test="fCreateBy != null "> and f_create_by = #{fCreateBy}</if>
+            <if test="fCreateDate != null "> and f_create_date = #{fCreateDate}</if>
+            <if test="fUpdateBy != null "> and f_update_by = #{fUpdateBy}</if>
+            <if test="fUpdateDate != null "> and f_update_date = #{fUpdateDate}</if>
+        </where>
+    </select>
+
+    <select id="selectMFloodMaterialsById" parameterType="Long" resultMap="MFloodMaterialsResult">
+        <include refid="selectMFloodMaterialsVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <insert id="insertMFloodMaterials" parameterType="com.szsk.reservoir.security.domain.MFloodMaterials" useGeneratedKeys="true" keyProperty="fId">
+        insert into m_flood_materials
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fMaterialsName != null">f_materials_name,</if>
+            <if test="fSpecification != null">f_specification,</if>
+            <if test="fEffective != null">f_effective,</if>
+            <if test="fStorageAddress != null">f_storage_address,</if>
+            <if test="fStorageRequirement != null">f_storage_requirement,</if>
+            <if test="fPurpose != null">f_purpose,</if>
+            <if test="fManufacturer != null">f_manufacturer,</if>
+            <if test="fUnit != null">f_unit,</if>
+            <if test="fNum != null">f_num,</if>
+            <if test="fPrice != null">f_price,</if>
+            <if test="fClassify != null">f_classify,</if>
+            <if test="fCreateBy != null">f_create_by,</if>
+            <if test="fCreateDate != null">f_create_date,</if>
+            <if test="fUpdateBy != null">f_update_by,</if>
+            <if test="fUpdateDate != null">f_update_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fMaterialsName != null">#{fMaterialsName},</if>
+            <if test="fSpecification != null">#{fSpecification},</if>
+            <if test="fEffective != null">#{fEffective},</if>
+            <if test="fStorageAddress != null">#{fStorageAddress},</if>
+            <if test="fStorageRequirement != null">#{fStorageRequirement},</if>
+            <if test="fPurpose != null">#{fPurpose},</if>
+            <if test="fManufacturer != null">#{fManufacturer},</if>
+            <if test="fUnit != null">#{fUnit},</if>
+            <if test="fNum != null">#{fNum},</if>
+            <if test="fPrice != null">#{fPrice},</if>
+            <if test="fClassify != null">#{fClassify},</if>
+            <if test="fCreateBy != null">#{fCreateBy},</if>
+            <if test="fCreateDate != null">#{fCreateDate},</if>
+            <if test="fUpdateBy != null">#{fUpdateBy},</if>
+            <if test="fUpdateDate != null">#{fUpdateDate},</if>
+        </trim>
+    </insert>
+
+    <insert id="insertAllMFloodMaterials">
+        insert into m_flood_materials
+            (
+                f_materials_name,
+                f_specification,
+                f_effective,
+                f_storage_address,
+                f_storage_requirement,
+                f_purpose,
+                f_manufacturer,
+                f_unit,
+                f_num,
+                f_price,
+                f_classify,
+                f_create_by,
+                f_create_date,
+                f_update_by,
+                f_update_date
+            )
+        values
+        <foreach collection="list" item="materials" separator=",">
+           (
+                #{materials.fMaterialsName},
+                #{materials.fSpecification},
+                #{materials.fEffective},
+                #{materials.fStorageAddress},
+                #{materials.fStorageRequirement},
+                #{materials.fPurpose},
+                #{materials.fManufacturer},
+                #{materials.fUnit},
+                #{materials.fNum},
+                #{materials.fPrice},
+                #{materials.fClassify},
+                #{materials.fCreateBy},
+                #{materials.fCreateDate},
+                #{materials.fUpdateBy},
+                #{materials.fUpdateDate}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateMFloodMaterials" parameterType="com.szsk.reservoir.security.domain.MFloodMaterials">
+        update m_flood_materials
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fMaterialsName != null">f_materials_name = #{fMaterialsName},</if>
+            <if test="fSpecification != null">f_specification = #{fSpecification},</if>
+            <if test="fEffective != null">f_effective = #{fEffective},</if>
+            <if test="fStorageAddress != null">f_storage_address = #{fStorageAddress},</if>
+            <if test="fStorageRequirement != null">f_storage_requirement = #{fStorageRequirement},</if>
+            <if test="fPurpose != null">f_purpose = #{fPurpose},</if>
+            <if test="fManufacturer != null">f_manufacturer = #{fManufacturer},</if>
+            <if test="fUnit != null">f_unit = #{fUnit},</if>
+            <if test="fNum != null">f_num = #{fNum},</if>
+            <if test="fPrice != null">f_price = #{fPrice},</if>
+            <if test="fClassify != null">f_classify = #{fClassify},</if>
+            <if test="fCreateBy != null">f_create_by = #{fCreateBy},</if>
+            <if test="fCreateDate != null">f_create_date = #{fCreateDate},</if>
+            <if test="fUpdateBy != null">f_update_by = #{fUpdateBy},</if>
+            <if test="fUpdateDate != null">f_update_date = #{fUpdateDate},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteMFloodMaterialsById" parameterType="Long">
+        delete from m_flood_materials where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteMFloodMaterialsByIds" parameterType="String">
+        delete from m_flood_materials where f_id in
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

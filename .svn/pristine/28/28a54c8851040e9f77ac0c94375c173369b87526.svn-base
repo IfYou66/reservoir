@@ -1,0 +1,124 @@
+package com.szsk.reservoir.manageSystem.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.ruoyi.common.core.domain.SysDictData;
+import com.ruoyi.common.core.exception.CustomException;
+import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.szsk.reservoir.manageSystem.domain.SysJoinTraining;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.szsk.reservoir.manageSystem.mapper.SysTrainingMapper;
+import com.szsk.reservoir.manageSystem.domain.SysTraining;
+import com.szsk.reservoir.manageSystem.service.ISysTrainingService;
+
+import javax.annotation.Resource;
+
+/**
+ * 培训Service业务层处理
+ * 
+ * @author cangfeng
+ * @date 2021-08-13
+ */
+@Service
+public class SysTrainingServiceImpl implements ISysTrainingService 
+{
+    @Resource
+    private SysTrainingMapper sysTrainingMapper;
+
+    /**
+     * 查询培训
+     * 
+     * @param fId 培训ID
+     * @return 培训
+     */
+    @Override
+    public SysTraining selectSysTrainingById(Long fId)
+    {
+        return sysTrainingMapper.selectSysTrainingById(fId);
+    }
+
+    /**
+     * 查询培训列表
+     * 
+     * @param sysTraining 培训
+     * @return 培训
+     */
+    @Override
+    public List<SysTraining> selectSysTrainingList(SysTraining sysTraining)
+    {
+        return sysTrainingMapper.selectSysTrainingList(sysTraining);
+    }
+
+    /**
+     * 新增培训
+     * 
+     * @param sysTraining 培训
+     * @return 结果
+     */
+    @Override
+    public int insertSysTraining(SysTraining sysTraining,List<SysJoinTraining> joinTrainingList)
+    {
+        return sysTrainingMapper.insertSysTraining(sysTraining);
+    }
+
+    /**
+     * 修改培训
+     * 
+     * @param sysTraining 培训
+     * @return 结果
+     */
+    @Override
+    public int updateSysTraining(SysTraining sysTraining)
+    {
+        return sysTrainingMapper.updateSysTraining(sysTraining);
+    }
+
+    /**
+     * 批量删除培训
+     * 
+     * @param fIds 需要删除的培训ID
+     * @return 结果
+     */
+    @Override
+    public int deleteSysTrainingByIds(Long[] fIds)
+    {
+        return sysTrainingMapper.deleteSysTrainingByIds(fIds);
+    }
+
+    /**
+     * 删除培训信息
+     * 
+     * @param fId 培训ID
+     * @return 结果
+     */
+    @Override
+    public int deleteSysTrainingById(Long fId)
+    {
+        return sysTrainingMapper.deleteSysTrainingById(fId);
+    }
+
+    @Override
+    public AjaxResult queryDataDictionary() {
+        Map<String,Object> map = new HashMap<>();
+        try {
+            // 查询字典
+            List<SysDictData> gender = sysTrainingMapper.queryDict("sys_user_sex");
+            map.put("gender",gender);
+
+            List<SysDictData> politicalStatus = sysTrainingMapper.queryDict("sys_political_outlook");
+            map.put("politicalStatus", politicalStatus);
+
+            List<SysDictData> education = sysTrainingMapper.queryDict("sys_education");
+            map.put("education", education);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new CustomException("数据初始化异常");
+        }
+        return AjaxResult.success(map);
+    }
+
+}

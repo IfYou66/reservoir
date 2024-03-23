@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.manageSystem.mapper.SysJoinTrainingMapper">
+    
+    <resultMap type="com.szsk.reservoir.manageSystem.domain.SysJoinTraining" id="SysJoinTrainingResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fTrainingId"    column="f_training_id"    />
+        <result property="fName"    column="f_name"    />
+        <result property="fGender"    column="f_gender"    />
+        <result property="fAge"    column="f_age"    />
+        <result property="fFace"    column="f_face"    />
+        <result property="fJobContent"    column="f_job_content"    />
+        <result property="fJobTitle"    column="f_job_title"    />
+        <result property="fEducation"    column="f_education"    />
+        <result property="fFraction"    column="f_fraction"    />
+        <result property="fTarTime"    column="f_tar_time"    />
+        <result property="fProve"    column="f_prove"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectSysJoinTrainingVo">
+        select f_id, f_reservoir_info_id,f_training_id, f_name, f_gender, f_age, f_face, f_job_content, f_job_title, f_education, f_fraction, f_tar_time, f_prove, f_status from sys_join_training
+    </sql>
+
+    <select id="selectSysJoinTrainingList" parameterType="com.szsk.reservoir.manageSystem.domain.SysJoinTraining" resultMap="SysJoinTrainingResult">
+        <include refid="selectSysJoinTrainingVo"/>
+        <where>
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fTrainingId != null "> and f_training_id = #{fTrainingId}</if>
+            <if test="fName != null  and fName != ''"> and f_name like concat('%', #{fName}, '%')</if>
+            <if test="fGender != null "> and f_gender = #{fGender}</if>
+            <if test="fAge != null "> and f_age = #{fAge}</if>
+            <if test="fFace != null "> and f_face = #{fFace}</if>
+            <if test="fJobContent != null  and fJobContent != ''"> and f_job_content = #{fJobContent}</if>
+            <if test="fJobTitle != null  and fJobTitle != ''"> and f_job_title = #{fJobTitle}</if>
+            <if test="fEducation != null "> and f_education = #{fEducation}</if>
+            <if test="fFraction != null "> and f_fraction = #{fFraction}</if>
+            <if test="fTarTime != null "> and f_tar_time = #{fTarTime}</if>
+            <if test="fProve != null "> and f_prove = #{fProve}</if>
+            <if test="fStatus != null "> and f_status = #{fStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectSysJoinTrainingById" parameterType="Long" resultMap="SysJoinTrainingResult">
+        <include refid="selectSysJoinTrainingVo"/>
+        where f_id = #{fId}
+    </select>
+    
+    <insert id="bulkInsert">
+        insert into sys_join_training (
+        f_training_id,
+        f_reservoir_info_id,
+        f_name,
+        f_gender,
+        f_age,
+        f_face,
+        f_job_content,
+        f_job_title,
+        f_education,
+        f_fraction,
+        f_tar_time,
+        f_prove,
+        f_status
+        )
+        values
+        <foreach collection="list" item="join" separator=",">
+            (
+            #{join.fTrainingId},
+            #{join.fReservoirInfoId},
+            #{join.fName},
+            #{join.fGender},
+            #{join.fAge},
+            #{join.fFace},
+            #{join.fJobContent},
+            #{join.fJobTitle},
+            #{join.fEducation},
+            #{join.fFraction},
+            #{join.fTarTime},
+            #{join.fProve},
+            #{join.fStatus}
+            )
+        </foreach>
+    </insert>
+        
+    <insert id="insertSysJoinTraining" parameterType="com.szsk.reservoir.manageSystem.domain.SysJoinTraining" useGeneratedKeys="true" keyProperty="fId">
+        insert into sys_join_training
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fTrainingId != null">f_training_id,</if>
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fName != null">f_name,</if>
+            <if test="fGender != null">f_gender,</if>
+            <if test="fAge != null">f_age,</if>
+            <if test="fFace != null">f_face,</if>
+            <if test="fJobContent != null">f_job_content,</if>
+            <if test="fJobTitle != null">f_job_title,</if>
+            <if test="fEducation != null">f_education,</if>
+            <if test="fFraction != null">f_fraction,</if>
+            <if test="fTarTime != null">f_tar_time,</if>
+            <if test="fProve != null">f_prove,</if>
+            <if test="fStatus != null">f_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fTrainingId != null">#{fTrainingId},</if>
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fName != null">#{fName},</if>
+            <if test="fGender != null">#{fGender},</if>
+            <if test="fAge != null">#{fAge},</if>
+            <if test="fFace != null">#{fFace},</if>
+            <if test="fJobContent != null">#{fJobContent},</if>
+            <if test="fJobTitle != null">#{fJobTitle},</if>
+            <if test="fEducation != null">#{fEducation},</if>
+            <if test="fFraction != null">#{fFraction},</if>
+            <if test="fTarTime != null">#{fTarTime},</if>
+            <if test="fProve != null">#{fProve},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysJoinTraining" parameterType="com.szsk.reservoir.manageSystem.domain.SysJoinTraining">
+        update sys_join_training
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fTrainingId != null">f_training_id = #{fTrainingId},</if>
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fName != null">f_name = #{fName},</if>
+            <if test="fGender != null">f_gender = #{fGender},</if>
+            <if test="fAge != null">f_age = #{fAge},</if>
+            <if test="fFace != null">f_face = #{fFace},</if>
+            <if test="fJobContent != null">f_job_content = #{fJobContent},</if>
+            <if test="fJobTitle != null">f_job_title = #{fJobTitle},</if>
+            <if test="fEducation != null">f_education = #{fEducation},</if>
+            <if test="fFraction != null">f_fraction = #{fFraction},</if>
+            <if test="fTarTime != null">f_tar_time = #{fTarTime},</if>
+            <if test="fProve != null">f_prove = #{fProve},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteSysJoinTrainingById" parameterType="Long">
+        delete from sys_join_training where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteSysJoinTrainingByIds" parameterType="String">
+        delete from sys_join_training where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,517 @@
+<template>
+  <div class="app-container">
+    <el-row :gutter="20">
+
+      <el-col :span="4" :xs="24">
+        <div class="head-container">
+          <el-input
+            v-model="typeName"
+            placeholder="请输入分类名称"
+            clearable
+            size="small"
+            prefix-icon="el-icon-search"
+            style="margin-bottom: 20px"
+          />
+        </div>
+        <div class="head-container">
+          <el-tree
+            :data="archivesOptions"
+            :props="defaultProps"
+            :expand-on-click-node="false"
+            :filter-node-method="filterNode"
+            ref="tree"
+            :default-expand-all="false"
+            @node-click="handleNodeClick"
+          />
+        </div>
+      </el-col>
+
+      <el-col :span="20" :xs="24">
+        <el-form :model="queryParams" ref="queryForm" :inline="true">
+          <el-form-item label="档案名称" prop="roleName">
+            <el-input
+              v-model="queryParams.fArchivesName"
+              placeholder="请输入档案名称"
+              clearable
+              size="small"
+              style="width: 160px"
+            />
+          </el-form-item>
+
+          <el-form-item label="责任人" prop="roleName">
+            <el-input
+              v-model="queryParams.fReceivePersion"
+              placeholder="请输入责任人"
+              clearable
+              size="small"
+              style="width: 160px"
+            />
+          </el-form-item>
+
+          <el-form-item label="档案编号" prop="roleName">
+            <el-input
+              v-model="queryParams.fArchivesNumber"
+              placeholder="请输入编号档案"
+              clearable
+              size="small"
+              style="width: 160px"
+            />
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="getList">搜索</el-button>
+
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+          </el-form-item>
+        </el-form>
+
+        <el-table
+          border
+          ref="multipleTable"
+          :data="archivesList"
+          tooltip-effect="dark"
+          style="width: 100%"
+        >
+          <el-table-column prop="fArchivesNumber" align="center" label="编号" width="120"/>
+          <el-table-column prop="fArchivesName" align="center" label="档案名称" width="90"/>
+          <el-table-column prop="fReceivePersion" align="center" label="责任人" width="90"/>
+          <el-table-column prop="fReceiveTime" align="center" label="接收时间" :show-overflow-tooltip="true"/>
+          <el-table-column prop="fFileNum" align="center" label="文件份数" width="90"/>
+          <el-table-column prop="fVolumeNum" align="center" label="卷内张数" width="90"/>
+          <el-table-column prop="fStoreroomId" align="center" label="库房" width="120">
+            <template slot-scope="scope" >
+                <span v-for="(item,index) in storeroomsList" v-if="item.fStoreroomId == scope.row.fStoreroomId">
+                  {{item.fStoreroomName}}
+                </span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="fShelfNumber" align="center" label="书架编号" width="120"/>
+          <el-table-column prop="fGrade" align="center" label="绝密等级" width="90">
+            <template slot-scope="scope" >
+                <span v-for="(item,index) in dictList" v-if="item.dictValue == scope.row.fGrade">
+                  {{item.dictLabel}}
+                </span>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column prop="frequency" align="center" label="借阅次数" width="90"/> -->
+          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+            <template slot-scope="{ row }">
+
+              <el-button size="mini" type="text" @click="handleUpdate(0,row)">预览</el-button>
+
+              <el-button size="mini" type="text" @click="borrowFile(row)" v-if="row.ifBorrow == 0">借阅</el-button>
+
+              <el-button size="mini" type="text" @click="record(row)">借阅记录</el-button>
+
+            </template>
+          </el-table-column>
+
+        </el-table>
+
+        <pagination
+          v-show="total>0"
+          :total="total"
+          :page.sync="queryParams.pageNum"
+          :limit.sync="queryParams.pageSize"
+          @pagination="getList"
+        />
+      </el-col>
+    </el-row>
+
+    <el-dialog :title="this.title" :visible.sync="open" width="40%" :before-close="handleClose" @close="cancel">
+
+      <el-form :inline="true" :model="form" ref="form" class="demo-form-inline">
+
+        <el-form-item label="案卷ID">
+          <el-input style="width:200px" v-model="form.fArchivesId" placeholder="案卷ID"/>
+        </el-form-item>
+        <el-form-item label="案卷名称">
+          <el-input style="width:200px" v-model="form.fArchivesName" placeholder="案卷名称"/>
+        </el-form-item>
+        <el-form-item label="库房">
+          <el-input style="width:200px" v-model="form.fStoreroomName" placeholder="库房"/>
+        </el-form-item>
+        <el-form-item label="借阅人">
+          <el-input style="width:200px" v-model="form.fBorrower" placeholder="请输入借阅人姓名"/>
+        </el-form-item>
+
+    </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="cancel">取 消</el-button>
+    <el-button type="primary" @click="submitForm">确 定</el-button>
+  </span>
+    </el-dialog>
+
+    <!-- 借阅记录弹窗 -->
+   <el-dialog title="借阅记录" :visible.sync="dialogTableVisible">
+     <div style="font-size: 18px">档案名称：{{this.documentName}}</div>
+     <br>
+     <div style="font-size: 18px">借阅次数：<font color="red">{{this.number}}</font></div>
+     <br>
+     <el-table :data="gridData" border>
+       <el-table-column property="fBorrower" align="center" label="借阅人"></el-table-column>
+       <el-table-column property="fBorrowerTime" align="center" label="借阅时间"></el-table-column>
+       <el-table-column property="fReturnTime" align="center" label="归还时间"></el-table-column>
+     </el-table>
+     <span slot="footer" class="dialog-footer">
+       <el-button @click="dialogTableVisible = false">取 消</el-button>
+       <el-button type="primary" @click="dialogTableVisible = false">确 定</el-button>
+     </span>
+   </el-dialog>
+
+    <el-dialog
+      title="预览"
+      :visible.sync="dialogBox"
+      width="55%"
+      :before-close="handleClose">
+      <img src="../../assets/u10346.png">
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogBox = false">取 消</el-button>
+    <el-button type="primary" @click="dialogBox = false">确 定</el-button>
+      </span>
+    </el-dialog>
+
+  </div>
+</template>
+
+<script>
+
+//档案借阅记录 相关接口API
+import {queryBorrow,addBorrow} from "@/api/classifyManage/borrow"
+import {getToken} from "@/utils/auth";
+import {treeselect} from "@/api/classifyManage/archivesType";
+import {getFileById} from "@/api/file";
+import Treeselect from "@riophae/vue-treeselect";
+import "@riophae/vue-treeselect/dist/vue-treeselect.css";
+import {
+  listArchives,
+  initArchivesForm,
+  getArchives,
+  delArchives,
+  addArchives,
+  updateArchives
+} from "@/api/systemSecurity/archives";
+
+export default {
+
+  components: {Treeselect},
+  data() {
+    return {
+      //借阅表格数据
+      gridData:[],
+      //借阅次数
+      number:0,
+      type: '',
+
+      download: '',
+
+      // 档案 表格数据
+      archivesList: [],
+
+      fileList: [],
+
+      form: {},
+      dictList: [],
+
+      previewOrModify: '',
+
+      dialogBox: false,
+      storeroomsList: [],
+      // 遮罩层
+      loading: true,
+      // 非多个禁用
+      multiple: true,
+      // 显示搜索条件
+      showSearch: true,
+      // 总条数
+      total: 0,
+      // 用户表格数据
+      userList: null,
+      // 弹出层标题
+      title: "",
+      // 部门树选项
+      archivesOptions: undefined,
+      // 是否显示弹出层
+      open: false,
+      // 部门名称
+      typeName: undefined,
+      // 默认密码
+      initPassword: undefined,
+      // 日期范围
+      dateRange: [],
+      // 状态数据字典
+      statusOptions: [],
+      // 性别状态字典
+      sexOptions: [],
+      // 岗位选项
+      postOptions: [],
+      // 角色选项
+      roleOptions: [],
+
+      dialogTableVisible: false,
+
+      documentName: '',
+
+      defaultProps: {
+        children: 'children',
+        label: 'label'
+      },
+
+      // 文件上传
+      upload: {
+        // 设置上传的请求头部
+        headers: {Authorization: "Bearer " + getToken()},
+        // 上传的地址
+        url: process.env.VUE_APP_BASE_API + "/file/upload"
+      },
+      // 查询参数
+      queryParams: {
+        pageNum: 1,
+        pageSize: 10,
+        fArchivesNumber: null,
+        fArchivesName: null,
+        fStoreroomId: null,
+        fArchivesTypeId: null,
+        fShelfNumber: null,
+        fGrade: null,
+        fFileNum: null,
+        fVolumeNum: null,
+        fAppendixId: null,
+        fStatus: null,
+        fReceiveTime: null,
+        fLogoutTime: null,
+        fCreateTime: null,
+        fEndTime: null,
+        fReceivePersion: null
+      },
+      // 表单重置
+      reset() {
+        this.form = {
+          fArchivesId: null,
+          fArchivesNumber: null,
+          fArchivesName: null,
+          fStoreroomId: null,
+          fReceivePersion: null,
+          fArchivesTypeId: null,
+          fShelfNumber: null,
+          fGrade: null,
+          fFileNum: null,
+          fVolumeNum: null,
+          fAppendixId: null,
+          fStatus: 0,
+          fReceiveTime: null,
+          fLogoutTime: null,
+          fCreateTime: null,
+          fEndTime: null
+        };
+        this.fileList = [],
+          this.resetForm("form");
+      },
+    };
+  },
+  watch: {
+
+
+    // 根据名称筛选部门树
+    typeName(val) {
+      this.$refs.tree.filter(val);
+    }
+  },
+  created() {
+    this.initArchivesForm();
+    this.getList();
+    this.getTreeselect();
+  },
+  methods: {
+    //借阅记录按钮
+    record(row) {
+      this.dialogTableVisible = true
+      console.log('借阅记录 ---------------  ',row)
+      queryBorrow({fArchivesId:row.fArchivesId}).then(res => {
+        this.gridData = res.rows
+        this.number = res.total
+        console.log("列表数据",res)
+        this.loading = false
+      })
+    },
+
+    //借阅按钮
+    borrowFile(row) {
+      console.log("  ----- 借阅 -----   ",row)
+      this.title = '借阅《' + row.fArchivesName + '》'
+
+      //库房
+      this.form.fStoreroomName = row.fStoreroomId
+      //档案名称
+      this.form.fArchivesName = row.fArchivesName
+
+      //档案ID
+      this.form.fArchivesId = row.fArchivesId
+
+      //借阅时间
+      const nowDate = new Date();
+      const date = {
+        year: nowDate.getFullYear(),
+        month: nowDate.getMonth() + 1,
+        date: nowDate.getDate(),
+        hour: nowDate.getHours(),
+        minute:nowDate.getMinutes(),
+        second:nowDate.getSeconds(),
+      };
+      const newmonth = date.month > 10 ? date.month : "0" + date.month;
+      const day = date.date > 10 ? date.date : "0" + date.date;
+      const mm = date.minute < 10 ? '0'+date.minute : date.minute;
+      const ss = date.second < 10 ? '0'+date.second : date.second;
+      this.form.fBorrowerTime = date.year + "-" + newmonth + "-" + day + " " + date.hour +":"+ date.minute + ":" + date.second;
+
+      this.open = true
+
+    },
+    seeDetails() {
+      this.dialogBox = true
+    },
+
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.queryParams.fArchivesName=null
+      this.queryParams.fReceivePersion=null
+      this.queryParams.fArchivesNumber=null
+      this.handleQuery();
+    },
+
+    /** 新增按钮操作 */
+    handleAdd() {
+      this.type = 0
+      this.reset();
+      this.title = '添加档案'
+      this.open = true
+      this.previewOrModify = 1
+    },
+
+    /** 编辑按钮操作 */
+    handleUpdate(previewOrModify,row) {
+      if (previewOrModify == 1) {
+        this.title = '编辑档案';
+      } else {
+        this.title = '预览档案';
+      }
+      this.previewOrModify = previewOrModify
+      this.type = 1;
+      this.form = row
+      this.open = true
+      if (row.fAppendixId) {
+        getFileById({id: row.fAppendixId}).then(result => {
+          if (result) {
+            this.download = result.data.fFilePath
+            this.fileList = [{name: result.data.fOldFileName, url: result.data.fFilePath}]
+          }
+        })
+      }
+    },
+
+    /** 提交按钮 */
+    submitForm() {
+      if(this.form.fBorrower == '' || this.form.fBorrower == null) {
+        this.msgSuccess('借阅人不可为空')
+        return
+      }
+      this.form.fState = 0
+      addBorrow(this.form).then(result =>{
+        //console.log("新增借阅记录",result)
+        if(result.code == 200) {
+            this.msgSuccess("新增借阅记录成功");
+            this.form.fBorrower = ''
+            this.open = false;
+            this.getList();
+        }
+      })
+
+    },
+
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => {
+        });
+    },
+
+    uploadedSuccess(response, file, fileList) {
+      this.form.fAppendixId = response.data.fId
+    },
+
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+	  window.open(this.fileList[0].url);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+
+    /** 搜索按钮操作 */
+    handleQuery() {
+      this.queryParams.fArchivesTypeId = null
+      this.getList();
+    },
+
+    /** 查询档案 列表 */
+    getList() {
+      this.loading = true;
+      listArchives(this.queryParams).then(response => {
+        this.archivesList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+      });
+    },
+    initArchivesForm() {
+      initArchivesForm().then(response => {
+        this.dictList = response.data.dictList;
+        this.storeroomsList = response.data.storeroomsList;
+      });
+    },
+
+    /** 查询部门下拉树结构 */
+    getTreeselect() {
+      treeselect().then(response => {
+        this.archivesOptions = response.data;
+      });
+    },
+    // 筛选节点
+    filterNode(value, data) {
+      if (!value) return true;
+      return data.label.indexOf(value) !== -1;
+    },
+    // 节点单击事件
+    handleNodeClick(data) {
+      this.queryParams.fArchivesTypeId = data.id;
+      this.getList();
+    },
+
+    // 取消按钮
+    cancel() {
+      this.reset();
+      this.open = false;
+    },
+
+
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.download {
+  margin-left: 35px;
+
+  ::v-deep.is-underline {
+    margin-top: 20px;
+  }
+}
+
+</style>

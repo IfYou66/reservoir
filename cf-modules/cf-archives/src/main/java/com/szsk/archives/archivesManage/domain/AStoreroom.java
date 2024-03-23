@@ -1,0 +1,168 @@
+package com.szsk.archives.archivesManage.domain;
+
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import com.ruoyi.common.core.annotation.Excel;
+import com.ruoyi.common.core.web.domain.BaseEntity;
+
+/**
+ * 库房对象 a_storeroom
+ * 
+ * @author wangcc
+ * @date 2021-08-16
+ */
+public class AStoreroom extends BaseEntity
+{
+    private static final long serialVersionUID = 1L;
+
+    /** id */
+    private Long fStoreroomId;
+
+    /** 库房编号 */
+    @Excel(name = "库房编号")
+    private String fStoreroomNumber;
+
+    /** 库房名称 */
+    @Excel(name = "库房名称")
+    private String fStoreroomName;
+
+    /** 库房说明详情 */
+    @Excel(name = "库房说明详情")
+    private String fStoreroomRemark;
+
+    /** 库房别名 */
+    @Excel(name = "库房别名")
+    private String fStoreroomAlias;
+
+    /** 排序 */
+    @Excel(name = "排序")
+    private Integer fSort;
+
+    /** 状态 */
+    @Excel(name = "状态")
+    private Integer fStatus;
+
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date fCreateTime;
+
+    /** 更新时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date fUpdateTime;
+
+    /**
+     * 水库id
+     */
+    private Long fReservoirInfoId;
+
+    
+    public Long getfReservoirInfoId() {
+		return fReservoirInfoId;
+	}
+
+	public void setfReservoirInfoId(Long fReservoirInfoId) {
+		this.fReservoirInfoId = fReservoirInfoId;
+	}
+	public void setfStoreroomId(Long fStoreroomId) 
+    {
+        this.fStoreroomId = fStoreroomId;
+    }
+
+    
+
+    public Long getfStoreroomId()
+    {
+        return fStoreroomId;
+    }
+    public void setfStoreroomNumber(String fStoreroomNumber) 
+    {
+        this.fStoreroomNumber = fStoreroomNumber;
+    }
+
+    public String getfStoreroomNumber() 
+    {
+        return fStoreroomNumber;
+    }
+    public void setfStoreroomName(String fStoreroomName) 
+    {
+        this.fStoreroomName = fStoreroomName;
+    }
+
+    public String getfStoreroomName() 
+    {
+        return fStoreroomName;
+    }
+    public void setfStoreroomRemark(String fStoreroomRemark) 
+    {
+        this.fStoreroomRemark = fStoreroomRemark;
+    }
+
+    public String getfStoreroomRemark() 
+    {
+        return fStoreroomRemark;
+    }
+    public void setfStoreroomAlias(String fStoreroomAlias) 
+    {
+        this.fStoreroomAlias = fStoreroomAlias;
+    }
+
+    public String getfStoreroomAlias() 
+    {
+        return fStoreroomAlias;
+    }
+    public void setfSort(Integer fSort) 
+    {
+        this.fSort = fSort;
+    }
+
+    public Integer getfSort() 
+    {
+        return fSort;
+    }
+    public void setfStatus(Integer fStatus) 
+    {
+        this.fStatus = fStatus;
+    }
+
+    public Integer getfStatus() 
+    {
+        return fStatus;
+    }
+    public void setfCreateTime(Date fCreateTime) 
+    {
+        this.fCreateTime = fCreateTime;
+    }
+
+    public Date getfCreateTime() 
+    {
+        return fCreateTime;
+    }
+    public void setfUpdateTime(Date fUpdateTime) 
+    {
+        this.fUpdateTime = fUpdateTime;
+    }
+
+    public Date getfUpdateTime() 
+    {
+        return fUpdateTime;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("fStoreroomId", getfStoreroomId())
+            .append("fStoreroomNumber", getfStoreroomNumber())
+            .append("fStoreroomName", getfStoreroomName())
+            .append("fStoreroomRemark", getfStoreroomRemark())
+            .append("fStoreroomAlias", getfStoreroomAlias())
+            .append("fSort", getfSort())
+            .append("fStatus", getfStatus())
+            .append("fCreateTime", getfCreateTime())
+            .append("fUpdateTime", getfUpdateTime())
+            .toString();
+    }
+}

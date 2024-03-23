@@ -1,0 +1,162 @@
+<template>
+  <div class="app-container home">
+    <div class="layui-fluid">
+      <div class="layui-card">
+        <div class="layui-card-body" style="width: 100%;height: 100%;">
+          <!--<div class="img-main">-->
+            <iframe id="mainIframe" ref="mainIframe" name="mainIframe" allowfullscreen='true'  frameborder="0" marginheight="0" marginwidth="0"   src="https://6400.succld.com/" width="80%" height="80%"></iframe>
+          <!--</div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "index",
+    data() {
+      return {
+        // 版本号
+        version: "2.5.0",
+        base: require('@/api/collection/'+this.common.CURRENT_RESERVOIR+'/base'),
+        image: this.common.CURRENT_RESERVOIR,
+      };
+    },
+    mounted() {
+      setTimeout(() =>{
+          if(document.getElementById('mainIframe')){
+            const oIframe = document.getElementById('mainIframe');
+            const deviceWidth = document.documentElement.clientWidth;
+            const deviceHeight = document.documentElement.clientHeight;
+            oIframe.style.width = (Number(deviceWidth-200)) + 'px'; //数字是页面布局宽度差值
+            oIframe.style.height = (Number(deviceHeight-200)) + 'px'; //数字是页面布局高度差
+          }
+      },200);
+          this.$nextTick(()=>{
+             window.addEventListener('resize', () => { //监听浏览器窗口大小改变
+                  const oIframe = document.getElementById('mainIframe');
+                  const deviceWidth = document.documentElement.clientWidth;
+                  const deviceHeight = document.documentElement.clientHeight;
+                  oIframe.style.width = (Number(deviceWidth-200)) + 'px'; //数字是页面布局宽度差值
+                  oIframe.style.height = (Number(deviceHeight-200)) + 'px'; //数字是页面布局高度差
+                    });
+                })
+
+
+      // this.addInfo();
+    },
+    methods: {
+      goTarget(href) {
+        window.open(href, "_blank");
+      },
+      addInfo() {
+        let main = document.getElementById('main');
+        main.innerHTML = this.base.getBaseInfo().info;
+      }
+    },
+
+  };
+</script>
+
+<style scoped lang="scss">
+  .home {
+    blockquote {
+      padding: 10px 20px;
+      margin: 0 0 20px;
+      font-size: 17.5px;
+      border-left: 5px solid #eee;
+    }
+
+    hr {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      border: 0;
+      border-top: 1px solid #eee;
+    }
+
+    .col-item {
+      margin-bottom: 20px;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    color: #676a6c;
+    overflow-x: hidden;
+
+    ul {
+      list-style-type: none;
+    }
+
+    h4 {
+      margin-top: 0px;
+    }
+
+    h2 {
+      margin-top: 10px;
+      font-size: 26px;
+      font-weight: 100;
+    }
+
+    p {
+      margin-top: 10px;
+
+      b {
+        font-weight: 700;
+      }
+    }
+
+    .update-log {
+      ol {
+        display: block;
+        list-style-type: decimal;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+        padding-inline-start: 40px;
+      }
+    }
+
+    html, body {
+      height: 97%;
+    }
+
+    .layui-fluid, .layui-card {
+      height: 100%;
+    }
+
+  .img-main > img {
+      display: block;
+      margin: 0 auto;
+      width: 80%;
+      height: 450px;
+    }
+
+
+
+    .info-main {
+      width: 80%;
+      margin: 1% auto 0;
+      text-align: justify;
+    }
+
+    .layui-fluid > .layui-card:nth-child(1) {
+      background-image: url("../assets/images/data/body.jpg");
+    }
+
+    .info-main > p {
+      font-family: 宋体, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu, serif, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu, serif;
+      font-size: 20pt;
+      color: black;
+      line-height: 38px;
+      font-weight: bold;
+    }
+  }
+</style>
+

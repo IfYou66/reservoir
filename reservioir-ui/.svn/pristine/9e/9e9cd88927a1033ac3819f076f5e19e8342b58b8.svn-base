@@ -1,0 +1,174 @@
+<template>
+  <div class="app-container">
+    <dv-border-box13 style="padding:20px; height: 780px;">
+      <el-row>
+        <el-col :span="24">
+          <div class="layui-card">
+            <div class="layui-card-body" style="height: 740px;">
+              <div id="div_map" style="width: 100%;height: 100%;min-width: 1536px;"></div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </dv-border-box13>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "realtime",
+    data() {
+      return {
+        markerArr: this.reservoir.getBasinControlInfo().markers,
+        map: null,
+      }
+    },
+    mounted() {
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = "https://api.map.baidu.com/getscript??v=3.0&ak=epzuneKMNwBO9DunUSojeQlPGfz6NfM3&services=&t=20200927172029";
+      script.onload = () => {
+        this.init();
+      };
+      document.body.appendChild(script);
+
+    },
+    methods: {
+      init() {
+        let BMap = window.BMap;
+        this.map = new BMap.Map("div_map", {enableMapClick: false});
+        this.setMapEvent(this.map);//设置地图事件
+        this.addMapControl(this.map);//向地图添加控件
+        this.map.clearOverlays();        //清除地图覆盖物
+        this.getBoundary(this.map);
+        this.addMarker(this.map);//向地图中添加marker
+      },
+      //地图事件设置函数：
+      setMapEvent(map) {
+        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+        //map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+        map.enableKeyboard();//启用键盘上下左右键移动地图
+      },
+
+      //地图控件添加函数：
+      addMapControl(map) {
+        //向地图中添加缩放控件
+        let ctrl_nav = new BMap.NavigationControl({
+          anchor: BMAP_ANCHOR_TOP_LEFT,
+          type: BMAP_NAVIGATION_CONTROL_LARGE
+        });
+        map.addControl(ctrl_nav);
+        //向地图中添加比例尺控件
+        let ctrl_sca = new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT});
+        map.addControl(ctrl_sca);
+      },
+
+
+      //创建marker
+      addMarker(map) {
+        for (let i = 0; i < this.markerArr.length; i++) {
+          let json = this.markerArr[i];
+          let p0 = json.point.split("|")[0];
+          let p1 = json.point.split("|")[1];
+          let point = new BMap.Point(p0, p1);
+          let iconImg = this.createIcon(json.icon);
+          let marker = new BMap.Marker(point, {icon: iconImg});
+
+          let iw = this.createInfoWindow(i);
+          let label = new BMap.Label(json.title, {"offset": new BMap.Size(json.icon.lb - json.icon.x + 10, -20)});
+          marker.setLabel(label);
+          map.addOverlay(marker);
+          label.setStyle({
+            borderColor: "#808080",
+            color: "#333",
+            cursor: "pointer"
+          });
+
+          let that = this;
+          (function () {
+            let index = i;
+            let _iw = that.createInfoWindow(i);
+            let _marker = marker;
+            _marker.addEventListener("click", function () {
+              that.openInfoWindow(_iw);
+            });
+            _iw.addEventListener("open", function () {
+              _marker.getLabel().hide();
+            });
+            _iw.addEventListener("close", function () {
+              _marker.getLabel().show();
+            });
+            label.addEventListener("click", function () {
+              _marker.openInfoWindow(_iw);
+            });
+            if (!!json.isOpen) {
+              label.hide();
+              _marker.openInfoWindow(_iw);
+            }
+          })()
+        }
+      },
+
+      //创建InfoWindow
+      createInfoWindow(i) {
+        let json = this.markerArr[i];
+        let windowStr = "<b class='iw_poi_title' title='" + json.title + "'>" + json.title +
+          "</b><div class='iw_poi_content'>" + json.content + "</div>" + "<div>"
+          + (json.type === "0" ? "" : ("<a href='" + json.href + "' target='_blank'>点击进入</a>")) + "</div>";
+        return new BMap.InfoWindow(windowStr);
+      },
+
+      //创建一个Icon
+      createIcon(json) {
+        return new BMap.Icon("../../../assets/images/common/mapPoint.png", new BMap.Size(json.w, json.h), {
+          imageOffset: new BMap.Size(-json.l, -json.t),
+          infoWindowOffset: new BMap.Size(json.lb + 5, 1),
+          offset: new BMap.Size(json.x, json.h)
+        });
+      },
+
+      getBoundary(map) {
+        map.clearOverlays();        //清除地图覆盖物
+        let polygons = [];
+        let dots = this.reservoir.getBasinControlInfo().boundaryDots;
+        for (let i = 0; i < dots.length; i++) {
+          polygons.push(new BMap.Point(dots[i][0], dots[i][1]));
+        }
+        let ply = new BMap.Polygon(polygons, {strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5});
+
+        ply.setFillOpacity(0.3);
+        ply.setFillColor("#FFBFFF")
+        ply.setStrokeStyle("dashed");
+        map.addOverlay(ply);  //添加覆盖物
+        map.setViewport(ply.getBounds());    //调整视野
+
+        //添加四条线
+        let lines = this.reservoir.getBasinControlInfo().areaLines;
+        for (let i = 0; i < lines.length; i++) {
+          let lineDots = [];
+          for (let j = 0; j < lines[i].length; j++) {
+            lineDots.push(new BMap.Point(lines[i][j][0], lines[i][j][1]));
+          }
+
+          let line = new BMap.Polyline(lineDots, {strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5});
+          line.setFillOpacity(0.3);
+          line.setFillColor("#FFBFFF")
+          line.setStrokeStyle("dashed");
+          map.addOverlay(line);  //添加覆盖物
+        }
+      }
+    }
+  }
+
+
+</script>
+
+<style scoped>
+  .app-container {
+    margin: 0;
+    background: url("../../../assets/images/bg.png") repeat-y;
+    color: #dfe6ec;
+    height: 100vh;
+  }
+</style>

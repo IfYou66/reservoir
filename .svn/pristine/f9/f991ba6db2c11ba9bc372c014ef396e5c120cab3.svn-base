@@ -1,0 +1,26 @@
+package com.ruoyi.file.service.impl;
+
+import com.ruoyi.file.mapper.SysFileMapper;
+import com.ruoyi.file.service.FileService;
+import com.ruoyi.system.api.domain.SysFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class FileServiceImpl implements FileService {
+
+    @Autowired
+    SysFileMapper sysFileMapper;
+
+    @Override
+    public int insertSysFile(SysFile sysFile) {
+       return sysFileMapper.insertSysFile(sysFile);
+    }
+
+    @Override
+    public SysFile getFileById(String id) {
+        SysFile sysFile = sysFileMapper.queryFile(id);
+        return sysFile;
+    }
+
+}

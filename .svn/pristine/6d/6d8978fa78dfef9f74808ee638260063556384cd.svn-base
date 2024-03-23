@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.file.mapper.SysFileMapper">
+
+    <resultMap type="com.ruoyi.system.api.domain.SysFile" id="FileResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fFilePath"    column="f_file_path"    />
+        <result property="fOldFileName"    column="f_old_file_name"    />
+        <result property="fNewFileName"    column="f_new_file_name"    />
+        <result property="fCreateBy"    column="f_create_by"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+    </resultMap>
+
+    <sql id="selectFileVo">
+        select f_id,f_file_path,f_old_file_name, f_new_file_name, f_create_by, f_create_time from sys_file
+    </sql>
+
+    <select id="queryFile" parameterType="java.lang.String" resultMap="FileResult">
+        <include refid="selectFileVo"/>
+        where f_id = #{id}
+    </select>
+
+    <insert id="insertSysFile" parameterType="com.ruoyi.system.api.domain.SysFile" useGeneratedKeys="true" keyProperty="fId">
+        insert into sys_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fOldFileName != null">f_old_file_name,</if>
+            <if test="fNewFileName != null">f_new_file_name,</if>
+            <if test="fFilePath != null">f_file_path,</if>
+            f_create_time,
+            <if test="fCreateBy != null">f_create_by,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fOldFileName != null">#{fOldFileName},</if>
+            <if test="fNewFileName != null">#{fNewFileName},</if>
+            <if test="fFilePath != null">#{fFilePath},</if>
+            NOW(),
+            <if test="fCreateBy != null">#{fCreateBy},</if>
+        </trim>
+    </insert>
+
+    <delete id="delFile" parameterType="java.lang.Long">
+        DELETE FROM sys_file where f_id = #{fId}
+    </delete>
+</mapper>

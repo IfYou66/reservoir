@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.RAnnualSchedulingMapper">
+    
+    <resultMap type="com.szsk.reservoir.run.domain.RAnnualScheduling" id="RAnnualSchedulingResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fDispatchName"    column="f_dispatch_name"    />
+        <result property="fDispatchType"    column="f_dispatch_type"    />
+        <result property="fBudget"    column="f_budget"    />
+        <result property="fDispatchContent"    column="f_dispatch_content"    />
+        <result property="fDispatchId"    column="f_dispatch_id"    />
+        <result property="fEditPersion"    column="f_edit_persion"    />
+        <result property="fEditTime"    column="f_edit_time"    />
+        <result property="fAuditContent"    column="f_audit_content"    />
+        <result property="fAuditResult"    column="f_audit_result"    />
+        <result property="fAuditPersion"    column="f_audit_persion"    />
+        <result property="fAuditTime"    column="f_audit_time"    />
+        <result property="fApproveContent"    column="f_approve_content"    />
+        <result property="fApproveResult"    column="f_approve_result"    />
+        <result property="fApprovePersion"    column="f_approve_persion"    />
+        <result property="fApproveTime"    column="f_approve_time"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fStartPersion"    column="f_start_persion"    />
+        <result property="fCreateTime"    column="f_create_time"    />
+        <result property="fActId"    column="f_act_id"    />
+        <result property="fActPersion"    column="f_act_persion"    />
+        <result property="fActStatus"    column="f_act_status"    />
+        <result property="fActNode"    column="f_act_node"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectRAnnualSchedulingVo">
+        select f_id, f_reservoir_info_id,f_dispatch_name, f_dispatch_type, f_budget, f_dispatch_content, f_dispatch_id, f_edit_persion, f_edit_time, f_audit_content, f_audit_result, f_audit_persion, f_audit_time, f_approve_content, f_approve_result, f_approve_persion, f_approve_time, f_status, f_start_persion, f_create_time, f_act_id, f_act_persion, f_act_status, f_act_node from r_annual_scheduling
+    </sql>
+
+    <select id="selectRAnnualSchedulingList" parameterType="com.szsk.reservoir.run.domain.RAnnualScheduling" resultMap="RAnnualSchedulingResult">
+        <include refid="selectRAnnualSchedulingVo"/>
+        <where>  
+            <if test="fDispatchName != null  and fDispatchName != ''"> and f_dispatch_name like concat('%', #{fDispatchName}, '%')</if>
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fDispatchType != null "> and f_dispatch_type = #{fDispatchType}</if>
+            <if test="fActStatus != null "> and f_act_status = #{fActStatus}</if>
+        </where>
+        order by f_id desc
+    </select>
+    
+    <select id="selectRAnnualSchedulingById" parameterType="Integer" resultMap="RAnnualSchedulingResult">
+        <include refid="selectRAnnualSchedulingVo"/>
+        where f_id = #{fId}
+    </select>
+        
+    <insert id="insertRAnnualScheduling" parameterType="com.szsk.reservoir.run.domain.RAnnualScheduling" useGeneratedKeys="true" keyProperty="fId">
+        insert into r_annual_scheduling
+        <trim prefix="(" suffix=")" suffixOverrides=","> 
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fDispatchName != null">f_dispatch_name,</if>
+            <if test="fDispatchType != null">f_dispatch_type,</if>
+            <if test="fBudget != null">f_budget,</if>
+            <if test="fDispatchContent != null">f_dispatch_content,</if>
+            <if test="fDispatchId != null">f_dispatch_id,</if>
+            <if test="fEditPersion != null">f_edit_persion,</if>
+            <if test="fEditTime != null">f_edit_time,</if>
+            <if test="fAuditContent != null">f_audit_content,</if>
+            <if test="fAuditResult != null">f_audit_result,</if>
+            <if test="fAuditPersion != null">f_audit_persion,</if>
+            <if test="fAuditTime != null">f_audit_time,</if>
+            <if test="fApproveContent != null">f_approve_content,</if>
+            <if test="fApproveResult != null">f_approve_result,</if>
+            <if test="fApprovePersion != null">f_approve_persion,</if>
+            <if test="fApproveTime != null">f_approve_time,</if>
+            <if test="fStatus != null">f_status,</if>
+            <if test="fStartPersion != null">f_start_persion,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+            <if test="fActId != null">f_act_id,</if>
+            <if test="fActPersion != null">f_act_persion,</if>
+            <if test="fActStatus != null">f_act_status,</if>
+            <if test="fActNode != null">f_act_node,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fDispatchName != null">#{fDispatchName},</if>
+            <if test="fDispatchType != null">#{fDispatchType},</if>
+            <if test="fBudget != null">#{fBudget},</if>
+            <if test="fDispatchContent != null">#{fDispatchContent},</if>
+            <if test="fDispatchId != null">#{fDispatchId},</if>
+            <if test="fEditPersion != null">#{fEditPersion},</if>
+            <if test="fEditTime != null">#{fEditTime},</if>
+            <if test="fAuditContent != null">#{fAuditContent},</if>
+            <if test="fAuditResult != null">#{fAuditResult},</if>
+            <if test="fAuditPersion != null">#{fAuditPersion},</if>
+            <if test="fAuditTime != null">#{fAuditTime},</if>
+            <if test="fApproveContent != null">#{fApproveContent},</if>
+            <if test="fApproveResult != null">#{fApproveResult},</if>
+            <if test="fApprovePersion != null">#{fApprovePersion},</if>
+            <if test="fApproveTime != null">#{fApproveTime},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+            <if test="fStartPersion != null">#{fStartPersion},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+            <if test="fActId != null">#{fActId},</if>
+            <if test="fActPersion != null">#{fActPersion},</if>
+            <if test="fActStatus != null">#{fActStatus},</if>
+            <if test="fActNode != null">#{fActNode},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRAnnualScheduling" parameterType="com.szsk.reservoir.run.domain.RAnnualScheduling">
+        update r_annual_scheduling
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fDispatchName != null">f_dispatch_name = #{fDispatchName},</if>
+            <if test="fDispatchType != null">f_dispatch_type = #{fDispatchType},</if>
+            <if test="fBudget != null">f_budget = #{fBudget},</if>
+            <if test="fDispatchContent != null">f_dispatch_content = #{fDispatchContent},</if>
+            <if test="fDispatchId != null">f_dispatch_id = #{fDispatchId},</if>
+            <if test="fEditPersion != null">f_edit_persion = #{fEditPersion},</if>
+            <if test="fEditTime != null">f_edit_time = #{fEditTime},</if>
+            <if test="fAuditContent != null">f_audit_content = #{fAuditContent},</if>
+            <if test="fAuditResult != null">f_audit_result = #{fAuditResult},</if>
+            <if test="fAuditPersion != null">f_audit_persion = #{fAuditPersion},</if>
+            <if test="fAuditTime != null">f_audit_time = #{fAuditTime},</if>
+            <if test="fApproveContent != null">f_approve_content = #{fApproveContent},</if>
+            <if test="fApproveResult != null">f_approve_result = #{fApproveResult},</if>
+            <if test="fApprovePersion != null">f_approve_persion = #{fApprovePersion},</if>
+            <if test="fApproveTime != null">f_approve_time = #{fApproveTime},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+            <if test="fStartPersion != null">f_start_persion = #{fStartPersion},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+            <if test="fActId != null">f_act_id = #{fActId},</if>
+            <if test="fActPersion != null">f_act_persion = #{fActPersion},</if>
+            <if test="fActStatus != null">f_act_status = #{fActStatus},</if>
+            <if test="fActNode != null">f_act_node = #{fActNode},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteRAnnualSchedulingById" parameterType="Integer">
+        delete from r_annual_scheduling where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteRAnnualSchedulingByIds" parameterType="String">
+        delete from r_annual_scheduling where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

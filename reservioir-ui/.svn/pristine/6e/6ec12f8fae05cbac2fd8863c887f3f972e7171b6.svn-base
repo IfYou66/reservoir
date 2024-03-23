@@ -1,0 +1,51 @@
+import request from '@/utils/request'
+
+// 查询档案室列表
+export function listStoreroom(query) {
+  return request({
+    url: '/archives/storeroom/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询档案室详细
+export function getStoreroom(fStoreroomId) {
+  return request({
+    url: '/archives/storeroom/' + fStoreroomId,
+    method: 'get'
+  })
+}
+// 查询档案室详细
+export function updateStatus(storeroomId) {
+  return request({
+    url: '/archives/storeroom/updateStatus?storeroomId='+storeroomId,
+    method: 'get'
+  })
+}
+
+// 新增档案室
+export function addStoreroom(data) {
+  return request({
+    url: '/archives/storeroom',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改档案室
+export function updateStoreroom(data) {
+  return request({
+    url: '/archives/storeroom',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除档案室
+export function delStoreroom(fStoreroomId) {
+  return request({
+    url: '/archives/storeroom/' + fStoreroomId,
+    method: 'delete'
+  })
+}

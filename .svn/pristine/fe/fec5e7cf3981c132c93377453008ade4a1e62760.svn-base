@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.security.mapper.MBorderMapper">
+    
+    <resultMap type="com.szsk.reservoir.security.domain.MBorder" id="MBorderResult">
+        <result property="fId"    column="f_id"/>
+        <result property="fLabel"    column="f_label"/>
+        <result property="fGroup"    column="f_group"/>
+        <result property="fCreateTime"    column="f_create_time"/>
+        <result property="fUpdateTime"    column="f_update_time"/>
+        <result property="fSort"    column="f_sort"/>
+        <result property="fCenterPoint"    column="f_center_point"/>
+        <result property="fFileId"    column="f_file_id"/>
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+	<select id="queryLabelList" resultMap="MBorderResult"
+		parameterType="java.lang.String">
+		select
+		f_id,f_reservoir_info_id,f_center_point,f_label,f_group,f_create_time,f_update_time,f_sort,f_file_id
+		from m_border   
+		<where>
+			<if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+			<if test="fGroup != null "> and f_group = #{fGroup}</if>
+		</where>
+		
+		 order by f_sort
+	</select>
+    
+    <sql id="selectMBorderVo">
+        select f_id,f_reservoir_info_id,f_center_point,f_label,f_group,f_create_time,f_update_time,f_sort,f_file_id from m_border 
+    </sql>
+    
+    <select id="selectMBorderById" parameterType="Long" resultMap="MBorderResult">
+        <include refid="selectMBorderVo"/>
+        where f_id = #{fId}
+    </select>
+    
+    <insert id="insertMBorder" parameterType="com.szsk.reservoir.security.domain.MBorder" useGeneratedKeys="true" keyProperty="fId">
+        insert into m_border
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fCenterPoint != null">f_center_point,</if>
+            <if test="fLabel != null">f_label,</if>
+            <if test="fGroup != null">f_group,</if>
+            <if test="fCreateTime != null">f_create_time,</if>
+            <if test="fUpdateTime != null">f_update_time,</if>
+            <if test="fSort != null">f_sort,</if>
+            <if test="fFileId != null">f_file_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fCenterPoint != null">#{fCenterPoint},</if>
+            <if test="fLabel != null">#{fLabel},</if>
+            <if test="fGroup != null">#{fGroup},</if>
+            <if test="fCreateTime != null">#{fCreateTime},</if>
+            <if test="fUpdateTime != null">#{fUpdateTime},</if>
+            <if test="fSort != null">#{fSort},</if>
+            <if test="fFileId != null">#{fFileId},</if>
+         </trim>
+    </insert>
+    <update id="updateMBorder" parameterType="com.szsk.reservoir.security.domain.MBorder">
+        update m_border
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fCenterPoint != null">f_center_point = #{fCenterPoint},</if>
+            <if test="fLabel != null">f_label = #{fLabel},</if>
+            <if test="fGroup != null">f_group = #{fGroup},</if>
+            <if test="fCreateTime != null">f_create_time = #{fCreateTime},</if>
+            <if test="fUpdateTime != null">f_update_time = #{fUpdateTime},</if>
+            <if test="fSort != null">f_sort = #{fSort},</if>
+            <if test="fFileId != null">f_file_id = #{fFileId},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+    
+</mapper>

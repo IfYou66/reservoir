@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.RInstructionRunLogMapper">
+    
+    <resultMap type="com.szsk.reservoir.run.domain.RInstructionRunLog" id="RInstructionRunLogResult">
+        <result property="fLogId"    column="f_log_id"    />
+        <result property="fInstructionId"    column="f_instruction_id"    />
+        <result property="fRunContent"    column="f_run_content"    />
+        <result property="fProblem"    column="f_problem"    />
+        <result property="fProblemHandle"    column="f_problem_handle"    />
+        <result property="fRunPersion"    column="f_run_persion"    />
+        <result property="fRunTime"    column="f_run_time"    />
+        <result property="fEndTime"    column="f_end_time"    />
+    </resultMap>
+
+    <sql id="selectRInstructionRunLogVo">
+        select f_log_id, f_instruction_id, f_run_content, f_problem, f_problem_handle, f_run_persion, f_run_time, f_end_time from r_instruction_run_log
+    </sql>
+
+    <select id="selectRInstructionRunLogList" parameterType="com.szsk.reservoir.run.domain.RInstructionRunLog" resultMap="RInstructionRunLogResult">
+        <include refid="selectRInstructionRunLogVo"/>
+        <where>  
+            <if test="fInstructionId != null "> and f_instruction_id = #{fInstructionId}</if>
+            <if test="fRunContent != null  and fRunContent != ''"> and f_run_content = #{fRunContent}</if>
+            <if test="fProblem != null  and fProblem != ''"> and f_problem = #{fProblem}</if>
+            <if test="fProblemHandle != null  and fProblemHandle != ''"> and f_problem_handle = #{fProblemHandle}</if>
+            <if test="fRunPersion != null  and fRunPersion != ''"> and f_run_persion = #{fRunPersion}</if>
+            <if test="fRunTime != null "> and f_run_time = #{fRunTime}</if>
+            <if test="fEndTime != null "> and f_end_time = #{fEndTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectRInstructionRunLogById" parameterType="Integer" resultMap="RInstructionRunLogResult">
+        <include refid="selectRInstructionRunLogVo"/>
+        where f_log_id = #{fLogId}
+    </select>
+        
+    <insert id="insertRInstructionRunLog" parameterType="com.szsk.reservoir.run.domain.RInstructionRunLog" useGeneratedKeys="true" keyProperty="fLogId">
+        insert into r_instruction_run_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fInstructionId != null">f_instruction_id,</if>
+            <if test="fRunContent != null">f_run_content,</if>
+            <if test="fProblem != null">f_problem,</if>
+            <if test="fProblemHandle != null">f_problem_handle,</if>
+            <if test="fRunPersion != null">f_run_persion,</if>
+            <if test="fRunTime != null">f_run_time,</if>
+            <if test="fEndTime != null">f_end_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fInstructionId != null">#{fInstructionId},</if>
+            <if test="fRunContent != null">#{fRunContent},</if>
+            <if test="fProblem != null">#{fProblem},</if>
+            <if test="fProblemHandle != null">#{fProblemHandle},</if>
+            <if test="fRunPersion != null">#{fRunPersion},</if>
+            <if test="fRunTime != null">#{fRunTime},</if>
+            <if test="fEndTime != null">#{fEndTime},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchDeposit" parameterType="com.szsk.reservoir.run.domain.RInstructionRunLog">
+        insert into r_instruction_run_log
+        (
+        f_instruction_id,
+        f_run_content,
+        f_problem,
+        f_problem_handle,
+        f_run_persion,
+        f_run_time,
+        f_end_time
+        )
+        values
+        <foreach collection="list" item="item">
+            (
+            #{item.fInstructionId},
+            #{item.fRunContent},
+            #{item.fProblem},
+            #{item.fProblemHandle},
+            #{item.fRunPersion},
+            #{item.fRunTime},
+            #{item.fEndTime}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateRInstructionRunLog" parameterType="com.szsk.reservoir.run.domain.RInstructionRunLog">
+        update r_instruction_run_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fInstructionId != null">f_instruction_id = #{fInstructionId},</if>
+            <if test="fRunContent != null">f_run_content = #{fRunContent},</if>
+            <if test="fProblem != null">f_problem = #{fProblem},</if>
+            <if test="fProblemHandle != null">f_problem_handle = #{fProblemHandle},</if>
+            <if test="fRunPersion != null">f_run_persion = #{fRunPersion},</if>
+            <if test="fRunTime != null">f_run_time = #{fRunTime},</if>
+            <if test="fEndTime != null">f_end_time = #{fEndTime},</if>
+        </trim>
+        where f_log_id = #{fLogId}
+    </update>
+
+    <delete id="deleteRInstructionRunLogById" parameterType="Integer">
+        delete from r_instruction_run_log where f_log_id = #{fLogId}
+    </delete>
+
+    <delete id="deleteRInstructionRunLogByIds" parameterType="String">
+        delete from r_instruction_run_log where f_log_id in 
+        <foreach item="fLogId" collection="array" open="(" separator="," close=")">
+            #{fLogId}
+        </foreach>
+    </delete>
+</mapper>

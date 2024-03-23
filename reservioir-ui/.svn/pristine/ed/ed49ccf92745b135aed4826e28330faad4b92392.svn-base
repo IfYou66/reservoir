@@ -1,0 +1,346 @@
+<template>
+  <div class='app-container'>
+    <el-col>
+      <div id="mapDiv">
+        <img src="@/assets/images/mahe/flight.gif" alt="">
+      </div>
+    </el-col>
+    <el-col style="margin-top: 20px;">
+      <el-table
+        :data="tableData"
+        style="width: 90%"
+        :row-class-name="tableRowClassName">
+        <el-table-column
+          prop="address"
+          label="巡检地点"
+          width="170">
+        </el-table-column>
+        <el-table-column
+          prop="state"
+          label="巡检状态"
+          width="140">
+        </el-table-column>
+        <el-table-column
+          prop="person"
+          label="巡检人员"
+          width="140">
+        </el-table-column>
+        <el-table-column
+          prop="time"
+          label="巡检时间"
+          width="140">
+        </el-table-column>
+        <el-table-column
+          prop="level"
+          label="险情等级"
+          width="140">
+        </el-table-column>
+        <el-table-column
+          prop="situation"
+          label="现场情况"
+          width="140">
+        </el-table-column>
+        <el-table-column
+          prop="measurement"
+          label="应对措施"
+          width="140">
+        </el-table-column>
+        <el-table-column
+          prop="picture"
+          label="照片影像"
+        >
+        </el-table-column>
+      </el-table>
+    </el-col>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: "reservoir",
+    data() {
+      return {
+        //巡检路线
+        checkPoints: [
+          [117.27417, 35.245775], [117.27417, 35.244891], [117.273721, 35.243609],
+          [117.273955, 35.243137], [117.274655, 35.243019], [117.274727, 35.24268],
+          [117.274278, 35.241958], [117.274835, 35.240174], [117.275913, 35.239201],
+          [117.276937, 35.238405], [117.27726, 35.237801], [117.277278, 35.237226],
+          [117.278374, 35.234484], [117.27974, 35.233216], [117.28044, 35.232243],
+          [117.281303, 35.232214], [117.281698, 35.23214], [117.28186, 35.231949],
+          [117.280926, 35.231374], [117.280638, 35.231005], [117.280728, 35.230489],
+          [117.281249, 35.230032], [117.281285, 35.229605], [117.280476, 35.229324],
+          [117.279973, 35.228794], [117.280836, 35.227821], [117.283638, 35.227039],
+          [117.287555, 35.225683], [117.287968, 35.225196], [117.289172, 35.22502],
+          [117.290106, 35.224857], [117.292514, 35.22586], [117.292747, 35.226332],
+          [117.292424, 35.226818], [117.292657, 35.227113], [117.29361, 35.227098],
+          [117.293466, 35.227998], [117.292675, 35.228853], [117.291454, 35.229634],
+          [117.29122, 35.230165], [117.291328, 35.230681], [117.293466, 35.231757],
+          [117.29449, 35.232804], [117.295837, 35.2336], [117.295891, 35.234027],
+          [117.295478, 35.23444], [117.294238, 35.234573], [117.292657, 35.234735],
+          [117.291472, 35.234012], [117.291112, 35.234101], [117.289909, 35.23699],
+          [117.28998, 35.23783], [117.291292, 35.239186], [117.29246, 35.239525],
+          [117.29246, 35.239953], [117.290771, 35.240955], [117.28998, 35.245082],
+          [117.289747, 35.246468], [117.2891, 35.24666], [117.285597, 35.247072],
+          [117.284573, 35.245702], [117.2838, 35.245363], [117.283926, 35.244876],
+          [117.284788, 35.24411], [117.284429, 35.243166], [117.283746, 35.242945],
+          [117.283046, 35.242444], [117.283117, 35.24181], [117.283477, 35.241117],
+          [117.283351, 35.24038], [117.282021, 35.237816], [117.281734, 35.237948],
+          [117.281554, 35.239437], [117.280369, 35.240719], [117.279291, 35.241515],
+          [117.278051, 35.241398], [117.276937, 35.241943], [117.275841, 35.24293],
+        ],
+        boundaryPoints: [
+          [117.292657, 35.239216], [117.291759, 35.238833], [117.290573, 35.23783],
+          [117.290502, 35.236916], [117.291508, 35.234617], [117.292586, 35.235472],
+          [117.296035, 35.234735], [117.296394, 35.233437], [117.295029, 35.232671],
+          [117.294095, 35.231757], [117.291867, 35.230607], [117.291975, 35.22987],
+          [117.293879, 35.22816], [117.294454, 35.226774], [117.293304, 35.226862],
+          [117.293053, 35.226302], [117.293089, 35.225536], [117.289424, 35.224179],
+          [117.287627, 35.224474], [117.287016, 35.225123], [117.285974, 35.225477],
+          [117.279884, 35.227869], [117.279201, 35.228974], [117.280387, 35.22977],
+          [117.280423, 35.230168], [117.280207, 35.230758], [117.280548, 35.231466],
+          [117.280387, 35.231952], [117.279614, 35.231908], [117.279183, 35.232601],
+          [117.278392, 35.233618], [117.277045, 35.23434], [117.276721, 35.236846],
+          [117.276596, 35.237421], [117.275985, 35.238203], [117.274368, 35.239514],
+          [117.273631, 35.241269], [117.274063, 35.242389], [117.273919, 35.242772],
+          [117.273038, 35.242978], [117.272571, 35.24373], [117.273991, 35.246542],
+          [117.276308, 35.243137], [117.278213, 35.242046], [117.280153, 35.242164],
+          [117.28177, 35.240012], [117.28186, 35.23849], [117.282152, 35.238372],
+          [117.282929, 35.240395], [117.28296, 35.241199], [117.282489, 35.242282],
+          [117.284177, 35.243874], [117.283423, 35.244493], [117.283207, 35.245643],
+          [117.284357, 35.246173], [117.285687, 35.247677], [117.290232, 35.246973],
+          [117.290789, 35.243255], [117.291436, 35.241221], [117.293053, 35.240218],
+        ],
+        markers: [],
+        map: undefined,
+        tableData: [{
+          address: '(1)迎水坡',
+          state: '√ 已巡检',
+          person: '水利专家组',
+          time: '2021-12-21',
+          level: '正常',
+          situation: '水位103m',
+          measurement: '观察',
+          picture: '巡检报告',
+        }, {
+          address: '(2)坝基',
+          state: '√ 已巡检',
+          person: '水利专家组',
+          time: '2021-12-21',
+          level: '正常',
+          situation: '水位93m',
+          measurement: '观察',
+          picture: '巡检报告',
+        }, {
+          address: '(3)坝体',
+          state: '√ 已巡检',
+          person: '水利专家组',
+          time: '2021-12-21',
+          level: '正常',
+          situation: '水位103m',
+          measurement: '观察',
+          picture: '巡检报告',
+        }, {
+          address: '(4)1#坝体渗压井',
+          state: '√ 已巡检',
+          person: '水利专家组',
+          time: '2021-12-21',
+          level: '正常',
+          situation: '水位103m',
+          measurement: '观察',
+          picture: '巡检报告',
+        },
+          {
+            address: '(5)放水洞',
+            state: '√ 已巡检',
+            person: '水利专家组',
+            time: '2021-12-21',
+            level: '正常',
+            situation: '水位103m',
+            measurement: '观察',
+            picture: '巡检报告',
+          },
+          {
+            address: '(6)溢洪道',
+            state: '√ 已巡检',
+            person: '水利专家组',
+            time: '2021-12-21',
+            level: '正常',
+            situation: '水位103m',
+            measurement: '观察',
+            picture: '巡检报告',
+          }]
+      }
+    },
+    created() {
+    },
+    mounted() {
+      // 初始化天地图
+      //this.initTdtMap();
+    },
+    watch: {},
+    methods: {
+
+      tableRowClassName({row, rowIndex}) {
+        if (rowIndex % 2 === 1) {
+          return 'warning-row';
+        } else {
+          return 'success-row';
+        }
+      },
+      // 初始化天地图
+      initTdtMap() {
+        let imageURL = "http://t0.tianditu.gov.cn/img_w/wmts?" +
+          "SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=img&STYLE=default&TILEMATRIXSET=w&FORMAT=tiles" +
+          "&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&tk=dd2abf5a55ddf44b3c81d9101e2d419b";
+        //创建自定义图层对象
+        let lay = new T.TileLayer(imageURL, {minZoom: 1, maxZoom: 18});
+        let config = {
+          layers: [lay],
+        };
+        //初始化地图对象
+        this.map = new T.Map("mapDiv", config);
+        //允许鼠标滚轮缩放地图
+        this.map.enableScrollWheelZoom();
+        this.map.centerAndZoom(new T.LngLat(this.boundaryPoints[0][0],
+          this.boundaryPoints[0][1]), 15);
+        //this.map.setViewport(this.boundaryPoints);
+
+        //this.addStartMarker(new T.Point(this.checkPoints[0]), '起点', map);
+
+        //飞机图标
+        let flight = new T.Map.Icon("@/assets/images/data/body.jpg", new T.Map.Size(52, 26), {
+          anchor: new T.Map.Size(27, 13),
+          imageSize: new T.Map.Size(52, 26)
+        });
+
+        this.drawBoundary();
+        this.drawCheckRoute();
+
+        let i = 0;
+        let interval = setInterval(function () {
+          this.drawLine(flight, this.map, this.checkPoints[i], this.checkPoints[i % this.checkPoints.length === 0 ? 0 : (i + 1)]);//画线调用
+          i = i + 1;
+          if (i % this.checkPoints.length === 0) {
+            i = 0;
+          }
+        }, 10);
+      },
+
+      //水库周界
+      drawBoundary() {
+        let points = [];
+        for (let i = 0; i < this.boundaryPoints.length; i++) {
+          points.push(new T.Map.Point(this.boundaryPoints[i]));
+        }
+        let polygon = new T.Map.Polygon(points, {
+          strokeColor: "green",
+          strokeWeight: 3,
+          strokeOpacity: 1,
+          strokeStyle: 'dashed'
+        });  //创建多边形
+        this.map.addOverlay(polygon);   //增加多边形
+      },
+
+      drawCheckRoute() {
+        let points = [];
+        for (let i = 0; i < this.checkPoints.length; i++) {
+          points.push(new T.Map.Point(this.checkPoints[i]));
+        }
+        let polygon = new T.Map.Polygon(points, {
+          strokeColor: "red",
+          strokeWeight: 5,
+          strokeOpacity: 0.6,
+          strokeStyle: 'solid'
+        });  //创建多边形
+        this.map.addOverlay(polygon);   //增加多边形
+      },
+
+      drawLine(flight, map, thisPoint, nextPoint) {
+        let polyline = new T.Map.Polyline(
+          [
+            new T.Map.Point(thisPoint),
+            new T.Map.Point(nextPoint)
+          ],
+          {
+            strokeColor: "#222332",
+            strokeStyle: "dashed",
+            strokeWeight: 2,
+            strokeOpacity: 1
+          });   //创建折线
+        map.addOverlay(polyline);
+        this.addMarkerEnd(flight, new T.Map.Point(nextPoint), '小车行驶', map, nextPoint, new T.Map.Point(thisPoint));//添加图标
+      },
+
+      //添加起始图标
+      addStartMarker(point, name, mapInit) {
+        if (name === "起点") {
+          let myIcon = new T.Map.Icon("startMap.png", new T.Map.Size(45, 45), {
+            anchor: new T.Map.Size(20, 45),//这句表示图片相对于所加的点的位置mapStart
+            imageSize: new T.Map.Size(45, 45)//图标所用的图片的大小，此功能的作用等同于CSS中的background-size属性。可用于实现高清屏的高清效果
+          });
+          window.marker = new T.Map.Marker(point, {icon: myIcon});  // 创建标注
+          mapInit.addOverlay(marker);               // 将标注添加到地图中
+          marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        }
+      },
+      //添加行驶和终点图标
+      addMarkerEnd(flight, point, name, mapInit, trackUnit, prePoint) {
+        if (name === "小车行驶") {
+          if (flight) {//先判断第一次进来的时候这个值有没有定义，有的话就清除掉上一次的。然后在进行画图标。第一次进来时候没有定义也就不走这块，直接进行画图标
+            mapInit.removeOverlay(flight);
+          }
+          flight = new T.Map.Marker(point, {icon: drivingPoint});  // 创建标注
+          flight.setRotation(trackUnit.route);//trackUnit.route
+          flight.addEventListener('mouseover', function (evt) {
+
+          });
+          mapInit.addOverlay(flight);               // 将标注添加到地图中
+          flight.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        } else {
+          mapInit.removeOverlay(flight);
+          flight = new T.Marker(point, {icon: terminalPoint});  // 创建标注
+          flight.addEventListener('click', function (evt) {
+          });
+          mapInit.addOverlay(flight);
+        }
+      },
+    }
+  }
+</script>
+
+<style lang="less">
+  .app-container {
+    margin: 0;
+    padding: 0 !important;
+  }
+
+  .el-table {
+    width: 90%;
+    margin: 0px auto;
+  }
+
+  .el-table .warning-row {
+    background: oldlace;
+  }
+
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
+
+  #mapDiv {
+    height: 500px;
+    margin-left: 5px;
+  }
+
+  #mapDiv>img{
+    display: block;
+    width:1100px;
+    margin: 0 auto;
+    height: 500px;
+  }
+
+
+
+
+</style>

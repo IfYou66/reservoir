@@ -1,0 +1,44 @@
+import request from '@/utils/request'
+
+// 查询传感器字段列表
+export function listSensor(query) {
+  return request({
+    url: '/collection/sensor/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询传感器字段详细
+export function getSensor(id) {
+  return request({
+    url: '/collection/sensor/' + id,
+    method: 'get'
+  })
+}
+
+// 新增传感器字段
+export function addSensor(data) {
+  return request({
+    url: '/collection/sensor',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改传感器字段
+export function updateSensor(data) {
+  return request({
+    url: '/collection/sensor',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除传感器字段
+export function delSensor(id) {
+  return request({
+    url: '/collection/sensor/' + id,
+    method: 'delete'
+  })
+}

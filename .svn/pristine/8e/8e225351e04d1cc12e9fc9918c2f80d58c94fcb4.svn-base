@@ -1,0 +1,178 @@
+package com.szsk.reservoir.security.service.Impl;
+
+import java.util.Date;
+import java.util.List;
+
+import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.szsk.reservoir.workflow.service.WorkFlowService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.szsk.reservoir.security.mapper.MReinforcementMapper;
+import com.szsk.reservoir.security.domain.MReinforcement;
+import com.szsk.reservoir.security.service.IMReinforcementService;
+
+import javax.annotation.Resource;
+
+/**
+ * 水库大坝除险加固 Service业务层处理
+ * 
+ * @author cangfeng
+ * @date 2021-08-17
+ */
+@Service
+public class MReinforcementServiceImpl implements IMReinforcementService 
+{
+    @Resource
+    private MReinforcementMapper mReinforcementMapper;
+    @Autowired
+    private WorkFlowService workFlowService;
+
+    /**
+     * 查询水库大坝除险加固 
+     * 
+     * @param fId 水库大坝除险加固 ID
+     * @return 水库大坝除险加固 
+     */
+    @Override
+    public MReinforcement selectMReinforcementById(Long fId)
+    {
+        return mReinforcementMapper.selectMReinforcementById(fId);
+    }
+
+    /**
+     * 查询水库大坝除险加固 列表
+     * 
+     * @param mReinforcement 水库大坝除险加固 
+     * @return 水库大坝除险加固 
+     */
+    @Override
+    public List<MReinforcement> selectMReinforcementList(MReinforcement mReinforcement)
+    {
+        return mReinforcementMapper.selectMReinforcementList(mReinforcement);
+    }
+
+    /**
+     * 新增水库大坝除险加固 
+     * 
+     * @param mReinforcement 水库大坝除险加固 
+     * @return 结果
+     */
+    @Override
+    public int insertMReinforcement(MReinforcement mReinforcement)
+    {
+        return mReinforcementMapper.insertMReinforcement(mReinforcement);
+    }
+
+    /**
+     * 修改水库大坝除险加固 
+     * 
+     * @param mReinforcement 水库大坝除险加固 
+     * @return 结果
+     */
+    @Override
+    public int updateMReinforcement(MReinforcement mReinforcement)
+    {
+        return mReinforcementMapper.updateMReinforcement(mReinforcement);
+    }
+
+    /**
+     * 批量删除水库大坝除险加固 
+     * 
+     * @param fIds 需要删除的水库大坝除险加固 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteMReinforcementByIds(Long[] fIds)
+    {
+        return mReinforcementMapper.deleteMReinforcementByIds(fIds);
+    }
+
+    /**
+     * 删除水库大坝除险加固 信息
+     * 
+     * @param fId 水库大坝除险加固 ID
+     * @return 结果
+     */
+    @Override
+    public int deleteMReinforcementById(Long fId)
+    {
+        return mReinforcementMapper.deleteMReinforcementById(fId);
+    }
+
+    /**
+     * 获取最近
+     * @return 结果
+     */
+    @Override
+    public MReinforcement latelyReinforcement()
+    {
+        return mReinforcementMapper.latelyReinforcement();
+    }
+
+
+    /**
+     * 流程
+     *
+     * @param mReinforcement
+     * @return 结果
+     */
+    @Override
+    public AjaxResult startWorkFlow(MReinforcement mReinforcement)
+    {
+        mReinforcement.setfReviewComments(null);
+        mReinforcement.setfReviewResult(null);
+        mReinforcement.setfReviewPeople(null);
+        mReinforcement.setfReviewDate(null);
+        mReinforcement.setfAuditComments(null);
+        mReinforcement.setfAuditResult(null);
+        mReinforcement.setfAuditPeople(null);
+        mReinforcement.setfAuditDate(null);
+        mReinforcement.setfActStatus(1);
+        mReinforcementMapper.insertMReinforcement(mReinforcement);
+        return workFlowService.startWorkFlow(mReinforcement.getfId(),"reinforcement");
+    }
+    @Override
+    public AjaxResult taskReview(MReinforcement mReinforcement)
+    {
+        AjaxResult reinforcement;
+        MReinforcement update = new MReinforcement();
+        update.setfId(mReinforcement.getfId());
+        if (mReinforcement.getfActStatus() == 1) {
+            reinforcement = workFlowService.taskReview(
+                    "reinforcement",
+                    mReinforcement.getfActId().toString(),
+                    String.valueOf(mReinforcement.getfReviewResult()),
+                    String.valueOf(mReinforcement.getfId())
+            );
+            if(mReinforcement.getfReviewResult() == 1){
+                update.setfActStatus(2);
+            }else{
+                update.setfActStatus(0);
+            }
+            update.setfReviewDate(mReinforcement.getfReviewDate());
+            update.setfReviewComments(mReinforcement.getfReviewComments());
+            update.setfReviewResult(mReinforcement.getfReviewResult());
+            update.setfReviewPeople(mReinforcement.getfReviewPeople());
+            updateMReinforcement(update);
+            return reinforcement;
+        } else {
+            reinforcement = workFlowService.taskReview(
+                    "reinforcement",
+                    mReinforcement.getfActId().toString(),
+                    mReinforcement.getfAuditResult().toString(),
+                    mReinforcement.getfId().toString()
+            );
+            if(mReinforcement.getfAuditResult() == 1){
+                update.setfActStatus(3);
+            }else{
+                update.setfActStatus(0);
+            }
+            update.setfAuditDate(mReinforcement.getfAuditDate());
+            update.setfAuditComments(mReinforcement.getfAuditComments());
+            update.setfAuditResult(mReinforcement.getfAuditResult());
+            update.setfAuditPeople(mReinforcement.getfAuditPeople());
+            updateMReinforcement(update);
+            return reinforcement;
+        }
+    }
+}

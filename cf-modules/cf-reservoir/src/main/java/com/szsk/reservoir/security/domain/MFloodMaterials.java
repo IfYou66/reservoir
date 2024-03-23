@@ -1,0 +1,265 @@
+package com.szsk.reservoir.security.domain;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import com.ruoyi.common.core.annotation.Excel;
+import com.ruoyi.common.core.web.domain.BaseEntity;
+
+/**
+ * 防汛物资 对象 m_flood_materials
+ * 
+ * @author cangfeng
+ * @date 2021-08-19
+ */
+public class MFloodMaterials extends BaseEntity
+{
+    private static final long serialVersionUID = 1L;
+
+    /** 防汛物资ID */
+    private Long fId;
+
+    /** 物资名称 */
+    @Excel(name = "物资名称")
+    private String fMaterialsName;
+
+    /** 物资规格 */
+    @Excel(name = "物资规格")
+    private String fSpecification;
+
+    /** 有效期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "有效期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fEffective;
+
+    /** 存储地点 */
+    @Excel(name = "存储地点")
+    private String fStorageAddress;
+
+    /** 存储要求 */
+    @Excel(name = "存储要求")
+    private String fStorageRequirement;
+
+    /** 用途 */
+    @Excel(name = "用途")
+    private String fPurpose;
+
+    /** 生产厂家 */
+    @Excel(name = "生产厂家")
+    private String fManufacturer;
+
+    /** 单位 */
+    @Excel(name = "单位")
+    private String fUnit;
+
+    /** 定额数量 */
+    @Excel(name = "定额数量")
+    private BigDecimal fExpectNum;
+
+    /** 数量 */
+    @Excel(name = "数量")
+    private BigDecimal fNum;
+
+    /** 单价 */
+    @Excel(name = "单价")
+    private BigDecimal fPrice;
+
+    /** 分类 */
+    @Excel(name = "分类")
+    private Integer fClassify;
+
+    /** 创建人 */
+    @Excel(name = "创建人")
+    private Long fCreateBy;
+
+    /** 创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "创建时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fCreateDate;
+
+    /** 更新人 */
+    @Excel(name = "更新人")
+    private Long fUpdateBy;
+
+    /** 更新时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "更新时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fUpdateDate;
+    
+    public void setfId(Long fId) 
+    {
+        this.fId = fId;
+    }
+
+    public Long getfId() 
+    {
+        return fId;
+    }
+    public void setfMaterialsName(String fMaterialsName) 
+    {
+        this.fMaterialsName = fMaterialsName;
+    }
+
+    public String getfMaterialsName() 
+    {
+        return fMaterialsName;
+    }
+    public void setfSpecification(String fSpecification) 
+    {
+        this.fSpecification = fSpecification;
+    }
+
+    public String getfSpecification() 
+    {
+        return fSpecification;
+    }
+    public void setfEffective(Date fEffective) 
+    {
+        this.fEffective = fEffective;
+    }
+
+    public Date getfEffective() 
+    {
+        return fEffective;
+    }
+    public void setfStorageAddress(String fStorageAddress) 
+    {
+        this.fStorageAddress = fStorageAddress;
+    }
+
+    public String getfStorageAddress() 
+    {
+        return fStorageAddress;
+    }
+    public void setfStorageRequirement(String fStorageRequirement) 
+    {
+        this.fStorageRequirement = fStorageRequirement;
+    }
+
+    public String getfStorageRequirement() 
+    {
+        return fStorageRequirement;
+    }
+    public void setfPurpose(String fPurpose) 
+    {
+        this.fPurpose = fPurpose;
+    }
+
+    public String getfPurpose() 
+    {
+        return fPurpose;
+    }
+    public void setfManufacturer(String fManufacturer) 
+    {
+        this.fManufacturer = fManufacturer;
+    }
+
+    public String getfManufacturer() 
+    {
+        return fManufacturer;
+    }
+    public void setfUnit(String fUnit) 
+    {
+        this.fUnit = fUnit;
+    }
+
+    public String getfUnit() 
+    {
+        return fUnit;
+    }
+
+    public BigDecimal getfNum() {
+        return fNum;
+    }
+
+    public void setfNum(BigDecimal fNum) {
+        this.fNum = fNum;
+    }
+
+    public void setfPrice(BigDecimal fPrice)
+    {
+        this.fPrice = fPrice;
+    }
+
+    public BigDecimal getfPrice() 
+    {
+        return fPrice;
+    }
+    public void setfClassify(Integer fClassify) 
+    {
+        this.fClassify = fClassify;
+    }
+
+    public Integer getfClassify() 
+    {
+        return fClassify;
+    }
+    public void setfCreateBy(Long fCreateBy) 
+    {
+        this.fCreateBy = fCreateBy;
+    }
+
+    public Long getfCreateBy() 
+    {
+        return fCreateBy;
+    }
+    public void setfCreateDate(Date fCreateDate) 
+    {
+        this.fCreateDate = fCreateDate;
+    }
+
+    public Date getfCreateDate() 
+    {
+        return fCreateDate;
+    }
+    public void setfUpdateBy(Long fUpdateBy) 
+    {
+        this.fUpdateBy = fUpdateBy;
+    }
+
+    public Long getfUpdateBy() 
+    {
+        return fUpdateBy;
+    }
+    public void setfUpdateDate(Date fUpdateDate) 
+    {
+        this.fUpdateDate = fUpdateDate;
+    }
+
+    public Date getfUpdateDate() 
+    {
+        return fUpdateDate;
+    }
+
+    public BigDecimal getfExpectNum() {
+        return fExpectNum;
+    }
+
+    public void setfExpectNum(BigDecimal fExpectNum) {
+        this.fExpectNum = fExpectNum;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+            .append("fId", getfId())
+            .append("fMaterialsName", getfMaterialsName())
+            .append("fSpecification", getfSpecification())
+            .append("fEffective", getfEffective())
+            .append("fStorageAddress", getfStorageAddress())
+            .append("fStorageRequirement", getfStorageRequirement())
+            .append("fPurpose", getfPurpose())
+            .append("fManufacturer", getfManufacturer())
+            .append("fUnit", getfUnit())
+            .append("fNum", getfNum())
+            .append("fPrice", getfPrice())
+            .append("fClassify", getfClassify())
+            .append("fCreateBy", getfCreateBy())
+            .append("fCreateDate", getfCreateDate())
+            .append("fUpdateBy", getfUpdateBy())
+            .append("fUpdateDate", getfUpdateDate())
+            .toString();
+    }
+}

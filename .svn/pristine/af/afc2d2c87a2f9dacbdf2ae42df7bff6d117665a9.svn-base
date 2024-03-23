@@ -1,0 +1,199 @@
+package com.szsk.archives.archivesManage.domain;
+
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import com.ruoyi.common.core.annotation.Excel;
+import com.ruoyi.common.core.web.domain.BaseEntity;
+
+import java.util.Date;
+
+public class ABorrow extends BaseEntity {
+    private static final long serialVersionUID = 1L;
+
+    private String fArchivesNumber;
+
+    public String getArchivesNum() {
+        return fArchivesNumber;
+    }
+
+    public void setArchivesNum(String fArchivesNumber) {
+        this.fArchivesNumber = fArchivesNumber;
+    }
+
+    /** id */
+    private Long fBorrowId;
+
+    /** 档案ID */
+    @Excel(name = "档案ID")
+    private Long fArchivesId;
+
+    /** 借阅人 */
+    @Excel(name = "借阅人")
+    private String fBorrower;
+
+    /** 借阅状态 */
+    @Excel(name = "借阅状态")
+    private Integer fState;
+
+    /** 归还时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "归还时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date fReturnTime;
+
+    /** 借阅时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "借阅时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
+    private Date fBorrowerTime;
+
+    /** 审核人 */
+    @Excel(name = "审核人")
+    private String fAuditPersion;
+
+    /** 审核时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "审核时间", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date fAuditTime;
+
+    /** 审核意见 */
+    @Excel(name = "审核意见")
+    private String fAuditOpinion;
+
+    /** 审核状态 0:不同意1：同意 */
+    @Excel(name = "审核状态 0:不同意1：同意")
+    private Integer fAuditStatus;
+
+    @Excel(name = "档案名称")
+    private String fArchivesName;
+
+    @Excel(name = "库房名称")
+    private String fStoreroomName;
+
+    //@Excel(name = "书架号")
+    //private String
+
+
+    public String getfArchivesName() {
+        return fArchivesName;
+    }
+
+    public void setfArchivesName(String fArchivesName) {
+        this.fArchivesName = fArchivesName;
+    }
+
+    public String getfStoreroomName() {
+        return fStoreroomName;
+    }
+
+    public void setfStoreroomName(String fStoreroomName) {
+        this.fStoreroomName = fStoreroomName;
+    }
+
+    public void setfBorrowId(Long fBorrowId)
+    {
+        this.fBorrowId = fBorrowId;
+    }
+
+    public Long getfBorrowId()
+    {
+        return fBorrowId;
+    }
+    public void setfArchivesId(Long fArchivesId)
+    {
+        this.fArchivesId = fArchivesId;
+    }
+
+    public Long getfArchivesId()
+    {
+        return fArchivesId;
+    }
+    public void setfBorrower(String fBorrower)
+    {
+        this.fBorrower = fBorrower;
+    }
+
+    public String getfBorrower()
+    {
+        return fBorrower;
+    }
+    public void setfState(Integer fState)
+    {
+        this.fState = fState;
+    }
+
+    public Integer getfState()
+    {
+        return fState;
+    }
+    public void setfReturnTime(Date fReturnTime)
+    {
+        this.fReturnTime = fReturnTime;
+    }
+
+    public Date getfReturnTime()
+    {
+        return fReturnTime;
+    }
+    public void setfBorrowerTime(Date fBorrowerTime)
+    {
+        this.fBorrowerTime = fBorrowerTime;
+    }
+
+    public Date getfBorrowerTime()
+    {
+        return fBorrowerTime;
+    }
+    public void setfAuditPersion(String fAuditPersion)
+    {
+        this.fAuditPersion = fAuditPersion;
+    }
+
+    public String getfAuditPersion()
+    {
+        return fAuditPersion;
+    }
+    public void setfAuditTime(Date fAuditTime)
+    {
+        this.fAuditTime = fAuditTime;
+    }
+
+    public Date getfAuditTime()
+    {
+        return fAuditTime;
+    }
+    public void setfAuditOpinion(String fAuditOpinion)
+    {
+        this.fAuditOpinion = fAuditOpinion;
+    }
+
+    public String getfAuditOpinion()
+    {
+        return fAuditOpinion;
+    }
+    public void setfAuditStatus(Integer fAuditStatus)
+    {
+        this.fAuditStatus = fAuditStatus;
+    }
+
+    public Integer getfAuditStatus()
+    {
+        return fAuditStatus;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+                .append("fBorrowId", getfBorrowId())
+                .append("fArchivesId", getfArchivesId())
+                .append("fBorrower", getfBorrower())
+                .append("fState", getfState())
+                .append("fReturnTime", getfReturnTime())
+                .append("fBorrowerTime", getfBorrowerTime())
+                .append("fAuditPersion", getfAuditPersion())
+                .append("fAuditTime", getfAuditTime())
+                .append("fAuditOpinion", getfAuditOpinion())
+                .append("fAuditStatus", getfAuditStatus())
+                .toString();
+    }
+}

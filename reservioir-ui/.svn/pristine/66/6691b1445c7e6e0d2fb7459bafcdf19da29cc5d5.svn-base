@@ -1,0 +1,391 @@
+<template>
+  <div class="app-container home">
+    <div class="el-card">
+      <div class="el-card__body">
+        <div class="el-row">
+          <div class="el-col-md-12">
+            <div class="el-card__body time-info">
+              实时时间：<span id="newest-time">--</span>
+            </div>
+
+          </div>
+          <div class="el-col-md-12">
+            <div class="el-card-body hint-info">
+              <img alt="" src="../../../../assets/images/common/safe.png"/>&nbsp;表示正常&emsp;
+              <img alt="" src="../../../../assets/images/common/warning.png"/>&nbsp;表示超限&emsp;
+              <img alt="" src="../../../../assets/images/common/danger.png"/>&nbsp;表示危险
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="el-card">
+      <div class="el-card__body section" v-for="item in items" v-bind:key="item.tag">
+        <fieldset v-if='operator.exists(item,items,`section`,item.section)' class="el-elem-field el-field-title" style="margin-top: 20px;">
+          <legend>{{item.section.split('-')[0]}}</legend>
+        </fieldset>
+        <el-row class="row" :gutter="20">
+          <el-col :span="8" class="cell">
+            <div class="grid-content bg-purple">
+              <img :src="require(`../../../assets/images/common/${item.image}.gif`)" alt=""/>
+              <span class="info" :id="item.tag">{{item.name}}:{{Math.abs(item.value)===common.BOUNDARY?'--':item.value}}{{item.unit}}</span>
+            </div>
+          </el-col>
+          <el-col :span="8" class="cell">
+            <div class="grid-content bg-purple">
+              <img :src="require(`../../../assets/images/common/${item.image}.gif`)" alt=""/>
+              <span class="info" :id="item.tag">{{item.limit}}:{{operator.generateScopeStr(item.max, item.min)}}{{item.unit}}</span>
+            </div>
+          </el-col>
+          <el-col :span="8" class="cell">
+            <div class="grid-content bg-purple">
+              <img :id="item.tag" src="../../../../assets/images/common/safe.png" alt="">
+              <span :id="item.tag" class="info state-info">实时状态:{{operator.generateStateStr(item)}}</span>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  const sensor = require("@/api/data/sensor");
+
+  export default {
+    name: "realtime",
+    data() {
+      let sensors = common.getData('realtime');
+      return {
+        items: sensors,
+        operator: operator,
+        common: common
+      };
+    },
+
+    methods: {},
+    created() {
+
+    },
+    updated() {
+
+    },
+    beforeMount() {
+    },
+
+    mounted() {
+
+    }
+  }
+
+  /******************************************************************
+   * 开始处理显示部分
+   * *****************************************************************/
+  const operator = require('../../../../api/data/operator');
+  const common = require('../../../../api/data/common');
+  const reservoir = require('../../../../api/data/'+this.common.CURRENT_RESERVOIR+'/reservoir');
+  let sensors = common.getData('realtime');
+  let tunnel = reservoir.getTunnel().getControlAnalysis();
+  let gate = reservoir.getGate().getBuildingAnalysis();
+  let dam = reservoir.getDam();
+
+  //updateSensors();
+
+  /******************************************************************
+   * 开始数据处理部分
+   * *****************************************************************/
+  // setInterval(function () {
+  //   sensors = common.getData('realtime');
+  //   updateSensors();
+  // }, common.TIME_SPAN);
+
+  /**
+   * 计算安全系数
+   * */
+  function computeStabilityArgument() {
+    let sensor = operator.findArrayItemByAttrValue(sensors, 'tag', 'stability-argument');
+    if (!sensor) return;
+    if (!reservoir.getRelations().getStabilityArgument) return;
+    sensor.value = reservoir.getRelations().getStabilityArgument(operator.getWaterLevel());
+  }
+
+  /**
+   * 计算渗透坡降J
+   * */
+  function computeSlopeDown() {
+    let sensor = operator.findArrayItemByAttrValue(sensors, 'tag', 'seepage-slope');
+    if (!sensor) return;
+    if (!reservoir.getRelations().getSlopeDown) return;
+    sensor.value = reservoir.getRelations().getSlopeDown(operator.getWaterLevel());
+  }
+
+  /**
+   * 计算最大值
+   * @param tagName 标签名称
+   * @param part 页面名
+   * @param name 数据名称
+   * */
+  function computeMax(tagName, part, name) {
+    let sensor = operator.findArrayItemByAttrValue(sensors, 'tag', tagName);
+    if (!sensor) return;
+    let maxSensors = operator.getSensors(operator.getSensors(common.loadSensors(), 'part', part), 'name', name);
+    if (!maxSensors.length) return;
+    let maxValue = -common.BOUNDARY;
+    for (let i = 0; i < maxSensors.length; i++) {
+      if (maxSensors[i].value === null) continue;
+      if (maxValue < Math.abs(maxSensors[i].value) && Math.abs(maxSensors[i].value) < 10 && maxSensors[i].value !== common.BOUNDARY) {
+        maxValue = Math.abs(maxSensors[i].value)
+      }
+    }
+    sensor.value = maxValue;
+  }
+
+  /**
+   * 计算最大倾斜角度
+   * @param tagName 标签名称
+   * */
+  function computeMaxInclination(tagName) {
+    let maxX = -common.BOUNDARY, maxY = -common.BOUNDARY;
+    let sensor = operator.findArrayItemByAttrValue(sensors, 'tag', tagName);
+    if (!sensor) return;
+    let maxSensors = operator.getSensors(common.loadSensors(), 'name', 'x倾斜');
+    for (let i = 0; i < maxSensors.length; i++) {
+      if (maxX < Math.abs(maxSensors[i].value) && maxSensors[i].value !== -100 && maxSensors[i].value !== common.BOUNDARY) {
+        maxX = Math.abs(maxSensors[i].value);
+      }
+    }
+    maxSensors = operator.getSensors(common.loadSensors(), 'name', 'y倾斜');
+    for (let i = 0; i < maxSensors.length; i++) {
+      if (maxY < Math.abs(maxSensors[i].value) && maxSensors[i].value !== -100 && maxSensors[i].value !== common.BOUNDARY) {
+        maxY = Math.abs(maxSensors[i].value);
+      }
+    }
+    let x = maxX, y = maxY;
+    sensor.value = {x, y};
+  }
+
+  /**
+   * 更新所有有效point的数值
+   */
+  function updateSensors() {
+    if (gate) {
+      let stabilityCoefficient = operator.findArrayItemByAttrValue(sensors, 'tag', 'stability-coefficient');
+      if (stabilityCoefficient) {
+        stabilityCoefficient.value = gate.computeOpenK();
+      }
+    }
+    if (tunnel) {
+      let shaftFactor = operator.findArrayItemByAttrValue(sensors, 'tag', 'shaft-factor');
+      if (shaftFactor) {
+        shaftFactor.value = tunnel.computeK();
+      }
+    }
+    if (dam) {
+      let stabilityArgument = operator.findArrayItemByAttrValue(sensors, 'tag', 'stability-argument');
+      if (stabilityArgument) {
+        stabilityArgument.value = dam.getStableAnalysis();
+      }
+    }
+    computeMax('dam-accumulate-down', 'damTransform', '沉降');
+    computeMax('gate-accumulate-down', 'gateDisplacement', '沉降');
+    computeMax('pipe-vibration-severity', 'pipe', '方向');
+    computeMax('well-vibration-severity', 'well', '方向');
+    computeMax('gate-vibration-severity', 'gateDisplacement', '方向');
+    computeStabilityArgument();
+    computeSlopeDown();
+
+    computeMaxInclination('pier-inclination');
+
+    let newestTime = sensors[0].time;
+    for (let i in sensors) {
+      if (sensors[i].time > newestTime) {
+        newestTime = sensors[i].time;
+      }
+      let tag = document.getElementById('#' + sensors[i].tag);
+
+      if (operator.isValid(sensors[i].value) && (typeof sensors[i].value === 'number') && tag.length > 0 && Math.abs(sensors[i].value) !== common.BOUNDARY) {
+        tag.html(sensors[i].name + ":" + sensors[i].value.toFixed(2) + sensors[i].unit);
+        operator.blinkTag(tag);
+        validateScope(sensors[i]);
+      }
+      if (operator.isValid(sensors[i].value) && (typeof sensors[i].value === 'object') && (tag.length > 0)) {
+        if (operator.isValid(sensors[i].value.x) && (Math.abs(sensors[i].value.x) !== common.BOUNDARY ||
+          Math.abs(sensors[i].value.y) !== common.BOUNDARY)) {
+          tag.html(sensors[i].name + ':' + operator.generateValueStr(sensors[i]) + sensors[i].unit);
+          operator.blinkTag(tag);
+          validateScope(sensors[i]);
+        }
+      }
+    }
+    document.getElementById('#newest-time').html((new Date(newestTime)).format("yyyy-MM-dd hh:mm:ss"));
+  }
+
+
+  /**
+   * 让图标闪烁
+   * @param tag 对应标签
+   */
+  window.blink = function (tag) {
+    let img = document.getElementById('#' + tag + "-state-img");
+    let info = document.getElementById('#' + tag + "-state-span");
+    if (img.css("visibility") !== "hidden") {
+      img.css("visibility", "hidden");
+      info.css("visibility", "hidden");
+    } else {
+      img.css("visibility", "visible");
+      info.css("visibility", "visible");
+    }
+  };
+
+  /**
+   * 验证值是否在范围内，不在范围内就会闪烁
+   * @param sensor 待验证传感器
+   */
+  function validateScope(sensor) {
+    let value = sensor.value;
+    let low = sensor.min;
+    let high = sensor.max;
+    let tag = sensor.tag;
+
+    if (low === '' && high === '') {
+      return
+    } else if (low && !low.x) {
+      low = low !== "" ? parseFloat(low) : -common.BOUNDARY;
+      high = high !== "" ? parseFloat(high) : common.BOUNDARY;
+    }
+
+    let img = document.getElementById('#' + tag + "-state-img");
+    let info = document.getElementById('#' + tag + "-state-span");
+    if (sensor.tag === '水位') {
+      if ((datetime.isFloodDate() && value > base.getBaseInfo().floodWaterLevel)
+        || (!datetime.isFloodDate() && value > base.getBaseInfo().headWaterLevel)) {
+        showWarning(img, info);
+      }
+      if (value > base.getBaseInfo().checkWaterLevel) {
+        showDanger(img, info);
+      }
+      sensor.timer = setInterval('blink(\'' + tag + '\')', 1000);
+    }
+    showInfo(value, high, low, img, info, tag, sensor);
+  }
+
+  function showInfo(value, high, low, img, info, tag, sensor) {
+    if (typeof value === 'number') {
+      if (value === common.BOUNDARY) {
+        return;
+      }
+      if (value <= high && value >= low) {
+        showNormal(img, info, sensor)
+      } else if (img.attr('src') === "../../../assets/images/common/safe.png") {
+        showWarning(img, info);
+        sensor.timer = setInterval('blink(\'' + tag + '\')', 1000);
+      }
+    } else {
+      if (Math.abs(value.x) === common.BOUNDARY || Math.abs(value.y) === common.BOUNDARY) {
+        return;
+      }
+      if (value.x <= high && value.x >= low || value.y <= high && value.y >= low) {
+        showNormal(img, info, sensor)
+      } else if (img.attr('src') === "../../../assets/images/common/safe.png") {
+        showWarning(img, info);
+        sensor.timer = setInterval('blink(\'' + tag + '\')', 1000);
+      }
+    }
+  }
+
+
+  /**
+   * 显示超限信息
+   * @param img 图片元素
+   * @param info 说明元素
+   */
+  function showWarning(img, info) {
+    img.attr('src', "../../../assets/images/common/warning.png");
+    info.css('color', '#f38702');
+    info.html('实时状态:超限');
+  }
+
+  /**
+   * 显示危险信息
+   * @param img 图片元素
+   * @param info 说明元素
+   */
+  function showDanger(img, info) {
+    img.attr('src', "../../../assets/images/common/danger.png");
+    info.css('color', 'red');
+    info.html('实时状态:危险');
+  }
+
+  /**
+   * 显示正常信息
+   * @param img 图片元素
+   * @param info 说明元素
+   * @param sensor
+   */
+  function showNormal(img, info, sensor) {
+    if (sensor.timer) {
+      clearInterval(sensor.timer);
+    }
+    img.attr('src', "../../../assets/images/common/safe.png");
+    info.css('color', 'green');
+    info.html('实时状态:正常');
+    img.css("visibility", "visible");
+    info.css("visibility", "visible");
+  }
+</script>
+
+<style scoped>
+  ::v-deep img {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+  }
+
+  ::v-deep .info {
+    font-family: 华文楷体, serif;
+    font-size: 20pt;
+    color: #000000;
+    vertical-align: top;
+  }
+
+  ::v-deep .el-elem-field legend {
+    font-size: 18pt;
+  }
+
+  ::v-deep .time-info, .hint-info {
+    font-size: 1.4rem;
+  }
+
+  ::v-deep .time-info {
+    padding-top: 10px;
+  }
+
+  ::v-deep .state-info {
+    color: green;
+  }
+
+  ::v-deep .el-card {
+    background-image: url("../../../../assets/images/data/body.jpg");
+  }
+
+  ::v-deep fieldset {
+    border-color: #eee;
+  }
+
+  ::v-deep .section:nth-child(odd) > .row > .cell {
+    background-color: #bdd0e045;
+  }
+
+  ::v-deep .section:nth-child(even) > .row > .cell{
+    background-color: #b3d9d943;
+  }
+
+  ::v-deep .el-card__body{
+    padding: 10px;
+  }
+
+  ::v-deep .cell{
+    border-radius: 4px;
+  }
+
+</style>

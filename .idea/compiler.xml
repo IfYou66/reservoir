@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="cf-common-swagger" />
+        <module name="cf-gateway" />
+        <module name="cf-common-log" />
+        <module name="cf-common-core" />
+        <module name="cf-modules-reservoir" />
+        <module name="cf-common-datasource" />
+        <module name="cf-modules-archives" />
+        <module name="cf-modules-file" />
+        <module name="cf-auth" />
+        <module name="cf-common-datascope" />
+        <module name="cf-visual-monitor" />
+        <module name="cf-modules-gen" />
+        <module name="cf-common-redis" />
+        <module name="cf-api-system" />
+        <module name="cf-common-security" />
+        <module name="cf-modules-job" />
+        <module name="cf-modules-system" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cf-modules-collection" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

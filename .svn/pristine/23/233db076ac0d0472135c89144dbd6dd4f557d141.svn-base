@@ -1,0 +1,27 @@
+package com.szsk.reservoir.security.service.Impl;
+
+import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.szsk.reservoir.security.mapper.MBorderMapper;
+import com.szsk.reservoir.security.service.IMBorderService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+/**
+ * 工程划界 Service业务层处理
+ * 
+ * @author wangcc
+ * @date 2021-08-23
+ */
+@Service
+public class MBorderServiceImpl implements IMBorderService
+{
+
+    @Resource
+    private MBorderMapper borderMapper;
+
+    @Override
+    public AjaxResult getLabelList() {
+        return AjaxResult.success(borderMapper.queryLabelList("shandong"));
+    }
+}

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.run.mapper.RCheckRecordMapper">
+    
+    <resultMap type="com.szsk.reservoir.run.domain.RCheckRecord" id="RCheckRecordResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fSecuimpId"    column="f_secuimp_id"    />
+        <result property="fCheckContent"    column="f_check_content"    />
+        <result property="fCheckTime"    column="f_check_time"    />
+        <result property="fCheckPersion"    column="f_check_persion"    />
+        <result property="fPhoto"    column="f_photo"    />
+        <result property="fStatus"    column="f_status"    />
+    </resultMap>
+
+    <sql id="selectRCheckRecordVo">
+        select f_id, f_secuimp_id, f_check_content, f_check_time, f_check_persion, f_photo, f_status from r_check_record
+    </sql>
+
+    <select id="selectRCheckRecordList" parameterType="com.szsk.reservoir.run.domain.RCheckRecord" resultMap="RCheckRecordResult">
+        <include refid="selectRCheckRecordVo"/>
+        <where>  
+            <if test="fId != null "> and f_id = #{fId}</if>
+            <if test="fSecuimpId != null  and fSecuimpId != ''"> and f_secuimp_id = #{fSecuimpId}</if>
+            <if test="fCheckContent != null  and fCheckContent != ''"> and f_check_content = #{fCheckContent}</if>
+            <if test="fCheckTime != null "> and f_check_time = #{fCheckTime}</if>
+            <if test="fCheckPersion != null  and fCheckPersion != ''"> and f_check_persion = #{fCheckPersion}</if>
+            <if test="fPhoto != null "> and f_photo = #{fPhoto}</if>
+            <if test="fStatus != null "> and f_status = #{fStatus}</if>
+        </where>
+    </select>
+    
+    <select id="selectRCheckRecordById" parameterType="Long" resultMap="RCheckRecordResult">
+        <include refid="selectRCheckRecordVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <select id="getMusterBy" resultType="com.szsk.reservoir.run.domain.RCheckRecord" resultMap="RCheckRecordResult">
+        <include refid="selectRCheckRecordVo"/>
+        where f_secuimp_id = #{fSecuimpId}
+    </select>
+
+    <insert id="insertRCheckRecord" parameterType="com.szsk.reservoir.run.domain.RCheckRecord">
+        insert into r_check_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fId != null">f_id,</if>
+            <if test="fSecuimpId != null">f_secuimp_id,</if>
+            <if test="fCheckContent != null">f_check_content,</if>
+            <if test="fCheckTime != null">f_check_time,</if>
+            <if test="fCheckPersion != null">f_check_persion,</if>
+            <if test="fPhoto != null">f_photo,</if>
+            <if test="fStatus != null">f_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fId != null">#{fId},</if>
+            <if test="fSecuimpId != null">#{fSecuimpId},</if>
+            <if test="fCheckContent != null">#{fCheckContent},</if>
+            <if test="fCheckTime != null">#{fCheckTime},</if>
+            <if test="fCheckPersion != null">#{fCheckPersion},</if>
+            <if test="fPhoto != null">#{fPhoto},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+         </trim>
+    </insert>
+
+    <insert id="batchAdd" parameterType="com.szsk.reservoir.run.domain.RCheckRecord">
+        insert into r_check_record
+        (
+        f_secuimp_id,
+        f_check_content,
+        f_check_time,
+        f_check_persion,
+        f_photo,
+        f_status
+        )
+        values
+        <foreach collection="list" item="check" separator=",">
+            (
+            #{check.fSecuimpId},
+            #{check.fCheckContent},
+            #{check.fCheckTime},
+            #{check.fCheckPersion},
+            #{check.fPhoto},
+            #{check.fStatus}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateRCheckRecord" parameterType="com.szsk.reservoir.run.domain.RCheckRecord">
+        update r_check_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fSecuimpId != null">f_secuimp_id = #{fSecuimpId},</if>
+            <if test="fCheckContent != null">f_check_content = #{fCheckContent},</if>
+            <if test="fCheckTime != null">f_check_time = #{fCheckTime},</if>
+            <if test="fCheckPersion != null">f_check_persion = #{fCheckPersion},</if>
+            <if test="fPhoto != null">f_photo = #{fPhoto},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteRCheckRecordById" parameterType="Long">
+        delete from r_check_record where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteRCheckRecordByIds" parameterType="String">
+        delete from r_check_record where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

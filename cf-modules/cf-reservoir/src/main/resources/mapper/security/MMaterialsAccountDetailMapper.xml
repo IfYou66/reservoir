@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.security.mapper.MMaterialsAccountDetailMapper">
+
+    <resultMap type="com.szsk.reservoir.security.domain.MMaterialsAccountDetail" id="MMaterialsAccountDetailResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fFloodMaterialsId"    column="f_flood_materials_id"    />
+        <result property="fAccountType"    column="f_account_type"    />
+        <result property="fAccountCode"    column="f_account_code"    />
+        <result property="fAccountNum"    column="f_account_num"    />
+        <result property="fUnit"    column="f_unit"    />
+        <result property="fPrice"    column="f_price"    />
+        <result property="fTotalPrice"    column="f_total_price"    />
+        <result property="fAccountDate"    column="f_account_date"    />
+        <result property="fAccountPeople"    column="f_account_people"    />
+        <result property="fSafekeepingPeople"    column="f_safekeeping_people"    />
+        <result property="fReviewPeople"    column="f_review_people"    />
+        <result property="fAuditPeople"    column="f_audit_people"    />
+        <result property="fRemarks"    column="f_remarks"    />
+        <result property="fActId"    column="f_act_id"    />
+        <result property="fActPersion"    column="f_act_persion"    />
+        <result property="fActStatus"    column="f_act_status"    />
+        <result property="fActNode"    column="f_act_node"    />
+        <result property="fCreateBy"    column="f_create_by"    />
+        <result property="fCreateDate"    column="f_create_date"    />
+    </resultMap>
+
+    <sql id="selectMMaterialsAccountDetailVo">
+        select f_id, f_flood_materials_id, f_account_type, f_account_code, f_account_num, f_unit, f_price, f_total_price, f_account_date, f_account_people, f_safekeeping_people, f_review_people, f_audit_people, f_remarks, f_act_id, f_act_persion, f_act_status, f_act_node, f_create_by, f_create_date from m_materials_account_detail
+    </sql>
+
+    <select id="selectMMaterialsAccountDetailList" parameterType="com.szsk.reservoir.security.domain.MMaterialsAccountDetail" resultMap="MMaterialsAccountDetailResult">
+        <include refid="selectMMaterialsAccountDetailVo"/>
+        <where>
+            <if test="fFloodMaterialsId != null "> and f_flood_materials_id = #{fFloodMaterialsId}</if>
+            <if test="fAccountType != null "> and f_account_type = #{fAccountType}</if>
+            <if test="fAccountCode != null  and fAccountCode != ''"> and f_account_code = #{fAccountCode}</if>
+            <if test="fAccountNum != null "> and f_account_num = #{fAccountNum}</if>
+            <if test="fUnit != null  and fUnit != ''"> and f_unit = #{fUnit}</if>
+            <if test="fPrice != null "> and f_price = #{fPrice}</if>
+            <if test="fTotalPrice != null "> and f_total_price = #{fTotalPrice}</if>
+            <if test="fAccountDate != null "> and f_account_date = #{fAccountDate}</if>
+            <if test="fAccountPeople != null  and fAccountPeople != ''"> and f_account_people = #{fAccountPeople}</if>
+            <if test="fSafekeepingPeople != null  and fSafekeepingPeople != ''"> and f_safekeeping_people = #{fSafekeepingPeople}</if>
+            <if test="fReviewPeople != null  and fReviewPeople != ''"> and f_review_people = #{fReviewPeople}</if>
+            <if test="fAuditPeople != null  and fAuditPeople != ''"> and f_audit_people = #{fAuditPeople}</if>
+            <if test="fRemarks != null  and fRemarks != ''"> and f_remarks = #{fRemarks}</if>
+            <if test="fActId != null "> and f_act_id = #{fActId}</if>
+            <if test="fActPersion != null "> and f_act_persion = #{fActPersion}</if>
+            <if test="fActStatus != null "> and f_act_status = #{fActStatus}</if>
+            <if test="fActNode != null  and fActNode != ''"> and f_act_node = #{fActNode}</if>
+            <if test="fCreateBy != null "> and f_create_by = #{fCreateBy}</if>
+            <if test="fCreateDate != null "> and f_create_date = #{fCreateDate}</if>
+            <if test="startTime != null "> and f_account_date &gt; #{startTime}</if>
+            <if test="endTime != null "> and f_account_date &lt; #{endTime}</if>
+        </where>
+    </select>
+
+    <select id="selectMMaterialsAccountDetailById" parameterType="Long" resultMap="MMaterialsAccountDetailResult">
+        <include refid="selectMMaterialsAccountDetailVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <insert id="insertMMaterialsAccountDetail" parameterType="com.szsk.reservoir.security.domain.MMaterialsAccountDetail" useGeneratedKeys="true" keyProperty="fId">
+        insert into m_materials_account_detail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fFloodMaterialsId != null">f_flood_materials_id,</if>
+            <if test="fAccountType != null">f_account_type,</if>
+            <if test="fAccountCode != null">f_account_code,</if>
+            <if test="fAccountNum != null">f_account_num,</if>
+            <if test="fUnit != null">f_unit,</if>
+            <if test="fPrice != null">f_price,</if>
+            <if test="fTotalPrice != null">f_total_price,</if>
+            <if test="fAccountDate != null">f_account_date,</if>
+            <if test="fAccountPeople != null">f_account_people,</if>
+            <if test="fSafekeepingPeople != null">f_safekeeping_people,</if>
+            <if test="fReviewPeople != null">f_review_people,</if>
+            <if test="fAuditPeople != null">f_audit_people,</if>
+            <if test="fRemarks != null">f_remarks,</if>
+            <if test="fActId != null">f_act_id,</if>
+            <if test="fActPersion != null">f_act_persion,</if>
+            <if test="fActStatus != null">f_act_status,</if>
+            <if test="fActNode != null">f_act_node,</if>
+            <if test="fCreateBy != null">f_create_by,</if>
+            <if test="fCreateDate != null">f_create_date,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fFloodMaterialsId != null">#{fFloodMaterialsId},</if>
+            <if test="fAccountType != null">#{fAccountType},</if>
+            <if test="fAccountCode != null">#{fAccountCode},</if>
+            <if test="fAccountNum != null">#{fAccountNum},</if>
+            <if test="fUnit != null">#{fUnit},</if>
+            <if test="fPrice != null">#{fPrice},</if>
+            <if test="fTotalPrice != null">#{fTotalPrice},</if>
+            <if test="fAccountDate != null">#{fAccountDate},</if>
+            <if test="fAccountPeople != null">#{fAccountPeople},</if>
+            <if test="fSafekeepingPeople != null">#{fSafekeepingPeople},</if>
+            <if test="fReviewPeople != null">#{fReviewPeople},</if>
+            <if test="fAuditPeople != null">#{fAuditPeople},</if>
+            <if test="fRemarks != null">#{fRemarks},</if>
+            <if test="fActId != null">#{fActId},</if>
+            <if test="fActPersion != null">#{fActPersion},</if>
+            <if test="fActStatus != null">#{fActStatus},</if>
+            <if test="fActNode != null">#{fActNode},</if>
+            <if test="fCreateBy != null">#{fCreateBy},</if>
+            <if test="fCreateDate != null">#{fCreateDate},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMMaterialsAccountDetail" parameterType="com.szsk.reservoir.security.domain.MMaterialsAccountDetail">
+        update m_materials_account_detail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fFloodMaterialsId != null">f_flood_materials_id = #{fFloodMaterialsId},</if>
+            <if test="fAccountType != null">f_account_type = #{fAccountType},</if>
+            <if test="fAccountCode != null">f_account_code = #{fAccountCode},</if>
+            <if test="fAccountNum != null">f_account_num = #{fAccountNum},</if>
+            <if test="fUnit != null">f_unit = #{fUnit},</if>
+            <if test="fPrice != null">f_price = #{fPrice},</if>
+            <if test="fTotalPrice != null">f_total_price = #{fTotalPrice},</if>
+            <if test="fAccountDate != null">f_account_date = #{fAccountDate},</if>
+            <if test="fAccountPeople != null">f_account_people = #{fAccountPeople},</if>
+            <if test="fSafekeepingPeople != null">f_safekeeping_people = #{fSafekeepingPeople},</if>
+            <if test="fReviewPeople != null">f_review_people = #{fReviewPeople},</if>
+            <if test="fAuditPeople != null">f_audit_people = #{fAuditPeople},</if>
+            <if test="fRemarks != null">f_remarks = #{fRemarks},</if>
+            <if test="fActId != null">f_act_id = #{fActId},</if>
+            <if test="fActPersion != null">f_act_persion = #{fActPersion},</if>
+            <if test="fActStatus != null">f_act_status = #{fActStatus},</if>
+            <if test="fActNode != null">f_act_node = #{fActNode},</if>
+            <if test="fCreateBy != null">f_create_by = #{fCreateBy},</if>
+            <if test="fCreateDate != null">f_create_date = #{fCreateDate},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteMMaterialsAccountDetailById" parameterType="Long">
+        delete from m_materials_account_detail where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteMMaterialsAccountDetailByIds" parameterType="String">
+        delete from m_materials_account_detail where f_id in
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,861 @@
+<template>
+  <div class="app-container instructionReceived">
+     <el-row class="from-top">
+      <!-- <el-col :span="24">
+        <div style="margin: 0 auto;display: flex;align-items: center;width: 100%;justify-content:center;">
+          <div style="position: relative;">
+            <img src="../../../assets/images/01s.png"/>
+            <div  style="position: absolute;top: 17px;left: 23px;width: 50%;color: #FFFFFF;">指令接收</div>
+          </div>
+          <div  style="position: relative; width: 30%;">
+            <img :src="require(active>1? '../../../assets/images/04.png':'../../../assets/images/05.png')"  style="width: 100%;"/>
+            <img v-if="active==1" :src="require(active==1? '../../../assets/images/07.gif':'../../../assets/images/06.gif')" style="position: absolute;top: 0px;left: 150px;height: 80%;width: 10%;"/>
+            </div>
+          <div  style="position: relative;">
+            <img :src="require(active>1? '../../../assets/images/01s.png':'../../../assets/images/01.png')" />
+            <div  :style="active>1? 'position: absolute;top: 17px;left: 23px;width: 50%;color: #FFFFFF;':'position: absolute;top: 17px;left: 23px;width: 50%;color: #999999;'">指令执行</div>
+            </div>
+          <div  style="position: relative; width: 30%;">
+            <img :src="require(active==3? '../../../assets/images/04.png':'../../../assets/images/05.png')" style="width: 100%;" />
+            <img v-if="active==2 || active==1" :src="require(active==2? '../../../assets/images/07.gif':'../../../assets/images/06.gif')" style="position: absolute;top: 0px;left: 150px;height: 80%;width: 10%;"/>
+            </div>
+          <div   style="position: relative;">
+            <img :src="require(active==3? '../../../assets/images/01s.png':'../../../assets/images/01.png')" />
+            <div  :style="active>1? 'position: absolute;top: 17px;left: 23px;width: 50%;color: #FFFFFF;':'position: absolute;top: 17px;left: 23px;width: 50%;color: #999999;'">指令上报</div>
+            </div>
+        </div>
+      </el-col> -->
+
+      <el-col :span="24">
+        <div style="margin: 0 auto;display: flex;align-items: center;width: 100%;justify-content:center;">
+          <div style="position: relative;">
+            <img src="../../../assets/images/jin.png"/>
+            <div  style="position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;">1.指令接收</div>
+          </div>
+          <div  style="position: relative;">
+            <img :src="require(active>1? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')" />
+            <div  :style="active>1? 'position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">2.指令执行</div>
+            </div>
+          <div   style="position: relative;">
+            <img :src="require(active>=3? '../../../assets/images/jin.png':'../../../assets/images/jin1.png')" />
+            <div  :style="active>1? 'position: absolute;top: 10px;left: 100px;width: 50%;color: #FFFFFF;':'position: absolute;top: 10px;left: 100px;width: 50%;color: #757575;'">3.指令上报</div>
+            </div>
+        </div>
+      </el-col>
+    </el-row>
+    <div  class="from-div">
+      <el-row>
+        <el-col :span="24"
+        class="from-div-title"
+        style="background-color: rgba(215, 215, 215, 1); text-align: right;"
+         >
+        <div>
+          <el-button v-if="active == 1 && formData.fId == null || formData.fId == '' " type="primary" size="small" style="margin-right: 5px" @click="submit(0)">暂存
+          </el-button>
+          <el-button v-if="active == 1" type="primary" size="small" style="margin-right: 20px" @click="submit(1)">提交
+          </el-button>
+          <el-button v-if="active == 2 " type="primary" size="small" style="margin-right: 20px" @click="execution">指令执行</el-button>
+          <el-button v-if="active == 3 " type="primary" size="small" style="margin-right: 20px" @click="report">结果上报</el-button>
+        </div>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24"
+        class="from-div-title">调度指令执行一览表</el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom" >
+        <el-col :span="3" class="from-col-left" >
+          调度指令名称
+        </el-col>
+        <el-col :span="9" class="from-border-right" >
+          <el-input v-model="formData.fInstructionName" placeholder="请输入内容" v-bind:disabled="active != 1? true : false"></el-input>
+        </el-col>
+        <el-col :span="4" class="from-col-left" >
+          调度指令下达时间
+        </el-col>
+        <el-col :span="8" style="text-align: center ;line-height: 40px;">
+          <el-date-picker v-model="formData.fInstructionTime" type="date" style="width: 50%;" format="yyyy 年 MM 月 dd日" placeholder="指令下达时间" v-bind:disabled="active != 1? true : false">
+          </el-date-picker>
+        </el-col>
+      </el-row>
+
+      <el-row  class="from-border-bottom">
+        <el-col :span="3" class="from-col" >
+          调度指令说明
+        </el-col>
+        <el-col :span="21" style="height: 50px;">
+          <el-input type="textarea" maxlength="500" show-word-limit  :rows="4" placeholder="请输入内容" v-model="formData.fInstructionContent" v-bind:disabled="active != 1? true : false">
+          </el-input>
+        </el-col>
+      </el-row>
+
+      <el-row  class="from-border-bottom">
+        <el-col :span="3" class="from-col" style="line-height: 100px;" >
+          调度单上传
+        </el-col>
+        <el-col :span="9" style="height: 100px; border-right: #a4d5ff 1px solid;">
+          <div  style="width: 300px;margin-top: 20px;margin-left: 20px;">
+            <el-upload style="margin-left: 15px;margin-top: 15px" class="upload-demo"
+                       :headers="GLOBAL.headers()"
+                       :action="GLOBAL.httpUrl"
+                       :on-preview="handlePreview" :on-remove="handleRemove"  multiple
+                       :on-success="uploadedSuccess"
+                       :show-file-list="true"
+                       :auto-upload="true"
+                       :limit="1"
+                       :disabled="active != 1"
+                       :on-exceed="handleExceed" :file-list="fileList">
+              <el-button size="small" type="primary" :disabled="active != 1">调度单上传</el-button>
+			  <div slot="tip" class="el-upload__tip" style="margin-top: 15px">上传文件不得超过100M</div>
+            </el-upload>
+          </div>
+        </el-col>
+        <el-col :span="3" class="from-col" style="line-height: 100px;">
+          操作票上传
+        </el-col>
+        <el-col :span="9" style="height: 50px;">
+          <div  style="width: 300px;margin-top: 20px;margin-left: 20px;">
+            <el-upload style="margin-left: 15px;margin-top: 15px" class="upload-demo"
+                       :headers="GLOBAL.headers()"
+                       :action="GLOBAL.httpUrl"
+                       :on-preview="handlePreviewa" :on-remove="operationTicketRemove"  multiple
+                       :on-success="operationTicket"
+                       :show-file-list="true"
+                       :auto-upload="true"
+                       :limit="1"
+                       :disabled="active != 1"
+                       :on-exceed="handleExceed" :file-list="fileList1">
+              <el-button size="small" type="primary" :disabled="active != 1">操作票上传</el-button>
+			  <div slot="tip" class="el-upload__tip" style="margin-top: 15px">上传文件不得超过100M</div>
+            </el-upload>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom" style="text-align: right;margin-right: 10px;">
+        <div style="margin-top:10px;margin-bottom:10px;">
+          编制人：<el-input v-model="formData.fPreparedBy"  placeholder="请输入内容" style="width:220px;border: 1px solid #DCDFE6;" :disabled="active != 1"></el-input>
+          <div class="block" style="display:inline;margin-left: 15px">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'"/>
+                <el-date-picker style="border: 1px solid #DCDFE6;"
+                  type="date"
+                  v-model="formData.fPreparationTime"
+                  placeholder="选择日期"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  :disabled="active != 1"
+                  >
+                </el-date-picker>
+              </div>
+        </div>
+
+      </el-row>
+
+      <el-row  class="from-border-bottom">
+        <el-col :span="3" class="from-col" style="line-height: 400px;min-height:400px">
+          调度指令执行
+        </el-col>
+        <el-col :span="21" >
+          <el-button size="small" type="primary" style="margin:5px;float:right;margin-right:15px;"
+            @click="addRun" v-if="active == 2">执行记录</el-button>
+            <div class="table-head" style="width:98%;margin:0 auto;margin-top:40px;">
+               调度指令执行列表
+            </div>
+          <el-table :data="tableData" border style="width:98%;margin:0 auto;">
+<!--            <el-table-column label="序号" align="center" width="70" type="index" />-->
+            <el-table-column label="执行时间" align="center" width="190" prop="fRunTime" />
+            <el-table-column label="结束时间" align="center" width="190" prop="fEndTime" />
+            <el-table-column label="执行情况描述" align="center" width="200" prop="fRunContent" />
+            <el-table-column label="存在问题" align="center" width="180" prop="fProblem" />
+            <el-table-column label="问题处置" align="center" width="180" prop="fProblemHandle" >
+              <template slot-scope="{row}">
+                <span v-for="(item,index) in dict.problemDisposal"  v-if="row.fProblemHandle == item.dictValue">{{item.dictLabel}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="执行人" align="center" prop="fRunPersion" />
+            <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="180">
+              <template slot-scope="{row}">
+<!--                <el-button size="mini" type="text" :disabled="active != 2">查看</el-button>-->
+                <el-button size="mini" type="text" :disabled="active != 2" @click="edit(row)">编辑</el-button>
+                <el-button size="mini" type="text" :disabled="active != 2" @click="del(row)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-col>
+      </el-row>
+
+      <el-row class="from-border-bottom" >
+        <el-col :span="3"  class="from-col" >
+          执行结果上报
+        </el-col>
+        <el-col :span="9" class="from-col" >
+          <el-input type="textarea" maxlength="500" show-word-limit  :rows="7" placeholder="请输入内容" v-model="formData.fRunResult" :disabled="active != 3"></el-input>
+        </el-col>
+        <el-col :span="4"  class="from-col" >
+          执行结果上报附件
+        </el-col>
+        <el-col :span="8" style="height: 50px;">
+          <div  style="width: 300px;margin-top: 20px;margin-left: 20px;">
+            <el-upload style="margin-left: 15px;margin-top: 15px" class="upload-demo"
+                       :headers="GLOBAL.headers()"
+                       :action="GLOBAL.httpUrl"
+                        :before-upload = "beforeAvatarUpload"
+                       :on-preview="handlePreviewb" :on-remove="executionResultRemove"  multiple
+                       :on-success="executionResult"
+                       :show-file-list="true"
+                       :auto-upload="true"
+                       :limit="1"
+                       :disabled="active != 3"
+                       :on-exceed="handleExceed" :file-list="fileList2">
+              <el-button size="small" type="primary" :disabled="active != 3">执行结果上传</el-button>
+			  <div slot="tip" class="el-upload__tip" style="margin-top: 15px">上传文件不得超过100M</div>
+            </el-upload>
+          </div>
+        </el-col>
+      </el-row>
+      <el-row class="from-border-bottom" style="text-align: right;margin-right: 10px;">
+        <div style="margin-top:10px;margin-bottom:10px;">
+          上报人：<el-input v-model="formData.fReportPersion"  placeholder="请输入内容" style="width:220px;border: 1px solid #DCDFE6;" :disabled="active != 3"></el-input>
+          <div class="block" style="display:inline;margin-left: 15px">
+                <span class="demonstration" v-html="'时&ensp;&ensp;间：'"/>
+                <el-date-picker style="border: 1px solid #DCDFE6;"
+                  type="date"
+                  v-model="formData.fReportTime"
+                  placeholder="选择日期"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd HH:mm:ss"
+                  :disabled="active != 3"
+                  >
+                </el-date-picker>
+              </div>
+        </div>
+
+      </el-row>
+
+
+
+    </div>
+    <!-- 执行记录 -->
+    <el-dialog :title="title" :visible.sync="open" width="40%" append-to-body @close="cancel">
+      <el-form ref="form" :model="form"  :inline="true" class="demo-form-inline">
+
+            <el-form-item label="执行时间" prop="">
+                <el-date-picker style="width:  200px" v-model="form.fRunTime"  placeholder="执行时间" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+            </el-form-item>
+
+            <el-form-item label="结束时间" prop="">
+                <el-date-picker style="width:  200px" v-model="form.fEndTime"  placeholder="结束时间" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+            </el-form-item>
+
+            <el-form-item label="问题处置" prop="">
+                <el-select style="width:  200px" v-model="form.fProblemHandle" placeholder="请选择问题处置">
+                  <el-option v-for="item in dict.problemDisposal" :key="item.dictValue" :label="item.dictLabel" :value="item.dictValue">
+                </el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item label="执行人" prop="">
+              <el-input style="width:  200px" v-model="form.fRunPersion" placeholder="请输入执行人名称" maxlength="50" />
+            </el-form-item>
+
+        <el-form-item label="存在问题">
+          <el-input style="width: 510px"  maxlength="500" show-word-limit  v-model="form.fProblem" :autosize="{ minRows: 4, maxRows: 6}" type="textarea"  placeholder="请输入存在问题"></el-input>
+        </el-form-item>
+
+        <el-form-item label="情况描述">
+          <el-input style="width: 510px"  maxlength="500" show-word-limit  v-model="form.fRunContent" :autosize="{ minRows: 4, maxRows: 6}" type="textarea"  placeholder="请输入描述内容"></el-input>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+      </div>
+    </el-dialog>
+
+<!--    <el-dialog-->
+<!--      title="选择处理人"-->
+<!--      :visible.sync="dialogVisible"-->
+<!--      :modal="false"-->
+<!--      width="30%">-->
+<!--      <el-radio v-model="formData.fActPersion" :label="item.userId" v-for="(item,index) in userList" :key="index">-->
+<!--        {{ item.nickName }}-->
+<!--      </el-radio>-->
+<!--      <span slot="footer" class="dialog-footer">-->
+<!--        <el-button @click="dialogVisible = false">取 消</el-button>-->
+<!--        <el-button type="primary" @click="addAndUpdate">确 定</el-button>-->
+<!--      </span>-->
+<!--    </el-dialog>-->
+
+  </div>
+</template>
+<script>
+
+import { getToken } from "@/utils/auth";
+import {
+  getUserList
+} from "@/api/security/planning";
+
+import {
+  dataQuery
+} from "@/api/indemnification/training";
+
+import { addInstruction, updateInstruction } from "@/api/dispatch/instruction"
+
+import { listLog, addLog, updateLog, delLog } from "@/api/dispatch/log"
+
+export default {
+
+    data() {
+      return {
+
+        title: '',
+
+        // 文件上传
+        // upload: {
+        //   // 设置上传的请求头部
+        //   headers: {Authorization: "Bearer " + getToken()},
+        //   // 上传的地址
+        //   url: process.env.VUE_APP_BASE_API + "/file/upload"
+        // },
+        userList: [],
+
+        // dialogVisible: false,
+
+        active:1,
+
+        info: {
+          stockDate:this.getNowTime(),  //日期
+        },
+
+        open: false,
+
+        dict: {
+          problemDisposal: []
+        },
+
+        fileList: [],
+        fileList1: [],
+        fileList2: [],
+
+        tableData: [],
+
+        formData: {
+          /** id */
+          fId: null,
+
+          /** 调度指令名称 */
+          fInstructionName: null,
+
+          /** 调度指令下达时间 */
+          fInstructionTime: null,
+
+          /** 调度指令说明 */
+          fInstructionContent: null,
+
+          /** 调度单附件 */
+          fSchedulingId: null,
+
+          /** 操作票附件 */
+          fOperateId: null,
+
+          /** 编制人 */
+          fPreparedBy: null,
+
+          /** 编制时间 */
+          fPreparationTime: null,
+
+          /** 执行结果 */
+          fRunResult: null,
+
+          /** 执行结果附件 */
+          fResultUrl: null,
+
+          /** 执行结果上报人 */
+          fReportPersion: null,
+
+          /** 上报时间 */
+          fReportTime: null,
+
+          /** 指令执行状态 0:指令接收 1:指令执行2：指令上报 */
+          fInstructionStatus: null,
+
+          /** 状态 0:无效1：有效 */
+          fStatus: null,
+
+          /** 创建人 */
+          fCreatePeople: null,
+
+          /** 创建时间 */
+          fCreateTime: null,
+
+          /** 流程实例id */
+          fActId: null,
+
+          // /** 流程下一环节审核人 */
+          // fActPersion: null,
+
+          /** 流程状态 1已提交启动 2：审核中 3：驳回 4：审核完成 */
+          fActStatus: null,
+
+          /** 流程节点 */
+          fActNode: null,
+
+          /**
+           * 暂存或提交 1提交 0暂存
+           */
+          holdOrSubmit: null,
+
+          /**
+           * 当前登陆人
+           */
+          landingPersonId: null
+
+        },
+
+        form: {
+          /** id */
+          fLogId: null,
+
+          /** 调度指令表ID */
+          fInstructionId: null,
+
+          /** 执行情况描述 */
+          fRunContent: null,
+
+          /** 存在问题 */
+          fProblem: null,
+
+          /** 问题处置 */
+          fProblemHandle: null,
+
+          /** 执行人 */
+          fRunPersion: null,
+
+          /** 执行时间 */
+          fRunTime: null,
+
+          /** 结束时间 */
+          fEndTime: null
+        }
+
+      };
+    },
+    created() {
+      this.Personnel();
+      this.dataQuery()
+    },
+    methods: {
+      beforeAvatarUpload(file){
+      const isLt100M = file.size / 1024 / 1024 < 100;
+         if (!isLt100M) {
+                this.$message.error('上传文件大小不能超过 100MB!');
+                return false
+            }
+      },
+
+      init(data, type, file, file1, file2) {
+        this.fileList2 = []
+        this.active = data.fActStatus
+        this.formData = data
+        if (file) {
+          this.fileList = [{name: file.fOldFileName, url: file.fFilePath}]
+        }
+        if (file1) {
+          this.fileList1 = [{name: file1.fOldFileName, url: file1.fFilePath}]
+        }
+        if (file2 && file2.fFilePath) {
+          this.fileList2 = [{name: file2.fOldFileName, url: file2.fFilePath}]
+        }
+        if (type == 1) {
+          this.getList()
+        }
+      },
+
+      submit(type) {
+        if (this.active == 1) {
+          if (this.formData.fInstructionName == null) {
+            this.$message.error("请填写调度指令名称")
+            return false
+          } else if (this.formData.fInstructionTime == null) {
+            this.$message.error("请选择调度指令下达时间")
+            return false
+          } else if (this.formData.fInstructionContent == null) {
+            this.$message.error("请填写调度指令说明")
+            return false
+          } else if (this.formData.fSchedulingId == null) {
+            this.$message.error("请上传经费用途文件")
+            return false
+          } else if (this.formData.fOperateId == null) {
+            this.$message.error("请上传操作票附件")
+            return false
+          } else if (this.formData.fPreparedBy == null) {
+            this.$message.error("请填写编制人")
+            return false
+          } else if (this.formData.fPreparationTime == null) {
+            this.$message.error("请选择编制时间")
+            return false
+          }
+          this.formData.holdOrSubmit = type
+          // if (type == 1) {
+          //   this.dialogVisible = true;
+          // } else {
+            this.addAndUpdate()
+          // }
+        }
+      },
+
+      // 调度指令执行
+      execution() {
+        if (this.tableData.length <= 0) {
+          this.$message.error("请添加执行记录");
+          return false
+        }
+        // this.dialogVisible = true
+        this.addAndUpdate()
+      },
+
+      // 执行结果上报
+      report() {
+        if (this.active == 3) {
+          if (this.formData.fRunResult == null) {
+            this.$message.error("请填写执行结果")
+            return false
+          } else if (this.formData.fResultUrl == null) {
+            this.$message.error("请上传执行结果上报附件")
+            return false
+          } else if (this.formData.fReportPersion == null) {
+            this.$message.error("请填写审批人")
+            return false
+          } else if (this.formData.fReportTime == null) {
+            this.$message.error("请选择审批时间")
+            return false
+          }
+          this.addAndUpdate()
+        }
+      },
+
+      addAndUpdate() {
+
+        // if (this.formData.holdOrSubmit == 1) {
+        //   if (this.formData.fActPersion == null) {
+        //     this.$message.error("请选择流程下一环节审核人")
+        //     return false
+        //   }
+        // }
+        if (this.formData.fId != null && this.formData.fId != '') {
+          updateInstruction(this.formData).then(res => {
+            if (res.code == 200) {
+              this.$message.success("调度成功");
+              // this.dialogVisible = false
+              // 调用父组件方法关闭弹窗
+              this.$emit("shut", false)
+              // 调用父组件方法查询列表
+              this.$emit("search")
+            } else {
+              this.$message.error("调度失败");
+            }
+          });
+        } else {
+          addInstruction(this.formData).then(res => {
+            if (res.code == 200) {
+              if (this.formData.holdOrSubmit == 1) {
+                this.$message.success("调度指令提交成功");
+              } else {
+                this.msgSuccess("调度指令暂存成功");
+              }
+              this.clearForm();
+              // this.dialogVisible = false
+            } else {
+              if (this.formData.holdOrSubmit == 1) {
+                this.$message.error("调度指令提交失败");
+              } else {
+                this.msgError("调度指令暂存失败");
+              }
+            }
+          });
+        }
+      },
+
+      Personnel() {
+        getUserList().then(response => {
+          this.userList = response.data
+        })
+      },
+
+      addRun() {
+        this.open = true;
+        this.title = '新增执行记录'
+      },
+
+      cancel() {
+        this.open = false;
+        this.remove()
+      },
+
+      // 调度指令执行列表保存
+      submitForm() {
+        if (this.form.fLogId != null && this.form.fLogId != '') {
+          updateLog(this.form).then(result => {
+            if (result.code == 200) {
+              this.$message.success("调度指令执行修改成功");
+              this.open = false
+              this.remove()
+              this.getList()
+            } else {
+              this.$message.error("调度指令执行修改失败")
+            }
+          });
+        } else {
+          this.form.fInstructionId = this.formData.fId
+          addLog(this.form).then(result => {
+            if (result.code == 200) {
+              this.$message.success("调度指令执行保存成功");
+              this.open = false
+              this.remove()
+              this.getList()
+            } else {
+              this.$message.error("调度指令执行保存失败");
+            }
+          });
+        }
+      },
+
+      // 编辑调度指令执行
+      edit(row) {
+        this.title = '修改执行记录'
+        this.form = row
+        this.open = true
+      },
+
+      // 调度指令执行删除
+      del(row) {
+        this.$confirm('是否确认删除档案分类 编号为"' + row.fLogId + '"的数据项?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function() {
+          return delLog(row.fLogId);
+        }).then(() => {
+          this.getList();
+          this.msgSuccess("删除成功");
+        }).catch(() => {});
+      },
+
+      // 获取调度指令执行列表
+      getList() {
+        var queryParams = {
+          fInstructionId : this.formData.fId
+        }
+        listLog(queryParams).then(result => {
+          this.tableData = result.rows
+        });
+      },
+
+      dataQuery() {
+        var query = { dictType: 'problemDisposal' }
+        dataQuery(query).then(res => {
+          if (res.code == 200) {
+            this.dict.problemDisposal = res.data
+          }
+        });
+      },
+
+      // 调度单附件上传成功
+      uploadedSuccess(response, file, fileList) {
+        this.formData.fSchedulingId = response.data.fId
+        this.fileList = [{
+          name:response.data.fOldFileName,
+          url:response.data.fFilePath
+        }]
+      },
+
+      // 操作票上传成功
+      operationTicket(response, file, fileList) {
+        this.formData.fOperateId = response.data.fId
+        this.fileList1 = [{
+          name:response.data.fOldFileName,
+          url:response.data.fFilePath
+        }]
+      },
+
+      // 执行结果上传成功
+      executionResult(response, file, fileList) {
+        this.formData.fResultUrl = response.data.fId
+        this.fileList2 = [{
+          name:response.data.fOldFileName,
+          url:response.data.fFilePath
+        }]
+      },
+
+      // 调度单附件删除成功
+      handleRemove(file, fileList) {
+        this.GLOBAL.commonFun(this.formData.fSchedulingId)
+      },
+
+      // 操作票删除成功
+      operationTicketRemove() {
+        this.GLOBAL.commonFun(this.formData.fOperateId)
+      },
+
+      // 执行结果删除成功
+      executionResultRemove() {
+        this.GLOBAL.commonFun(this.formData.fResultUrl)
+      },
+
+
+      handlePreview(file) {
+        console.log(file);
+		// window.location.href = file.url;
+		window.open(this.fileList[0].url);
+      },
+      handlePreviewa(file){
+        window.open(this.fileList1[0].url);
+      },
+      handlePreviewb(file){
+        window.open(this.fileList2[0].url);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
+      },
+      	    getNowTime() {
+	       var now = new Date();
+	       var year = now.getFullYear(); //得到年份
+	       var month = now.getMonth(); //得到月份
+	       var date = now.getDate(); //得到日期
+	       var hour =" 00:00:00"; //默认时分秒 如果传给后台的格式为年月日时分秒，就需要加这个，如若不需要，此行可忽略
+	       month = month + 1;
+	       month = month.toString().padStart(2, "0");
+	       date = date.toString().padStart(2, "0");
+	       var defaultDate = `${year}-${month}-${date}${hour}`;
+	       console.log(defaultDate)
+	       return defaultDate;
+	       this.$set(this.info, "stockDate", defaultDate);
+	    },
+
+
+      clearForm() {
+        this.formData = {
+          /** id */
+          fId: null,
+
+          /** 调度指令名称 */
+          fInstructionName: null,
+
+          /** 调度指令下达时间 */
+          fInstructionTime: null,
+
+          /** 调度指令说明 */
+          fInstructionContent: null,
+
+          /** 调度单附件 */
+          fSchedulingId: null,
+
+          /** 操作票附件 */
+          fOperateId: null,
+
+          /** 编制人 */
+          fPreparedBy: null,
+
+          /** 编制时间 */
+          fPreparationTime: null,
+
+          /** 执行结果 */
+          fRunResult: null,
+
+          /** 执行结果附件 */
+          fResultUrl: null,
+
+          /** 执行结果上报人 */
+          fReportPersion: null,
+
+          /** 上报时间 */
+          fReportTime: null,
+
+          /** 指令执行状态 0:指令接收 1:指令执行2：指令上报 */
+          fInstructionStatus: null,
+
+          /** 状态 0:无效1：有效 */
+          fStatus: null,
+
+          /** 创建人 */
+          fCreatePeople: null,
+
+          /** 创建时间 */
+          fCreateTime: null,
+
+          /** 流程实例id */
+          fActId: null,
+
+          // /** 流程下一环节审核人 */
+          // fActPersion: null,
+
+          /** 流程状态 1已提交启动 2：审核中 3：驳回 4：审核完成 */
+          fActStatus: null,
+
+          /** 流程节点 */
+          fActNode: null,
+
+          /**
+           * 暂存或提交 1提交 0暂存
+           */
+          holdOrSubmit: null,
+
+          /**
+           * 当前登陆人
+           */
+          landingPersonId: null
+        }
+
+        this.fileList = []
+        this.fileList1 = []
+
+      },
+
+      remove() {
+        this.form = {
+          /** id */
+          fLogId: null,
+
+          /** 调度指令表ID */
+          fInstructionId: null,
+
+          /** 执行情况描述 */
+          fRunContent: null,
+
+          /** 存在问题 */
+          fProblem: null,
+
+          /** 问题处置 */
+          fProblemHandle: null,
+
+          /** 执行人 */
+          fRunPersion: null,
+
+          /** 执行时间 */
+          fRunTime: null,
+
+          /** 结束时间 */
+          fEndTime: null
+        }
+      }
+
+    }
+  };
+</script>
+<style lang="scss" >
+  .color409 {
+    color: #409eff;
+    cursor: pointer;
+  }
+  .instructionReceived{
+    .el-upload-list{
+      margin-left: 120px;
+      margin-top: -60px;
+    }
+  }
+
+</style>

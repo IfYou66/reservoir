@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.reservoir.security.mapper.MCancellationMapper">
+
+    <resultMap type="com.szsk.reservoir.security.domain.MCancellation" id="MCancellationResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fReservoirName"    column="f_reservoir_name"    />
+        <result property="fCancellationNumber"    column="f_cancellation_number"    />
+        <result property="fAddress"    column="f_address"    />
+        <result property="fDamTypeMaterial"    column="f_dam_type_material"    />
+        <result property="fDamTypeStructure"    column="f_dam_type_structure"    />
+        <result property="fRiver"    column="f_river"    />
+        <result property="fManagementUnit"    column="f_management_unit"    />
+        <result property="fMaximumDamHeight"    column="f_maximum_dam_height"    />
+        <result property="fTotalStorageCapacity"    column="f_total_storage_capacity"    />
+        <result property="fStartDate"    column="f_start_date"    />
+        <result property="fCompletionDate"    column="f_completion_date"    />
+        <result property="fDiscardReason"    column="f_discard_reason"    />
+        <result property="fReasonRemarks"    column="f_reason_remarks"    />
+        <result property="fApprovalNumber"    column="f_approval_number"    />
+        <result property="fContentAbstract"    column="f_content_abstract"    />
+        <result property="fApprovalUnit"    column="f_approval_unit"    />
+        <result property="fApprovalDate"    column="f_approval_date"    />
+        <result property="fCancellationFileId"    column="f_cancellation_file_id"    />
+        <result property="fPreparedBy"    column="f_prepared_by"    />
+        <result property="fPreparationTime"    column="f_preparation_time"    />
+        <result property="fReviewComments"    column="f_review_comments"    />
+        <result property="fReviewResult"    column="f_review_result"    />
+        <result property="fReviewPeople"    column="f_review_people"    />
+        <result property="fReviewDate"    column="f_review_date"    />
+        <result property="fAuditComments"    column="f_audit_comments"    />
+        <result property="fAuditResult"    column="f_audit_result"    />
+        <result property="fAuditPeople"    column="f_audit_people"    />
+        <result property="fAuditDate"    column="f_audit_date"    />
+        <result property="fActId"    column="f_act_id"    />
+        <result property="fActPersion"    column="f_act_persion"    />
+        <result property="fActStatus"    column="f_act_status"    />
+        <result property="fActNode"    column="f_act_node"    />
+        <result property="fRegistrationMechanism"    column="f_registration_mechanism"    />
+        <result property="fRegistrationDate"    column="f_registration_date"    />
+        <result property="fDeclareUnit"    column="f_declare_unit"    />
+        <result property="fPostalCode"    column="f_postal_code"    />
+        <result property="fCompetentDepartment"    column="f_competent_department"    />
+        <result property="fCreateDate"    column="f_create_date"    />
+        <result property="fCreateBy"    column="f_create_by"    />
+        <result property="fStatus"    column="f_status"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectMCancellationVo">
+        select f_id,f_reservoir_info_id, f_reservoir_name, f_cancellation_number, f_address, f_dam_type_material, f_dam_type_structure, f_river, f_management_unit, f_maximum_dam_height, f_total_storage_capacity, f_start_date, f_completion_date, f_discard_reason, f_reason_remarks, f_approval_number, f_content_abstract, f_approval_unit, f_approval_date, f_cancellation_file_id, f_prepared_by, f_preparation_time, f_review_comments, f_review_result, f_review_people, f_review_date, f_audit_comments, f_audit_result, f_audit_people, f_audit_date, f_act_id, f_act_persion, f_act_status, f_act_node, f_registration_mechanism, f_registration_date, f_declare_unit, f_postal_code, f_competent_department, f_create_date, f_create_by, f_status from m_cancellation
+    </sql>
+
+    <select id="selectMCancellationList" parameterType="com.szsk.reservoir.security.domain.MCancellation" resultMap="MCancellationResult">
+        <include refid="selectMCancellationVo"/>
+        <where>
+            <if test="fReservoirName != null  and fReservoirName != ''"> and f_reservoir_name like concat('%', #{fReservoirName}, '%')</if>
+            <if test="fCancellationNumber != null  and fCancellationNumber != ''"> and f_cancellation_number = #{fCancellationNumber}</if>
+            <if test="fAddress != null  and fAddress != ''"> and f_address = #{fAddress}</if>
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="fDamTypeMaterial != null "> and f_dam_type_material = #{fDamTypeMaterial}</if>
+            <if test="fDamTypeStructure != null "> and f_dam_type_structure = #{fDamTypeStructure}</if>
+            <if test="fRiver != null  and fRiver != ''"> and f_river = #{fRiver}</if>
+            <if test="fManagementUnit != null  and fManagementUnit != ''"> and f_management_unit = #{fManagementUnit}</if>
+            <if test="fMaximumDamHeight != null "> and f_maximum_dam_height = #{fMaximumDamHeight}</if>
+            <if test="fTotalStorageCapacity != null "> and f_total_storage_capacity = #{fTotalStorageCapacity}</if>
+            <if test="fStartDate != null "> and f_start_date = #{fStartDate}</if>
+            <if test="fCompletionDate != null "> and f_completion_date = #{fCompletionDate}</if>
+            <if test="fDiscardReason != null  and fDiscardReason != ''"> and f_discard_reason = #{fDiscardReason}</if>
+            <if test="fReasonRemarks != null  and fReasonRemarks != ''"> and f_reason_remarks = #{fReasonRemarks}</if>
+            <if test="fApprovalNumber != null  and fApprovalNumber != ''"> and f_approval_number = #{fApprovalNumber}</if>
+            <if test="fContentAbstract != null  and fContentAbstract != ''"> and f_content_abstract = #{fContentAbstract}</if>
+            <if test="fApprovalUnit != null  and fApprovalUnit != ''"> and f_approval_unit = #{fApprovalUnit}</if>
+            <if test="fApprovalDate != null "> and f_approval_date = #{fApprovalDate}</if>
+            <if test="fCancellationFileId != null "> and f_cancellation_file_id = #{fCancellationFileId}</if>
+            <if test="fPreparedBy != null  and fPreparedBy != ''"> and f_prepared_by = #{fPreparedBy}</if>
+            <if test="fPreparationTime != null "> and f_preparation_time = #{fPreparationTime}</if>
+            <if test="fReviewComments != null  and fReviewComments != ''"> and f_review_comments = #{fReviewComments}</if>
+            <if test="fReviewResult != null "> and f_review_result = #{fReviewResult}</if>
+            <if test="fReviewPeople != null  and fReviewPeople != ''"> and f_review_people = #{fReviewPeople}</if>
+            <if test="fReviewDate != null "> and f_review_date = #{fReviewDate}</if>
+            <if test="fAuditComments != null  and fAuditComments != ''"> and f_audit_comments = #{fAuditComments}</if>
+            <if test="fAuditResult != null "> and f_audit_result = #{fAuditResult}</if>
+            <if test="fAuditPeople != null  and fAuditPeople != ''"> and f_audit_people = #{fAuditPeople}</if>
+            <if test="fAuditDate != null "> and f_audit_date = #{fAuditDate}</if>
+            <if test="fActId != null "> and f_act_id = #{fActId}</if>
+            <if test="fActPersion != null "> and f_act_persion = #{fActPersion}</if>
+            <if test="fActStatus != null "> and f_act_status = #{fActStatus}</if>
+            <if test="fActNode != null  and fActNode != ''"> and f_act_node = #{fActNode}</if>
+            <if test="fRegistrationMechanism != null  and fRegistrationMechanism != ''"> and f_registration_mechanism = #{fRegistrationMechanism}</if>
+            <if test="fRegistrationDate != null "> and f_registration_date = #{fRegistrationDate}</if>
+            <if test="fDeclareUnit != null  and fDeclareUnit != ''"> and f_declare_unit = #{fDeclareUnit}</if>
+            <if test="fPostalCode != null "> and f_postal_code = #{fPostalCode}</if>
+            <if test="fCompetentDepartment != null  and fCompetentDepartment != ''"> and f_competent_department = #{fCompetentDepartment}</if>
+            <if test="fCreateDate != null "> and f_create_date = #{fCreateDate}</if>
+            <if test="fCreateBy != null "> and f_create_by = #{fCreateBy}</if>
+            <if test="fStatus != null "> and f_status = #{fStatus}</if>
+        </where>
+        ORDER BY
+        f_id DESC
+    </select>
+
+    <select id="selectMCancellationById" parameterType="Long" resultMap="MCancellationResult">
+        <include refid="selectMCancellationVo"/>
+        where f_id = #{fId}
+    </select>
+
+    <select id="getLatelyCancellation" resultMap="MCancellationResult">
+        <include refid="selectMCancellationVo"/>
+        <where>  
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+        </where>
+        ORDER BY f_id DESC LIMIT 1
+    </select>
+
+    <insert id="insertMCancellation" parameterType="com.szsk.reservoir.security.domain.MCancellation" useGeneratedKeys="true" keyProperty="fId">
+        insert into m_cancellation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirName != null">f_reservoir_name,</if> 
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="fCancellationNumber != null">f_cancellation_number,</if>
+            <if test="fAddress != null">f_address,</if>
+            <if test="fDamTypeMaterial != null">f_dam_type_material,</if>
+            <if test="fDamTypeStructure != null">f_dam_type_structure,</if>
+            <if test="fRiver != null">f_river,</if>
+            <if test="fManagementUnit != null">f_management_unit,</if>
+            <if test="fMaximumDamHeight != null">f_maximum_dam_height,</if>
+            <if test="fTotalStorageCapacity != null">f_total_storage_capacity,</if>
+            <if test="fStartDate != null">f_start_date,</if>
+            <if test="fCompletionDate != null">f_completion_date,</if>
+            <if test="fDiscardReason != null">f_discard_reason,</if>
+            <if test="fReasonRemarks != null">f_reason_remarks,</if>
+            <if test="fApprovalNumber != null">f_approval_number,</if>
+            <if test="fContentAbstract != null">f_content_abstract,</if>
+            <if test="fApprovalUnit != null">f_approval_unit,</if>
+            <if test="fApprovalDate != null">f_approval_date,</if>
+            <if test="fCancellationFileId != null">f_cancellation_file_id,</if>
+            <if test="fPreparedBy != null">f_prepared_by,</if>
+            <if test="fPreparationTime != null">f_preparation_time,</if>
+            <if test="fReviewComments != null">f_review_comments,</if>
+            <if test="fReviewResult != null">f_review_result,</if>
+            <if test="fReviewPeople != null">f_review_people,</if>
+            <if test="fReviewDate != null">f_review_date,</if>
+            <if test="fAuditComments != null">f_audit_comments,</if>
+            <if test="fAuditResult != null">f_audit_result,</if>
+            <if test="fAuditPeople != null">f_audit_people,</if>
+            <if test="fAuditDate != null">f_audit_date,</if>
+            <if test="fActId != null">f_act_id,</if>
+            <if test="fActPersion != null">f_act_persion,</if>
+            <if test="fActStatus != null">f_act_status,</if>
+            <if test="fActNode != null">f_act_node,</if>
+            <if test="fRegistrationMechanism != null">f_registration_mechanism,</if>
+            <if test="fRegistrationDate != null">f_registration_date,</if>
+            <if test="fDeclareUnit != null">f_declare_unit,</if>
+            <if test="fPostalCode != null">f_postal_code,</if>
+            <if test="fCompetentDepartment != null">f_competent_department,</if>
+            <if test="fCreateDate != null">f_create_date,</if>
+            <if test="fCreateBy != null">f_create_by,</if>
+            <if test="fStatus != null">f_status,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirName != null">#{fReservoirName},</if>
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="fCancellationNumber != null">#{fCancellationNumber},</if>
+            <if test="fAddress != null">#{fAddress},</if>
+            <if test="fDamTypeMaterial != null">#{fDamTypeMaterial},</if>
+            <if test="fDamTypeStructure != null">#{fDamTypeStructure},</if>
+            <if test="fRiver != null">#{fRiver},</if>
+            <if test="fManagementUnit != null">#{fManagementUnit},</if>
+            <if test="fMaximumDamHeight != null">#{fMaximumDamHeight},</if>
+            <if test="fTotalStorageCapacity != null">#{fTotalStorageCapacity},</if>
+            <if test="fStartDate != null">#{fStartDate},</if>
+            <if test="fCompletionDate != null">#{fCompletionDate},</if>
+            <if test="fDiscardReason != null">#{fDiscardReason},</if>
+            <if test="fReasonRemarks != null">#{fReasonRemarks},</if>
+            <if test="fApprovalNumber != null">#{fApprovalNumber},</if>
+            <if test="fContentAbstract != null">#{fContentAbstract},</if>
+            <if test="fApprovalUnit != null">#{fApprovalUnit},</if>
+            <if test="fApprovalDate != null">#{fApprovalDate},</if>
+            <if test="fCancellationFileId != null">#{fCancellationFileId},</if>
+            <if test="fPreparedBy != null">#{fPreparedBy},</if>
+            <if test="fPreparationTime != null">#{fPreparationTime},</if>
+            <if test="fReviewComments != null">#{fReviewComments},</if>
+            <if test="fReviewResult != null">#{fReviewResult},</if>
+            <if test="fReviewPeople != null">#{fReviewPeople},</if>
+            <if test="fReviewDate != null">#{fReviewDate},</if>
+            <if test="fAuditComments != null">#{fAuditComments},</if>
+            <if test="fAuditResult != null">#{fAuditResult},</if>
+            <if test="fAuditPeople != null">#{fAuditPeople},</if>
+            <if test="fAuditDate != null">#{fAuditDate},</if>
+            <if test="fActId != null">#{fActId},</if>
+            <if test="fActPersion != null">#{fActPersion},</if>
+            <if test="fActStatus != null">#{fActStatus},</if>
+            <if test="fActNode != null">#{fActNode},</if>
+            <if test="fRegistrationMechanism != null">#{fRegistrationMechanism},</if>
+            <if test="fRegistrationDate != null">#{fRegistrationDate},</if>
+            <if test="fDeclareUnit != null">#{fDeclareUnit},</if>
+            <if test="fPostalCode != null">#{fPostalCode},</if>
+            <if test="fCompetentDepartment != null">#{fCompetentDepartment},</if>
+            <if test="fCreateDate != null">#{fCreateDate},</if>
+            <if test="fCreateBy != null">#{fCreateBy},</if>
+            <if test="fStatus != null">#{fStatus},</if>
+        </trim>
+    </insert>
+
+    <update id="updateMCancellation" parameterType="com.szsk.reservoir.security.domain.MCancellation">
+        update m_cancellation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="fReservoirName != null">f_reservoir_name = #{fReservoirName},</if>
+            <if test="fCancellationNumber != null">f_cancellation_number = #{fCancellationNumber},</if>
+            <if test="fAddress != null">f_address = #{fAddress},</if>
+            <if test="fDamTypeMaterial != null">f_dam_type_material = #{fDamTypeMaterial},</if>
+            <if test="fDamTypeStructure != null">f_dam_type_structure = #{fDamTypeStructure},</if>
+            <if test="fRiver != null">f_river = #{fRiver},</if>
+            <if test="fManagementUnit != null">f_management_unit = #{fManagementUnit},</if>
+            <if test="fMaximumDamHeight != null">f_maximum_dam_height = #{fMaximumDamHeight},</if>
+            <if test="fTotalStorageCapacity != null">f_total_storage_capacity = #{fTotalStorageCapacity},</if>
+            <if test="fStartDate != null">f_start_date = #{fStartDate},</if>
+            <if test="fCompletionDate != null">f_completion_date = #{fCompletionDate},</if>
+            <if test="fDiscardReason != null">f_discard_reason = #{fDiscardReason},</if>
+            <if test="fReasonRemarks != null">f_reason_remarks = #{fReasonRemarks},</if>
+            <if test="fApprovalNumber != null">f_approval_number = #{fApprovalNumber},</if>
+            <if test="fContentAbstract != null">f_content_abstract = #{fContentAbstract},</if>
+            <if test="fApprovalUnit != null">f_approval_unit = #{fApprovalUnit},</if>
+            <if test="fApprovalDate != null">f_approval_date = #{fApprovalDate},</if>
+            <if test="fCancellationFileId != null">f_cancellation_file_id = #{fCancellationFileId},</if>
+            <if test="fPreparedBy != null">f_prepared_by = #{fPreparedBy},</if>
+            <if test="fPreparationTime != null">f_preparation_time = #{fPreparationTime},</if>
+            <if test="fReviewComments != null">f_review_comments = #{fReviewComments},</if>
+            <if test="fReviewResult != null">f_review_result = #{fReviewResult},</if>
+            <if test="fReviewPeople != null">f_review_people = #{fReviewPeople},</if>
+            <if test="fReviewDate != null">f_review_date = #{fReviewDate},</if>
+            <if test="fAuditComments != null">f_audit_comments = #{fAuditComments},</if>
+            <if test="fAuditResult != null">f_audit_result = #{fAuditResult},</if>
+            <if test="fAuditPeople != null">f_audit_people = #{fAuditPeople},</if>
+            <if test="fAuditDate != null">f_audit_date = #{fAuditDate},</if>
+            <if test="fActId != null">f_act_id = #{fActId},</if>
+            <if test="fActPersion != null">f_act_persion = #{fActPersion},</if>
+            <if test="fActStatus != null">f_act_status = #{fActStatus},</if>
+            <if test="fActNode != null">f_act_node = #{fActNode},</if>
+            <if test="fRegistrationMechanism != null">f_registration_mechanism = #{fRegistrationMechanism},</if>
+            <if test="fRegistrationDate != null">f_registration_date = #{fRegistrationDate},</if>
+            <if test="fDeclareUnit != null">f_declare_unit = #{fDeclareUnit},</if>
+            <if test="fPostalCode != null">f_postal_code = #{fPostalCode},</if>
+            <if test="fCompetentDepartment != null">f_competent_department = #{fCompetentDepartment},</if>
+            <if test="fCreateDate != null">f_create_date = #{fCreateDate},</if>
+            <if test="fCreateBy != null">f_create_by = #{fCreateBy},</if>
+            <if test="fStatus != null">f_status = #{fStatus},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteMCancellationById" parameterType="Long">
+        delete from m_cancellation where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteMCancellationByIds" parameterType="String">
+        delete from m_cancellation where f_id in
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+</mapper>

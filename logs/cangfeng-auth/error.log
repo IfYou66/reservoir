@@ -1,0 +1,260 @@
+16:03:59.427 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181039273, Client-RequestToken=4a85918247cb6fc3702bb4c2bf2c030a, Timestamp=1711181039274, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+16:03:59.534 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181039273, Client-RequestToken=4a85918247cb6fc3702bb4c2bf2c030a, Timestamp=1711181039274, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+16:03:59.661 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181039273, Client-RequestToken=4a85918247cb6fc3702bb4c2bf2c030a, Timestamp=1711181039274, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+16:03:59.787 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181039675, Client-RequestToken=729f6aa601c49644ff9d99529a2ccf03, Timestamp=1711181039675, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+16:03:59.899 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181039675, Client-RequestToken=729f6aa601c49644ff9d99529a2ccf03, Timestamp=1711181039675, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+16:04:00.010 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181039675, Client-RequestToken=729f6aa601c49644ff9d99529a2ccf03, Timestamp=1711181039675, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+16:04:00.121 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181040011, Client-RequestToken=ed69793f600dda9c48187844f82aefc7, Timestamp=1711181040011, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+16:04:00.229 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181040011, Client-RequestToken=ed69793f600dda9c48187844f82aefc7, Timestamp=1711181040011, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+16:04:00.336 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181040011, Client-RequestToken=ed69793f600dda9c48187844f82aefc7, Timestamp=1711181040011, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+16:04:00.444 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181040337, Client-RequestToken=925df731e6c0320181361e63c2e5c1cb, Timestamp=1711181040337, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+16:04:00.551 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181040337, Client-RequestToken=925df731e6c0320181361e63c2e5c1cb, Timestamp=1711181040337, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+16:04:00.663 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711181040337, Client-RequestToken=925df731e6c0320181361e63c2e5c1cb, Timestamp=1711181040337, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+16:04:04.557 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=SubscribeServiceRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+16:04:04.669 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=SubscribeServiceRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+16:04:04.780 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=SubscribeServiceRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+16:04:04.782 [main] ERROR c.a.c.n.d.NacosWatch - [start,127] - namingService subscribe failed, properties:NacosDiscoveryProperties{serverAddr='127.0.0.1:8848', endpoint='', namespace='', watchDelay=30000, logName='', service='ruoyi-auth', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='192.168.194.32', networkInterface='', port=-1, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null}
+com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.subscribe(NamingGrpcClientProxy.java:172)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.subscribe(NamingClientProxyDelegate.java:146)
+	at com.alibaba.nacos.client.naming.NacosNamingService.subscribe(NacosNamingService.java:387)
+	at com.alibaba.cloud.nacos.discovery.NacosWatch.start(NacosWatch.java:123)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:438)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1336)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1325)
+	at com.ruoyi.auth.CFAuthApplication.main(CFAuthApplication.java:19)
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 19 common frames omitted
+16:04:04.906 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+16:04:05.007 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+16:04:05.108 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+16:04:05.108 [main] ERROR c.a.c.n.r.NacosServiceRegistry - [register,79] - nacos registry, ruoyi-auth register failed...NacosRegistration{nacosDiscoveryProperties=NacosDiscoveryProperties{serverAddr='127.0.0.1:8848', endpoint='', namespace='', watchDelay=30000, logName='', service='ruoyi-auth', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='192.168.194.32', networkInterface='', port=9200, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null}},
+com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.registerService(NamingGrpcClientProxy.java:101)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.registerService(NamingClientProxyDelegate.java:95)
+	at com.alibaba.nacos.client.naming.NacosNamingService.registerInstance(NacosNamingService.java:139)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:74)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.register(AbstractAutoServiceRegistration.java:232)
+	at com.alibaba.cloud.nacos.registry.NacosAutoServiceRegistration.register(NacosAutoServiceRegistration.java:78)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.start(AbstractAutoServiceRegistration.java:133)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.bind(AbstractAutoServiceRegistration.java:98)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:86)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:47)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:421)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:378)
+	at org.springframework.boot.web.servlet.context.WebServerStartStopLifecycle.start(WebServerStartStopLifecycle.java:46)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:438)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1336)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1325)
+	at com.ruoyi.auth.CFAuthApplication.main(CFAuthApplication.java:19)
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 31 common frames omitted
+16:04:05.491 [main] ERROR o.s.b.SpringApplication - [reportFailure,847] - Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is java.lang.reflect.UndeclaredThrowableException
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:438)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1336)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1325)
+	at com.ruoyi.auth.CFAuthApplication.main(CFAuthApplication.java:19)
+Caused by: java.lang.reflect.UndeclaredThrowableException: null
+	at org.springframework.util.ReflectionUtils.rethrowRuntimeException(ReflectionUtils.java:147)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:83)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.register(AbstractAutoServiceRegistration.java:232)
+	at com.alibaba.cloud.nacos.registry.NacosAutoServiceRegistration.register(NacosAutoServiceRegistration.java:78)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.start(AbstractAutoServiceRegistration.java:133)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.bind(AbstractAutoServiceRegistration.java:98)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:86)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:47)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:421)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:378)
+	at org.springframework.boot.web.servlet.context.WebServerStartStopLifecycle.start(WebServerStartStopLifecycle.java:46)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	... 14 common frames omitted
+Caused by: com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.registerService(NamingGrpcClientProxy.java:101)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.registerService(NamingClientProxyDelegate.java:95)
+	at com.alibaba.nacos.client.naming.NacosNamingService.registerInstance(NacosNamingService.java:139)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:74)
+	... 27 common frames omitted
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 31 common frames omitted
+18:49:41.054 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190980903, Client-RequestToken=1c0e15f87d2923ddf052c63f96e31752, Timestamp=1711190980904, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+18:49:41.164 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190980903, Client-RequestToken=1c0e15f87d2923ddf052c63f96e31752, Timestamp=1711190980904, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+18:49:41.275 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190980903, Client-RequestToken=1c0e15f87d2923ddf052c63f96e31752, Timestamp=1711190980904, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+18:49:41.402 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190981286, Client-RequestToken=aed9166d837f17980477640291b00ca1, Timestamp=1711190981286, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+18:49:41.509 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190981286, Client-RequestToken=aed9166d837f17980477640291b00ca1, Timestamp=1711190981286, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+18:49:41.615 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190981286, Client-RequestToken=aed9166d837f17980477640291b00ca1, Timestamp=1711190981286, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+18:49:41.723 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190981616, Client-RequestToken=61a93b9f0f40b92eefd94e5a204cd617, Timestamp=1711190981616, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+18:49:41.832 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190981616, Client-RequestToken=61a93b9f0f40b92eefd94e5a204cd617, Timestamp=1711190981616, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+18:49:41.942 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190981616, Client-RequestToken=61a93b9f0f40b92eefd94e5a204cd617, Timestamp=1711190981616, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+18:49:42.051 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190981943, Client-RequestToken=f51c49701bb91c5bda08eb4fe6594604, Timestamp=1711190981943, notify=false}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+18:49:42.160 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190981943, Client-RequestToken=f51c49701bb91c5bda08eb4fe6594604, Timestamp=1711190981943, notify=false}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+18:49:42.267 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=ConfigQueryRequest{headers={charset=UTF-8, exConfigInfo=true, Client-AppName=unknown, Client-RequestTS=1711190981943, Client-RequestToken=f51c49701bb91c5bda08eb4fe6594604, Timestamp=1711190981943, notify=false}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+18:49:47.628 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=SubscribeServiceRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+18:49:47.733 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=SubscribeServiceRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+18:49:47.836 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=SubscribeServiceRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+18:49:47.837 [main] ERROR c.a.c.n.d.NacosWatch - [start,127] - namingService subscribe failed, properties:NacosDiscoveryProperties{serverAddr='127.0.0.1:8848', endpoint='', namespace='', watchDelay=30000, logName='', service='ruoyi-auth', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='192.168.194.32', networkInterface='', port=-1, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null}
+com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.subscribe(NamingGrpcClientProxy.java:172)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.subscribe(NamingClientProxyDelegate.java:146)
+	at com.alibaba.nacos.client.naming.NacosNamingService.subscribe(NacosNamingService.java:387)
+	at com.alibaba.cloud.nacos.discovery.NacosWatch.start(NacosWatch.java:123)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:438)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1336)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1325)
+	at com.ruoyi.auth.CFAuthApplication.main(CFAuthApplication.java:19)
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 19 common frames omitted
+18:49:47.982 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes=0,errorMessage=Client not connected,current status:STARTING
+18:49:48.090 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes=1,errorMessage=Client not connected,current status:STARTING
+18:49:48.195 [main] ERROR c.a.n.c.r.client - [printIfErrorEnabled,99] - Send request fail, request=InstanceRequest{headers={app=unknown}, requestId='null'}, retryTimes=2,errorMessage=Client not connected,current status:STARTING
+18:49:48.195 [main] ERROR c.a.c.n.r.NacosServiceRegistry - [register,79] - nacos registry, ruoyi-auth register failed...NacosRegistration{nacosDiscoveryProperties=NacosDiscoveryProperties{serverAddr='127.0.0.1:8848', endpoint='', namespace='', watchDelay=30000, logName='', service='ruoyi-auth', weight=1.0, clusterName='DEFAULT', group='DEFAULT_GROUP', namingLoadCacheAtStart='false', metadata={preserved.register.source=SPRING_CLOUD}, registerEnabled=true, ip='192.168.194.32', networkInterface='', port=9200, secure=false, accessKey='', secretKey='', heartBeatInterval=null, heartBeatTimeout=null, ipDeleteTimeout=null}},
+com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.registerService(NamingGrpcClientProxy.java:101)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.registerService(NamingClientProxyDelegate.java:95)
+	at com.alibaba.nacos.client.naming.NacosNamingService.registerInstance(NacosNamingService.java:139)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:74)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.register(AbstractAutoServiceRegistration.java:232)
+	at com.alibaba.cloud.nacos.registry.NacosAutoServiceRegistration.register(NacosAutoServiceRegistration.java:78)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.start(AbstractAutoServiceRegistration.java:133)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.bind(AbstractAutoServiceRegistration.java:98)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:86)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:47)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:421)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:378)
+	at org.springframework.boot.web.servlet.context.WebServerStartStopLifecycle.start(WebServerStartStopLifecycle.java:46)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:438)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1336)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1325)
+	at com.ruoyi.auth.CFAuthApplication.main(CFAuthApplication.java:19)
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 31 common frames omitted
+18:49:48.580 [main] ERROR o.s.b.SpringApplication - [reportFailure,847] - Application run failed
+org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is java.lang.reflect.UndeclaredThrowableException
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:181)
+	at org.springframework.context.support.DefaultLifecycleProcessor.access$200(DefaultLifecycleProcessor.java:54)
+	at org.springframework.context.support.DefaultLifecycleProcessor$LifecycleGroup.start(DefaultLifecycleProcessor.java:356)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.context.support.DefaultLifecycleProcessor.startBeans(DefaultLifecycleProcessor.java:155)
+	at org.springframework.context.support.DefaultLifecycleProcessor.onRefresh(DefaultLifecycleProcessor.java:123)
+	at org.springframework.context.support.AbstractApplicationContext.finishRefresh(AbstractApplicationContext.java:935)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:586)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:145)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:758)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:438)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:337)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1336)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1325)
+	at com.ruoyi.auth.CFAuthApplication.main(CFAuthApplication.java:19)
+Caused by: java.lang.reflect.UndeclaredThrowableException: null
+	at org.springframework.util.ReflectionUtils.rethrowRuntimeException(ReflectionUtils.java:147)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:83)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.register(AbstractAutoServiceRegistration.java:232)
+	at com.alibaba.cloud.nacos.registry.NacosAutoServiceRegistration.register(NacosAutoServiceRegistration.java:78)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.start(AbstractAutoServiceRegistration.java:133)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.bind(AbstractAutoServiceRegistration.java:98)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:86)
+	at org.springframework.cloud.client.serviceregistry.AbstractAutoServiceRegistration.onApplicationEvent(AbstractAutoServiceRegistration.java:47)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:421)
+	at org.springframework.context.support.AbstractApplicationContext.publishEvent(AbstractApplicationContext.java:378)
+	at org.springframework.boot.web.servlet.context.WebServerStartStopLifecycle.start(WebServerStartStopLifecycle.java:46)
+	at org.springframework.context.support.DefaultLifecycleProcessor.doStart(DefaultLifecycleProcessor.java:178)
+	... 14 common frames omitted
+Caused by: com.alibaba.nacos.api.exception.NacosException: Request nacos server failed: 
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:213)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.registerService(NamingGrpcClientProxy.java:101)
+	at com.alibaba.nacos.client.naming.remote.NamingClientProxyDelegate.registerService(NamingClientProxyDelegate.java:95)
+	at com.alibaba.nacos.client.naming.NacosNamingService.registerInstance(NacosNamingService.java:139)
+	at com.alibaba.cloud.nacos.registry.NacosServiceRegistry.register(NacosServiceRegistry.java:74)
+	... 27 common frames omitted
+Caused by: com.alibaba.nacos.api.exception.NacosException: Client not connected,current status:STARTING
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:628)
+	at com.alibaba.nacos.common.remote.client.RpcClient.request(RpcClient.java:608)
+	at com.alibaba.nacos.client.naming.remote.gprc.NamingGrpcClientProxy.requestToServer(NamingGrpcClientProxy.java:203)
+	... 31 common frames omitted

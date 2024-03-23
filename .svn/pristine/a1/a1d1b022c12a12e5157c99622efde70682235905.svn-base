@@ -1,0 +1,18 @@
+package com.szsk.reservoir.security.service;
+
+import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.szsk.reservoir.security.domain.MCancellation;
+
+import java.util.List;
+
+/**
+ * 工程划界 Service接口
+ * 
+ * @author wangcc
+ * @date 2021-08-23
+ */
+public interface IMBorderService
+{
+    // 获取坐标列表
+   public AjaxResult getLabelList();
+}

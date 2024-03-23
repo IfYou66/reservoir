@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="78e02981-e3b1-462b-94bb-afab81edbe88" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/flash.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/flash.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/login.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="22bC4m3UyiVm5pRFrMOkwWRyBVo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/views" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\svn\view\digtal_reservioir\cangfeng-ui\src\views" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\svn\view\digtal_reservioir\cangfeng-ui\src\views" />
+      <recent name="D:\svn\view\digtal_reservioir\cangfeng-ui\src\api\flash" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\Administrator\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="D:\svn\view\digtal_reservioir\cangfeng-ui" />
+          <option name="myCopyRoot" value="D:\svn\view\digtal_reservioir\cangfeng-ui" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="D:\svn\view\digtal_reservioir\cangfeng-ui" />
+          <option name="myCopyRoot" value="D:\svn\view\digtal_reservioir\cangfeng-ui" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="78e02981-e3b1-462b-94bb-afab81edbe88" name="Default Changelist" comment="" />
+      <created>1640096710817</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1640096710817</updated>
+      <workItem from="1640096712607" duration="5696000" />
+      <workItem from="1640103726486" duration="199000" />
+      <workItem from="1640220105873" duration="10265000" />
+      <workItem from="1640234059375" duration="3881000" />
+      <workItem from="1640269053673" duration="3827000" />
+      <workItem from="1640351191028" duration="3673000" />
+      <workItem from="1640359155586" duration="7305000" />
+      <workItem from="1640401225525" duration="5292000" />
+      <workItem from="1640406738215" duration="577000" />
+      <workItem from="1640417419565" duration="3365000" />
+      <workItem from="1640503483887" duration="8278000" />
+    </task>
+    <task id="LOCAL-00001">
+      <created>1640419620187</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1640419620187</updated>
+    </task>
+    <task id="LOCAL-00002">
+      <created>1640511950328</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1640511950329</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="947" y="78" key="#JSHint" timestamp="1640351684704">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state x="947" y="78" key="#JSHint/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640351684704" />
+    <state x="602" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1640096940991">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state x="602" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640096940991" />
+    <state x="819" y="252" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1640506899388">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state x="819" y="252" key="#com.intellij.fileTypes.FileTypeChooser/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640506899388" />
+    <state x="369" y="0" key="CommitChangelistDialog2" timestamp="1640511945143">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state x="247" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1640419476539" />
+    <state x="369" y="0" key="CommitChangelistDialog2/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640511945143" />
+    <state x="878" y="162" key="FileChooserDialogImpl" timestamp="1640503860320">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state x="878" y="162" key="FileChooserDialogImpl/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640503860320" />
+    <state width="2294" height="293" key="GridCell.Tab.0.bottom" timestamp="1640504156668">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state width="1537" height="284" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1640234187018" />
+    <state width="2294" height="293" key="GridCell.Tab.0.bottom/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640504156668" />
+    <state width="2294" height="293" key="GridCell.Tab.0.center" timestamp="1640504156668">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state width="1537" height="284" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1640234187018" />
+    <state width="2294" height="293" key="GridCell.Tab.0.center/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640504156668" />
+    <state width="2294" height="293" key="GridCell.Tab.0.left" timestamp="1640504156668">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state width="1537" height="284" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1640234187017" />
+    <state width="2294" height="293" key="GridCell.Tab.0.left/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640504156668" />
+    <state width="2294" height="293" key="GridCell.Tab.0.right" timestamp="1640504156668">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state width="1537" height="284" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1640234187018" />
+    <state width="2294" height="293" key="GridCell.Tab.0.right/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640504156668" />
+    <state x="0" y="119" width="1536" height="694" key="MergeDialog" timestamp="1640419236974">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="0" y="119" width="1536" height="694" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1640419236974" />
+    <state x="404" y="58" key="MultipleFileMergeDialog" timestamp="1640419236978">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="404" y="58" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1640419236978" />
+    <state x="818" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1640511914512">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state x="548" y="245" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1640419129002" />
+    <state x="818" y="274" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640511914512" />
+    <state x="745" y="148" width="804" height="624" key="find.popup" timestamp="1640511839001">
+      <screen x="0" y="0" width="2293" height="920" />
+    </state>
+    <state x="499" y="133" width="803" height="624" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1640232489538" />
+    <state x="745" y="148" width="804" height="624" key="find.popup/3440.493.1920.1020/0.0.2293.920/1364.1440.1536.824@0.0.2293.920" timestamp="1640511839001" />
+  </component>
+</project>

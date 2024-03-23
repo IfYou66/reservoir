@@ -1,0 +1,309 @@
+<template>
+  <div class="app-container">
+    <record :sensor="sensor" :dialogVisible="dialogVisible" @changeShow="showHistory"></record>
+    <dv-border-box8 style="height: 100px; padding: 30px">
+      <el-row>
+        <el-col :span="10" :offset='2'>
+          <span class="demonstration">选择日期：</span>
+          <el-button type="primary" icon="el-icon-caret-left" style="width: 20px" @click="getPre"></el-button>
+          <el-date-picker
+            v-model="currentTime"
+            type="datetime"
+            placeholder="选择日期时间"
+            align="right"
+            :picker-options="pickerOptions">
+          </el-date-picker>
+          <el-button type="primary" icon="el-icon-caret-right" style="width: 20px" @click="getNext"></el-button>
+        </el-col>
+        <el-col :span="6">
+          <label class="layui-form-label">断面选择:</label>
+          <el-select v-model="section" placeholder="请选择" @change="selectSection(section)">
+            <el-option
+              v-for="(item,i) in sections"
+              :key="item"
+              :label="item"
+              :value="i">
+            </el-option>
+          </el-select>
+        </el-col>
+        <el-col :span="6">
+          <el-button type="warning" round @click="queryData">数据查询</el-button>
+          <el-button type="primary" round @click="exportData">数据导出</el-button>
+        </el-col>
+      </el-row>
+    </dv-border-box8>
+    <dv-border-box8 style="height: 420px; padding: 10px">
+      <el-row>
+        <div class="layui-card-body" style="width:100%;height: 380px;">
+          <div id="chart" style="width:105%;height: 100%;margin-left: 0%"></div>
+        </div>
+      </el-row>
+    </dv-border-box8>
+    <dv-border-box8 style="height: 320px; padding: 30px">
+      <el-row>
+        <el-col :span="24">
+          <dv-scroll-board :config="config" style="width:90%;height:260px; margin: 0 auto"/>
+        </el-col>
+      </el-row>
+    </dv-border-box8>
+  </div>
+</template>
+
+<script>
+  import record from '@/views/collection/common/record'
+
+  export default {
+    name: "realtime",
+    components: {record},
+    created() {
+    },
+    data() {
+      let sections = this.operator.getAttrArray(this.common.getData('damSeepage'), 'section').filter(function (item) {
+        return item.indexOf('TBD') < 0;
+      });
+      return {
+        sections: sections,
+        section: 0,
+        dialogVisible: false,
+        pageSize: 10,
+        currentPage: 1,
+        total: 10,
+        pickerOptions: {
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
+        currentTime: new Date().format("yyyy-MM-dd hh:mm:ss"),
+        loading: '',
+        lineChart: null,
+        lineOption: null,
+        seepage: this.reservoir.getDam().getSeepageSafe(),
+        setEvent: 0,
+        sensor: null,
+        config: null,
+        count: 0,
+        data: [],
+      }
+    },
+    methods: {
+      selectSection(section) {
+        this.section = section;
+        this.refreshData();
+      },
+      showRecord(sen) {
+        this.sensor = sen;
+        this.dialogVisible = true;
+      },
+      // 监听 子组件弹窗关闭后触发，有子组件调用
+      showHistory(data) {
+        this.dialogVisible = data !== 'false';
+      },
+      tableRowClassName({row, rowIndex}) {
+        if (rowIndex % 2 === 1) {
+          return 'warning-row';
+        } else {
+          return 'success-row';
+        }
+      },
+      getPre() {
+        let time = new Date(this.currentTime);
+        time.setTime(time.getTime() - 24 * 3600 * 1000);
+        this.currentTime = time.format("yyyy-MM-dd hh:mm:ss");
+        this.$set(this, "currentTime", time.format("yyyy-MM-dd hh:mm:ss"));
+        this.refreshData();
+      },
+      getNext() {
+        let time = new Date(this.currentTime);
+        time.setTime(time.getTime() + 24 * 3600 * 1000);
+        this.currentTime = time.format("yyyy-MM-dd hh:mm:ss");
+        this.$set(this, "currentTime", time.format("yyyy-MM-dd hh:mm:ss"));
+        this.refreshData();
+      },
+      sendRequest() {
+        this.initChart();
+        this.loading = this.openLoading();
+        //开始获取数据
+        let sens = this.operator.getSensors(this.operator.getSensors(this.common.loadSensors(),
+          'section', this.sections[this.section]), 'part', 'damSeepage');
+        let dateStart = new Date(new Date(this.currentTime).getTime() - 1000 * 60 * 30);
+        let dateEnd = new Date(new Date(this.currentTime).getTime() + 1000 * 60 * 30);
+
+        for (let i = 0; i < sens.length; i++) {
+          this.request.sendRecordRequestWithFreeTime(sens[i].url, this.common.SENSOR_RECORD_COMMOND,
+            sens[i].id, this.datetime.formatToDateTime(dateStart), this.datetime.formatToDateTime(dateEnd), this.handle);
+          this.data.push({
+            name: sens[i].name,
+            waterLevel: this.operator.getWaterLevel(),
+            seepageLevel: sens[i].value === this.common.BOUNDARY ? '--' : sens[i].value,
+            height: sens[i].height,
+            low: sens[i].low,
+            // bias: sens[i].bias,
+            // id: sens[i].id,
+            // invalid: sens[i].invalid,
+            // precision: sens[i].precision,
+            // min: sens[i].min
+          })
+          this.count++;
+        }
+      },
+      refreshData() {
+        let that = this;
+        setTimeout(function () {
+          that.sendRequest();
+        }, 100);
+      },
+      handle(result) {
+        let sensor = {};
+        this.count--;
+        if (result && result.length !== 0) {
+          let sensor = this.operator.findArrayItemByAttrValue(this.common.loadSensors(), 'id', result[0].SensorID);
+          if (!sensor) return;
+
+
+          let sum = 0;
+          for (let i = 0; i < result.length; i++) {
+            sum += result[i].DataValue;
+          }
+
+          sensor.seepageLevel = this.common.correct(sum / result.length, sensor.bias).toFixed(sensor.precision);
+          if (sensor.invalid) {
+            if (sensor.seepageLevel < sensor.min) {
+              sensor.seepageLevel = '--';
+            }
+          }
+        }
+        if (this.count === 0) {
+          let arr = [];
+          this.data.sort((a, b) => {
+            return a.name > b.name ? 1 : (a.name === b.name ? 0 : -1)
+          });
+          for (let i = 0; i < this.data.length; i++) {
+            arr.push([this.data[i].name, this.data[i].waterLevel, this.data[i].seepageLevel,
+              this.data[i].height, this.data[i].low]);
+          }
+
+          this.config = {
+            header: ['测压管', '水库水位(m)', '渗压水位(m)', '管口高程(m)', '管底高程(m)'],
+            data: arr,
+            columnWidth: [100, 200, 200, 200, 200],
+            align: ['center'],
+            rowNum: 3,
+            index: true,
+            headerBGC: '#1981f6',
+            carousel: 'single',
+            headerHeight: 35,
+            oddRowBGC: 'rgba(0, 44, 81, 0.8)',
+            evenRowBGC: 'rgba(10, 29, 50, 0.8)'
+          };
+
+          this.data = [];
+        }
+        this.loading.close();
+
+      },
+      exportData() {
+        let titleExcel = ['测压管', '水库水位(m)', '渗压水位(m)', '管口高程(m)', '管底高程(m)'];
+        this.excel.convert(this.config.data, this.sections[this.section] + " " + this.currentTime, titleExcel);
+      },
+      queryData() {
+        this.refreshData();
+      },
+      change: function (currentPage) {
+        this.currentPage = currentPage;
+      },
+      initChart() {
+        this.displayWaterLevelLine(this.section);
+      },
+      show(params) {
+        if (params.componentType === 'markPoint') {
+          let sens = this.operator.getSensors(this.common.loadSensors(), 'name', '水位', true)
+            .concat(this.operator.getSensors(this.common.getData('damSeepage'), 'section', this.sections[this.section]));
+          let sensor = this.operator.findArrayItemByAttrValue(sens, 'name', params.name);
+          if (sensor && (!sensor.getInvalid() || (sensor.getInvalid() && sensor.value > sensor.min))) {
+            this.showRecord(sensor);
+          }
+        }
+      },
+      //显示水位线
+      displayWaterLevelLine(index) {
+        let chartWaterLevel = this.$echarts.init(document.getElementById('chart'));
+
+        chartWaterLevel.setOption(this.seepage[index].createDam(1), true);
+        let that = this;
+        if (this.setEvent === 0) {
+          this.setEvent++;
+
+          chartWaterLevel.on('click', function (params) {
+            that.show(params);
+          }, false);
+        } else {
+          chartWaterLevel.off("click");
+          chartWaterLevel.on('click', function (params) {
+            that.show(params);
+          }, false);
+        }
+      },
+
+
+    },
+    mounted() {
+      this.initChart();
+      this.refreshData();
+    }
+  }
+
+
+</script>
+
+<style scoped>
+  .app-container {
+    margin: 0;
+    padding: 30px;
+    background: url("../../../../assets/images/bg.png") repeat-y;
+    color: #dfe6ec;
+    height: 120vh;
+  }
+
+  ::v-deep .ceil {
+    font-size: 13pt;
+    text-align: center;
+  }
+
+  ::v-deep .header-item {
+    text-align: center;
+    font-size: 14pt;
+  }
+
+  ::v-deep table {
+    width: 100% !important;
+  }
+
+  ::v-deep .el-table__empty-block {
+    width: 100% !important;
+  }
+
+  ::v-deep td {
+    text-align: center !important;
+  }
+
+  ::v-deep .el-table th {
+    text-align: center !important;
+  }
+</style>

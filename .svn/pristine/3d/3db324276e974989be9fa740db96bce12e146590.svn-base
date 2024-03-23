@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.szsk.archives.archivesManage.mapper.ArchivesTypeMapper">
+    
+    <resultMap type="com.szsk.archives.archivesManage.domain.ArchivesType" id="archivesTypeResult">
+        <result property="archivesTypeId"    column="f_archives_type_id"    />
+        <result property="typeName"    column="f_type_name"    />
+        <result property="sort"    column="f_sort"    />
+        <result property="code"    column="f_code"    />
+        <result property="parentId"    column="f_parent_id"    />
+        <result property="level"    column="f_level"    />
+        <result property="status"    column="f_status"    />
+        <result property="fReservoirInfoId"    column="f_reservoir_info_id"    />
+    </resultMap>
+
+    <sql id="selectarchivesTypeVo">
+        select f_archives_type_id, f_reservoir_info_id,f_type_name, f_sort, f_code, f_parent_id, f_level, f_status from a_archives_type
+    </sql>
+
+    <select id="selectarchivesTypeList" parameterType="com.szsk.archives.archivesManage.domain.ArchivesType" resultMap="archivesTypeResult">
+        <include refid="selectarchivesTypeVo"/>
+        <where>
+
+            <if test="typeName != null  and typeName != ''"> and f_type_name like concat('%', #{typeName}, '%')</if>
+            <if test="fReservoirInfoId != null "> and f_reservoir_info_id = #{fReservoirInfoId}</if>
+            <if test="sort != null "> and f_sort = #{sort}</if>
+            <if test="code != null  and code != ''"> and f_code = #{code}</if>
+            <if test="parentId != null "> and f_parent_id = #{parentId}</if>
+            <if test="level != null "> and f_level = #{level}</if>
+            <if test="status != null "> and f_status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectarchivesTypeById" parameterType="Long" resultMap="archivesTypeResult">
+        <include refid="selectarchivesTypeVo"/>
+        where f_archives_type_id = #{archivesTypeId}
+    </select>
+        
+    <insert id="insertarchivesType" parameterType="com.szsk.archives.archivesManage.domain.ArchivesType">
+        insert into a_archives_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id,</if>
+            <if test="typeName != null">f_type_name,</if>
+            <if test="sort != null">f_sort,</if>
+            <if test="code != null">f_code,</if>
+            <if test="parentId != null">f_parent_id,</if>
+            <if test="level != null">f_level,</if>
+            <if test="status != null">f_status,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">#{fReservoirInfoId},</if>
+            <if test="typeName != null">#{typeName},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="code != null">#{code},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="level != null">#{level},</if>
+            <if test="status != null">#{status},</if>
+         </trim>
+    </insert>
+
+    <update id="updatearchivesType" parameterType="com.szsk.archives.archivesManage.domain.ArchivesType">
+        update a_archives_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fReservoirInfoId != null">f_reservoir_info_id = #{fReservoirInfoId},</if>
+            <if test="typeName != null">f_type_name = #{typeName},</if>
+            <if test="sort != null">f_sort = #{sort},</if>
+            <if test="code != null">f_code = #{code},</if>
+            <if test="parentId != null">f_parent_id = #{parentId},</if>
+            <if test="level != null">f_level = #{level},</if>
+            <if test="status != null">f_status = #{status},</if>
+        </trim>
+        where f_archives_type_id = #{archivesTypeId}
+    </update>
+
+    <delete id="deletearchivesTypeById" parameterType="Long">
+        delete from a_archives_type where f_archives_type_id = #{archivesTypeId}
+    </delete>
+
+    <delete id="deletearchivesTypeByIds" parameterType="String">
+        delete from a_archives_type where f_archives_type_id in 
+        <foreach item="archivesTypeId" collection="array" open="(" separator="," close=")">
+            #{archivesTypeId}
+        </foreach>
+    </delete>
+</mapper>
